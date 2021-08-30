@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class ClientOrderBean {	
-	//test
 	private String OS_CODE;
 	private String OS_CLCODE;
 	private String OS_DATE;
