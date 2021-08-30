@@ -25,6 +25,12 @@ public class OneController {
 		return "home";
 	}
 	
+	@GetMapping("/Access") 
+	public String AccessForm() {
+		return "accessForm";
+	}
+	
+	
 	/*
 	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();
 	 * mav.addObject("testdata",td.test2()); mav.setViewName("/test"); return mav; }
