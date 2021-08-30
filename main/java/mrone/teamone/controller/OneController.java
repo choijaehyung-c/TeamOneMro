@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class OneController {
 	//test
-	//hsm1
+	//hsm2
 	ModelAndView mav;
 	
 	
