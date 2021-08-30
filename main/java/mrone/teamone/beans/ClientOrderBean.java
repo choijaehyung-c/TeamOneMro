@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ClientOrderBean {	
 	
-	private String uCode;
+	private String uCode2;
 	private String OS_CODE;
 	private String OS_CLCODE;
 	private String OS_DATE;
