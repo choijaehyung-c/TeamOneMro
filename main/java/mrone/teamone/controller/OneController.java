@@ -20,7 +20,7 @@ public class OneController {
 	//test
 	//현상민테스트ㄴㅇ
 	//commit ps
-	//dsfsdfdsfs
+	//dsfsdfdsfss
 	ModelAndView mav;
 	
 	
