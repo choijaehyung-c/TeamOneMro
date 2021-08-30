@@ -18,9 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class OneController {
 	//test
-	//현상민테스트ㄴㅇ
-	//commit ps
-	//dsfsdfdsfss
+	//현상민테스트3
 	ModelAndView mav;
 	
 	
