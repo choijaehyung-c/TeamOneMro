@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class OneController {
 	//test
-	//현상민테스트ㄴㅇ ㄴㅁㅇ거ㅏ악ㄴㅇㄱㄷㄱㅈㄱㄷㅈㄱㅇㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅁㅁㅁㅁㅁㅁㅁㅁ
+	//현상민테스트3123123123123
 	ModelAndView mav;
 	
 	
