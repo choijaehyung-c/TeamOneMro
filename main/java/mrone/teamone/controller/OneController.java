@@ -18,7 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class OneController {
 	//test
+<<<<<<< HEAD
 	//hsm2
+=======
+	//현상민테스트ㄴㅇ
+	//commit ps
+	//dsfsdfdsfss
+>>>>>>> 98de4b5004eee418b5ff5930310cb019ed109476
 	ModelAndView mav;
 	
 	
