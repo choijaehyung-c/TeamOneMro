@@ -1,5 +1,5 @@
 package mrone.mro.service;
 
-public class MroService {
+public class MroServiceCtl {
 
 }

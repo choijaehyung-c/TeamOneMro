@@ -1,6 +1,6 @@
 package mrone.client.service;
 
-public class ClientService {
+public class ClientServiceCtl {
 //test
 	//test1
 }

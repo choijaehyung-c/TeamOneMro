@@ -1,5 +1,5 @@
 package mrone.supply.service;
 
-public class SupplyService {
+public class SupplyServiceCtl {
 
 }
