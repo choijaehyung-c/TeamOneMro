@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mrone.teamone.mapper.Auth">
+
+	<select id="isUserId" parameterType="mrone.teamone.beans.AccessBean" resultType="int">
+		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id}
+	</select>
+	
+	<select id="checkPwd" parameterType="mrone.teamone.beans.AccessBean" resultType="int">
+		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id} AND  MD_PWD = {Pwd}
+	</select>
+	
+	<select id="getAccessHistorySum" parameterType="mrone.teamone.beans.MroAccessBean" resultType="int">
+		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{AHM_CODE}
+	</select>
+	
+	<select id="getLogOutAccessHistorySum" parameterType="mrone.teamone.beans.MroAccessBean" resultType="int">
+		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{AHM_CODE} AND AHM_PUBLICIP = #{AHM_PUBLICIP} AND 
+		AHM_PRIVATEIP = #{AHM_PRIVATEIP} AND AHM_BROWSER = #{AHM_BROWSER}
+	</select>
+	
+	<select id="getLastAccessInfo" parameterType="mrone.teamone.beans.MroAccessBean" resultType="string">
+		SELECT AHM_BROWSER||AHM_PUBLICIP||AHM_PRIVATEIP FROM(SELECT * FROM AHM WHERE AHM_CODE =#{AHM_CODE} ORDER BY AHM_DATE DESC) WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="forceLogout" parameterType="mrone.teamone.beans.MroAccessBean">
+		INSERT INTO AHM(AHM_CODE,AHM_DATE,AHM_PUBLICIP,AHM_PRIVATEIP,AHM_METHOD,AHM_BROWSER) 
+		SELECT AHM_CODE,SYSDATE,AHM_PUBLICIP,AHM_PRIVATEIP,-1,AHM_BROWSER FROM AHM
+		WHERE AHM_DATE = (SELECT MAX(AHM_DATE) FROM AHM WHERE AHM_CODE=#{AHM_CODE}) AND AHM_METHOD = #{AHM_METHOD}
+	</insert>
+	
+	<insert id="insAccessHistory" parameterType="mrone.teamone.beans.MroAccessBean">
+		INSERT INTO AHM(AHM_CODE,AHM_DATE,AHM_PUBLICIP,AHM_PRIVATEIP,AHM_METHOD,AHM_BROWSER) 
+		VALUES(#{AHM_CODE},#{AHM_DATE},#{AHM_PUBLICIP},#{AHM_PRIVATEIP},#{AHM_METHOD},#{AHM_BROWSER})
+	</insert>
+	
+</mapper>

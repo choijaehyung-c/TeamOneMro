@@ -49,3 +49,17 @@ function makeInput(type,name,value){
 	return input;
 }
 
+function sendAccessInfo(){
+	
+	let Id = document.getElementsByName("Id")[0];
+	let Pwd = document.getElementsByName("Pwd")[0];
+	
+	let	f = makeForm("/Access","post");
+	
+	f.appendChild(Id);
+	f.appendChild(Pwd);
+	
+	document.body.appendChild(f);
+	f.submit();
+	
+}

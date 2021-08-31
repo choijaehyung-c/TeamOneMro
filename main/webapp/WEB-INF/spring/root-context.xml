@@ -37,7 +37,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="dbSessionFactory" />
 	</bean>
 	
-	
+	<mybatis-spring:scan base-package="mrone.teamone.mapper"/>
 	<!-- <mybatis-spring:scan base-package="mrone.teamone.mapper" factory-ref="dbSessionFactory"/> -->
 	
 	

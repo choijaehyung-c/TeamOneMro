@@ -99,7 +99,7 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                	<iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe>
+                	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
                 </main>
             </div>
         </div>
