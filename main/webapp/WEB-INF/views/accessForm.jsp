@@ -40,12 +40,12 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="text" name="Id" class="form-control form-control-user"
+                                            <input type="text" name="AHM_CODE" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Your Code">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name ="Pwd"class="form-control form-control-user"
+                                            <input type="password" name ="MD_PWD"class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
@@ -55,9 +55,9 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <div onclick="readyAccessMro('1','/AccessMro')" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </div>
                                         <hr>
 
                                     </form>

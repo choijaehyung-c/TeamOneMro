@@ -37,7 +37,6 @@ public class Authentication {
 						System.out.println("다른브라우저로그인성공");
 					}
 				}else {
-					
 					if(pu.getAttribute("userSs")==null){//서버 로그인이 되어있지만 세션이 만료된 경우
 						dao.forceLogout(ma);
 						loginProcess(mav,ma);
@@ -47,7 +46,7 @@ public class Authentication {
 				}
 			//해당 아이디가 로그인이 안되어있을경우(db에 로그아웃상태)
 			}else{
-				
+				System.out.println("222");
 				loginProcess(mav,ma);
 			}
 		}catch (Exception e) {
@@ -74,16 +73,8 @@ public class Authentication {
 						if(tf = dao.insAccessHistory(ma)) {
 							System.out.println("기록성공");
 							mav.setViewName("redirect:/");
-							HttpServletResponse response = null;
-							Cookie cookie = new Cookie("key", "loginCk");
-							cookie.setMaxAge(3600); // 쿠키 유효기간 설정 (초 단위)
-							response.addCookie(cookie);
-							try {
-								pu.setAttribute("loginCk",enc.aesEncode(ab.getId(),"icia"));
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
 							pu.setAttribute("userSs",enc.aesEncode(ab.getId(),"session"));
+							pu.setAttribute("ck",ab.getId());
 						}
 					}
 				}
@@ -97,6 +88,30 @@ public class Authentication {
 		}
 	}
 	
+	public ModelAndView accessOutMroCtl(MroAccessBean ma) {
+		mav = new ModelAndView();
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				ma.setAHM_CODE(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				if(dao.getLogOutAccessHistorySum(ma)) {
+					dao.insAccessHistory(ma);
+				}
+				pu.removeAttribute("userSs");
+				//쿠키 지우는거
+				pu.removeAttribute("ck");
+				mav.setViewName("redirect:/");
+				mav.addObject("message","alert('로그아웃 되었습니다.');");
+				System.out.println("로그아웃ctl성공");
+			}else{
+				mav.setViewName("redirect:/");
+				mav.addObject("message","alert('이미 로그아웃 되었습니다.');");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	
 	
 	public ModelAndView start(Cookie ck) {
@@ -108,10 +123,12 @@ public class Authentication {
 			if(pu.getAttribute("userSs")!=null){
 				ma.setAHM_CODE(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 				//남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
-				if(dao.getAccessHistorySum(ma) && ck.getValue().equals(pu.getAttribute("userSs"))) {
+				if(dao.getAccessHistorySum(ma) && ck.getValue().equals((String)pu.getAttribute("userSs"))) {
 					mav.setViewName("home");
 				//남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
 				}else{
+					//쿠키도삭제
+					System.out.println("asd");
 					pu.removeAttribute("userSs");
 					mav.setViewName("accessForm");
 				}

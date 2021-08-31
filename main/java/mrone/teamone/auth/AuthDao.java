@@ -43,6 +43,7 @@ public class AuthDao {
 		return sql.selectOne("", ab);
 	}
 	boolean insAccessHistory(MroAccessBean ma) {
+		System.out.println(ma.getAHM_BROWSER()+ma.getAHM_CODE()+ma.getAHM_METHOD()+ma.getAHM_PRIVATEIP()+ma.getAHM_PUBLICIP()+ma.getMD_PWD());
 		return convertToBoolean(sql.insert("insAccessHistory", ma));
 	}
 	

@@ -21,9 +21,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="mrone.teamone.controller.*" />
-	<context:component-scan base-package="mrone.teamone.auth.*" />
-	<context:component-scan base-package="mrone.teamone.utill.*"/>
-	<context:annotation-config />
+	<context:component-scan base-package="mrone.teamone.*"/>
 	
 </beans:beans>

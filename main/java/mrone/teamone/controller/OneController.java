@@ -1,5 +1,13 @@
 package mrone.teamone.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,26 +23,46 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.auth.Authentication;
 import mrone.teamone.beans.MroAccessBean;
+import mrone.teamone.utill.Encryption;
+import mrone.teamone.utill.ProjectUtils;
 
 @Controller
 public class OneController {
 	ModelAndView mav;
-	
 	@Autowired
 	Authentication auth;
+	@Autowired
+	private ProjectUtils pu;
+	@Autowired
+	Encryption enc;
 	
 	@RequestMapping(value = "/", method = {RequestMethod.POST,RequestMethod.GET} )
 	public ModelAndView home(@CookieValue(value = "key", required = false) Cookie ck) {
-		System.out.println("imhere");
 		mav = auth.start(ck);
 		return mav;
 	}
 	
-	@PostMapping("/Access")
-	public ModelAndView Access(@ModelAttribute MroAccessBean ma,HttpServletResponse response) {
+	@PostMapping("/AccessMro")
+	public ModelAndView accessMro(@ModelAttribute MroAccessBean ma,HttpServletResponse response) {
 		mav = auth.accessMroCtl(ma);
+		try {
+			if(pu.getAttribute("ck").equals(ma.getAHM_CODE())) {
+			Cookie cookie = new Cookie("key", enc.aesEncode(ma.getAHM_CODE(),"session"));
+			cookie.setMaxAge(36000); // 쿠키 유효기간 설정 (초 단위)
+			response.addCookie(cookie);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
+	
+	@PostMapping("/AccessOutMro")
+	public ModelAndView accessOutMro(@ModelAttribute MroAccessBean ma) {
+		mav = auth.accessOutMroCtl(ma);
+		return mav;
+	}
+	
 	
 	
 	/*
