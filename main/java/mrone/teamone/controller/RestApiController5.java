@@ -19,16 +19,16 @@ public class RestApiController5 {
 	@Autowired
 	SupplyServiceCtl2 ssc2;
 	
-
-	@PostMapping("/SupplyProductListForm")
-	public ModelAndView supplyProductListForm() {
-		return mav;
-	}
 	
-	@PostMapping("/productBean")
+	@PostMapping("/SupplyProductListForm")
 	public List<ProductBean> supplyProductListCtl(@RequestBody List<ProductBean> SupplyPrList){
 		return ssc2.supplyProductListCtl(SupplyPrList.get(0));
 		
 	}
-
+	
+	@PostMapping("/SupplyNewRequeListForm")
+	public List<ProductBean> newSupplyPrListCtl(@RequestBody List<ProductBean> SupplyNewPrList) {
+		return ssc2.NewSupplyPrListCtl(SupplyNewPrList.get(0));
+	}
+	
 }
