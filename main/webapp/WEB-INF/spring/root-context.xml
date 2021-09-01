@@ -39,7 +39,7 @@
 	
 	
 	
-	<!-- <mybatis-spring:scan base-package="mrone.teamone.mapper" factory-ref="dbSessionFactory"/> -->
+	<!-- <mybatis-spring:scan base-package="mrone.teamone.mapper" factory-ref="dbSessionFactory"/>-->
 	
 	
 	<!-- Tsac -->
