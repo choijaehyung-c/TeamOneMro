@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 function clientList(){
 	
@@ -19,14 +16,14 @@ function supplyList(){
 	alert("공급사목록을 불러옵니다.");
 }
 
-
-const orderList = new Vue({
-	el: "#mOrderList",
+window.onload = function (){
+const orderListasd = new Vue({
+	el: "#mOrderListasdasd",
 	data:{
-		msg:"ss",
-		list:[]
+		msg : "ss",
+		list : []
 	},
-	method:{
+	methods:{
 		mroOrderList:function(){
 			axios.get('iyj/mroOrderListForm')
 			.then(result =>{
@@ -34,18 +31,16 @@ const orderList = new Vue({
 			})
 		},
 		putData:function(data){
-			this.list=data
+			this.list=data;
 		}
 	}
 	
 });
+}
 
 function orderDetail(){
-	let os = document.getElementsByName("OD_OSCODE")[0].value;
-	//orderList.putData= JSON.parse(os);
-	console.log(os);
-	
-	
+	//let os = document.getElementsByName("OD_OSCODE")[0].value;
+	//orderListasd.msg="asdasd";
 }
 
 
