@@ -34,7 +34,6 @@ public class ClientDaoCJH {
 	boolean insClientOrderDetail(OrderDetailBean od) {
 		return convertToBoolean(sql.insert("insClientOrderDetail", od));
 	}
-
 	
 	private boolean convertToBoolean(int data) {
 		return data>0? true : false;
