@@ -14,14 +14,17 @@
 
 
 
-<body onLoad="orderDetail()">
+<body>
 
 
 	<div> 공급사 목록 : ${Slist} </div>
 	<div> 고객사 목록 : ${Clist} </div>
 
-	<div  id="mOrderList"> <div v-for:"list2 in list" onclick="orderDetail()">{{list}}</div> </div> 	
-	<input v-model:"msg" type="text"/>
+<!--  	<div  id="mOrderList"> <div v-for:"list2 in list" onclick="orderDetail()">{{list}}</div> </div> 	
+	<input v-model:"msg" type="text"/>-->
+	
+	<div onClick="orderDetail()">주문 목록 : ${WorderList }</div>
+	<div id="getWaitList" name="getWaitList"></div>
 	<input type="hidden" value="${WorderList}" name="OD_OSCODE" />
 	
 

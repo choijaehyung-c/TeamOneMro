@@ -2,6 +2,7 @@
  * 
  */
 
+//고객사 목록 불러오기
 function clientList(){
 	
 	let f = makeForm("/iyj/mroClientListForm","post");
@@ -11,6 +12,7 @@ function clientList(){
 	
 }
 
+//공급사 목록 불러오기
 function supplyList(){
 	
 	let f = makeForm("/iyj/mroSupplyListForm","post");
@@ -20,7 +22,7 @@ function supplyList(){
 }
 
 
-const orderList = new Vue({
+/*const orderList = new Vue({
 	el: "#mOrderList",
 	data:{
 		msg:"ss",
@@ -38,18 +40,17 @@ const orderList = new Vue({
 		}
 	}
 	
-});
+});*/
 
-function orderDetail(){
+/*function orderDetail(){
 	let os = document.getElementsByName("OD_OSCODE")[0].value;
 	//orderList.putData= JSON.parse(os);
 	console.log(os);
-	
-	
-}
+
+}*/
 
 
-
+//mro에서 주문대기리스트 불러오기
 function mroOrderList(){
 	
 	let f = makeForm("iyj/mroOrderListForm","post");
@@ -59,12 +60,13 @@ function mroOrderList(){
 }
 
 
-function orderDetail2(){
+//주문번호의 상세정보 불러오기
+function orderDetail(){
 	
 	const osCode = document.getElementsByName("OD_OSCODE")[0];
 	
 	alert(osCode);
-	let f = makeForm("M_OrderDetail","post");
+	let f = makeForm("mroGetOrderDetail","post");
 	f.appendChild(osCode);
 	document.body.appendChild(f);
 	f.submit();

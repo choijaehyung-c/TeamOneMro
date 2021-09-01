@@ -46,7 +46,7 @@ public class OneControllerIYJ {
 		return mav;
 	}
 	
-	@PostMapping("/M_OrderDetail")
+	@PostMapping("/mroGetOrderDetail")
 	public ModelAndView getOrderDetail(@ModelAttribute OrderDetailBean od) {
 		System.out.println(od.getOD_OSCODE());
 		mav = mse.getOrderDetail(od);
