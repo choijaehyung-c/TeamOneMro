@@ -23,5 +23,7 @@
 	
 	<context:component-scan base-package="mrone.teamone.*"/>
 	<context:component-scan base-package="mrone.client.service"/>
+	<context:component-scan base-package="mrone.mro.service"/>
+	<context:component-scan base-package="mrone.supply.service"/>
 	
 </beans:beans>
