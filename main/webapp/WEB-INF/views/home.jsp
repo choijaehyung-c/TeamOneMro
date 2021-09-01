@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
         <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -48,24 +49,24 @@
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <div class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 
-                                Test1
+                                 거래처관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <div class="nav-link" >Test1-1</div>
-                                    <div class="nav-link" >Test1-2</div>
+                                    <div class="nav-link" onClick="clientList()">고객사 목록</div>
+                                    <div class="nav-link" onClick="supplyList()">공급사 목록</div>
                                 </nav>
                             </div>
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 
-                                Test2
+                                주문관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Test2-1
+                                        주문목록
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </div>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
@@ -77,10 +78,27 @@
                                         </nav>
                                     </div>
                                     <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Test2-2
+                                        반품목록
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </div>
+                                     <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        교환목록
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </div>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    
+                                    <div class="nav-link collapsed2" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
+                                
+                                 	상품관리
+                                	<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            		</div>
+                            		<div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                	<nav class="sb-sidenav-menu-nested nav">
+                                    	<div class="nav-link" onClick="clientList()">상품수정요청건</div>
+                                   		<div class="nav-link" onClick="supplyList()">새상품등록요청건</div>
+                                	</nav>
+                            </div>
+                                    
                                         <nav class="sb-sidenav-menu-nested nav">
                                         </nav>
                                     </div>
