@@ -16,11 +16,10 @@ public class ClientServiceCtl {
 	ProjectUtils pu;
 	
 	
-	String clientOrderCtl(ClientOrderBean co){
+	String clientRequestCtl(ClientOrderBean co){
 		String result = "failure";
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED,false);
-		
 		if(dao.isClient(co)) {
 			if(dao.isClientPwd(co)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -37,7 +36,7 @@ public class ClientServiceCtl {
 					}
 					if(tranCount == co.getOD().size()) {
 						tran = true;
-						result = "success";
+						result = dao.getOrderData(co);
 					}
 					
 				}				
@@ -46,7 +45,7 @@ public class ClientServiceCtl {
 		pu.setTransactionResult(tran);
 		return result;
 	}
-	
+
 }
 /*
  * setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED,false);

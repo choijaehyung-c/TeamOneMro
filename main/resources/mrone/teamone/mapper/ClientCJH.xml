@@ -14,15 +14,15 @@
 	</select>
 	
 	<insert id="insClientOrder" parameterType="mrone.teamone.beans.ClientOrderBean">
-		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{OS_CLCODE},TO_DATE(#{OS_DATE}),'PR')
+		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{OS_CLCODE},TO_DATE(#{OS_DATE}),#{OS_STATE})
 	</insert>
 	
 	<insert id="insClientOrderDetail" parameterType="mrone.teamone.beans.ClientOrderBean">
-		INSERT INTO OD VALUES(#{OD_PRSPCODE},#{OD_OSCODE},'PR',#{OD_PRCODE},#{OD_QUANTITY})
+		INSERT INTO OD VALUES(#{OD_PRSPCODE},#{OD_OSCODE},#{OS_STATE},#{OD_PRCODE},#{OD_QUANTITY})
 	</insert>
 	
 	<select id="getOrderData" parameterType="mrone.teamone.beans.ClientOrderBean" resultType="string">
 		SELECT OS_CODE FROM OS WHERE OS_CLCODE = #{OS_CLCODE} AND OS_DATE = TO_DATE(#{OS_DATE})
 	</select>
-	
+
 </mapper>

@@ -9,4 +9,6 @@ public interface ClientCJH {
 	void insClientOrder(ClientOrderBean co);
 	void insClientOrderDetail(OrderDetailBean od);
 	void getOrderData(ClientOrderBean co);
+	void insRefundOrder(ClientOrderBean co);
+	void insRefundOrderDetail(OrderDetailBean od);
 }

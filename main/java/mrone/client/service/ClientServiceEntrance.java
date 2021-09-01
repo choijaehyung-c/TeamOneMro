@@ -9,11 +9,8 @@ public class ClientServiceEntrance {
 	@Autowired
 	ClientServiceCtl csc;
 	
-	public String clientOrder(ClientOrderBean co) {
-		return csc.clientOrderCtl(co);
+	public String clientRequest(ClientOrderBean co) {
+		return csc.clientRequestCtl(co);
 	}
-	
-	public String clientRefund(ClientOrderBean co) {
-		return null;
-	}
+
 }
