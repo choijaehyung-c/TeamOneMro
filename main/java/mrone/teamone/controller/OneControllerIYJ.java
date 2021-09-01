@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.mro.service.MroServiceEntrance;
-import mrone.teamone.auth.Authentication;
-import mrone.teamone.beans.MroAccessBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -26,24 +25,31 @@ public class OneControllerIYJ {
 	Encryption enc;
 	
 	
-	@PostMapping("/M_SupplyListForm")
+	@PostMapping("/mroSupplyListForm")
 	public ModelAndView mroSupplyListForm() {
 		//System.out.println("공급사목록");
 		mav = mse.SupplyListCtl();
 		return mav;
 	}
 	
-	@PostMapping("/M_ClientListForm")
+	@PostMapping("/mroClientListForm")
 	public ModelAndView morClientListForm() {
 		//System.out.println("고객사목록");
 		mav = mse.ClientListCtl();
 		return mav;
 	}
 	
-	@PostMapping("/M_WaitOrderForm")
+	@PostMapping("/mroOrderListForm")
 	public ModelAndView mroOrderListForm() {
 		//System.out.println("주문서 목록");
 		mav = mse.getWaitOrderListCtl();
+		return mav;
+	}
+	
+	@PostMapping("/M_OrderDetail")
+	public ModelAndView getOrderDetail(@ModelAttribute OrderDetailBean od) {
+		System.out.println(od.getOD_OSCODE());
+		mav = mse.getOrderDetail(od);
 		return mav;
 	}
 

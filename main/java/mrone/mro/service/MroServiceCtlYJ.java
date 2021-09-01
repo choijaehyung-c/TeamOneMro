@@ -21,7 +21,7 @@ public class MroServiceCtlYJ {
 	List<SupplyInfoBean> SupplyList() {
 		List<SupplyInfoBean> list;
 		list = dao.getSupplyList();
-		System.out.println(list);
+		
 
 		return list;
 	}
@@ -45,8 +45,10 @@ public class MroServiceCtlYJ {
 			}
 		}
 		
-		System.out.println(waitOrderList);
+		//System.out.println(waitOrderList);
 		return waitOrderList;
 	}
+
+
 
 }
