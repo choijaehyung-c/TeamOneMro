@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="checkPwd" parameterType="mrone.teamone.beans.AccessBean" resultType="int">
-		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id} AND  MD_PWD = {Pwd}
+		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id} AND  MD_PWD = #{Pwd}
 	</select>
 	
 	<select id="getAccessHistorySum" parameterType="mrone.teamone.beans.MroAccessBean" resultType="int">
