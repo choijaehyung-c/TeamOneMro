@@ -26,10 +26,24 @@ public class OneControllerIYJ {
 	Encryption enc;
 	
 	
-	@PostMapping("/mroSupplyListForm")
+	@PostMapping("/M_SupplyListForm")
 	public ModelAndView mroSupplyListForm() {
 		//System.out.println("공급사목록");
 		mav = mse.SupplyListCtl();
+		return mav;
+	}
+	
+	@PostMapping("/M_ClientListForm")
+	public ModelAndView morClientListForm() {
+		//System.out.println("고객사목록");
+		mav = mse.ClientListCtl();
+		return mav;
+	}
+	
+	@PostMapping("/M_WaitOrderForm")
+	public ModelAndView mroOrderListForm() {
+		//System.out.println("주문서 목록");
+		mav = mse.getWaitOrderListCtl();
 		return mav;
 	}
 
