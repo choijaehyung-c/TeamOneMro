@@ -24,5 +24,27 @@ public class SupplyServiceCtl2 {
 		return productBean;
 	}
 	
+	public String getProductDetail(ProductBean pb) {
+		
+		
+		return null;
+	}
+	
+	public List<ProductBean> NewSupplyPrListCtl(ProductBean pd){
+		List<ProductBean> prBean;
+		prBean = sqlSession.selectList("NewSupplyPrListCtl", pd);
+		
+		return prBean;
+	}
+	
+	public String getSuReNewProduct(ProductBean pd) {
+		return null;
+	}
+	
+	public String supplyReModifyCtl (ProductBean pd) {
+		
+		return null;
+	}
+	
 	
 }
