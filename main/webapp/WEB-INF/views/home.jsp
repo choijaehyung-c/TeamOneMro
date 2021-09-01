@@ -58,6 +58,7 @@
                                     <div class="nav-link" onClick="supplyList()">공급사 목록</div>
                                 </nav>
                             </div>
+                            
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 
                                 주문관리
@@ -65,61 +66,21 @@
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        주문목록
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </div>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav" id="vuetest" >
-                                        	<input type="text" value="" v-model="message" id="testtag"/>
-                                        	{{message}}
-                                       		 <div v-for="list in list" class="nav-link" >Login</div>
-                                        
-                                        </nav>
-                                    </div>
-                                    <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        반품목록
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </div>
-                                     <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        교환목록
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </div>                                    
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                        </nav>
-                                    </div>                                    
+                                    <div class="nav-link" onClick="mroOrderList()">주문목록</div>
+                                    <div class="nav-link" >반품목록</div>
+                                    <div class="nav-link" >교환목록</div>                                                                    
                                 </nav>  
                             </div>
                             
                             
-                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">
-                                
+                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">                                
                                 상품관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav" id="vuetest" >
-                                        	<input type="text" value="" v-model="message" id="testtag"/>
-                                        	{{message}}
-                                       		 <div v-for="list in list" class="nav-link" >Login</div>
-                                        
-                                        </nav>
-                                    </div>
-                                    <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        새상품등록 요청건
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </div>
-                                     <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        상품수정 요청건
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </div>                                    
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                        </nav>
-                                    </div>                                    
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
+                                    <div class="nav-link" onClick="get">새상품 등록 요청건</div>
+                                    <div class="nav-link" onClick="">상품수정 요청건</div>                      
                                 </nav>  
                             </div>
                             

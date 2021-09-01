@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div> 공급사 목록 : ${list} </div>
+
+
+	<div> 공급사 목록 : ${Slist} </div>
+	<div> 고객사 목록 : ${Clist} </div>
+	<div> 주문내역 :  ${WorderList} </div>
 </body>
 </html>
