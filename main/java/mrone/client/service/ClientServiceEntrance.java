@@ -1,5 +1,11 @@
 package mrone.client.service;
 
-public class ClientServiceEntrance {
+import org.springframework.stereotype.Service;
 
+@Service
+public class ClientServiceEntrance {
+	public String clientOrder() {
+		
+		return null;
+	}
 }

@@ -1,1 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mrone.teamone.mapper.ClientCJH">
+
+	<select id="isClient" parameterType="ClientOrderBean">
+		SELECT COUNT(*) FROM CL WHERE CL_CODE = #{OS_CLCODE}
+	</select>
+	
+	<select id="isClientPwd" parameterType="ClientOrderBean">
+		SELECT COUNT(*) FROM CL WHERE CL_PWD = #{CL_PWD}
+	</select>
+	
+	<insert id="insClientOrder" parameterType="ClientOrderBean">
+	
+	</insert>
+	
+</mapper>
+<!-- 
+	private String OS_CODE;
+	private String OS_CLCODE;
+	private String CL_PWD;
+	private String OS_DATE;
+	private String OS_STATE;
+	private String SP_CODE;
+	private List<OrderDetailBean> OD; -->

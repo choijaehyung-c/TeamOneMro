@@ -1,5 +1,8 @@
 package mrone.client.service;
 
-public class ClientDaoCJH {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class ClientDaoCJH {
+	
 }
