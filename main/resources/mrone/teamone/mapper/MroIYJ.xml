@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="mrone.teamone.mapper.MroIYJ">
+    
+    <select id="getSupplyList" resultType="mrone.teamone.beans.SupplyInfoBean">
+SELECT SP.SP_CODE ,
+       SP.SP_NAME,
+       SP.SP_TEL,
+       SP.SP_ADDRESS,
+       SP.SP_CORPNUM,
+       SP.SP_BKIND,
+       BKIND.BK_NAME
+FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+    </select>
+    
+    </mapper>
