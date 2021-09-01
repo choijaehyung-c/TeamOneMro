@@ -10,7 +10,10 @@ public class ClientServiceEntrance {
 	ClientServiceCtl csc;
 	
 	public String clientOrder(ClientOrderBean co) {
-		
 		return csc.clientOrderCtl(co);
+	}
+	
+	public String clientRefund(ClientOrderBean co) {
+		return null;
 	}
 }
