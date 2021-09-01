@@ -36,7 +36,7 @@ public class AuthDao {
 	}
 
 	boolean checkPwd(AccessBean ab) {
-		return convertToBoolean(sql.selectOne("isUserId", ab));
+		return convertToBoolean(sql.selectOne("checkPwd", ab));
 	}
 	
 	String getGrade(AccessBean ab){

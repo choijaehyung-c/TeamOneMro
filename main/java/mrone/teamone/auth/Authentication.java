@@ -68,7 +68,6 @@ public class Authentication {
 					ab.setPwd(enc.aesEncode(ab.getPwd(), ab.getId()));
 					
 					if(dao.checkPwd(ab)){
-						
 						System.out.println("로그인성공");
 						if(tf = dao.insAccessHistory(ma)) {
 							System.out.println("기록성공");
