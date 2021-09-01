@@ -78,7 +78,7 @@ public class Authentication {
 					}
 				}
 				if(!tf){
-					mav.setViewName("access");
+					mav.setViewName("accessForm");
 					mav.addObject("message","alert('로그인실패');");
 				}
 			}
