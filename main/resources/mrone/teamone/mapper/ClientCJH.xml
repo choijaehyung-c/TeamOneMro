@@ -5,18 +5,22 @@
     
 <mapper namespace="mrone.teamone.mapper.ClientCJH">
 
-	<select id="isClient" parameterType="ClientOrderBean">
+	<select id="isClient" parameterType="mrone.teamone.beans.ClientOrderBean">
 		SELECT COUNT(*) FROM CL WHERE CL_CODE = #{OS_CLCODE}
 	</select>
 	
-	<select id="isClientPwd" parameterType="ClientOrderBean">
+	<select id="isClientPwd" parameterType="mrone.teamone.beans.ClientOrderBean">
 		SELECT COUNT(*) FROM CL WHERE CL_PWD = #{CL_PWD}
 	</select>
 	
-	<insert id="insClientOrder" parameterType="ClientOrderBean">
-	
+	<!-- <insert id="insClientOrder" parameterType="ClientOrderBean">
+		INSERT INTO OS VALUES(#{OS_CODE},#{OS_CLCODE},#{},#{})
 	</insert>
 	
+	<insert id="insClientOrderDetail" parameterType="ClientOrderBean">
+		
+	</insert>
+	 -->
 </mapper>
 <!-- 
 	private String OS_CODE;
