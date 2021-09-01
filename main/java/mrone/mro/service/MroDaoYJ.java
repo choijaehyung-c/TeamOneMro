@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mrone.teamone.beans.ClientInfoBean;
+import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.SupplyInfoBean;
 
 @Repository
@@ -22,7 +24,25 @@ public class MroDaoYJ {
 		return list;
 	}
 	
+	List<ClientInfoBean> getClientList(){
+		List<ClientInfoBean> list;
+		list = sql.selectList("getClientList");
+		
+		return list;
+	}
+
+
+	 List<MroOrderBean> getWaitOrderList() {
+		List<MroOrderBean> list;
+		list = sql.selectList("getWaitOrderList");
+		
+		return list;
+	}
+	 
+	 
+	 
+		
 	boolean convertToBoolean(int data) {
-		return data>0? true : false;
+			return data>0? true : false;
 	}
 }

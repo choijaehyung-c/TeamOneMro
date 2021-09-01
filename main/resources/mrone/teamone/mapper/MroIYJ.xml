@@ -6,14 +6,37 @@
     <mapper namespace="mrone.teamone.mapper.MroIYJ">
     
     <select id="getSupplyList" resultType="mrone.teamone.beans.SupplyInfoBean">
-SELECT SP.SP_CODE ,
+		SELECT SP.SP_CODE ,
        SP.SP_NAME,
        SP.SP_TEL,
        SP.SP_ADDRESS,
        SP.SP_CORPNUM,
        SP.SP_BKIND,
        BKIND.BK_NAME
-FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+    </select>
+    
+    <select id="getClientList" resultType="mrone.teamone.beans.ClientInfoBean">
+    	
+    	SELECT CL.CL_CODE,
+      	 CL.CL_NAME,
+      	 CL.CL_ADDRESS,
+      	 CL.CL_CORPNUM,
+      	 CL.CL_HP,
+     	 CL.CL_BTYPE,
+      	 CL.CL_BKIND,
+     	 BK.BK_NAME
+		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE
+    </select>
+    
+    <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">
+		SELECT OS.OS_CODE,
+       OS.OS_CLCODE,
+       CL.CL_NAME,
+       OS_DATE,
+       OS_STATE
+FROM OS INNER JOIN CL ON OS.OS_CLCODE = CL.CL_CODE
+		    
     </select>
     
     </mapper>

@@ -10,17 +10,36 @@ public class MroServiceEntrance {
 	@Autowired
 	MroServiceCtlYJ mseIYJ;
 	
-	private ModelAndView mav = null;
+	
+	
+	private ModelAndView mav =null;
 
 	public ModelAndView SupplyListCtl() {
-		mav = new ModelAndView();
-		
-		
+		mav = new ModelAndView();	
 		mav.setViewName("MroHome");
-		mav.addObject("list",mseIYJ.SupplyList());
+		mav.addObject("Slist",mseIYJ.SupplyList());
 		
 		return mav;
 	}
+
+	public ModelAndView ClientListCtl() {
+		mav = new ModelAndView();
+		mav.setViewName("MroHome");
+		mav.addObject("Clist",mseIYJ.ClientList());
+		
+		return mav;
+	}
+
+	public ModelAndView getWaitOrderListCtl() {
+		mav = new ModelAndView();
+		
+		mav.setViewName("MroHome");
+		mav.addObject("WorderList",mseIYJ.getWaitOrderList());
+		
+		return mav;
+	}
+
+
 	
 	
 
