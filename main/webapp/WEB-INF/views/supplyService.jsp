@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="${pageContext.request.contextPath}/resources/js/nsb.js"></script>
 </head>
 <body>
 <div> 발주 접수 대기 리스트 : ${waitOrderlist} </div>

@@ -4,6 +4,8 @@ package mrone.teamone.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -28,7 +30,8 @@ public class OneControllerNSB {
 	Authentication auth;
 	@Autowired
 	Encryption enc;
-	SupplyServiceEntrance sse = new SupplyServiceEntrance(); 
+	@Autowired
+	SupplyServiceEntrance sse; 
 	
 	
 	@GetMapping("/supplyReceiveWaitOrderListForm")
@@ -40,12 +43,10 @@ public class OneControllerNSB {
 	}
 	
 	@PostMapping("/getSupplyReceiveWaitOrderList")
-	public ModelAndView supplyReceiveWaitOrderList(@ModelAttribute RequestOrderBean rb) {
-		System.out.println(rb.getRE_SPCODE());
-		ModelAndView mav = new ModelAndView();
-		mav = sse.RequestWaitOrderListCtl(rb);
+	public ModelAndView supplyReceiveWaitOrderList(RequestOrderBean rb) {
 		
+		mav = sse.RequestWaitOrderListCtl(rb);
 		return mav;
-
+		
 	}
 }

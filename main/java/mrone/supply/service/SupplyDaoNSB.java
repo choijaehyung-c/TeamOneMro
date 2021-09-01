@@ -18,7 +18,6 @@ public class SupplyDaoNSB {
 	
 	
 	List<RequestOrderBean> getWaitOrderList(RequestOrderBean rb){
-		System.out.println(rb.getRE_SPCODE());
-		return sqlSession.selectList("getWaitOrderList", rb);
+		return sqlSession.selectList("getSupplyWaitOrderList", rb);
 	}
 }
