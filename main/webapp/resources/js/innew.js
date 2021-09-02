@@ -35,7 +35,7 @@ function getWaitOrderListM(data){
 	let HTML = "<div>주문목록</div>";
 	
 	for(i=0; i<data.length; i++){
-		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_CODE+")'>"+"[주문날짜 : " + data[i].os_DATE +"] [주문번호 : " + data[i].os_CODE+ "] [고객사 : " + data[i].cl_NAME + "] [상태 : " + data[i].os_STATE +"]</div>";
+		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";
 				
 		space.innerHTML = HTML;
 	}
@@ -53,7 +53,7 @@ function getOrderDetailM(data){
 	
 	let HTML = ""
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 :"+ data[i].sp_NAME + "	상품코드 : " + data[i].od_PRCODE + "	상품이름 : " + data[i].pr_NAME +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
 	
 	}
 	space.innerHTML=HTML;
@@ -73,7 +73,7 @@ function getRefundListM(jsonData){
 	let HTML1 = "<div>반품목록</div>";
 	
 	for(i=0; i<jsonData.length; i++){
-		HTML1 += "<div id='refundList' name='refundList'  onClick='getRefundDetail("+jsonData[i].os_CODE+")'>"+"[주문날짜 : " + jsonData[i].os_DATE +"] [주문번호 : " + jsonData[i].os_CODE+ "] [고객사 : " + jsonData[i].cl_NAME + "] [상태 : " + jsonData[i].os_STATE +"]</div>";
+		HTML1 += "<div id='refundList' name='refundList'  onClick='getRefundDetail("+jsonData[i].os_code+")'>"+"[주문날짜 : " + jsonData[i].os_date +"] [주문번호 : " + jsonData[i].os_code+ "] [고객사 : " + jsonData[i].cl_name + "] [상태 : " + jsonData[i].os_state +"]</div>";
 				
 		space1.innerHTML = HTML1;
 }
@@ -92,7 +92,7 @@ function getRefundDetailListM(data){
 	
 	let HTML = ""
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 : "+ data[i].sp_NAME  + "		상품코드 : " + data[i].od_PRCODE + "		상품이름 : " + data[i].pr_NAME +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name  + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
 	
 	}
 	space.innerHTML=HTML;
@@ -111,7 +111,7 @@ function getExchageListM(data){
 	let contents = "<div>교환목록</div>";
 	
 	for(i=0; i<data.length; i++){
-		contents += "<div id='exchangeList' name='exchangeList' onClick='getExchangeDetail("+data[i].os_CODE+")'>"+"[주문날짜 : " + data[i].os_DATE +"] [주문번호 : " + data[i].os_CODE+ "] [고객사 : " + data[i].cl_NAME + "] [상태 : " + data[i].os_STATE +"]</div>";
+		contents += "<div id='exchangeList' name='exchangeList' onClick='getExchangeDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";
 				
 		space2.innerHTML = contents;
  }
@@ -128,7 +128,7 @@ function getExchangeDetailListM(data){
 	
 	let HTML = ""
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 : "+ data[i].sp_NAME + "		상품코드 : " + data[i].od_PRCODE + "		상품이름 : " + data[i].pr_NAME +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
 	
 	}
 	space.innerHTML=HTML;
