@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.MroOrderBean;
-import mrone.teamone.beans.OrderDetailBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 
 @Service
 public class MroServiceEntrance {
@@ -38,16 +38,14 @@ public class MroServiceEntrance {
 	public List<MroOrderBean> getWaitOrderListCtl() {
 		List<MroOrderBean> list =mseIYJ.getWaitOrderList(); 
 		
-		//mav.setViewName("MroHome");
-		System.out.println(list);
-		
 		return list;
 	}
 	
-	public ModelAndView getOrderDetail(OrderDetailBean od) {
-		//System.out.println(od.getOD_OSCODE());
-		System.out.println(od.getOD_OSCODE());
-		return null;
+	public MroOrderDetailBean getOrderDetail(String osCode) {
+		
+		MroOrderDetailBean od = mseIYJ.getOrderDetail(osCode);
+
+		return od;
 	}
 
 

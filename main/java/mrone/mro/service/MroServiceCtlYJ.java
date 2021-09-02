@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.MroOrderBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 
 @Service
@@ -47,6 +48,14 @@ public class MroServiceCtlYJ {
 		
 		//System.out.println(waitOrderList);
 		return waitOrderList;
+	}
+	
+	MroOrderDetailBean getOrderDetail(String osCode) {
+		MroOrderDetailBean od;
+		od = dao.getOrderDetail(osCode);
+		System.out.println(od);
+		
+		return od;
 	}
 
 

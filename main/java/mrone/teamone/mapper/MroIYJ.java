@@ -4,4 +4,5 @@ public interface MroIYJ {
 	void getSupplyList();
 	void getClientList();
 	void getWaitOrderList();
+	void getOrderDetail(String osCode);
 }

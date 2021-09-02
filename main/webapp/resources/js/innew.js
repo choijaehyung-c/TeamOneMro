@@ -25,7 +25,7 @@ function supplyList(){
 function mroOrderList(){
 	
 	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="")
-	alert("주문목록을 불러옵니다.");
+	
 }
 
 //주문목록 찍어주는 펑션
@@ -35,25 +35,28 @@ function getWaitOrderListM(data){
 	let HTML = "<div>주문목록</div>";
 	
 	for(i=0; i<data.length; i++){
-		HTML += "<div id='orderList' name='orderList'>"+"[주문날짜 : " + data[i].os_DATE +"] [주문번호 : " + data[i].os_CODE+ "] [고객사 : " + data[i].cl_NAME + "] [상태 : " + data[i].os_STATE +"]</div>";
-		
-	
-		
+		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_CODE+")'>"+"[주문날짜 : " + data[i].os_DATE +"] [주문번호 : " + data[i].os_CODE+ "] [고객사 : " + data[i].cl_NAME + "] [상태 : " + data[i].os_STATE +"]</div>";
+				
 		space.innerHTML = HTML;
 	}
 }
 
 
 //주문번호의 상세정보 불러오기
-function orderDetail(){
+function getDetail(data){
 	
-	const osCode = document.getElementsByName("OD_OSCODE")[0];
+		alert("주문번호 "+ data + "의 상세내역입니다.");
+		postAjaxString('/vue2/mroGetOrderDetail','getOrderDetailM',data);
+}
+
+function getOrderDatailM(data){
+	alert(data);
+	let space = document.getElementById("mOrderDetail");
 	
-	alert(osCode);
-	let f = makeForm("mroGetOrderDetail","post");
-	f.appendChild(osCode);
-	document.body.appendChild(f);
-	f.submit();
+	let HTML = "<div>"+data.od_PRSPCODE + data.sp_NAME + data.od_OSCODE + data.od_PRCODE + data.PR_NAME+"</div>"
+	
+	space.innerHTML=HTML;
+	
 }
 
 /*const orderList = new Vue({

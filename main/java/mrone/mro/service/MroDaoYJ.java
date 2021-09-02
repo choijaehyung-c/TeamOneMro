@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.MroOrderBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 
 @Repository
@@ -39,7 +40,10 @@ public class MroDaoYJ {
 		return list;
 	}
 	 
-	 
+	 MroOrderDetailBean getOrderDetail(String osCode) {
+		
+		 return sql.selectOne("getOrderDetail", osCode);
+	 }
 	 
 		
 	boolean convertToBoolean(int data) {

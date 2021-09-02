@@ -39,4 +39,8 @@
 		    
     </select>
     
+    <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
+    	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
+    </select>
+    
     </mapper>
