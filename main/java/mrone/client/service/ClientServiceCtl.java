@@ -67,7 +67,7 @@ public class ClientServiceCtl {
 				list = dao.getTaxBillList(ci);
 				
 				for(int i = 0 ; i < list.size(); i++) {
-					list.get(i).setTB_TTPRICE(enc.aesDecode(list.get(i).getTB_TTPRICE(), ci.getCL_CODE()) );
+					list.get(i).setTb_ttprice(enc.aesDecode(list.get(i).getTb_ttprice(), ci.getCl_code()) );
 				}
 			}
 		}
@@ -81,9 +81,9 @@ public class ClientServiceCtl {
 		if(dao.isClient(ci)) {
 			if(dao.isClientPwd(ci)) {
 				data = dao.getTaxBillDetail(ci);
-				data.setTB_TTPRICE(enc.aesDecode(data.getTB_TTPRICE(), ci.getCL_CODE()) );
-				data.setTB_PRICE(enc.aesDecode(data.getTB_PRICE(), ci.getCL_CODE()) );
-				data.setTB_TAX(enc.aesDecode(data.getTB_TAX(), ci.getCL_CODE()) );
+				data.setTb_ttprice(enc.aesDecode(data.getTb_ttprice(), ci.getCl_code()) );
+				data.setTb_price(enc.aesDecode(data.getTb_price(), ci.getCl_code()) );
+				data.setTb_tax(enc.aesDecode(data.getTb_tax(), ci.getCl_code()) );
 			}
 		}
 		return data;

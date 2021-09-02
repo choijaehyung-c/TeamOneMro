@@ -39,8 +39,8 @@ public class MroServiceCtlYJ {
 		waitOrderList = dao.getWaitOrderList();
 
 		for(int i=0; i<waitOrderList.size(); i++) {
-			if(waitOrderList.get(i).getOS_STATE().equals("W")) {
-				waitOrderList.get(i).setOS_STATE("대기");
+			if(waitOrderList.get(i).getOs_state().equals("W")) {
+				waitOrderList.get(i).setOs_state("대기");
 			}
 		}
 		
