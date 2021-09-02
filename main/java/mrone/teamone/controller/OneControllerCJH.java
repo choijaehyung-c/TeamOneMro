@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -23,8 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.client.service.ClientServiceEntrance;
 import mrone.teamone.auth.Authentication;
+import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.MroAccessBean;
+import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -39,23 +42,32 @@ public class OneControllerCJH {
 
 	
 	
-	@PostMapping("/clientOrderApi")
+	@PostMapping("/clientOrder")
 	public String clientOrderApi(@ModelAttribute ClientOrderBean co) {
 		co.setOS_STATE("PR");
 		return cse.clientRequest(co);
 	}
 	
-	@PostMapping("/clientRefundApi")
+	@PostMapping("/clientRefund")
 	public String clientRefundApi(@ModelAttribute ClientOrderBean co) {
 		co.setOS_STATE("RR");
 		return cse.clientRequest(co);
 	}
 	
-	@PostMapping("/clientExchangeApi")
+	@PostMapping("/clientExchange")
 	public String clientExchangeApi(@ModelAttribute ClientOrderBean co) {
 		co.setOS_STATE("ER");
 		return cse.clientRequest(co);
 	}
 	
+	@PostMapping("/clientGetTaxbill")
+	public List<TaxBean> clientGetTaxbillApi(@ModelAttribute ClientInfoBean ci) throws Exception {
+		return cse.clientGetTaxbill(ci);
+	}
+	
+	@PostMapping("/clientGetTaxbillDetail")
+	public TaxBean clientGetTaxbillDetailApi(@ModelAttribute ClientInfoBean ci) throws Exception {
+		return cse.clientGetTaxbillDetail(ci);
+	}
 	
 }
