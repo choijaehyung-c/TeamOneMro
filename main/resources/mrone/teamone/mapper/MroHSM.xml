@@ -6,7 +6,7 @@
     <mapper namespace="mrone.teamone.mapper.MroHSM">
     
     <select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_STCODE = 'PR'
+    	SELECT pr_code, pr_name, pr_stcode FROM PR WHERE PR_STCODE = 'PR'
     </select>
     
     

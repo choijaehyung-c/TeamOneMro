@@ -16,7 +16,7 @@ function getRequestRegisterNewProductList(jsonData){
 	let data = "<div>새 상품 등록신청 리스트</div>";
 	if(jsonData !=""){
 		for(i=0; i<jsonData.length; i++){
-		data += "<div onClick='getNewProductDetail("+JSON.stringify(jsonData[i])+")'>"+"상품명:"+jsonData[i].pr_NAME+"</div>";
+		data += "<div onClick='getNewProductDetail("+JSON.stringify(jsonData[i])+")'>"+"상품명:"+jsonData[i].pr_name+"</div>";
 		}
 	}else{
 		data += "<div>새 상품 등록신청이 없습니다.</div>";
@@ -31,7 +31,7 @@ function getNewProductDetail(jsonData){
 	let modal = document.getElementById("newProductDetailModal");
 	let data = "<div>새 상품 정보</div>";
 		data += "<div>"+JSON.stringify(jsonData)+"</div>";
-		data += "<div onClick=\"responseNewProduct('"+jsonData.pr_CODE+"','PR')\">수락</div>"+"<div onClick=\"responseNewProduct('"+jsonData.pr_CODE+"','PC')\">거절</div>";
+		data += "<div onClick=\"responseNewProduct('"+jsonData.pr_code+"','PR')\">수락</div>"+"<div onClick=\"responseNewProduct('"+jsonData.pr_code+"','PC')\">거절</div>";
 	newProductDetailInfo.innerHTML = data;
 	modal.style.display = "block";	
 }
@@ -45,7 +45,7 @@ function modalClose(){
 //새 상품 등록 신청 응답
 function responseNewProduct(prcode, prstcode){
 	alert(prcode+ prstcode);
-	let sendJsonData = [];
+	let sendJsonData = []
 		sendJsonData.push({pr_code:prcode, pr_stcode:prstcode});
 	let clientData = JSON.stringify(sendJsonData);
 		postAjaxJson('ResponseNewProduct','callRequestRegisterNewProductList', clientData);

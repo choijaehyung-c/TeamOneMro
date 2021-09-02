@@ -23,6 +23,10 @@ public class MroDaoHSM {
 
 		return PBList;
 	}
+	
+	void responseNewProduct(List<ProductBean> pb){
+		
+	}
 
 	
 	

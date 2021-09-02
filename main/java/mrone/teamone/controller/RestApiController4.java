@@ -29,9 +29,11 @@ public class RestApiController4 {
 	
 	
 	@PostMapping("/ResponseNewProduct")
-	public void responseNewProduct(){
+	public void responseNewProduct(@RequestBody List<ProductBean> pb){
+		System.out.println(pb.get(0).getPr_code());
+		System.out.println(pb.get(0).getPr_stcode());
 		System.out.println("responseNewProduct 진입");
-		
+	
 	}
 	
 }
