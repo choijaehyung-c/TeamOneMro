@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -23,8 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.client.service.ClientServiceEntrance;
 import mrone.teamone.auth.Authentication;
+import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.MroAccessBean;
+import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -32,30 +35,13 @@ import mrone.teamone.utill.ProjectUtils;
 @RequestMapping("/cjh")
 public class OneControllerCJH {
 	ModelAndView mav;
-	@Autowired
-	private ClientServiceEntrance cse;
-	@Autowired
-	private ProjectUtils pu;
-
 	
-	
-	@PostMapping("/clientOrderApi")
-	public String clientOrderApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("PR");
-		return cse.clientRequest(co);
+	@GetMapping("/apiTest")
+	public ModelAndView clientApiTestForm() {
+		System.out.println("api-In");
+		mav = new ModelAndView();
+		mav.setViewName("clientApiCJH");
+		return mav;
 	}
-	
-	@PostMapping("/clientRefundApi")
-	public String clientRefundApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("RR");
-		return cse.clientRequest(co);
-	}
-	
-	@PostMapping("/clientExchangeApi")
-	public String clientExchangeApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("ER");
-		return cse.clientRequest(co);
-	}
-	
 	
 }

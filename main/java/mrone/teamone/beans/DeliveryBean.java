@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class DeliveryBean {
-	private String DL_CODE;
-	private String DL_OSCODE;
-	private String DL_DSCODE;
-	private String DS_NAME;
-	private String DL_DVCODE;
-	private String DV_NAME;
-	private String DV_HP;
-	private String DL_LCCODE;
-	private String LC_X;
-	private String LC_Y;
-	private String LC_DATE;
+	private String dl_code;
+	private String dl_oscode;
+	private String dl_dscode;
+	private String ds_name;
+	private String dl_dvcode;
+	private String dv_name;
+	private String dv_hp;
+	private String dl_lccode;
+	private String lc_x;
+	private String lc_y;
+	private String lc_date;
 }

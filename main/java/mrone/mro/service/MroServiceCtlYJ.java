@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.MroOrderBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 
 @Service
@@ -38,17 +39,46 @@ public class MroServiceCtlYJ {
 		waitOrderList = dao.getWaitOrderList();
 
 		for(int i=0; i<waitOrderList.size(); i++) {
-			if(waitOrderList.get(i).getOS_STATE().equals("W")) {
-				waitOrderList.get(i).setOS_STATE("대기");
-			}else if(waitOrderList.get(i).getOS_STATE().equals("B")) {
-				waitOrderList.get(i).setOS_STATE("상품준비중");
+			if(waitOrderList.get(i).getOs_state().equals("W")) {
+				waitOrderList.get(i).setOs_state("대기");
 			}
 		}
 		
 		//System.out.println(waitOrderList);
 		return waitOrderList;
 	}
+	
+	List<MroOrderDetailBean> getOrderDetail(String osCode) {
+		List<MroOrderDetailBean> od;
+		od = dao.getOrderDetail(osCode);
+		//System.out.println(od);
+		
+		return od;
+	}
 
+	List<MroOrderBean> getRefundList() {
+		List<MroOrderBean> list = dao.getRefundList();
+		return list;
+	}
+	
+
+	 List<MroOrderBean> getExchangeList() {
+		 List<MroOrderBean> list = dao.getExchangeList();
+			return list;
+	}
 
 
 }
+
+//
+//List<MroOrderDetailBean> getRefundDetail(String osCode) {
+//	List<MroOrderDetailBean> rd;
+//	rd = dao.getRefundDetail(osCode);
+//	return rd;
+//}
+//
+//List<MroOrderDetailBean> getExchangeDetail(String osCode) {
+//	List<MroOrderDetailBean> ed;
+//	ed = dao.getExchangeDetail(osCode);
+//	return ed;
+//}
