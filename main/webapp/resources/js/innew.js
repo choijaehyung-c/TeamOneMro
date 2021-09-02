@@ -53,10 +53,24 @@ function supplyList(){
 //mro에서 주문대기리스트 불러오기
 function mroOrderList(){
 	
-	let f = makeForm("iyj/mroOrderListForm","post");
+	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="")
+	/*let f = makeForm("/iyj/mroOrderListForm","post");
 	document.body.append(f);
-	f.submit();
+	f.submit();*/
 	alert("주문목록을 불러옵니다.");
+}
+
+function getWaitOrderListM(data){
+	alert(data);
+	let space = document.getElementById("mOrderList");
+	
+	const HTML = "<div>주문목록</div>";
+	
+	for(i=0; i<data.length; i++){
+		HTML += "<div id='orderList' name='orderList'>"+ data[i]+"</div>"
+		
+		"<input type='checkbox' id='checkbox' name='invit' value='"+ jsonData[i].userId + "'/>" + "<div class='contentsSpaceId'>"+ jsonData[i].userId + "</div><div class='contentsSpaceName'>"+ jsonData[i].userName + "</div><div class='contentsSpaceMail'>"+  jsonData[i].userMail + "</div><br>";
+	}
 }
 
 

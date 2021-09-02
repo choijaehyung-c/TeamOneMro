@@ -39,18 +39,18 @@ public class OneControllerIYJ {
 		return mav;
 	}
 	
-	@PostMapping("/mroOrderListForm")
-	public ModelAndView mroOrderListForm() {
-		//System.out.println("주문서 목록");
-		mav = mse.getWaitOrderListCtl();
-		return mav;
-	}
+//	@PostMapping("/mroOrderListForm")
+//	public ModelAndView mroOrderListForm() {
+//		//System.out.println("주문서 목록");
+//		mav = mse.getWaitOrderListCtl();
+//		return mav;
+//	}
 	
-	@PostMapping("/mroGetOrderDetail")
-	public ModelAndView getOrderDetail(@ModelAttribute OrderDetailBean od) {
-		System.out.println(od.getOD_OSCODE());
-		mav = mse.getOrderDetail(od);
-		return mav;
-	}
+//	@PostMapping("/mroGetOrderDetail")
+//	public ModelAndView getOrderDetail(@ModelAttribute OrderDetailBean od) {
+//		System.out.println(od.getOD_OSCODE());
+//		mav = mse.getOrderDetail(od);
+//		return mav;
+//	}
 
 }

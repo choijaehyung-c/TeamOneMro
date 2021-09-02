@@ -13,7 +13,9 @@
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
+         <script src="${pageContext.request.contextPath}/resources/vue/hsm.js"></script>
         <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
+       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
@@ -79,8 +81,8 @@
                             </div>
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
-                                    <div class="nav-link" onClick="get">새상품 등록 요청건</div>
-                                    <div class="nav-link" onClick="">상품수정 요청건</div>                      
+                                    <div class="nav-link" onClick="getNewProductRequest()">새상품 등록 요청건</div>
+                                    <div class="nav-link" onClick="getModifyRequest()">상품수정 요청건</div>                      
                                 </nav>  
                             </div>
                             
