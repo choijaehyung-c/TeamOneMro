@@ -73,6 +73,7 @@
                                     <div class="nav-link" onClick="mroExchangeList()">교환목록</div>
                                 </nav>  
                             </div>
+                   
                             
                             
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">                                
@@ -83,6 +84,16 @@
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
                                     <div class="nav-link" onClick="getNewProductRequest()">새상품 등록 요청건</div>
                                     <div class="nav-link" onClick="getModifyRequest()">상품수정 요청건</div>                      
+                                </nav>  
+                            </div>
+                            
+                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">                                
+                                발주관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </div>
+                            <div class="collapse" id="collapsePages3" aria-labelledby="headingfour" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
+                                    <div class="nav-link" onClick="requestOrder()">발주하기</div>                
                                 </nav>  
                             </div>
                             
