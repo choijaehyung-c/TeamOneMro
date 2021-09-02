@@ -35,36 +35,13 @@ import mrone.teamone.utill.ProjectUtils;
 @RequestMapping("/cjh")
 public class OneControllerCJH {
 	ModelAndView mav;
-	@Autowired
-	private ClientServiceEntrance cse;
-	@Autowired
-	private ProjectUtils pu;
-
 	
-	
-	@PostMapping("/clientOrder")
-	public String clientOrderApi(@ModelAttribute ClientOrderBean co){
-		return cse.clientRequestOrder(co);
-	}
-	
-	@PostMapping("/clientRefund")
-	public String clientRefundApi(@ModelAttribute ClientOrderBean co){	
-		return cse.clientRequestRefund(co);
-	}
-	
-	@PostMapping("/clientExchange")
-	public String clientExchangeApi(@ModelAttribute ClientOrderBean co){
-		return cse.clientRequestExchange(co);
-	}
-	
-	@PostMapping("/clientGetTaxbill")
-	public List<TaxBean> clientGetTaxbillApi(@ModelAttribute ClientInfoBean ci) throws Exception {
-		return cse.clientGetTaxbill(ci);
-	}
-	
-	@PostMapping("/clientGetTaxbillDetail")
-	public TaxBean clientGetTaxbillDetailApi(@ModelAttribute ClientInfoBean ci) throws Exception {
-		return cse.clientGetTaxbillDetail(ci);
+	@GetMapping("/apiTest")
+	public ModelAndView clientApiTestForm() {
+		System.out.println("api-In");
+		mav = new ModelAndView();
+		mav.setViewName("clientApiCJH");
+		return mav;
 	}
 	
 }
