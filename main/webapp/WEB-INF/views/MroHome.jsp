@@ -5,9 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 </head>
 <body>
 
@@ -23,6 +20,10 @@
 	</div> 
 
 	  
-	
+
+<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
+
 </body>
 </html>

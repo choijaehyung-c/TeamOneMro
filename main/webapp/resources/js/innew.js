@@ -16,7 +16,7 @@ function supplyList(){
 	alert("공급사목록을 불러옵니다.");
 }
 
-window.onload = function (){
+
 const orderListasd = new Vue({
 	el: "#mOrderListasdasd",
 	data:{
@@ -32,15 +32,18 @@ const orderListasd = new Vue({
 		},
 		putData:function(data){
 			this.list=data;
+		},
+		putData2:function(data){
+			this.msg=data;
 		}
 	}
 	
 });
-}
+
 
 function orderDetail(){
 	let os = document.getElementsByName("OD_OSCODE")[0].value;
-	orderListasd.putData("aa");
+	orderListasd.putData2(os);
 }
 
 
