@@ -50,8 +50,8 @@ public class MroServiceCtlYJ {
 		return waitOrderList;
 	}
 	
-	MroOrderDetailBean getOrderDetail(String osCode) {
-		MroOrderDetailBean od;
+	List<MroOrderDetailBean> getOrderDetail(String osCode) {
+		List<MroOrderDetailBean> od;
 		od = dao.getOrderDetail(osCode);
 		System.out.println(od);
 		

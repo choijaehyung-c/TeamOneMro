@@ -69,8 +69,8 @@
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <div class="nav-link" onClick="mroOrderList()" >주문목록</div>
-                                    <div class="nav-link" >반품목록</div>
-                                    <div class="nav-link" >교환목록</div>                                                                    
+                                    <div class="nav-link" onClick="mroRefundList()">반품목록</div>
+                                    <div class="nav-link" onClick="mroExchangeList()" >교환목록</div>                                                                    
                                 </nav>  
                             </div>
                             
@@ -103,7 +103,7 @@
                 <main>
                 	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
                 	<div id="mOrderList"></div>
-                	<div>${WorderList}</div>
+                	
                 </main>
             </div>
         </div>

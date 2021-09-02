@@ -18,6 +18,7 @@ public class MroServiceEntrance {
 		
 	private ModelAndView mav =null;
 
+	//공급사리스트
 	public ModelAndView SupplyListCtl() {
 		mav = new ModelAndView();	
 		mav.setViewName("MroHome");
@@ -26,6 +27,7 @@ public class MroServiceEntrance {
 		return mav;
 	}
 
+	//고객사리스트
 	public ModelAndView ClientListCtl() {
 		mav = new ModelAndView();
 		mav.setViewName("MroHome");
@@ -41,11 +43,19 @@ public class MroServiceEntrance {
 		return list;
 	}
 	
-	public MroOrderDetailBean getOrderDetail(String osCode) {
+	//주문대기 상세보기
+	public List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		
-		MroOrderDetailBean od = mseIYJ.getOrderDetail(osCode);
+		List<MroOrderDetailBean> od = mseIYJ.getOrderDetail(osCode);
 
 		return od;
+	}
+
+	//반품대기 리스트
+	public List<MroOrderBean> getRefundListCtl() {
+		List<MroOrderBean> list = mseIYJ.getRefundList();
+	
+		return list;
 	}
 
 

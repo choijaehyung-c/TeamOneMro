@@ -24,7 +24,7 @@ function supplyList(){
 //mro에서 주문대기리스트 불러오기
 function mroOrderList(){
 	
-	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="")
+	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="");
 	
 }
 
@@ -41,15 +41,26 @@ function getWaitOrderListM(data){
 	}
 }
 
+//mro에서 반품리스트 불러오기
+function mroRefundList(){
+	postAjaxJson('vue2/mroRefundListForm','getRefundListM',clientData="");
+}
+
+//mro에서 교환리스트 불러오기
+function mroExchangeList(){
+	
+}
+
 
 //주문번호의 상세정보 불러오기
 function getDetail(data){
 	
 		alert("주문번호 "+ data + "의 상세내역입니다.");
-		postAjaxString('/vue2/mroGetOrderDetail','getOrderDetailM',data);
+		postAjaxJson('/vue2/mroGetOrderDetail','getOrderDetailM',data);
 }
 
 function getOrderDatailM(data){
+	console.log(data);
 	alert(data);
 	let space = document.getElementById("mOrderDetail");
 	

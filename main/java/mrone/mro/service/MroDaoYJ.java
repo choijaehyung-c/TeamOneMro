@@ -40,9 +40,9 @@ public class MroDaoYJ {
 		return list;
 	}
 	 
-	 MroOrderDetailBean getOrderDetail(String osCode) {
+	 List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		
-		 return sql.selectOne("getOrderDetail", osCode);
+		 return sql.selectList("getOrderDetail", osCode);
 	 }
 	 
 		

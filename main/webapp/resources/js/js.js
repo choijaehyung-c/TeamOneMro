@@ -14,6 +14,7 @@ function postAjaxJson(jobCode,fn,clientData="") {
 	ajax.onreadystatechange = function() {
 		if (ajax.readyState == 4 && ajax.status == 200) {
 			window[fn](JSON.parse(ajax.responseText));
+			alert(ajax.responseText);
 		}
 	}
 	ajax.open("POST", jobCode);
