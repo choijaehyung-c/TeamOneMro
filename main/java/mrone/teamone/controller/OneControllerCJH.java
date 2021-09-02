@@ -43,21 +43,18 @@ public class OneControllerCJH {
 	
 	
 	@PostMapping("/clientOrder")
-	public String clientOrderApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("PR");
-		return cse.clientRequest(co);
+	public String clientOrderApi(@ModelAttribute ClientOrderBean co){
+		return cse.clientRequestOrder(co);
 	}
 	
 	@PostMapping("/clientRefund")
-	public String clientRefundApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("RR");
-		return cse.clientRequest(co);
+	public String clientRefundApi(@ModelAttribute ClientOrderBean co){	
+		return cse.clientRequestRefund(co);
 	}
 	
 	@PostMapping("/clientExchange")
-	public String clientExchangeApi(@ModelAttribute ClientOrderBean co) {
-		co.setOS_STATE("ER");
-		return cse.clientRequest(co);
+	public String clientExchangeApi(@ModelAttribute ClientOrderBean co){
+		return cse.clientRequestExchange(co);
 	}
 	
 	@PostMapping("/clientGetTaxbill")
