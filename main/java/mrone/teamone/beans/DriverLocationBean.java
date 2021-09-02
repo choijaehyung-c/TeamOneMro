@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class DriverLocationBean {
-	private String LC_CODE;
-	private double LC_X;
-	private double LC_Y;
-	private String LC_DATE;
+	private String lc_code;
+	private double lc_x;
+	private double lc_y;
+	private String lc_date;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,17 +23,19 @@ public class RestApiController1 {
 
 	
 	@PostMapping("/clientOrder")
-	public String clientOrderApi(@ModelAttribute ClientOrderBean co){
-		return cse.clientRequestOrder(co);
+	public String clientOrderApi(@RequestBody ClientOrderBean co){
+		//System.out.println(co.getCl_Pwd()+co.getOsclCode());
+		System.out.println("in Entrance");
+		return "test";
 	}
 	
 	@PostMapping("/clientRefund")
-	public String clientRefundApi(@ModelAttribute ClientOrderBean co){	
+	public String clientRefundApi(@RequestBody ClientOrderBean co){	
 		return cse.clientRequestRefund(co);
 	}
 	
 	@PostMapping("/clientExchange")
-	public String clientExchangeApi(@ModelAttribute ClientOrderBean co){
+	public String clientExchangeApi(@RequestBody ClientOrderBean co){
 		return cse.clientRequestExchange(co);
 	}
 	

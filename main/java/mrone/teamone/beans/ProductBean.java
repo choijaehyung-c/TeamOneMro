@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class ProductBean {
-	private String PR_SPCODE;
-	private String PR_CODE;
-	private String PR_STOCK;
-	private String PR_NAME;
-	private String PR_IMAGE;
-	private String PR_PRICE;
-	private String PR_TAX;
-	private String PR_INFO;
-	private String PR_ORIGIN;
-	private String PR_SPBKIND;
-	private String PR_STCODE;
+	private String pr_spcode;
+	private String pr_code;
+	private String pr_stock;
+	private String pr_name;
+	private String pr_image;
+	private String pr_price;
+	private String pr_tax;
+	private String pr_info;
+	private String pr_origin;
+	private String pr_spbkind;
+	private String pr_stcode;
 }

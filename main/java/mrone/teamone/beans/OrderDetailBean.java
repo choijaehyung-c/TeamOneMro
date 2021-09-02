@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class OrderDetailBean {
-	private String OD_PRSPCODE;
-	private String OD_OSCODE;
-	private String OD_STCODE;
-	private String OD_PRCODE;
-	private int OD_QUANTITY;
+	private String od_prspcode;
+	private String od_oscode;
+	private String od_stcode;
+	private String od_prcode;
+	private int od_quantity;
 }

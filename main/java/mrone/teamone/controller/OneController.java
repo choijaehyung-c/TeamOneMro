@@ -46,8 +46,8 @@ public class OneController {
 	public ModelAndView accessMro(@ModelAttribute MroAccessBean ma,HttpServletResponse response) {
 		mav = auth.accessMroCtl(ma);
 		try {
-			if(pu.getAttribute("ck").equals(ma.getAHM_CODE())) {
-			Cookie cookie = new Cookie("key", enc.aesEncode(ma.getAHM_CODE(),"session"));
+			if(pu.getAttribute("ck").equals(ma.getAhm_code())) {
+			Cookie cookie = new Cookie("key", enc.aesEncode(ma.getAhm_code(),"session"));
 			cookie.setMaxAge(36000); // 쿠키 유효기간 설정 (초 단위)
 			response.addCookie(cookie);
 			}

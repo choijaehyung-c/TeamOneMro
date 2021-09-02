@@ -15,17 +15,17 @@ public class ClientServiceEntrance {
 	ClientServiceCtl csc;
 	
 	public String clientRequestOrder(ClientOrderBean co) {
-		co.setOS_STATE("PR");
+		//co.setOS_STATE("PR");
 		return csc.clientRequestCtl(co);
 	}
 	
 	public String clientRequestRefund(ClientOrderBean co) {
-		co.setOS_STATE("RR");
+		//co.setOS_STATE("RR");
 		return csc.clientRequestCtl(co);
 	}
 	
 	public String clientRequestExchange(ClientOrderBean co) {
-		co.setOS_STATE("ER");
+		//co.setOS_STATE("ER");
 		return csc.clientRequestCtl(co);
 	}
 	
