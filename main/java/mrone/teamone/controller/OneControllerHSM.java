@@ -26,10 +26,9 @@ public class OneControllerHSM {
 	MroServiceCtlHSM msch;
 	
 	
-	@PostMapping("/mroRegisterNewProductForm")
-	public ModelAndView mroRegisterNewProductForm() {
-		mav.setViewName("mroRequestNewProduct");
-		return mav;
+	@PostMapping("/MroRegisterNewProductForm")
+	public String mroRegisterNewProductForm() {
+		return "mroRequestNewProduct";
 	}
 	
 }

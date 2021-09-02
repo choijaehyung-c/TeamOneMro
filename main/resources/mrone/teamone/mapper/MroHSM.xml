@@ -5,5 +5,9 @@
     
     <mapper namespace="mrone.teamone.mapper.MroHSM">
     
+    <select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">
+    	SELECT * FROM PR WHERE PR_STCODE = 'PR'
+    </select>
+    
     
     </mapper>

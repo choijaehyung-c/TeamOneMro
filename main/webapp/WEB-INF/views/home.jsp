@@ -13,7 +13,7 @@
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
-         <script src="${pageContext.request.contextPath}/resources/vue/hsm.js"></script>
+         <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
         <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>

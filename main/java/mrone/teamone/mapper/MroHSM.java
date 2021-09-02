@@ -1,5 +1,9 @@
 package mrone.teamone.mapper;
 
-public interface MroHSM {
+import java.util.List;
 
+import mrone.teamone.beans.ProductBean;
+
+public interface MroHSM {
+	public List<ProductBean> getRequestRegisterNewProductList();
 }
