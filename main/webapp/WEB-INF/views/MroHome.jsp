@@ -19,7 +19,7 @@
 	<li v-for="item in list" key="item">{{item}}</li> 
 	<input type="text" v-model="list">
 	<a>{{msg}}</a>
-	<input type="hidden" value="${WorderList}" name="OD_OSCODE" />
+	<input type="hidden" value="${WorderList}" name="OD_OSCODE"/>
 	</div> 
 
 	  

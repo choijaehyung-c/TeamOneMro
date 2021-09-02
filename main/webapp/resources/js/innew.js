@@ -39,8 +39,8 @@ const orderListasd = new Vue({
 }
 
 function orderDetail(){
-	//let os = document.getElementsByName("OD_OSCODE")[0].value;
-	//orderListasd.msg="asdasd";
+	let os = document.getElementsByName("OD_OSCODE")[0].value;
+	orderListasd.putData("aa");
 }
 
 
