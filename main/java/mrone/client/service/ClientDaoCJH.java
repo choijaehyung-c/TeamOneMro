@@ -17,7 +17,7 @@ public class ClientDaoCJH {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	
+	//asdasd
 	boolean isClient(ClientInfoBean ci) {
 		return convertToBoolean(sql.selectOne("isClient", ci));
 	}
