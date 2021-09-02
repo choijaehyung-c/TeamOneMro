@@ -6,35 +6,35 @@
 <mapper namespace="mrone.teamone.mapper.Auth">
 
 	<select id="isUserId" parameterType="mrone.teamone.beans.AccessBean" resultType="int">
-		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id}
+		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{id}
 	</select>
 	
 	<select id="checkPwd" parameterType="mrone.teamone.beans.AccessBean" resultType="int">
-		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{Id} AND  MD_PWD = #{Pwd}
+		SELECT COUNT(*) FROM MRD WHERE MD_CODE = #{id} AND  MD_PWD = #{pwd}
 	</select>
 	
 	<select id="getAccessHistorySum" parameterType="mrone.teamone.beans.MroAccessBean" resultType="int">
-		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{AHM_CODE}
+		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{ahm_code}
 	</select>
 	
 	<select id="getLogOutAccessHistorySum" parameterType="mrone.teamone.beans.MroAccessBean" resultType="int">
-		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{AHM_CODE} AND AHM_PUBLICIP = #{AHM_PUBLICIP} AND 
-		AHM_PRIVATEIP = #{AHM_PRIVATEIP} AND AHM_BROWSER = #{AHM_BROWSER}
+		SELECT COALESCE(SUM(AHM_METHOD),0) FROM AHM WHERE AHM_CODE = #{ahm_code} and ahm_publicip = #{ahm_publicip} and 
+		AHM_PRIVATEIP = #{ahm_privateip} and ahm_browser = #{ahm_browser}
 	</select>
 	
 	<select id="getLastAccessInfo" parameterType="mrone.teamone.beans.MroAccessBean" resultType="string">
-		SELECT AHM_BROWSER||AHM_PUBLICIP||AHM_PRIVATEIP FROM(SELECT * FROM AHM WHERE AHM_CODE =#{AHM_CODE} ORDER BY AHM_DATE DESC) WHERE ROWNUM = 1
+		SELECT AHM_BROWSER||AHM_PUBLICIP||AHM_PRIVATEIP FROM(SELECT * FROM AHM WHERE AHM_CODE =#{ahm_code} order by ahm_date desc) where rownum = 1
 	</select>
 	
 	<insert id="forceLogout" parameterType="mrone.teamone.beans.MroAccessBean">
 		INSERT INTO AHM(AHM_CODE,AHM_DATE,AHM_PUBLICIP,AHM_PRIVATEIP,AHM_METHOD,AHM_BROWSER) 
 		SELECT AHM_CODE,SYSDATE,AHM_PUBLICIP,AHM_PRIVATEIP,-1,AHM_BROWSER FROM AHM
-		WHERE AHM_DATE = (SELECT MAX(AHM_DATE) FROM AHM WHERE AHM_CODE=#{AHM_CODE}) AND AHM_METHOD = #{AHM_METHOD}
+		WHERE AHM_DATE = (SELECT MAX(AHM_DATE) FROM AHM WHERE AHM_CODE=#{ahm_code}) and ahm_method = #{ahm_method}
 	</insert>
 	
 	<insert id="insAccessHistory" parameterType="mrone.teamone.beans.MroAccessBean">
 		INSERT INTO AHM(AHM_CODE,AHM_DATE,AHM_PUBLICIP,AHM_PRIVATEIP,AHM_METHOD,AHM_BROWSER) 
-		VALUES(#{AHM_CODE},SYSDATE,#{AHM_PUBLICIP},#{AHM_PRIVATEIP},#{AHM_METHOD},#{AHM_BROWSER})
+		VALUES(#{ahm_code},sysdate,#{ahm_publicip},#{ahm_privateip},#{ahm_method},#{ahm_browser})
 	</insert>
 	
 </mapper>

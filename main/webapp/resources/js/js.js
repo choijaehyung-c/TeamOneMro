@@ -79,12 +79,12 @@ function readyAccessMro(data,jc){
 
 function sendAccessInfo(Ip){
 	
-	const method = makeInput("hidden","AHM_METHOD",inout);
-	const publicIp = makeInput("hidden","AHM_PUBLICIP",Ip.ip);
-	const privateIp = makeInput("hidden","AHM_PRIVATEIP",location.host);
-	const browser = makeInput("hidden","AHM_BROWSER",navigator.userAgent.replace(/ /g,""));
-	let Id = document.getElementsByName("AHM_CODE")[0];
-	let Pwd = document.getElementsByName("MD_PWD")[0];
+	const method = makeInput("hidden","ahm_method",inout);
+	const publicIp = makeInput("hidden","ahm_publicip",Ip.ip);
+	const privateIp = makeInput("hidden","ahm_privateip",location.host);
+	const browser = makeInput("hidden","ahm_browser",navigator.userAgent.replace(/ /g,""));
+	let Id = document.getElementsByName("ahm_code")[0];
+	let Pwd = document.getElementsByName("md_pwd")[0];
 	
 	let	f = makeForm(jobCodeField,"post");
 	
@@ -101,10 +101,10 @@ function sendAccessInfo(Ip){
 }
 
 function accessOut(Ip){
-	const method = makeInput("hidden","AHM_METHOD",inout);
-	const publicIp = makeInput("hidden","AHM_PUBLICIP",Ip.ip);
-	const privateIp = makeInput("hidden","AHM_PRIVATEIP",location.host);
-	const browser = makeInput("hidden","AHM_BROWSER",navigator.userAgent.replace(/ /g,""));
+	const method = makeInput("hidden","ahm_method",inout);
+	const publicIp = makeInput("hidden","ahm_publicip",Ip.ip);
+	const privateIp = makeInput("hidden","ahm_privateip",location.host);
+	const browser = makeInput("hidden","ahm_browser",navigator.userAgent.replace(/ /g,""));
 	let	f = makeForm(jobCodeField,"post");
 	f.appendChild(method);
 	f.appendChild(publicIp);
