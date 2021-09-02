@@ -1,26 +1,3 @@
-/**
- * 
- */
-
-//고객사 목록 불러오기
-function clientList(){
-	
-	let f = makeForm("/iyj/mroClientListForm","post");
-	document.body.append(f);
-	f.submit();
-	alert("고객사목록을 불러옵니다.");
-	
-}
-
-//공급사 목록 불러오기
-function supplyList(){
-	
-	let f = makeForm("/iyj/mroSupplyListForm","post");
-	document.body.append(f);
-	f.submit();
-	alert("공급사목록을 불러옵니다.");
-}
-
 
 /*const orderList = new Vue({
 	el: "#mOrderList",
@@ -49,39 +26,10 @@ function supplyList(){
 
 }*/
 
-
-//mro에서 주문대기리스트 불러오기
-function mroOrderList(){
+function getNewProductRequest(){
+	let f = makeForm("HSM/mroRegisterNewProductForm", "post");
 	
-	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="")
-	/*let f = makeForm("/iyj/mroOrderListForm","post");
 	document.body.append(f);
-	f.submit();*/
-	alert("주문목록을 불러옵니다.");
-}
-
-function getWaitOrderListM(data){
-	alert(data);
-	let space = document.getElementById("mOrderList");
-	
-	const HTML = "<div>주문목록</div>";
-	
-	for(i=0; i<data.length; i++){
-		HTML += "<div id='orderList' name='orderList'>"+ data[i]+"</div>"
-		
-		"<input type='checkbox' id='checkbox' name='invit' value='"+ jsonData[i].userId + "'/>" + "<div class='contentsSpaceId'>"+ jsonData[i].userId + "</div><div class='contentsSpaceName'>"+ jsonData[i].userName + "</div><div class='contentsSpaceMail'>"+  jsonData[i].userMail + "</div><br>";
-	}
-}
-
-
-//주문번호의 상세정보 불러오기
-function orderDetail(){
-	
-	const osCode = document.getElementsByName("OD_OSCODE")[0];
-	
-	alert(osCode);
-	let f = makeForm("mroGetOrderDetail","post");
-	f.appendChild(osCode);
-	document.body.appendChild(f);
 	f.submit();
+	alert("새상품신청목록 연결");
 }
