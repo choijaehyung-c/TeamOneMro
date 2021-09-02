@@ -21,9 +21,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="mrone.teamone.*"/>
-	<context:component-scan base-package="mrone.client.service"/>
-	<context:component-scan base-package="mrone.mro.service"/>
-	<context:component-scan base-package="mrone.supply.service"/>
+	<context:component-scan base-package="mrone.teamone.*" />
+	<context:component-scan base-package="mrone.client.service/*" />
+	<context:component-scan base-package="mrone.mro.service/*" /> 
+	<context:component-scan base-package="mrone.supply.service/*" />
 	
-</beans:beans>
+</beans:beans> 
