@@ -9,9 +9,10 @@
  <script src="${pageContext.request.contextPath}/resources/js/nsb.js"></script>
 </head>
 <body>
-	<div><input type = "button" onClick="receiveOrderControll()" value = "발주 접수 관리"/></div>
 	<div>
-		<input type = "text" name="RE_SPCODE" />
+	<input type = "button" onClick="receiveOrderControll()" value = "발주 접수 관리"></input>
 	</div>
+	<div id = "orderList"></div>
+	<div id = "orderListD"></div>
 </body>
 </html>
