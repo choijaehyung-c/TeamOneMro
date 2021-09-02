@@ -32,12 +32,13 @@ public class SupplyServiceCtlNSB {
 		return reList;
 	}
 	
-	List<RequestOrderBean> waitOrderlistD(List<RequestOrderBean> rc) {
+	List<RequestOrderBean> waitOrderlistD(RequestOrderBean rb) {
 		
 		List<RequestOrderBean> reList = null;
 		try {
-	
-			reList = sqlSession.selectList("getSupplyWaitOrderListD",rc);
+			rb.setRe_code(rb.getRe_code());
+			System.out.println(rb.getRe_code());
+			reList = sqlSession.selectList("getSupplyWaitOrderListD",rb);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,6 +6,6 @@ import mrone.teamone.beans.RequestOrderBean;
 
 public interface SupplyNSB {
 	void waitOrderlist();
-	void waitOrderlistD(List<RequestOrderBean> rc);
+	void waitOrderlistD(RequestOrderBean rb);
 	
 }

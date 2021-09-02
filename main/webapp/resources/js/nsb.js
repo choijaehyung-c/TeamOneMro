@@ -21,7 +21,7 @@ function callReceiveListD(recode){
 		sendJsonData.push({re_code:recode});
 		let clientData = JSON.stringify(sendJsonData);
 		alert(clientData);
-		postAjax('getSupplyReceiveWaitOrderListD','getReceiveListD',clientData);
+		postAjaxJson('getSupplyReceiveWaitOrderListD','getReceiveListD',clientData);
 		
 }
 
@@ -29,8 +29,12 @@ function callReceiveListD(recode){
 function getReceiveListD(jsonData){
 		let orderHtml = "<div>상세내역</div>";
 		let orderList = document.getElementById("orderListD");	
+		console.log(jsonData);
+		for(i=0; i<jsonData.length; i++){
+		orderHtml += "<div class = 'orderlist'>" +"공급사코드:"+jsonData[i].rd_prspcode+ " 주문코드:"+ jsonData[i].rd_recode+ "상품코드:"+jsonData[i].rd_prcode+ "주문수량:"+jsonData[i].rd_quantity+ "주문상태:"+jsonData[i].rd_stcode+"</div>";
 		
-		orderHtml += "<div class = 'orderlist'>" +"공급사코드:"+jsonData.rd_prspcode+"주문코드:"+ jsonData.rd_recocde+ "상품코드:"+jsonData.rd_prcocde+ "주문수량:"+jsonData.rd_quantity+ "주문상태:"+jsonData.rd_stcode+"</div>";			
+		}			
+		
 		orderList.innerHTML = orderHtml;
 }
 	

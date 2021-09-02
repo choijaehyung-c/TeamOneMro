@@ -26,9 +26,9 @@ public class SupplyServiceEntrance {
 		return reList;
 	}
 	
-	public List<RequestOrderBean> RequestWaitOrderListCtlD(List<RequestOrderBean> rc) {			
-		List<RequestOrderBean> reList = null;
-		reList = sscn.waitOrderlistD(rc);
-		return reList;
+	public List<RequestOrderBean> RequestWaitOrderListCtlD(RequestOrderBean rb) {			
+		
+		
+		return sscn.waitOrderlistD(rb);
 	}
 }

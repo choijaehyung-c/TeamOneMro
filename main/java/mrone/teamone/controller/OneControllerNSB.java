@@ -55,11 +55,10 @@ public class OneControllerNSB {
 	}
 	
 	@PostMapping("/getSupplyReceiveWaitOrderListD")
-	public List<RequestOrderBean> supplyReceiveWaitOrderListD(@RequestBody List<RequestOrderBean> rc ) {
-		List<RequestOrderBean> reList = null;
-		reList = sse.RequestWaitOrderListCtlD(rc);
+	public List<RequestOrderBean> supplyReceiveWaitOrderListD(@RequestBody List<RequestOrderBean> list ) {
+		
 		System.out.println("dd");
-		return reList;
+		return sse.RequestWaitOrderListCtlD(list.get(0));
 		
 	}
 }
