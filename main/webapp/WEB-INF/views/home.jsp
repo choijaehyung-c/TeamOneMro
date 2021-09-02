@@ -68,11 +68,12 @@
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <div class="nav-link" onClick="mroOrderList()" >주문목록</div>
-                                    <div class="nav-link" >반품목록</div>
-                                    <div class="nav-link" >교환목록</div>                                                                    
+                                    <div class="nav-link" onClick="mroOrderList()">주문목록</div>
+                                    <div class="nav-link" onClick="mroRefundList()">반품목록</div>
+                                    <div class="nav-link" onClick="mroExchangeList()">교환목록</div>
                                 </nav>  
                             </div>
+                   
                             
                             
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">                                
@@ -83,6 +84,16 @@
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
                                     <div class="nav-link" onClick="getNewProductRequest()">새상품 등록 요청건</div>
                                     <div class="nav-link" onClick="getModifyRequest()">상품수정 요청건</div>                      
+                                </nav>  
+                            </div>
+                            
+                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">                                
+                                발주관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </div>
+                            <div class="collapse" id="collapsePages3" aria-labelledby="headingfour" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
+                                    <div class="nav-link" onClick="requestOrder()">발주하기</div>                
                                 </nav>  
                             </div>
                             
@@ -103,13 +114,13 @@
                 <main>
                 	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
                 	<div id="mOrderList"></div>
-                	<div>${WorderList}</div>
+                	<div id="mOrderDetail"></div>
                 </main>
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  
         <script src="resources/js/datatables-simple-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-		<script src="${pageContext.request.contextPath}/resources/vue/test.js"></script>
+		
     </body>
 </html>

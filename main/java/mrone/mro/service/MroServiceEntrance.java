@@ -18,6 +18,7 @@ public class MroServiceEntrance {
 		
 	private ModelAndView mav =null;
 
+	//공급사리스트
 	public ModelAndView SupplyListCtl() {
 		mav = new ModelAndView();	
 		mav.setViewName("MroHome");
@@ -26,6 +27,7 @@ public class MroServiceEntrance {
 		return mav;
 	}
 
+	//고객사리스트
 	public ModelAndView ClientListCtl() {
 		mav = new ModelAndView();
 		mav.setViewName("MroHome");
@@ -37,19 +39,49 @@ public class MroServiceEntrance {
 	//mro 주문대기리스트
 	public List<MroOrderBean> getWaitOrderListCtl() {
 		List<MroOrderBean> list =mseIYJ.getWaitOrderList(); 
-		
+		//System.out.println(list);
 		return list;
 	}
 	
-	public MroOrderDetailBean getOrderDetail(String osCode) {
+	//주문대기,반품요청, 교환요청 상세보기
+	public List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		
-		MroOrderDetailBean od = mseIYJ.getOrderDetail(osCode);
+		List<MroOrderDetailBean> od = mseIYJ.getOrderDetail(osCode);
 
 		return od;
 	}
 
-
+	//반품요청 리스트
+	public List<MroOrderBean> getRefundListCtl() {
+		List<MroOrderBean> list = mseIYJ.getRefundList();
+		//System.out.println(list);
+		return list;
+	}
 	
 	
+	//교환요청 리스트
+	public List<MroOrderBean> getExchangeListCtl() {
+		List<MroOrderBean> list = mseIYJ.getExchangeList();
+		//System.out.println(list);
+		return list;
+	}
 
 }
+
+
+
+
+
+////반품 요청 상세보기
+//public List<MroOrderDetailBean> getRefundDetail(String osCode) {
+//	List<MroOrderDetailBean> rd = mseIYJ.getRefundDetail(osCode);
+//	System.out.println("반품디테일 :"+ rd);
+//	return rd;
+//}
+//
+////교환 요청 상세보기
+//public List<MroOrderDetailBean> getExchangeDetail(String osCode) {
+//	List<MroOrderDetailBean> ed = mseIYJ.getExchangeDetail(osCode);
+//	System.out.println("교환디테일 :"+ ed);
+//	return ed;
+//}
