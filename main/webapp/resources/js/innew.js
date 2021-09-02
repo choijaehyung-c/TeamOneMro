@@ -48,13 +48,14 @@ function getDetail(data){
 		postAjaxJson('/vue2/mroGetOrderDetail','getOrderDetailM',data);
 }
 
-function getOrderDatailM(data){
-	console.log(data);
-	alert(data);
+function getOrderDetailM(data){
 	let space = document.getElementById("mOrderDetail");
 	
-	let HTML = "<div>"+data.od_PRSPCODE + data.sp_NAME + data.od_OSCODE + data.od_PRCODE + data.PR_NAME+"</div>"
+	let HTML = ""
+	for(i=0; i<data.length; i++){
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 :"+ data[i].sp_NAME + "	상품코드 : " + data[i].od_PRCODE + "	상품이름 : " + data[i].pr_NAME +"</div>"
 	
+	}
 	space.innerHTML=HTML;
 	
 }
@@ -78,6 +79,26 @@ function getRefundListM(jsonData){
 }
 }
 
+function getRefundDetail(data){
+	
+	alert("주문번호 "+ data + " 의 반품 상세내역입니다.");
+	postAjaxJson('/vue2/mroGetRefundDetail','getRefundDetailListM',data);
+		
+}
+
+function getRefundDetailListM(data){
+	
+	let space = document.getElementById("mOrderDetail");
+	
+	let HTML = ""
+	for(i=0; i<data.length; i++){
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 : "+ data[i].sp_NAME  + "		상품코드 : " + data[i].od_PRCODE + "		상품이름 : " + data[i].pr_NAME +"</div>"
+	
+	}
+	space.innerHTML=HTML;
+	
+}
+
 //mro에서 교환리스트 불러오기
 function mroExchangeList(){
 	postAjaxJson('vue2/mroExchangeListForm','getExchageListM',clientData="");
@@ -96,6 +117,23 @@ function getExchageListM(data){
  }
 }
 
+function getExchangeDetail(data){
+	alert("주문번호 "+ data + " 의 교환 상세내역입니다.");
+	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM',data);
+}
+
+function getExchangeDetailListM(data){
+	
+	let space = document.getElementById("mOrderDetail");
+	
+	let HTML = ""
+	for(i=0; i<data.length; i++){
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_PRSPCODE + ") 공급사 : "+ data[i].sp_NAME + "		상품코드 : " + data[i].od_PRCODE + "		상품이름 : " + data[i].pr_NAME +"</div>"
+	
+	}
+	space.innerHTML=HTML;
+	
+}
 /*const orderList = new Vue({
 	el: "#mOrderList",
 	data:{

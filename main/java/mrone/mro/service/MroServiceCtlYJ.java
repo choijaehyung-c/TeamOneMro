@@ -51,7 +51,7 @@ public class MroServiceCtlYJ {
 	List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		List<MroOrderDetailBean> od;
 		od = dao.getOrderDetail(osCode);
-		System.out.println(od);
+		//System.out.println(od);
 		
 		return od;
 	}
@@ -60,6 +60,7 @@ public class MroServiceCtlYJ {
 		List<MroOrderBean> list = dao.getRefundList();
 		return list;
 	}
+	
 
 	 List<MroOrderBean> getExchangeList() {
 		 List<MroOrderBean> list = dao.getExchangeList();
@@ -67,5 +68,17 @@ public class MroServiceCtlYJ {
 	}
 
 
-
 }
+
+//
+//List<MroOrderDetailBean> getRefundDetail(String osCode) {
+//	List<MroOrderDetailBean> rd;
+//	rd = dao.getRefundDetail(osCode);
+//	return rd;
+//}
+//
+//List<MroOrderDetailBean> getExchangeDetail(String osCode) {
+//	List<MroOrderDetailBean> ed;
+//	ed = dao.getExchangeDetail(osCode);
+//	return ed;
+//}

@@ -45,17 +45,32 @@ public class RestApiController2 {
 		
 		return mse.getRefundListCtl();
 		
+	}
+	
+	//반품요청 상세보기
+	@PostMapping("/mroGetRefundDetail")
+	public List<MroOrderDetailBean> mroGetRefundDetail(@RequestBody String osCode){
+		
+		return mse.getOrderDetail(osCode);
 		
 	}
+	
 	
 	//교환요청 리스트 받아오기
 	@PostMapping("/mroExchangeListForm")
 	public List<MroOrderBean> mroExchangeListForm(){
 		//System.out.println("교환요청");
 		
-		return mse.getExchangeListCtl();
-		
+		return mse.getExchangeListCtl();		
 	}
+	
+	//교환 요청 상세보기
+	@PostMapping("/mroGetExchangeDetail")
+	public List<MroOrderDetailBean> mroGetExchangeDetail(@RequestBody String osCode){
+	System.out.println("교환요청 디테일");
+		return mse.getOrderDetail(osCode);		
+	}
+	
 	
 	
 	

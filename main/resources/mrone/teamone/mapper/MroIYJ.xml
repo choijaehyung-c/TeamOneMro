@@ -45,4 +45,8 @@
     	SELECT * FROM ORDERSVIEW WHERE OS_STATE='ER'
     </select>
     
+    <select id="getRefundDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
+    	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
+    </select>
+    
     </mapper>
