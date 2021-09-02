@@ -5,14 +5,24 @@
     
     <mapper namespace="mrone.teamone.mapper.SupplyNSB">
     
-    <select id="getSupplyWaitOrderList" resultType="mrone.teamone.beans.RequestOrderBean">
+    <select id="getSupplyWaitOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
 	SELECT 
 	RE_CODE,
 	RE_CLCODE,
 	RE_SPCODE,
 	RE_DATE,
 	RE_STATE
-	FROM RE WHERE RE_STATE = 'W'
+	FROM RE WHERE RE_STATE = 'W'AND RE_SPCODE = #{sp}
+    </select>
+    
+    <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBeean">
+	SELECT 
+	RD_PRSPCODE, 
+	RD_RECODE, 
+	RD_PRCODE, 
+	RD_QUANTITY, 
+	RD_STCODE 
+	FROM RD WHERE RD_RECODE = #{re_code}
     </select>
     
     </mapper>
