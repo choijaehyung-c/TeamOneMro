@@ -2,9 +2,10 @@ package mrone.supply.service;
 
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import mrone.teamone.beans.RequestOrderBean;
 
@@ -12,16 +13,36 @@ import mrone.teamone.beans.RequestOrderBean;
 public class SupplyServiceCtlNSB {
 	@Autowired
 	SupplyDaoNSB dao;
-	private ModelAndView mav = null;
+	@Autowired
+	SqlSessionTemplate sqlSession;
+
 	
-	ModelAndView waitOrderlist(RequestOrderBean rb) {
+	List<RequestOrderBean> waitOrderlist() {
 		
-		mav = new ModelAndView();
-		mav.setViewName("supplyService");
-		mav.addObject("waitOrderlist", dao.getWaitOrderList(rb));
-		System.out.println(dao.getWaitOrderList(rb));
+		List<RequestOrderBean> reList = null;
+		try {
+			String sp = null;
+			sp = "KR001D";
+			
+			reList = sqlSession.selectList("getSupplyWaitOrderList",sp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return reList;
+	}
+	
+	List<RequestOrderBean> waitOrderlistD(List<RequestOrderBean> rc) {
 		
-		return mav;
+		List<RequestOrderBean> reList = null;
+		try {
+	
+			reList = sqlSession.selectList("getSupplyWaitOrderListD",rc);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return reList;
 	}
 	
 }
