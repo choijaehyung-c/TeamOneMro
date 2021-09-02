@@ -21,6 +21,6 @@ public class RestApiController5 {
 	//상품리스트 상세보기
 	@PostMapping("/productListDetail")
 	public List<ProductBean> supplyProductListForm(){
-		return ssej.supplyProductListCtl();	
+		return null;	
 	}
 }
