@@ -10,8 +10,8 @@
 </head>
 <body>
 	<div><input type = "button" onClick="receiveOrderControll()" value = "발주 접수 관리"/></div>
-	<div>
-		<input type = "text" name="RE_SPCODE" />
-	</div>
+			<div id="orderList" ></div>
+			
+	
 </body>
 </html>

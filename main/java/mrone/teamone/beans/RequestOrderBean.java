@@ -13,4 +13,5 @@ public class RequestOrderBean {
 	private String RE_DATE;
 	private String RE_STATE;
 	private List<OrderDetailBean> DETAIL;
+	
 }

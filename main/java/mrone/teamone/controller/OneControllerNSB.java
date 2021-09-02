@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.servlet.ModelAndView;
+
 
 import mrone.supply.service.SupplyServiceEntrance;
 import mrone.teamone.auth.Authentication;
@@ -43,10 +45,8 @@ public class OneControllerNSB {
 	}
 	
 	@PostMapping("/getSupplyReceiveWaitOrderList")
-	public ModelAndView supplyReceiveWaitOrderList(RequestOrderBean rb) {
+	public List<RequestOrderBean> supplyReceiveWaitOrderList() {
 		
-		mav = sse.RequestWaitOrderListCtl(rb);
-		return mav;
-		
+		return sse.RequestWaitOrderListCtl();	
 	}
 }

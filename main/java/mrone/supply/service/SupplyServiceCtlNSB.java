@@ -2,26 +2,33 @@ package mrone.supply.service;
 
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.RequestOrderBean;
 
 @Service
 public class SupplyServiceCtlNSB {
-	@Autowired
-	SupplyDaoNSB dao;
-	private ModelAndView mav = null;
 	
-	ModelAndView waitOrderlist(RequestOrderBean rb) {
-		
-		mav = new ModelAndView();
-		mav.setViewName("supplyService");
-		mav.addObject("waitOrderlist", dao.getWaitOrderList(rb));
-		System.out.println(dao.getWaitOrderList(rb));
-		
-		return mav;
+	@Autowired
+	SqlSessionTemplate sqlSession;
+
+	
+	List<RequestOrderBean> waitOrderlist() {	
+			List<RequestOrderBean> reList = null;
+			
+			try {
+				String rb = null;
+				rb = ("1235678901");
+				reList = sqlSession.selectList("getWaitOrderList", rb);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return reList;
+			
 	}
 	
 }

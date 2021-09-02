@@ -15,9 +15,8 @@ public class SupplyServiceEntrance {
 	SupplyServiceCtlNSB sscn;
 	ModelAndView mav = null;
 	
-	public ModelAndView RequestWaitOrderListCtl(RequestOrderBean rb) {			
-		
-		mav = sscn.waitOrderlist(rb);
-		return mav;
+	public List<RequestOrderBean> RequestWaitOrderListCtl() {			
+
+		return sscn.waitOrderlist();
 	}
 }

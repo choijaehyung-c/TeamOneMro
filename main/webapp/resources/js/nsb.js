@@ -1,14 +1,26 @@
+
+
 function receiveOrderControll(){
+
+	postAjaxJson('SupplyNSB/getSupplyReceiveWaitOrderList','getReceiveList');
 	
-	let spcode = document.getElementsByName("RE_SPCODE")[0];
-	let f = makeForm("/SupplyNSB/getSupplyReceiveWaitOrderList","post");
+}
 	
-	f.appendChild(spcode);
-	document.body.append(f);
+
+function getReceiveList(jsonData){
 	
+		let teamHtml = "<div>접수대기리스트</div><div class='detail' onclick='listDetail()'>상세보기</div>";
+		let teamList = document.getElementById("orderList");		
 	
-	f.submit();
-	alert("js도착")
+		for(i=0; i<jsonData.length; i++){
+		 	teamHtml += "<div class = 'list' width:\'80%\'>" +"</div>";
+			teamHtml += "<div class = 're_code'>" +jsonData[i].re_code+ "</div>";
+			teamHtml += "<div class = 're_clcode'>" +jsonData[i].re_clcode+ "</div>";
+			teamHtml += "<div class = 're_spcode'>" +jsonData[i].re_spcode+ "</div>";
+			teamHtml += "</div>";
+		}
+	
+		teamList.innerHTML = teamHtml;
 }
 
 	

@@ -8,6 +8,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/nsb.js"></script>
 </head>
 <body>
-<div> 발주 접수 대기 리스트 : ${waitOrderlist} </div>
+
+<input type="button" class="teamBtn" id="left" value="${waitOrderlist}" onClick="sendRecode('${waitOrderlist}')" />
 </body>
 </html>
