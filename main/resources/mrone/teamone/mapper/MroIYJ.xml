@@ -29,18 +29,20 @@
 		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE
     </select>
     
-    <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">
-		SELECT OS.OS_CODE,
-       OS.OS_CLCODE,
-       CL.CL_NAME,
-       TO_CHAR(OS_DATE,'YYYY-MM-DD HH:mm') AS OS_DATE,
-       OS_STATE
-		FROM OS INNER JOIN CL ON OS.OS_CLCODE = CL.CL_CODE 
-		    
+    <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">   
+		SELECT * FROM ORDERSVIEW WHERE OS_STATE='W'	    
     </select>
     
     <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
+    </select>
+    
+    <select id="getRefundList" resultType="mrone.teamone.beans.MroOrderBean" >
+    	SELECT * FROM ORDERSVIEW WHERE OS_STATE='RR'
+    </select>
+    
+    <select id="getExchangeList" resultType="mrone.teamone.beans.MroOrderBean" >
+    	SELECT * FROM ORDERSVIEW WHERE OS_STATE='ER'
     </select>
     
     </mapper>

@@ -41,17 +41,6 @@ function getWaitOrderListM(data){
 	}
 }
 
-//mro에서 반품리스트 불러오기
-function mroRefundList(){
-	postAjaxJson('vue2/mroRefundListForm','getRefundListM',clientData="");
-}
-
-//mro에서 교환리스트 불러오기
-function mroExchangeList(){
-	
-}
-
-
 //주문번호의 상세정보 불러오기
 function getDetail(data){
 	
@@ -68,6 +57,43 @@ function getOrderDatailM(data){
 	
 	space.innerHTML=HTML;
 	
+}
+
+//mro에서 반품리스트 불러오기
+function mroRefundList(){
+	postAjaxJson('vue2/mroRefundListForm','getRefundListM',clientData="");
+	
+}
+
+//mro 반품리스트 찍어오는 펑션
+function getRefundListM(jsonData){
+	//alert(jsonData);
+	let space1 = document.getElementById("mOrderList");
+	let HTML1 = "<div>반품목록</div>";
+	
+	for(i=0; i<jsonData.length; i++){
+		HTML1 += "<div id='refundList' name='refundList'  onClick='getRefundDetail("+jsonData[i].os_CODE+")'>"+"[주문날짜 : " + jsonData[i].os_DATE +"] [주문번호 : " + jsonData[i].os_CODE+ "] [고객사 : " + jsonData[i].cl_NAME + "] [상태 : " + jsonData[i].os_STATE +"]</div>";
+				
+		space1.innerHTML = HTML1;
+}
+}
+
+//mro에서 교환리스트 불러오기
+function mroExchangeList(){
+	postAjaxJson('vue2/mroExchangeListForm','getExchageListM',clientData="");
+}
+
+//mro 교환리스트 찍어오는 펑션
+function getExchageListM(data){
+	
+	let space2 = document.getElementById("mOrderList");
+	let contents = "<div>교환목록</div>";
+	
+	for(i=0; i<data.length; i++){
+		contents += "<div id='exchangeList' name='exchangeList' onClick='getExchangeDetail("+data[i].os_CODE+")'>"+"[주문날짜 : " + data[i].os_DATE +"] [주문번호 : " + data[i].os_CODE+ "] [고객사 : " + data[i].cl_NAME + "] [상태 : " + data[i].os_STATE +"]</div>";
+				
+		space2.innerHTML = contents;
+ }
 }
 
 /*const orderList = new Vue({
@@ -96,7 +122,3 @@ function getOrderDatailM(data){
 	console.log(os);
 
 }*/
-
-
-
-

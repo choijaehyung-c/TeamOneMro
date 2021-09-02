@@ -39,7 +39,7 @@ public class MroServiceEntrance {
 	//mro 주문대기리스트
 	public List<MroOrderBean> getWaitOrderListCtl() {
 		List<MroOrderBean> list =mseIYJ.getWaitOrderList(); 
-		
+		//System.out.println(list);
 		return list;
 	}
 	
@@ -51,10 +51,17 @@ public class MroServiceEntrance {
 		return od;
 	}
 
-	//반품대기 리스트
+	//반품요청 리스트
 	public List<MroOrderBean> getRefundListCtl() {
 		List<MroOrderBean> list = mseIYJ.getRefundList();
+		//System.out.println(list);
+		return list;
+	}
 	
+	//교환요청 리스트
+	public List<MroOrderBean> getExchangeListCtl() {
+		List<MroOrderBean> list = mseIYJ.getExchangeList();
+		//System.out.println(list);
 		return list;
 	}
 

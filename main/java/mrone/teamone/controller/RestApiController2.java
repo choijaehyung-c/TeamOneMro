@@ -20,6 +20,7 @@ public class RestApiController2 {
 	@Autowired
 	MroServiceEntrance mse;
 	
+	//주문대기 리스트 받아오기
 	@PostMapping("/mroOrderListForm")
 	public List<MroOrderBean> mroOrderListForm(){
 		//System.out.println("Restcontroller진입");
@@ -28,6 +29,7 @@ public class RestApiController2 {
 		
 	}
 	
+	//주문대기 상세보기
 	@PostMapping("/mroGetOrderDetail")
 	public List<MroOrderDetailBean> mroGetOrderDetail(@RequestBody String osCode){
 		System.out.println(osCode);
@@ -35,5 +37,26 @@ public class RestApiController2 {
 		return mse.getOrderDetail(osCode);
 		
 	}
+	
+	//반품요청 리스트 받아오기
+	@PostMapping("/mroRefundListForm")
+	public List<MroOrderBean> mroRefundListForm(){
+		//System.out.println("반품요청");
+		
+		return mse.getRefundListCtl();
+		
+		
+	}
+	
+	//교환요청 리스트 받아오기
+	@PostMapping("/mroExchangeListForm")
+	public List<MroOrderBean> mroExchangeListForm(){
+		//System.out.println("교환요청");
+		
+		return mse.getExchangeListCtl();
+		
+	}
+	
+	
 	
 }

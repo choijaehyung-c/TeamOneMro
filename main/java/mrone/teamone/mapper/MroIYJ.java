@@ -5,4 +5,6 @@ public interface MroIYJ {
 	void getClientList();
 	void getWaitOrderList();
 	void getOrderDetail(String osCode);
+	void getRefundList();
+	void getExchangeList();
 }

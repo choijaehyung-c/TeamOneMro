@@ -17,7 +17,7 @@ public class MroDaoYJ {
 	@Autowired
 	SqlSessionTemplate sql;
 
-	
+	//공급사리스트
 	List<SupplyInfoBean> getSupplyList(){
 		List<SupplyInfoBean> list;		
 		list =sql.selectList("getSupplyList");
@@ -25,6 +25,7 @@ public class MroDaoYJ {
 		return list;
 	}
 	
+	//고객사 리스트
 	List<ClientInfoBean> getClientList(){
 		List<ClientInfoBean> list;
 		list = sql.selectList("getClientList");
@@ -32,7 +33,7 @@ public class MroDaoYJ {
 		return list;
 	}
 
-
+	//주문대기리스트
 	 List<MroOrderBean> getWaitOrderList() {
 		List<MroOrderBean> list;
 		list = sql.selectList("getWaitOrderList");
@@ -40,13 +41,29 @@ public class MroDaoYJ {
 		return list;
 	}
 	 
+	 //주문대기 디테일
 	 List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		
 		 return sql.selectList("getOrderDetail", osCode);
 	 }
 	 
 		
-	boolean convertToBoolean(int data) {
+	
+	 //반품요청 리스트 
+	 List<MroOrderBean> getRefundList() {
+		
+		return sql.selectList("getRefundList");
+	}
+	 
+	 //교환요청 리스트
+	public List<MroOrderBean> getExchangeList() {
+		return sql.selectList("getExchangeList");
+	}	 
+	 
+	 
+	 boolean convertToBoolean(int data) {
 			return data>0? true : false;
 	}
+
+
 }

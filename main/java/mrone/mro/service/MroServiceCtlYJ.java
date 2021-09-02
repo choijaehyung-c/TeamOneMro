@@ -41,8 +41,6 @@ public class MroServiceCtlYJ {
 		for(int i=0; i<waitOrderList.size(); i++) {
 			if(waitOrderList.get(i).getOS_STATE().equals("W")) {
 				waitOrderList.get(i).setOS_STATE("대기");
-			}else if(waitOrderList.get(i).getOS_STATE().equals("B")) {
-				waitOrderList.get(i).setOS_STATE("상품준비중");
 			}
 		}
 		
@@ -56,6 +54,16 @@ public class MroServiceCtlYJ {
 		System.out.println(od);
 		
 		return od;
+	}
+
+	List<MroOrderBean> getRefundList() {
+		List<MroOrderBean> list = dao.getRefundList();
+		return list;
+	}
+
+	 List<MroOrderBean> getExchangeList() {
+		 List<MroOrderBean> list = dao.getExchangeList();
+			return list;
 	}
 
 

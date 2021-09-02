@@ -68,9 +68,9 @@
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <div class="nav-link" onClick="mroOrderList()" >주문목록</div>
+                                    <div class="nav-link" onClick="mroOrderList()">주문목록</div>
                                     <div class="nav-link" onClick="mroRefundList()">반품목록</div>
-                                    <div class="nav-link" onClick="mroExchangeList()" >교환목록</div>                                                                    
+                                    <div class="nav-link" onClick="mroExchangeList()">교환목록</div>
                                 </nav>  
                             </div>
                             
@@ -103,13 +103,13 @@
                 <main>
                 	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
                 	<div id="mOrderList"></div>
-                	
+                	<div id="mOrderDetail"></div>
                 </main>
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  
         <script src="resources/js/datatables-simple-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-		<script src="${pageContext.request.contextPath}/resources/vue/test.js"></script>
+		
     </body>
 </html>
