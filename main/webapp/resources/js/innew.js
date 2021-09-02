@@ -8,7 +8,7 @@ function clientList(){
 	let f = makeForm("/iyj/mroClientListForm","post");
 	document.body.append(f);
 	f.submit();
-	alert("고객사목록을 불러옵니다.");
+	//alert("고객사목록을 불러옵니다.");
 	
 }
 
@@ -18,7 +18,7 @@ function supplyList(){
 	let f = makeForm("/iyj/mroSupplyListForm","post");
 	document.body.append(f);
 	f.submit();
-	alert("공급사목록을 불러옵니다.");
+	//alert("공급사목록을 불러옵니다.");
 }
 
 //mro에서 주문대기리스트 불러오기
