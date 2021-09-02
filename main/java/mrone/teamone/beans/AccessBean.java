@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AccessBean {
-	private String Id;
-	private String Pwd;
+	private String id;
+	private String pwd;
 	private String code; //서플라이 회사코드
 }

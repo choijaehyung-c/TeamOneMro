@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DriverBean {
-	private String DV_CODE;//보류
+	private String dv_code;//보류
 }

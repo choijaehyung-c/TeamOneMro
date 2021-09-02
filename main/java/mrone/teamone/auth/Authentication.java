@@ -30,7 +30,7 @@ public class Authentication {
 			//해당 아이디 로그인이 어딘가에서 된상태(db에 로그인상태)
 			if(dao.getAccessHistorySum(ma)) {
 				// 그 로그인이 다른브라우저에 되어 있을경우 강제종료후 로그인
-				if(!(ma.getAHM_BROWSER()+ma.getAHM_PUBLICIP()+ma.getAHM_PRIVATEIP()).equals(dao.getLastAccessInfo(ma))) {	 
+				if(!(ma.getAhm_browser()+ma.getAhm_publicip()+ma.getAhm_privateip()).equals(dao.getLastAccessInfo(ma))) {	 
 					if(dao.forceLogout(ma)) {
 						System.out.print("강제로그아웃성공");
 						loginProcess(mav,ma);
@@ -57,8 +57,8 @@ public class Authentication {
 
 	private void loginProcess(ModelAndView mav,MroAccessBean ma) {
 		AccessBean ab = new AccessBean();
-		ab.setId(ma.getAHM_CODE());
-		ab.setPwd(ma.getMD_PWD());
+		ab.setId(ma.getAhm_code());
+		ab.setPwd(ma.getMd_pwd());
 		
 		try {	
 			if(pu.getAttribute("userSs")==null){
@@ -91,7 +91,7 @@ public class Authentication {
 		mav = new ModelAndView();
 		try {
 			if(pu.getAttribute("userSs") != null) {
-				ma.setAHM_CODE(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				ma.setAhm_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 				if(dao.getLogOutAccessHistorySum(ma)) {
 					dao.insAccessHistory(ma);
 				}
@@ -120,7 +120,7 @@ public class Authentication {
 		try {
 			//브라우저에 일단 세션이 남아 있는 경우
 			if(pu.getAttribute("userSs")!=null){
-				ma.setAHM_CODE(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				ma.setAhm_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 				//남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
 				if(dao.getAccessHistorySum(ma) && ck.getValue().equals((String)pu.getAttribute("userSs"))) {
 					mav.setViewName("home");

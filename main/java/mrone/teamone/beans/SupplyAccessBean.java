@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class SupplyAccessBean {
-	private String AHS_SDSPCODE;
-	private String AHS_CODE;//ID
-	private String AHS_PUBLIC;
-	private String AHS_PRIVATE;
-	private String AHS_BROWSER;
-	private String AHS_METHOD;
-	private String AHS_DATE;
-	private String SD_PWD;
+	private String ahs_sdspcode;
+	private String ahs_code;//id
+	private String ahs_public;
+	private String ahs_private;
+	private String ahs_browser;
+	private String ahs_method;
+	private String ahs_date;
+	private String sd_pwd;
 }

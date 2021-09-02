@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class ClientOrderBean {
-	private String OS_CODE;
-	private String OS_CLCODE;
-	private String CL_PWD;
-	private String OS_DATE;
-	private String OS_STATE;
-	private String SP_CODE;
-	private List<OrderDetailBean> OD;
+	private String os_code;
+	private String os_clcode;
+	private String cl_pwd;
+	private String os_date;
+	private String os_state;
+	private String sp_code;
+	private List<OrderDetailBean> od;
 }

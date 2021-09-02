@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.MroOrderBean;
-import mrone.teamone.beans.OrderDetailBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 
 @Service
 public class MroServiceEntrance {
@@ -18,6 +18,7 @@ public class MroServiceEntrance {
 		
 	private ModelAndView mav =null;
 
+	//공급사리스트
 	public ModelAndView SupplyListCtl() {
 		mav = new ModelAndView();	
 		mav.setViewName("MroHome");
@@ -26,6 +27,7 @@ public class MroServiceEntrance {
 		return mav;
 	}
 
+	//고객사리스트
 	public ModelAndView ClientListCtl() {
 		mav = new ModelAndView();
 		mav.setViewName("MroHome");
@@ -37,21 +39,49 @@ public class MroServiceEntrance {
 	//mro 주문대기리스트
 	public List<MroOrderBean> getWaitOrderListCtl() {
 		List<MroOrderBean> list =mseIYJ.getWaitOrderList(); 
-		
-		//mav.setViewName("MroHome");
-		System.out.println(list);
-		
+		//System.out.println(list);
 		return list;
 	}
 	
-	public ModelAndView getOrderDetail(OrderDetailBean od) {
-		//System.out.println(od.getOD_OSCODE());
-		System.out.println(od.getOD_OSCODE());
-		return null;
+	//주문대기,반품요청, 교환요청 상세보기
+	public List<MroOrderDetailBean> getOrderDetail(String osCode) {
+		
+		List<MroOrderDetailBean> od = mseIYJ.getOrderDetail(osCode);
+
+		return od;
 	}
 
-
+	//반품요청 리스트
+	public List<MroOrderBean> getRefundListCtl() {
+		List<MroOrderBean> list = mseIYJ.getRefundList();
+		//System.out.println(list);
+		return list;
+	}
 	
 	
+	//교환요청 리스트
+	public List<MroOrderBean> getExchangeListCtl() {
+		List<MroOrderBean> list = mseIYJ.getExchangeList();
+		//System.out.println(list);
+		return list;
+	}
 
 }
+
+
+
+
+
+////반품 요청 상세보기
+//public List<MroOrderDetailBean> getRefundDetail(String osCode) {
+//	List<MroOrderDetailBean> rd = mseIYJ.getRefundDetail(osCode);
+//	System.out.println("반품디테일 :"+ rd);
+//	return rd;
+//}
+//
+////교환 요청 상세보기
+//public List<MroOrderDetailBean> getExchangeDetail(String osCode) {
+//	List<MroOrderDetailBean> ed = mseIYJ.getExchangeDetail(osCode);
+//	System.out.println("교환디테일 :"+ ed);
+//	return ed;
+//}
