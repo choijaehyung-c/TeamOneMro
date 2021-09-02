@@ -14,7 +14,18 @@ public class ClientServiceEntrance {
 	@Autowired
 	ClientServiceCtl csc;
 	
-	public String clientRequest(ClientOrderBean co) {
+	public String clientRequestOrder(ClientOrderBean co) {
+		co.setOS_STATE("PR");
+		return csc.clientRequestCtl(co);
+	}
+	
+	public String clientRequestRefund(ClientOrderBean co) {
+		co.setOS_STATE("RR");
+		return csc.clientRequestCtl(co);
+	}
+	
+	public String clientRequestExchange(ClientOrderBean co) {
+		co.setOS_STATE("ER");
 		return csc.clientRequestCtl(co);
 	}
 	
