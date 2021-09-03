@@ -3,26 +3,6 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-    <mapper namespace="mrone.teamone.mapper.SupplyNSB">
+<mapper namespace="mrone.teamone.mapper.SupplyNSB">
     
-    <select id="getSupplyWaitOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
-	SELECT 
-	RE_CODE,
-	RE_CLCODE,
-	RE_SPCODE,
-	RE_DATE,
-	RE_STATE
-	FROM RE WHERE RE_STATE = 'W'AND RE_SPCODE = #{sp}
-    </select>
-    
-    <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBeean">
-	SELECT 
-	RD_PRSPCODE, 
-	RD_RECODE, 
-	RD_PRCODE, 
-	RD_QUANTITY, 
-	RD_STCODE 
-	FROM RD WHERE RD_RECODE = #{re_code}
-    </select>
-    
-    </mapper>
+</mapper>

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
 	.out-bg{
 		width:100%;height:100%;
 		background: rgba(0,0,0,0.5);
@@ -30,16 +31,16 @@ Client pwd<input type="text" value="" name="CL_PWD"/><br>
 <button onclick="modalOn()">모달온</button>
 
 <button onclick="sendApiData()" style="width:50px; height:50px;" >submit</button>
+
+
 <div id="vuezone">{{msg}}{{modalOnOff}}
 
 
 <div class="out-bg" v-if="modalOnOff=='on'">
 	<div class="in-bg">
-		<li>test vue modal</li>		
+		<li @click="momo()" v-for="item in 3">asdasd</li>		
 	</div>
-</div>
-
-
+</div>	
 
 
 </div>

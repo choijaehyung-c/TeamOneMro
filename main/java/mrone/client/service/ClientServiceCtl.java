@@ -34,30 +34,48 @@ public class ClientServiceCtl {
 	
 	String clientRequestCtl(ClientOrderBean co){
 		String result = "failure";
-		/*
-		 * boolean tran = false;
-		 * pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-		 * TransactionDefinition.ISOLATION_READ_COMMITTED,false); ClientInfoBean ci =
-		 * new ClientInfoBean(); ci.setCL_CODE(co.getOS_CLCODE()); try {
-		 * System.out.println(co.getOS_CLCODE() + ":::");
-		 * ci.setCL_PWD(enc.aesEncode(co.getCL_PWD(), co.getOS_CLCODE()) );
-		 * System.out.println(ci.getCL_PWD()); } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 * if(dao.isClient(ci)) { if(dao.isClientPwd(ci)) { SimpleDateFormat sdf = new
-		 * SimpleDateFormat("yyMMddHHmmss"); Calendar cal = Calendar.getInstance();
-		 * co.setOS_DATE(sdf.format(cal.getTime())); if(dao.insClientOrder(co)) { int
-		 * tranCount = 0; for(int i = 0 ; i <co.getOD().size(); i++) {
-		 * co.getOD().get(i).setOD_OSCODE(dao.getOrderData(co));
-		 * co.getOD().get(i).setOD_STCODE(co.getOS_STATE());
-		 * if(!dao.insClientOrderDetail(co.getOD().get(i))) { break; } tranCount++; }
-		 * if(tranCount == co.getOD().size()) { tran = true; result =
-		 * dao.getOrderData(co); }
-		 * 
-		 * } } } pu.setTransactionResult(tran);
-		 */
+		
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		ClientInfoBean ci = new ClientInfoBean();
+		ci.setCl_code(co.getOs_clcode());
+		try {
+			System.out.println(co.getOs_clcode() + ":::");
+			ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(), co.getOs_clcode()));
+			System.out.println(ci.getCl_pwd());
+		} catch (Exception e) {
+		}
+
+		if (dao.isClient(ci)) {
+			if (dao.isClientPwd(ci)) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+				Calendar cal = Calendar.getInstance();
+				co.setOs_date(sdf.format(cal.getTime()));
+				if (dao.insClientOrder(co)) {
+					int tranCount = 0;
+					for (int i = 0; i < co.getOd().size(); i++) {
+						co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
+						co.getOd().get(i).setOd_stcode(co.getOs_state());
+						if (!dao.insClientOrderDetail(co.getOd().get(i))) {
+							break;
+						}
+						tranCount++;
+					}
+					if (tranCount == co.getOd().size()) {
+						tran = true;
+						result = dao.getOrderData(co);
+					}
+
+				}
+			}
+		}
+		pu.setTransactionResult(tran);
+
 		return result;
 	}
+	
+	
 
 
 	public List<TaxBean> clientGetTaxbillListCtl(ClientInfoBean ci) throws Exception {
@@ -89,8 +107,3 @@ public class ClientServiceCtl {
 		return data;
 	}
 }
-
-/* taxbillList 일단 가져온것
- * 세금계산서코드 주문서코드 공급사이름 공급날짜
- *  */
- 

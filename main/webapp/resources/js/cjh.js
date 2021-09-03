@@ -17,8 +17,6 @@ const appvue = new Vue({
 		}
 		
 	}
-	
-	
 });
 
 function modalOn(){
@@ -46,17 +44,16 @@ function sendApiData(){
 	*/
 	let clientData = {osclCode:id,cl_Pwd:pwd};
 	//console.log(clientData.OS_CLCODE+clientData.CL_PWD)
-	postAjaxJson('clientOrder','appvue.serverResponse',JSON.stringify(clientData));
+	postAjaxJson('clientOrder','ajaxToServerResponse',JSON.stringify(clientData));
 }
 
 
-function postAjaxJson(jobCode,fn,f,clientData="") {
+function postAjaxJson(jobCode,fn,clientData="") {
 	let ajax = new XMLHttpRequest();
 	ajax.onreadystatechange = function() {
 		if (ajax.readyState == 4 && ajax.status == 200) {
-			//fn(ajax.responseText);
-			appvue.serverResponse(ajax.responseText);
-			
+			window[fn](ajax.responseText);
+			//appvue.serverResponse(ajax.responseText);
 		}
 	}
 	ajax.open("POST", jobCode);
