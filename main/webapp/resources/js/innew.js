@@ -146,23 +146,43 @@ function getExchangeDetailListM(data){
 	
 	let space = document.getElementById("mOrderDetail");
 	
-	let HTML = ""
+	let HTML = "";
 	for(i=0; i<data.length; i++){
 	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
 	
 	}
-	space.innerHTML=HTML;
+	space.innerHTML= HTML;
 	
 }
 
 
+function supplyReceiveRefundListForm(){
+	postAjaxJson('supplyReceiveRefundListForm','supplyRefundList','j');
+	
+}
 
-function ReceiveRefundDetail(){
+function supplyRefundList(data){
+	alert(data);
+	console.log(data);
+	let space = document.getElementById("refundSpace");
 	
-	let list = document.getElementsByName("refundList")[0];
+	let html = "<div>반품목록</div>";
 	
-		console.log(list);
-		
+	for(i=0; i<data.length; i++){
+		html += "<div onClick='ReceiveRefundDetail(\""+data[i].os_code+"\")'>"+ "주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state +"</div>";
+	}
+	
+	space.innerHTML=html;
+}
+
+
+function ReceiveRefundDetail(oscode){
+	
+	let sendJsonData = [];
+	sendJsonData.push({os_code:oscode});
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM','j',clientData);
+	alert(clientData);
 }
 
 function ReceiveExchangeDetail(){

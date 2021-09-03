@@ -5,16 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
+
 
 
 </head>
 
 
 
-<body>
+<body onLoad="supplyReceiveRefundListForm()">
 
 
 	<div> 공급사 목록 : ${Slist} </div>
@@ -28,9 +26,12 @@
 	<div id="getWaitList" name="getWaitList"></div>
 	<input type="hidden" value="${WorderList}" name="OD_OSCODE" />
 	
-	<div name="refundList" onClick="ReceiveRefundDetail()"> 공급사 반품목록 : ${refundList} </div>
+	
+	<div id="refundSpace"></div>
 	<div name="exchangeList" onClick="ReceiveExchangeDetail()"> 공급사 교환목록 : ${exchangeList} </div>
 	  
-	
+	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 </body>
 </html>

@@ -21,19 +21,18 @@ public class SupplyServiceIYJ {
 	
 	MroOrderDetailBean mod;
 	
-	public ModelAndView supplyReceiveRefundListForm() {
-		mav = new ModelAndView();
+	public List<MroOrderDetailBean> supplyReceiveRefundListForm() {
 		mod= new MroOrderDetailBean();
 		List<MroOrderDetailBean> list;
 		
 		mod.setOd_prspcode("KR001D");//Session이 없어서 강제로 넣어줌
 		mod.setOs_state("RR");
-		mav.setViewName("MroHome");
-		mav.addObject("refundList",dao.getRefundListSp(mod));
-		System.out.println(dao.getRefundListSp(mod));
-		//System.out.println(mod);
 		
+		list = dao.getRefundListSp(mod);
 		
+		//System.out.println(dao.getRefundListSp(mod));
+		
+			
 //		try {//Session이 살아있으면, Session에 있는 아이디를 mod에 담는다.
 //			if(pu.getAttribute("userSs")!=null) {
 //				mod.setOd_prspcode((String)pu.getAttribute("userSs"));
@@ -45,7 +44,7 @@ public class SupplyServiceIYJ {
 		
 		
 		
-		return mav;
+		return list;
 	}
 
 	public ModelAndView supplyReceiveExchangeListForm() {
