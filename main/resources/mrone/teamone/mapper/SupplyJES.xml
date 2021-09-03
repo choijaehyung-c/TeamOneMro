@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mrone.teamone.mapper.SupplyJES">
+ 	<select id = "getProductList" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
+ 		SELECT COUNT(*) FROM PRODUCT WHERE PR_NAME = #{prlist}
+ 	</select>
+ 	
+ 	<select id = "getNewProductList" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
+ 	</select>
+ 	
+ 	<select id = "getProductDetail" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
+ 		SELECT COUNT(*) FROM PRODUCT WHERE PR_CODE = #{prcode}
+ 	</select>
+ </mapper>

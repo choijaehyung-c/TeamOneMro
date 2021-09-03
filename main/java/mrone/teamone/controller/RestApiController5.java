@@ -9,26 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import mrone.supply.service.SupplyServiceCtl2;
+import mrone.supply.service.SupplyServiceEntranceJES;
 import mrone.teamone.beans.ProductBean;
 
 @RestController
 @RequestMapping("/vue5")
 public class RestApiController5 {
-	ModelAndView mav;
 	@Autowired
-	SupplyServiceCtl2 ssc2;
+	SupplyServiceEntranceJES ssej; 
 	
-	
-	@PostMapping("/SupplyProductListForm")
-	public List<ProductBean> supplyProductListCtl(@RequestBody List<ProductBean> SupplyPrList){
-		return ssc2.supplyProductListCtl(SupplyPrList.get(0));
-		
+	//상품리스트 상세보기
+	@PostMapping("/productListDetail")
+	public ModelAndView supplyProductListForm(){
+		return ssej.supplyProductListCtl();	
 	}
-	
-	@PostMapping("/SupplyNewRequeListForm")
-	public List<ProductBean> newSupplyPrListCtl(@RequestBody List<ProductBean> SupplyNewPrList) {
-		return ssc2.NewSupplyPrListCtl(SupplyNewPrList.get(0));
-	}
-	
 }
