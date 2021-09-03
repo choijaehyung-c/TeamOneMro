@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 
 
 
@@ -17,7 +18,19 @@ public class SupplyDaoNSB {
 	
 	
 	
-	List<RequestOrderBean> getWaitOrderList(RequestOrderBean rb){
-		return sqlSession.selectList("getSupplyWaitOrderList", rb);
+	boolean responseOrder(RequestOrderDetailBean rdb){
+		return this.convertToBoolean(sqlSession.update("updateRequestOrderState", rdb));
+	}
+	
+	boolean responseOrder2(RequestOrderDetailBean rdb){
+		
+		return this.convertToBoolean(sqlSession.update("updateRequestOrderState2", rdb));
+		
+	}
+	
+	
+	
+	private boolean convertToBoolean(int value) {
+		return (value > 0)? true: false;
 	}
 }

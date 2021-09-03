@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 
 
 @Service
@@ -30,5 +31,11 @@ public class SupplyServiceEntrance {
 		
 		
 		return sscn.waitOrderlistD(rb);
+	}
+	
+	public String responseOrder(RequestOrderDetailBean rdb) {			
+		String message = sscn.responseOrder(rdb);
+		
+		return message;
 	}
 }

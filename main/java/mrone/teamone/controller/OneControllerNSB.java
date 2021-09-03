@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import mrone.supply.service.SupplyServiceEntrance;
 import mrone.teamone.auth.Authentication;
 import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.Encryption;
 
 
@@ -50,7 +51,9 @@ public class OneControllerNSB {
 	public List<RequestOrderBean> supplyReceiveWaitOrderList() {
 		List<RequestOrderBean> reList = null;
 		reList = sse.RequestWaitOrderListCtl();
+		System.out.println(sse.RequestWaitOrderListCtl());
 		return reList;
+		
 		
 	}
 	
@@ -59,6 +62,14 @@ public class OneControllerNSB {
 		
 		System.out.println("dd");
 		return sse.RequestWaitOrderListCtlD(list.get(0));
+		
+	}
+	
+	@PostMapping("/responseOrder")
+	public String responseOrder(@RequestBody List<RequestOrderDetailBean> list ) {
+		String message = sse.responseOrder(list.get(0));
+		
+		return message;
 		
 	}
 }

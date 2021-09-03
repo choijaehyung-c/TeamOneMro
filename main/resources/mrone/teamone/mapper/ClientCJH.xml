@@ -14,15 +14,15 @@
 	</select>
 	
 	<insert id="insClientOrder" parameterType="mrone.teamone.beans.ClientOrderBean">
-		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},to_date(#{os_date}),#{os_state})
+		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},TO_DATE(#{os_date},'YYYYMMDDHH24miss'),#{os_state})
 	</insert>
 	
 	<insert id="insClientOrderDetail" parameterType="mrone.teamone.beans.ClientOrderBean">
-		INSERT INTO OD VALUES(#{od_prspcode},#{od_oscode},#{os_state},#{od_prcode},#{od_quantity})
+		INSERT INTO OD VALUES(#{od_prspcode},#{od_oscode},#{od_stcode},#{od_prcode},#{od_quantity})
 	</insert>
 	
 	<select id="getOrderData" parameterType="mrone.teamone.beans.ClientOrderBean" resultType="string">
-		SELECT OS_CODE FROM OS WHERE OS_CLCODE = #{os_clcode} and os_date = to_date(#{os_date})
+		SELECT OS_CODE FROM OS WHERE OS_CLCODE = #{os_clcode} and os_date = TO_DATE(#{os_date},'YYYYMMDDHH24miss')
 	</select>
 
 	<select id="getTaxBillList" parameterType="mrone.teamone.beans.ClientInfoBean" resultType="mrone.teamone.beans.ClientInfoBean">

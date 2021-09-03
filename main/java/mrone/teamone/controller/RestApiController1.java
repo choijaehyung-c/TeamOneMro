@@ -23,10 +23,10 @@ public class RestApiController1 {
 
 	
 	@PostMapping("/clientOrder")
-	public String clientOrderApi(@ModelAttribute ClientOrderBean co){
-		System.out.println(co.getOs_clcode());
+	public String clientOrderApi(@RequestBody ClientOrderBean co){
+		System.out.println(co.getOs_clcode()+co.getOd().size());
 		System.out.println("in Entrance");
-		return "test";
+		return cse.clientRequestOrder(co);
 	}
 	
 	@PostMapping("/clientRefund")

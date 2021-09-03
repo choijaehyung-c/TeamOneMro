@@ -29,40 +29,17 @@ function ajaxToServerResponse(data){
 }
 
 
-
-
 function sendApiData(){
 	let id = document.getElementsByName("os_clcode")[0].value;
 	let pwd = document.getElementsByName("cl_pwd")[0].value;
-	
-	console.log(pwd);
-	/*clientData=`변수명(빈.OO)=${변수값}&변수명(빈.OO)=${변수값}`;
 	let OD = [];
 	for(i=0;i<3;i++){
-		OD.push({OD_PRSPCODE:"KR001D",OD_PRCODE:"123123123"+i});
+		OD.push({od_prspcode:"KR001D",od_prcode:"123123123"+i,od_quantity:i+1});
 	}
-	*/
-	//let clientData = cl_Pwd:pwd;
-	//console.log(clientData.OS_CLCODE+clientData.CL_PWD)
 	
-	let clientData = `'os_clcode'='${id}'&'cl_pwd'='${pwd}'`;
-	console.log(clientData);
-	postAjaxForm('clientOrder','ajaxToServerResponse','s',clientData);
-}
-
-
-function postAjaxJson2(jobCode,fn,clientData="") {
-	let ajax = new XMLHttpRequest();
-	ajax.onreadystatechange = function() {
-		if (ajax.readyState == 4 && ajax.status == 200) {
-			window[fn](ajax.responseText);
-			//appvue.serverResponse(ajax.responseText);
-		}
-	}
-	ajax.open("POST", jobCode);
-	ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
-	console.log(clientData);
-	ajax.send(clientData);
+	let clientData ={os_clcode:id,cl_pwd:pwd,od:OD};
+	console.log(clientData.od[0].od_quantity);
+	postAjaxJson('clientOrder','ajaxToServerResponse','s',JSON.stringify(clientData));
 }
 
 function postAjaxJson(jobCode, fn, rType, clientData = "") {
