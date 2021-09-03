@@ -23,12 +23,39 @@ public class MroDaoHSM {
 
 		return PBList;
 	}
+	
+	ProductBean mroGetNewProductDetail(ProductBean pb){
+		System.out.println(pb.getPr_code());
+		return sql.selectOne("mroGetNewProductDetail", pb);
+	}
+
+	boolean mroResponseNewProduct(ProductBean pb) {
+		return convertToBoolean(sql.update("mroResponseNewProduct", pb));
+	}
+	
+	public List<ProductBean> callModifyRequestList() {
+		return sql.selectList("callModifyRequestList");
+	}
+	
+	public ProductBean mroGetModifyProductDetail(ProductBean pb) {
+		return sql.selectOne("mroGetModifyProductDetail", pb);
+	}
 
 	
+	public boolean mroResponseModifyProduct(ProductBean pb) {
+		return convertToBoolean(sql.update("mroResponseModifyProduct", pb));
+	}
+	
+	public boolean updatePCToPD(ProductBean pb) {
+		return convertToBoolean(sql.update("updatePCToPD", pb));
+	}
 	
 	boolean convertToBoolean(int data) {
 			return data>0? true : false;
 	}
+
+
+
 	
 	
 }

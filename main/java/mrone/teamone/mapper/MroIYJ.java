@@ -1,5 +1,7 @@
 package mrone.teamone.mapper;
 
+import mrone.teamone.beans.MroOrderDetailBean;
+
 public interface MroIYJ {
 	void getSupplyList();
 	void getClientList();
@@ -9,4 +11,5 @@ public interface MroIYJ {
 	void getExchangeList();
 	//void getRefundDetail(String osCode);
 	//void getExchangeDetail(String osCode);
+	void getRefundListSp(MroOrderDetailBean mod);
 }

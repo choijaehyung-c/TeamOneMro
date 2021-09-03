@@ -18,10 +18,8 @@ public class SupplyServiceCtl2 {
 	
 	
 	public List<ProductBean> supplyProductListCtl(ProductBean pb) {
-		List<ProductBean> productBean;
-		productBean = sqlSession.selectList("supplyProductListCtl", pb);
 		
-		return productBean;
+		return null;
 	}
 	
 	public String getProductDetail(ProductBean pb) {
@@ -31,10 +29,8 @@ public class SupplyServiceCtl2 {
 	}
 	
 	public List<ProductBean> NewSupplyPrListCtl(ProductBean pd){
-		List<ProductBean> prBean;
-		prBean = sqlSession.selectList("NewSupplyPrListCtl", pd);
-		
-		return prBean;
+	
+		return null;
 	}
 	
 	public String getSuReNewProduct(ProductBean pd) {
