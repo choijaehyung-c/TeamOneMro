@@ -46,7 +46,7 @@ function responseOrder(recode){
 		let clientData = JSON.stringify(sendJsonData);
 		alert(clientData);
 		postAjaxJson2('responseOrder','receiveOrderControll2',clientData);
-}
+} // 접수확인 클릭 시 주문서 상태 상품준비중 업데이트 -> 상품준비중 리스트 출력 후 배송시작 버튼 클릭= dl 테이블 인서트
 
 
 
