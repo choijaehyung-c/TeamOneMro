@@ -13,6 +13,7 @@ public class MroOrderDetailBean {
 	private String od_prcode; //상품코드
 	private String pr_name; //상품이름
 	private String od_quantity; //주문갯수
+	private String os_state;//상태
 
 }
 

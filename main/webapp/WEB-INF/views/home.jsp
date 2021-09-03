@@ -112,13 +112,13 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-             <div id="vuezone">  
+              <div id="vuezone">
                 <main>
                 	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
-                	<div id="mOrderList"></div>
+                	<div id="mOrderList" v-for="item in orderList">{{item.os_code}}</div>
                 	<div id="mOrderDetail"></div>
                 </main>
-             </div>  
+             </div> 
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  

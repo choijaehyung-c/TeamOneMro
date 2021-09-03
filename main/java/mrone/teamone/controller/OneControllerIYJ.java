@@ -44,11 +44,19 @@ public class OneControllerIYJ {
 	}
 	
 	
-	//공급사 반품리스트 뽑아오는 명령어 
+	//공급사 반품리스트 뽑아오는 메서드
 	@GetMapping("/supplyReceiveRefundListForm")
 	public ModelAndView supplyReceiveRefundListForm() {
 		System.out.println("공급사 반품리스트");
 		mav = ssin.supplyReceiveRefundListForm();
+		return mav;
+	}
+	
+	//공급사 교환리스트 뽑아오는 메서드
+	@GetMapping("/supplyReceiveExchangeListForm")
+	public ModelAndView supplyReceiveExchangeListForm() {
+		System.out.println("공급사 교환리스트");
+		mav = ssin.supplyReceiveExchangeListForm();
 		return mav;
 	}
 	

@@ -29,7 +29,7 @@ const ordervue = new Vue({
 	},
 	methods:{
 		orderListResponse : function(data){
-			this.msg = data;
+			this.orderList = data;
 		},
 		btn:function(){
 			this.orderList=(this.orderList)
@@ -42,7 +42,7 @@ const ordervue = new Vue({
 //mro에서 주문대기리스트 불러오기
 function mroOrderList(){
 	
-	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM',clientData="");
+	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM','j',clientData="");
 	
 }
 
@@ -65,7 +65,7 @@ function getWaitOrderListM(data){
 function getDetail(data){
 	
 		alert("주문번호 "+ data + "의 상세내역입니다.");
-		postAjaxJson('/vue2/mroGetOrderDetail','getOrderDetailM',data);
+		postAjaxJson('/vue2/mroGetOrderDetail','getOrderDetailM','j',data);
 }
 
 function getOrderDetailM(data){
@@ -82,7 +82,7 @@ function getOrderDetailM(data){
 
 //mro에서 반품리스트 불러오기
 function mroRefundList(){
-	postAjaxJson('vue2/mroRefundListForm','getRefundListM',clientData="");
+	postAjaxJson('vue2/mroRefundListForm','getRefundListM','j',clientData="");
 	
 }
 
@@ -102,7 +102,7 @@ function getRefundListM(jsonData){
 function getRefundDetail(data){
 	
 	alert("주문번호 "+ data + " 의 반품 상세내역입니다.");
-	postAjaxJson('/vue2/mroGetRefundDetail','getRefundDetailListM',data);
+	postAjaxJson('/vue2/mroGetRefundDetail','getRefundDetailListM','j',data);
 		
 }
 
@@ -121,7 +121,7 @@ function getRefundDetailListM(data){
 
 //mro에서 교환리스트 불러오기
 function mroExchangeList(){
-	postAjaxJson('vue2/mroExchangeListForm','getExchageListM',clientData="");
+	postAjaxJson('vue2/mroExchangeListForm','getExchageListM','j',clientData="");
 }
 
 //mro 교환리스트 찍어오는 펑션
@@ -139,7 +139,7 @@ function getExchageListM(data){
 
 function getExchangeDetail(data){
 	alert("주문번호 "+ data + " 의 교환 상세내역입니다.");
-	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM',data);
+	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM','j',data);
 }
 
 function getExchangeDetailListM(data){
@@ -153,6 +153,21 @@ function getExchangeDetailListM(data){
 	}
 	space.innerHTML=HTML;
 	
+}
+
+
+
+function ReceiveRefundDetail(){
+	
+	let list = document.getElementsByName("refundList")[0];
+	
+		console.log(list);
+		
+}
+
+function ReceiveExchangeDetail(){
+	let list2 = document.getElementsByName("exchangeList")[0];
+	console.log(list2);
 }
 /*const orderList = new Vue({
 	el: "#mOrderList",

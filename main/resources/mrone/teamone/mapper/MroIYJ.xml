@@ -50,7 +50,7 @@
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
     
-    <!-- 공급사가 본인의 회사에 들어온 반품리스트를 받는 쿼리 -->
+    <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
      <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >
     	SELECT OSV.OS_CODE,
        		OSV.OS_CLCODE,
@@ -58,7 +58,7 @@
        		OSV.OS_DATE,
        		OSV.OS_STATE
 		FROM ORDERDETAILVIEW ODV INNER JOIN ORDERSVIEW OSV ON ODV.OD_OSCODE = OSV.OS_CODE
-		WHERE OS_STATE='RR' AND OD_PRSPCODE= #{od_prspcode}
+		WHERE OS_STATE=#{os_state} AND OD_PRSPCODE= #{od_prspcode}
     </select>
     
     </mapper>

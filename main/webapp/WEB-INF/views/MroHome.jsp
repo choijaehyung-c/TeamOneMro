@@ -19,7 +19,7 @@
 
 	<div> 공급사 목록 : ${Slist} </div>
 	<div> 고객사 목록 : ${Clist} </div>
-	<div> 공급사 반품목록 : ${refundList} </div>
+
 
 <!--  	<div  id="mOrderList"> <div v-for:"list2 in list" onclick="orderDetail()">{{list}}</div> </div> 	
 	<input v-model:"msg" type="text"/>-->
@@ -28,7 +28,8 @@
 	<div id="getWaitList" name="getWaitList"></div>
 	<input type="hidden" value="${WorderList}" name="OD_OSCODE" />
 	
-
+	<div name="refundList" onClick="ReceiveRefundDetail()"> 공급사 반품목록 : ${refundList} </div>
+	<div name="exchangeList" onClick="ReceiveExchangeDetail()"> 공급사 교환목록 : ${exchangeList} </div>
 	  
 	
 </body>

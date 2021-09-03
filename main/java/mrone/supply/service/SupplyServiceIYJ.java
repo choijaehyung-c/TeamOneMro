@@ -26,8 +26,8 @@ public class SupplyServiceIYJ {
 		mod= new MroOrderDetailBean();
 		List<MroOrderDetailBean> list;
 		
-		mod.setOd_prspcode("KR001D");
-		
+		mod.setOd_prspcode("KR001D");//Session이 없어서 강제로 넣어줌
+		mod.setOs_state("RR");
 		mav.setViewName("MroHome");
 		mav.addObject("refundList",dao.getRefundListSp(mod));
 		System.out.println(dao.getRefundListSp(mod));
@@ -44,6 +44,20 @@ public class SupplyServiceIYJ {
 //		}
 		
 		
+		
+		return mav;
+	}
+
+	public ModelAndView supplyReceiveExchangeListForm() {
+		mav = new ModelAndView();
+		mod= new MroOrderDetailBean();
+		List<MroOrderDetailBean> list;
+		
+		mod.setOd_prspcode("KR001C"); //Session이 없어서 강제로 넣어줌(교환있는 회사)
+		mod.setOs_state("ER");
+		mav.setViewName("MroHome");
+		mav.addObject("exchangeList",dao.getRefundListSp(mod));
+		System.out.println(dao.getRefundListSp(mod));
 		
 		return mav;
 	}
