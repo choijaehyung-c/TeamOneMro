@@ -5,13 +5,13 @@
   
  <mapper namespace="mrone.teamone.mapper.SupplyJES">
  	<select id = "getProductList" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
- 		SELECT COUNT(*) FROM PRODUCT WHERE PR_NAME = #{pr_stock}
+ 		SELECT COUNT(*) FROM PRODUCT WHERE PR_NAME = #{prlist}
  	</select>
  	
  	<select id = "getNewProductList" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
  	</select>
  	
  	<select id = "getProductDetail" parameterType = "mrone.teamone.bean.ProductBean" resultType = "mrone.teamone.bean.ProductBean">
- 		SELECT COUNT(*) FROM PRODUCT WHERE PR_CODE = #{pr_code}
+ 		SELECT COUNT(*) FROM PRODUCT WHERE PR_CODE = #{prcode}
  	</select>
  </mapper>

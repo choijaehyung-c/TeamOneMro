@@ -14,6 +14,5 @@
 	</div>
 	<div id = "orderList"></div>
 	<div id = "orderListD"></div>
-	
 </body>
 </html>
