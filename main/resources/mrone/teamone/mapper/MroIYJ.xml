@@ -30,7 +30,7 @@
     </select>
     
     <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">   
-		SELECT * FROM ORDERSVIEW WHERE OS_STATE='W'	    
+		SELECT * FROM ORDERSVIEW WHERE OS_STATE='OR'	    
     </select>
     
     <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
@@ -61,4 +61,17 @@
 		WHERE OS_STATE=#{os_state} AND OD_PRSPCODE= #{od_prspcode}
     </select>
     
+    <select id="supplyReceiveAsDetail" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
+    	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE=#{os_code}
+    </select>
+    
+    <!-- 반품요청->반품처리로 (수락 또는 거절) 업데이트 -->
+    <update id="supplyResponseRefund" parameterType="mrone.teamone.beans.MroOrderBean">
+    	UPDATE OD SET OD_STCODE=#{os_state} WHERE OD_OSCODE=#{os_code} AND OD_STCODE='RR'
+    </update>
+    
+    <!-- 구매확정이 있으면, 그 레코드의 정보들을 가져와라-->
+	<select id="supplyOCInfo" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
+		SELECT * FROM OD WHERE OD_OSCODE=#{os_code}
+	</select>
     </mapper>

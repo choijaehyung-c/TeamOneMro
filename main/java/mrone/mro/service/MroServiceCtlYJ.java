@@ -39,7 +39,7 @@ public class MroServiceCtlYJ {
 		waitOrderList = dao.getWaitOrderList();
 
 		for(int i=0; i<waitOrderList.size(); i++) {
-			if(waitOrderList.get(i).getOs_state().equals("W")) {
+			if(waitOrderList.get(i).getOs_state().equals("OR")) {
 				waitOrderList.get(i).setOs_state("대기");
 			}
 		}
@@ -51,19 +51,31 @@ public class MroServiceCtlYJ {
 	List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		List<MroOrderDetailBean> od;
 		od = dao.getOrderDetail(osCode);
-		//System.out.println(od);
+		System.out.println(od);
 		
 		return od;
 	}
 
 	List<MroOrderBean> getRefundList() {
 		List<MroOrderBean> list = dao.getRefundList();
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOs_state().equals("RR")) {
+				list.get(i).setOs_state("반품요청");
+			}
+		}
 		return list;
 	}
 	
 
 	 List<MroOrderBean> getExchangeList() {
 		 List<MroOrderBean> list = dao.getExchangeList();
+		 
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).getOs_state().equals("ER")) {
+					list.get(i).setOs_state("교환요청");
+				}
+			}
 			return list;
 	}
 

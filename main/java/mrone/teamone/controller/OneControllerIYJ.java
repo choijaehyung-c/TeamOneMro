@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.mro.service.MroServiceEntrance;
 import mrone.supply.service.SupplyServiceIYJ;
+import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
@@ -59,11 +61,10 @@ public class OneControllerIYJ {
 	//공급사 반품리스트 뽑아오는 메서드
 	@PostMapping("/supplyReceiveRefundListForm")
 	@ResponseBody
-	public List<MroOrderDetailBean> supplyReceiveRefundListForm() {
-		List<MroOrderDetailBean> list;
-		System.out.println("공급사 반품리스트ddd");
+	public List<MroOrderBean> supplyReceiveRefundListForm() {
+		List<MroOrderBean> list;
+		System.out.println("공급사 반품리스트");
 		list = ssin.supplyReceiveRefundListForm();
-		System.out.println(list);
 		return list;
 	}
 	
@@ -73,6 +74,22 @@ public class OneControllerIYJ {
 		System.out.println("공급사 교환리스트");
 		mav = ssin.supplyReceiveExchangeListForm();
 		return mav;
+	}
+	
+	//supply 반품디테일
+	@PostMapping("/supplyReceiveAsDetail")
+	@ResponseBody
+	public List<MroOrderDetailBean> supplyReceiveAsDetail(@RequestBody MroOrderBean mo){
+		System.out.println(mo);
+		return ssin.supplyReceiveAsDetail(mo);
+	}
+	
+	//supply 반품 응답
+	@PostMapping("/supplyResponseRefund")
+	@ResponseBody
+	public String supplyResponseRefund(@RequestBody MroOrderBean mo){
+		//System.out.println(mo);
+		return ssin.supplyResponseRefund(mo);
 	}
 	
 	
