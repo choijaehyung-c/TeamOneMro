@@ -4,16 +4,32 @@
 const appvue = new Vue({
 	el:"#vuezone",
 	data:{
-		msg:'응답대기'
+		msg:'응답대기',
+		modalOnOff:'off'
 	},
 	methods:{
 		serverResponse:function(ddata){
 			this.msg = ddata;
+		},
+		momo:function(){
+			//this.modalOnOff = 'on';
+			this.modalOnOff=(this.modalOnOff=='on')?'off':'on';
 		}
+		
 	}
 	
 	
 });
+
+function modalOn(){
+	appvue.momo();
+}
+
+
+function ajaxToServerResponse(data){
+	appvue.serverResponse(data);
+}
+
 
 
 
@@ -34,7 +50,7 @@ function sendApiData(){
 }
 
 
-function postAjaxJson(jobCode,fn,clientData="") {
+function postAjaxJson(jobCode,fn,f,clientData="") {
 	let ajax = new XMLHttpRequest();
 	ajax.onreadystatechange = function() {
 		if (ajax.readyState == 4 && ajax.status == 200) {
