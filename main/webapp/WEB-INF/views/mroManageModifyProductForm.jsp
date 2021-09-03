@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 </head>
-<body onLoad="callRequestRegisterNewProductList('')">
+<body onLoad="callModifyRequestList('')">
 
 <div id="RequestProductListBox">
 </div>

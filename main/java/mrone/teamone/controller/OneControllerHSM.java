@@ -30,5 +30,10 @@ public class OneControllerHSM {
 	public String mroRegisterNewProductForm() {
 		return "mroRequestNewProduct";
 	}
+
+	@PostMapping("/MroManageModifyProductForm")
+	public String mroManageModifyProductForm() {
+		return "mroManageModifyProductForm";
+	}
 	
 }
