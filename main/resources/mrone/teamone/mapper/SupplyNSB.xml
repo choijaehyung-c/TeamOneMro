@@ -15,7 +15,7 @@
 	FROM RE WHERE RE_STATE = 'W'AND RE_SPCODE = #{sp}
     </select>
     
-    <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBeean">
+    <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
 	SELECT 
 	RD_PRSPCODE, 
 	RD_RECODE, 
@@ -23,6 +23,14 @@
 	RD_QUANTITY, 
 	RD_STCODE 
 	FROM RD WHERE RD_RECODE = #{re_code}
+    </select>
+    
+    <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
+	UPDATE REQUEST SET RE_STATE = 'S' WHERE RE_CODE = #{rd_recode}
+    </select>
+    
+    <select id="updateRequestOrderState2" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
+	UPDATE REQUESTDETAIL SET RD_STCODE = 'S' WHERE RD_RECODE = #{rd_recode}
     </select>
     
     </mapper>

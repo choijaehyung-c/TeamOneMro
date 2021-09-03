@@ -4,6 +4,7 @@ function receiveOrderControll(){
 }
 
 function getReceiveList(jsonData){
+	
 	console.log(jsonData);
 		let orderHtml = "<div>주문 접수 리스트</div>";
 		let orderList = document.getElementById("orderList");		
@@ -32,11 +33,33 @@ function getReceiveListD(jsonData){
 		console.log(jsonData);
 		for(i=0; i<jsonData.length; i++){
 		orderHtml += "<div class = 'orderlist'>" +"공급사코드:"+jsonData[i].rd_prspcode+ " 주문코드:"+ jsonData[i].rd_recode+ "상품코드:"+jsonData[i].rd_prcode+ "주문수량:"+jsonData[i].rd_quantity+ "주문상태:"+jsonData[i].rd_stcode+"</div>";
-		
+		orderHtml += "<input type = 'button' onclick ='responseOrder(\""+jsonData[i].rd_recode+"\")' value='주문접수확인' />";				
 		}			
 		
 		orderList.innerHTML = orderHtml;
 }
+
+function responseOrder(recode){
+	
+	let sendJsonData = [];
+		sendJsonData.push({rd_recode:recode});
+		let clientData = JSON.stringify(sendJsonData);
+		alert(clientData);
+		postAjaxJson('responseOrder','receiveOrderControll2',clientData);
+}
+
+function receiveOrderControll2(message){
+	alert(message);
+	if(message= true){
+		alert(message);
+		postAjaxJson2('getSupplyReceiveWaitOrderList','getReceiveList');
+	}else{
+		alert("접수등록 실패");
+		}
+	
+}
+
+
 	
 function getAjax(jobCode,fn,clientData=""){
         	let ajax = new XMLHttpRequest();
@@ -61,6 +84,18 @@ function postAjaxJson(jobCode,fn,clientData="") {
 	ajax.send(clientData);
 }
 
+function postAjaxJson2(jobCode,fn,clientData="") {
+	let ajax = new XMLHttpRequest();
+	ajax.onreadystatechange = function() {
+		if (ajax.readyState == 4 && ajax.status == 200) {
+			window[fn];
+		}
+	}
+	ajax.open("POST", jobCode);
+	ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
+	ajax.send(clientData);
+}
+
 function postAjaxString(jobCode,fn,clientData="") {
 	let ajax = new XMLHttpRequest();
 	ajax.onreadystatechange = function() {
@@ -72,6 +107,8 @@ function postAjaxString(jobCode,fn,clientData="") {
 	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded;");
 	ajax.send(clientData);
 }
+
+
 
 function makeForm(action,method,name = null){//name = null => name값이 없다면 null
 	let form = document.createElement("form");

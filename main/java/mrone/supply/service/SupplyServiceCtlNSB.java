@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 
 @Service
 public class SupplyServiceCtlNSB {
@@ -46,4 +47,23 @@ public class SupplyServiceCtlNSB {
 		return reList;
 	}
 	
+	String responseOrder(RequestOrderDetailBean rdb) {
+		
+	String message= null;
+		rdb.setRd_recode(rdb.getRd_recode());
+		for(int i=0; i<rdb.getRd_recode().length(); i++) {
+			if(dao.responseOrder(rdb)) {
+				if(dao.responseOrder2(rdb)) {
+					message = "접수완료";
+				}
+		}
+						 
+		}			
+		return message;
+	}
 }
+		
+			
+	
+	
+
