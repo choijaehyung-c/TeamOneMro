@@ -21,7 +21,7 @@ function supplyList(){
 	alert("공급사목록을 불러옵니다.");
 }
 
-const ordervue = new Vue({
+/*const ordervue = new Vue({
 	el : "#vuezone",
 	data:{
 		msg : '응답대기',
@@ -36,7 +36,7 @@ const ordervue = new Vue({
 		}
 	}
 	
-});
+});*/
 
 
 //mro에서 주문대기리스트 불러오기
