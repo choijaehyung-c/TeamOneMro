@@ -49,6 +49,7 @@
                                 Dashboard
                             </div>
                             <div class="sb-sidenav-menu-heading">Interface</div>
+                        
                             <div class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 
                                  거래처관리
@@ -96,7 +97,7 @@
                                     <div class="nav-link" onClick="requestOrder()">발주하기</div>                
                                 </nav>  
                             </div>
-                            
+                        
                             
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <div class="nav-link" >
@@ -111,11 +112,13 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
+             <div id="vuezone">  
                 <main>
                 	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
                 	<div id="mOrderList"></div>
                 	<div id="mOrderDetail"></div>
                 </main>
+             </div>  
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  

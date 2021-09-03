@@ -19,6 +19,7 @@
 
 	<div> 공급사 목록 : ${Slist} </div>
 	<div> 고객사 목록 : ${Clist} </div>
+	<div> 공급사 반품목록 : ${refundList} </div>
 
 <!--  	<div  id="mOrderList"> <div v-for:"list2 in list" onclick="orderDetail()">{{list}}</div> </div> 	
 	<input v-model:"msg" type="text"/>-->

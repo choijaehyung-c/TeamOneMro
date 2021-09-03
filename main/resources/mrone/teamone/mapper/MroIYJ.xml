@@ -36,17 +36,29 @@
     <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
-    
+    <!-- Mro 반품리스트 받아오는 쿼리 -->
     <select id="getRefundList" resultType="mrone.teamone.beans.MroOrderBean" >
     	SELECT * FROM ORDERSVIEW WHERE OS_STATE='RR'
     </select>
     
+    <!-- Mro 교환리스트 받아오는 쿼리 -->
     <select id="getExchangeList" resultType="mrone.teamone.beans.MroOrderBean" >
     	SELECT * FROM ORDERSVIEW WHERE OS_STATE='ER'
     </select>
     
     <select id="getRefundDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
+    </select>
+    
+    <!-- 공급사가 본인의 회사에 들어온 반품리스트를 받는 쿼리 -->
+     <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >
+    	SELECT OSV.OS_CODE,
+       		OSV.OS_CLCODE,
+      	 	OSV.CL_NAME,
+       		OSV.OS_DATE,
+       		OSV.OS_STATE
+		FROM ORDERDETAILVIEW ODV INNER JOIN ORDERSVIEW OSV ON ODV.OD_OSCODE = OSV.OS_CODE
+		WHERE OS_STATE='RR' AND OD_PRSPCODE= #{od_prspcode}
     </select>
     
     </mapper>

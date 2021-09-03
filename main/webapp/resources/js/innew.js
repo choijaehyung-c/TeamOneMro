@@ -21,6 +21,24 @@ function supplyList(){
 	alert("공급사목록을 불러옵니다.");
 }
 
+const ordervue = new Vue({
+	el : "#vuezone",
+	data:{
+		msg : '응답대기',
+		orderList : []	
+	},
+	methods:{
+		orderListResponse : function(data){
+			this.msg = data;
+		},
+		btn:function(){
+			this.orderList=(this.orderList)
+		}
+	}
+	
+});
+
+
 //mro에서 주문대기리스트 불러오기
 function mroOrderList(){
 	
@@ -31,14 +49,16 @@ function mroOrderList(){
 //주문목록 찍어주는 펑션
 function getWaitOrderListM(data){
 	
-	let space = document.getElementById("mOrderList");
+	ordervue.orderListResponse(data);
+	
+	/*let space = document.getElementById("mOrderList");
 	let HTML = "<div>주문목록</div>";
 	
 	for(i=0; i<data.length; i++){
 		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";
 				
 		space.innerHTML = HTML;
-	}
+	}*/
 }
 
 //주문번호의 상세정보 불러오기
