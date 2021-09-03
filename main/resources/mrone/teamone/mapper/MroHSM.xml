@@ -6,8 +6,31 @@
     <mapper namespace="mrone.teamone.mapper.MroHSM">
     
     <select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_STCODE = 'PR'
+    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'PR'
     </select>
     
+    <select id="mroGetNewProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
+    	SELECT * FROM PR WHERE PR_CODE = #{pr_code}
+    </select>
+    
+    <update id="mroResponseNewProduct" parameterType="mrone.teamone.beans.ProductBean">
+    	UPDATE PR SET PR_STCODE = #{pr_stcode} WHERE PR_CODE = #{pr_code}
+    </update>
+    
+     <select id="callModifyRequestList" resultType="mrone.teamone.beans.ProductBean">
+    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'MR'
+    </select>
+    
+    <select id="mroGetModifyProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
+    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'MR'
+    </select>
+    
+    <update id="mroResponseModifyProduct" parameterType="mrone.teamone.beans.ProductBean">
+    	UPDATE PR SET PR_STCODE = #{pr_stcode} WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'MR'
+    </update>
+    
+    <update id="updatePCToPD" parameterType="mrone.teamone.beans.ProductBean">
+    	UPDATE PR SET PR_STCODE = 'PD' WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'PC'
+    </update>
     
     </mapper>

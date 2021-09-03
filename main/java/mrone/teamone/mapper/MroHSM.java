@@ -6,4 +6,5 @@ import mrone.teamone.beans.ProductBean;
 
 public interface MroHSM {
 	public List<ProductBean> getRequestRegisterNewProductList();
+	public boolean mroResponseNewProduct();
 }
