@@ -59,7 +59,7 @@ public class MroServiceCtlHSM {
 				}
 			}
 		}else {
-			if(hdao.mroResponseModifyProduct(pb)){//해당 상품코드AND MR인 애를 PD로			
+			if(hdao.mroResponseModifyProduct(pb)){//해당 상품코드AND MR인 애를 PD로   거절코드 따로			
 				tran = true;
 			}
 		}

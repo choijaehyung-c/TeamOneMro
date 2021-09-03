@@ -11,11 +11,10 @@ function callRequestRegisterNewProductList(message){
 	if(message != ""){
 		alert(message);
 	}
-		postAjaxJson('GetRequestRegisterNewProductList', 'getRequestRegisterNewProductList');
+		postAjaxJson('GetRequestRegisterNewProductList', 'getRequestRegisterNewProductList', 'j');
 }
 
 function getRequestRegisterNewProductList(jsonData){
-	alert(JSON.stringify(jsonData)+"                    aaaaaaaaaaaaaaaa");
 	let data = "<div>새 상품 등록신청 리스트</div>";
 	if(jsonData !=""){
 		for(i=0; i<jsonData.length; i++){
@@ -32,7 +31,7 @@ function mroCallNewProductDetail(prcode){
 	alert(prcode);
 	let sendJsonData = {pr_code:prcode};
 	let clientData = JSON.stringify(sendJsonData);
-		postAjaxJson('MroGetNewProductDetail','mroGetNewProductDetail', clientData);
+		postAjaxJson('MroGetNewProductDetail','mroGetNewProductDetail', 'j', clientData);
 }
 
 
@@ -42,8 +41,7 @@ function mroGetNewProductDetail(jsonData){
 	modal.style.display = "block";	
 	let data = "<div>새 상품 정보</div>";
 		data += "<div>"+JSON.stringify(jsonData)+"</div>";
-		data += "<div onClick=\"mroResponseNewProduct('"+jsonData.pr_code+"','PC')\">수락</div>"+"<div onClick=\"mroResponseNewProduct('"+jsonData.pr_code+"','PD')\">거절</div>";
-		//alert(JSON.stringify(jsonData[0].pr_code)+"         dsdsdsdsdsd");
+		data += "<div onClick=\"mroResponseNewProduct('"+jsonData.pr_code+"','PC')\">수락</div>"+"<div onClick=\"mroResponseNewProduct('"+jsonData.pr_code+"','AF')\">거절</div>";
 	ProductDetailInfo.innerHTML = data;
 }
 //모달 닫기
@@ -55,29 +53,9 @@ function modalClose(){
 
 //새 상품 등록 신청 응답
 function mroResponseNewProduct(prcode, prstcode){
-	
-	alert(JSON.stringify(prcode));
-	alert(prcode+ prstcode);
-	
 	let sendJsonData = {pr_code:prcode, pr_stcode:prstcode};
-
 	let clientData = JSON.stringify(sendJsonData);
-	//alert(clientData);
-		postAjaxJson11('MroResponseNewProduct','callRequestRegisterNewProductList', clientData);
-}
-
-
-
-function postAjaxJson11(jobCode,fn,clientData="") {
-	let ajax = new XMLHttpRequest();
-	ajax.onreadystatechange = function() {
-		if (ajax.readyState == 4 && ajax.status == 200) {
-			window[fn](ajax.responseText);
-		}
-	}
-	ajax.open("POST", jobCode);
-	ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
-	ajax.send(clientData);
+		postAjaxJson('MroResponseNewProduct','callRequestRegisterNewProductList', 's', clientData);
 }
 
 
@@ -95,7 +73,7 @@ function callModifyRequestList(message){
 	if(message != ""){
 		alert(message);
 	}
-	postAjaxJson('CallModifyRequestList', 'getModifyRequestList');
+	postAjaxJson('CallModifyRequestList', 'getModifyRequestList', 'j');
 }
 
 // 수정요청 리스트 띄우기
@@ -112,10 +90,9 @@ function getModifyRequestList(jsonData){
 }
 
 function mroCallProductModifyDetail(prcode){
-	alert(prcode+"       call")
 	let sendJsonData = {pr_code:prcode};
 	let clientData = JSON.stringify(sendJsonData);
-		postAjaxJson('MroGetModifyProductDetail','mroGetModifyProductDetail', clientData);
+		postAjaxJson('MroGetModifyProductDetail','mroGetModifyProductDetail', 'j', clientData);
 }
 
 
@@ -124,17 +101,15 @@ function mroGetModifyProductDetail(jsonData){
 	modal.style.display = "block";	
 	let data = "<div>수정요청 상품정보</div>";
 		data += "<div>"+JSON.stringify(jsonData)+"</div>";
-		data += "<div onClick=\"mroResponseModifyProduct('"+jsonData.pr_code+"','PC')\">수락</div>"+"<div onClick=\"mroResponseModifyProduct('"+jsonData.pr_code+"','PD')\">거절</div>";
+		data += "<div onClick=\"mroResponseModifyProduct('"+jsonData.pr_code+"','PC')\">수락</div>"+"<div onClick=\"mroResponseModifyProduct('"+jsonData.pr_code+"','RF')\">거절</div>";
 		//alert(JSON.stringify(jsonData[0].pr_code)+"         dsdsdsdsdsd");
 	ProductDetailInfo.innerHTML = data;
 }
 
 function mroResponseModifyProduct(prcode, prstcode){	
 	let sendJsonData = {pr_code:prcode, pr_stcode:prstcode};
-
 	let clientData = JSON.stringify(sendJsonData);
-	alert(clientData);
-		postAjaxJson11('MroResponseModifyProduct','callModifyRequestList', clientData);
+		postAjaxJson('MroResponseModifyProduct','callModifyRequestList', 's', clientData);
 }
 /*const orderList = new Vue({
 	el: "#mOrderList",
