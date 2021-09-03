@@ -123,6 +123,6 @@
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
-  
+        
     </body>
 </html>
