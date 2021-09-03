@@ -2,7 +2,6 @@ package mrone.teamone.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mrone.mro.service.MroServiceEntrance;
-import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.MroOrderBean;
+import mrone.teamone.beans.MroOrderDetailBean;
 
 @RestController
 @RequestMapping("/vue2")
@@ -71,6 +70,13 @@ public class RestApiController2 {
 		return mse.getOrderDetail(osCode);		
 	}
 	
+	
+	//supply 반품디테일
+	@PostMapping("/supplyReceiveAsDetail")
+	public List<MroOrderDetailBean> supplyReceiveAsDetail(@RequestBody MroOrderBean mo){
+		
+		return null;
+	}
 	
 	
 	

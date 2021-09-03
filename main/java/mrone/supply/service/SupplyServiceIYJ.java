@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -59,6 +60,15 @@ public class SupplyServiceIYJ {
 		System.out.println(dao.getRefundListSp(mod));
 		
 		return mav;
+	}
+	
+	public List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo){
+		System.out.println(mo.getOs_code());
+		List<MroOrderDetailBean> list;
+		
+		
+		list = dao.supplyReceiveAsDetail(mo);
+		return list;
 	}
 
 }

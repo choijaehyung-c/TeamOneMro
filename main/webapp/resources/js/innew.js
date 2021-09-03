@@ -21,7 +21,7 @@ function supplyList(){
 	alert("공급사목록을 불러옵니다.");
 }
 
-const ordervue = new Vue({
+/*const ordervue = new Vue({
 	el : "#vuezone",
 	data:{
 		msg : '응답대기',
@@ -36,7 +36,7 @@ const ordervue = new Vue({
 		}
 	}
 	
-});
+});*/
 
 
 //mro에서 주문대기리스트 불러오기
@@ -181,11 +181,11 @@ function ReceiveRefundDetail(oscode){
 	let sendJsonData = [];
 	sendJsonData.push({os_code:oscode});
 	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM','j',clientData);
+	postAjaxJson('/vue2/supplyReceiveAsDetail','getAsDetailListS','j',clientData);
 	alert(clientData);
 }
 
-function ReceiveExchangeDetail(){
+function getAsDetailListS(){
 	let list2 = document.getElementsByName("exchangeList")[0];
 	console.log(list2);
 }
