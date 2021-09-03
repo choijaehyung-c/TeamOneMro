@@ -94,9 +94,9 @@ function readyAccessMro(data, jc) {
 		}
 	}*/
 	if (data == '1') {
-		getAjax("https://api.ipify.org?format=json","sendAccessInfo");
+		getAjax("https://api.ipify.org?format=json","sendAccessInfo","j");
 	}else{
-		getAjax("https://api.ipify.org?format=json","accessOut");
+		getAjax("https://api.ipify.org?format=json","accessOut","j");
 	}
 }
 
