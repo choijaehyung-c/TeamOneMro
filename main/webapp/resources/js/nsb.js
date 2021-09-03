@@ -45,13 +45,16 @@ function responseOrder(recode){
 		sendJsonData.push({rd_recode:recode});
 		let clientData = JSON.stringify(sendJsonData);
 		alert(clientData);
-		postAjaxJson('responseOrder','receiveOrderControll2',clientData);
+		postAjaxJson2('responseOrder','receiveOrderControll2',clientData);
 }
 
+
+
 function receiveOrderControll2(message){
-	alert(message);
-	if(message= true){
+	
+	if(message!= ""){
 		alert(message);
+		//spcode 다시 보내기
 		postAjaxJson2('getSupplyReceiveWaitOrderList','getReceiveList');
 	}else{
 		alert("접수등록 실패");
@@ -88,7 +91,7 @@ function postAjaxJson2(jobCode,fn,clientData="") {
 	let ajax = new XMLHttpRequest();
 	ajax.onreadystatechange = function() {
 		if (ajax.readyState == 4 && ajax.status == 200) {
-			window[fn];
+			window[fn](ajax.responseText);
 		}
 	}
 	ajax.open("POST", jobCode);
