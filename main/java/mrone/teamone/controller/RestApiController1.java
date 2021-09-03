@@ -23,8 +23,8 @@ public class RestApiController1 {
 
 	
 	@PostMapping("/clientOrder")
-	public String clientOrderApi(@RequestBody ClientOrderBean co){
-		//System.out.println(co.getCl_Pwd()+co.getOsclCode());
+	public String clientOrderApi(@ModelAttribute ClientOrderBean co){
+		System.out.println(co.getOs_clcode());
 		System.out.println("in Entrance");
 		return "test";
 	}

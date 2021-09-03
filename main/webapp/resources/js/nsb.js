@@ -1,16 +1,42 @@
 function receiveOrderControll(){
 	
-	let spcode = document.getElementsByName("RE_SPCODE")[0];
-	let f = makeForm("/SupplyNSB/getSupplyReceiveWaitOrderList","post");
-	
-	f.appendChild(spcode);
-	document.body.append(f);
-	
-	
-	f.submit();
-	alert("js도착")
+	postAjaxJson('getSupplyReceiveWaitOrderList','getReceiveList');
 }
 
+function getReceiveList(jsonData){
+	console.log(jsonData);
+		let orderHtml = "<div>주문 접수 리스트</div>";
+		let orderList = document.getElementById("orderList");		
+	
+		for(i=0; i<jsonData.length; i++){
+			orderHtml += "<div class = 'orderlist'>" +"주문코드:"+jsonData[i].re_code+"고객사코드:"+ jsonData[i].re_clcode+ "공급사코드:"+jsonData[i].re_spcode+ "주문날짜:"+jsonData[i].re_date+ "주문상태:"+jsonData[i].re_state+"</div>";			
+			orderHtml += "<div class='recode' onclick='callReceiveListD(\""+jsonData[i].re_code+"\")'>상세보기</div>";		
+		}
+		orderList.innerHTML = orderHtml;
+}
+
+function callReceiveListD(recode){
+		
+		let sendJsonData = [];
+		sendJsonData.push({re_code:recode});
+		let clientData = JSON.stringify(sendJsonData);
+		alert(clientData);
+		postAjaxJson('getSupplyReceiveWaitOrderListD','getReceiveListD',clientData);
+		
+}
+
+
+function getReceiveListD(jsonData){
+		let orderHtml = "<div>상세내역</div>";
+		let orderList = document.getElementById("orderListD");	
+		console.log(jsonData);
+		for(i=0; i<jsonData.length; i++){
+		orderHtml += "<div class = 'orderlist'>" +"공급사코드:"+jsonData[i].rd_prspcode+ " 주문코드:"+ jsonData[i].rd_recode+ "상품코드:"+jsonData[i].rd_prcode+ "주문수량:"+jsonData[i].rd_quantity+ "주문상태:"+jsonData[i].rd_stcode+"</div>";
+		
+		}			
+		
+		orderList.innerHTML = orderHtml;
+}
 	
 function getAjax(jobCode,fn,clientData=""){
         	let ajax = new XMLHttpRequest();

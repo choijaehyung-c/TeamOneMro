@@ -4,17 +4,21 @@ package mrone.teamone.controller;
 
 
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import mrone.supply.service.SupplyServiceEntrance;
 import mrone.teamone.auth.Authentication;
@@ -22,7 +26,7 @@ import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.utill.Encryption;
 
 
-@Controller
+@RestController
 @RequestMapping("/SupplyNSB")
 public class OneControllerNSB {
 	ModelAndView mav = null;
@@ -43,10 +47,18 @@ public class OneControllerNSB {
 	}
 	
 	@PostMapping("/getSupplyReceiveWaitOrderList")
-	public ModelAndView supplyReceiveWaitOrderList(RequestOrderBean rb) {
+	public List<RequestOrderBean> supplyReceiveWaitOrderList() {
+		List<RequestOrderBean> reList = null;
+		reList = sse.RequestWaitOrderListCtl();
+		return reList;
 		
-		mav = sse.RequestWaitOrderListCtl(rb);
-		return mav;
+	}
+	
+	@PostMapping("/getSupplyReceiveWaitOrderListD")
+	public List<RequestOrderBean> supplyReceiveWaitOrderListD(@RequestBody List<RequestOrderBean> list ) {
+		
+		System.out.println("dd");
+		return sse.RequestWaitOrderListCtlD(list.get(0));
 		
 	}
 }

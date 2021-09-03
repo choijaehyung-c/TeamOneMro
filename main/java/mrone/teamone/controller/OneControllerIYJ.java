@@ -2,13 +2,13 @@ package mrone.teamone.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.mro.service.MroServiceEntrance;
-import mrone.teamone.beans.OrderDetailBean;
+import mrone.supply.service.SupplyServiceIYJ;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -19,6 +19,10 @@ public class OneControllerIYJ {
 	ModelAndView mav;
 	@Autowired
 	MroServiceEntrance mse;
+	
+	@Autowired
+	SupplyServiceIYJ ssin;
+	
 	@Autowired
 	private ProjectUtils pu;
 	@Autowired
@@ -38,6 +42,25 @@ public class OneControllerIYJ {
 		mav = mse.ClientListCtl();
 		return mav;
 	}
+	
+	
+	//공급사 반품리스트 뽑아오는 메서드
+	@GetMapping("/supplyReceiveRefundListForm")
+	public ModelAndView supplyReceiveRefundListForm() {
+		System.out.println("공급사 반품리스트");
+		mav = ssin.supplyReceiveRefundListForm();
+		return mav;
+	}
+	
+	//공급사 교환리스트 뽑아오는 메서드
+	@GetMapping("/supplyReceiveExchangeListForm")
+	public ModelAndView supplyReceiveExchangeListForm() {
+		System.out.println("공급사 교환리스트");
+		mav = ssin.supplyReceiveExchangeListForm();
+		return mav;
+	}
+	
+	
 	
 //	@PostMapping("/mroOrderListForm")
 //	public ModelAndView mroOrderListForm() {
