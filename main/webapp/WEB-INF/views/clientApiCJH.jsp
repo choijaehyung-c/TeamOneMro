@@ -24,8 +24,8 @@
 </head>
 <body>
 
-Client id<input type="text" value="" name="OS_CLCODE"/><br>
-Client pwd<input type="text" value="" name="CL_PWD"/><br>
+Client id<input type="text" value="" name="os_clcode"/><br>
+Client pwd<input type="text" value="" name="cl_pwd"/><br>
 
 
 <button onclick="modalOn()">모달온</button>
