@@ -181,11 +181,11 @@ function ReceiveRefundDetail(oscode){
 	let sendJsonData = [];
 	sendJsonData.push({os_code:oscode});
 	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('/vue2/mroGetExchangeDetail','getExchangeDetailListM','j',clientData);
+	postAjaxJson('/vue2/supplyReceiveAsDetail','getAsDetailListS','j',clientData);
 	alert(clientData);
 }
 
-function ReceiveExchangeDetail(){
+function getAsDetailListS(){
 	let list2 = document.getElementsByName("exchangeList")[0];
 	console.log(list2);
 }
