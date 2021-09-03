@@ -25,8 +25,8 @@ public class RestApiController1 {
 	@PostMapping("/clientOrder")
 	public String clientOrderApi(@RequestBody ClientOrderBean co){
 		System.out.println(co.getOs_clcode()+co.getOd().size());
-		System.out.println("in Entrance");
-		return cse.clientRequestOrder(co);
+		System.out.println("in Entrance");//cse.clientRequestOrder(co)
+		return "한글";
 	}
 	
 	@PostMapping("/clientRefund")
