@@ -15,4 +15,6 @@ public class ProductBean {
 	private String pr_origin;
 	private String pr_spbkind;
 	private String pr_stcode;
+	private String cate;
+	private String cate_name;
 }
