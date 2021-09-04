@@ -16,15 +16,28 @@ public class SupplyDaoIYJ {
 	@Autowired
 	SqlSessionTemplate sql;
 
-	List<MroOrderDetailBean> getRefundListSp(MroOrderDetailBean mod) {
-		List<MroOrderDetailBean> list = sql.selectList("getRefundListSp",mod);
-		
+	List<MroOrderBean> getRefundListSp(MroOrderDetailBean mod) {
+		List<MroOrderBean> list = sql.selectList("getRefundListSp",mod);
+		//System.out.println(list);
 		return list;
 	}
 
 	 List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo) {
 		List<MroOrderDetailBean> list = sql.selectList("supplyReceiveAsDetail",mo);
-		return null;
+		return list;
 	}
+
+	 boolean supplyResponseRefund(MroOrderBean mo) {
+		
+		return this.convertToBoolean(sql.update("supplyResponseRefund", mo));
+	}
+	 
+	 List<MroOrderDetailBean> supplyOCInfo(MroOrderBean mo) {
+		 return sql.selectList("supplyOCInfo",mo);
+	 }
+	 
+	 boolean convertToBoolean(int data) {
+		 return data>0?true:false;
+	 }
 
 }

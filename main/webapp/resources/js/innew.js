@@ -41,24 +41,26 @@ function supplyList(){
 
 //mro에서 주문대기리스트 불러오기
 function mroOrderList(){
-	
 	postAjaxJson('vue2/mroOrderListForm','getWaitOrderListM','j',clientData="");
-	
 }
 
 //주문목록 찍어주는 펑션
 function getWaitOrderListM(data){
 	
-	ordervue.orderListResponse(data);
+	//ordervue.orderListResponse(data);
 	
-	/*let space = document.getElementById("mOrderList");
+	let space = document.getElementById("mOrderList");
 	let HTML = "<div>주문목록</div>";
 	
+	if(data!=""){
 	for(i=0; i<data.length; i++){
-		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";
-				
-		space.innerHTML = HTML;
-	}*/
+		HTML += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";		
+	   }
+ 	}else{
+		HTML = "<div>주문목록이 없습니다.</div>";
+	}
+	space.innerHTML = HTML;
+	
 }
 
 //주문번호의 상세정보 불러오기
@@ -71,7 +73,7 @@ function getDetail(data){
 function getOrderDetailM(data){
 	let space = document.getElementById("mOrderDetail");
 	
-	let HTML = ""
+	let HTML = "";
 	for(i=0; i<data.length; i++){
 	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
 	
@@ -107,14 +109,15 @@ function getRefundDetail(data){
 }
 
 function getRefundDetailListM(data){
-	
 	let space = document.getElementById("mOrderDetail");
 	
-	let HTML = ""
+	let HTML = "";
+
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name  + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
 	
 	}
+ 	
 	space.innerHTML=HTML;
 	
 }
@@ -130,11 +133,14 @@ function getExchageListM(data){
 	let space2 = document.getElementById("mOrderList");
 	let contents = "<div>교환목록</div>";
 	
-	for(i=0; i<data.length; i++){
-		contents += "<div id='exchangeList' name='exchangeList' onClick='getExchangeDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";
-				
-		space2.innerHTML = contents;
- }
+	if(data!=""){
+	 for(i=0; i<data.length; i++){
+		contents += "<div id='orderList' name='orderList'  onClick='getDetail("+data[i].os_code+")'>"+"[주문날짜 : " + data[i].os_date +"] [주문번호 : " + data[i].os_code+ "] [고객사 : " + data[i].cl_name + "] [상태 : " + data[i].os_state +"]</div>";		
+	   }
+ 	}else{
+		contents = "<div>교환목록이 없습니다.</div>";
+	}
+	space2.innerHTML = contents;
 }
 
 function getExchangeDetail(data){
@@ -158,37 +164,62 @@ function getExchangeDetailListM(data){
 
 function supplyReceiveRefundListForm(){
 	postAjaxJson('supplyReceiveRefundListForm','supplyRefundList','j');
-	
 }
 
 function supplyRefundList(data){
-	alert(data);
 	console.log(data);
 	let space = document.getElementById("refundSpace");
 	
 	let html = "<div>반품목록</div>";
 	
 	for(i=0; i<data.length; i++){
-		html += "<div onClick='ReceiveRefundDetail(\""+data[i].os_code+"\")'>"+ "주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state +"</div>";
+		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].os_code+"','RR')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
 	}
 	
 	space.innerHTML=html;
 }
 
 
-function ReceiveRefundDetail(oscode){
-	
-	let sendJsonData = [];
-	sendJsonData.push({os_code:oscode});
+function ReceiveRefundDetail(oscode,osstate){
+
+	let sendJsonData = {os_code:oscode,os_state:osstate};
 	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('/vue2/supplyReceiveAsDetail','getAsDetailListS','j',clientData);
-	alert(clientData);
+	postAjaxJson('supplyReceiveAsDetail','getAsDetailListS','j',clientData);
+
 }
 
-function getAsDetailListS(){
-	let list2 = document.getElementsByName("exchangeList")[0];
-	console.log(list2);
+
+function getAsDetailListS(data){
+	let list = document.getElementById("detailSpace");
+	let html = "<div><주문코드 : "+data[0].od_oscode+" 반품내역></div>";
+	
+	for(i=0; i<data.length; i++){
+	 html += "<div> 상품코드: "+data[i].od_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].od_quantity+ "  상태: "+data[i].od_stcode +"</div>";
+	}
+	
+	 html += "<div onClick=\"responseRefund('"+data[0].od_oscode+"','RC')\">수락</div>";
+     html += "<div onClick=\"responseRefund('"+data[0].od_oscode+"','FF')\">거절</div>";
+
+	list.innerHTML=html;
 }
+
+
+function responseRefund(oscode, osstate){
+	alert(oscode);
+	alert(osstate);
+	let sendJsonData = {os_code:oscode, os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyResponseRefund','refundResult', 'j', clientData);
+	alert(clientData);
+	
+}
+
+
+
+
+
+
+
 /*const orderList = new Vue({
 	el: "#mOrderList",
 	data:{

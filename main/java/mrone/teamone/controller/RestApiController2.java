@@ -60,7 +60,7 @@ public class RestApiController2 {
 	public List<MroOrderBean> mroExchangeListForm(){
 		//System.out.println("교환요청");
 		
-		return mse.getExchangeListCtl();		
+		return mse.getExchangeListCtl();
 	}
 	
 	//교환 요청 상세보기
@@ -71,12 +71,7 @@ public class RestApiController2 {
 	}
 	
 	
-	//supply 반품디테일
-	@PostMapping("/supplyReceiveAsDetail")
-	public List<MroOrderDetailBean> supplyReceiveAsDetail(@RequestBody MroOrderBean mo){
-		
-		return null;
-	}
+
 	
 	
 	

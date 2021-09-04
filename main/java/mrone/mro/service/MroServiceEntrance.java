@@ -39,7 +39,10 @@ public class MroServiceEntrance {
 	//mro 주문대기리스트
 	public List<MroOrderBean> getWaitOrderListCtl() {
 		List<MroOrderBean> list =mseIYJ.getWaitOrderList(); 
-		//System.out.println(list);
+		
+		if(list.isEmpty()) {
+			System.out.println("주문 대기 리스트가 없습니다.");
+		}
 		return list;
 	}
 	
@@ -54,7 +57,10 @@ public class MroServiceEntrance {
 	//반품요청 리스트
 	public List<MroOrderBean> getRefundListCtl() {
 		List<MroOrderBean> list = mseIYJ.getRefundList();
-		//System.out.println(list);
+		
+		if(list.isEmpty()) {
+			System.out.println("반품요청된 목록이 없습니다.");
+		}
 		return list;
 	}
 	
@@ -62,6 +68,13 @@ public class MroServiceEntrance {
 	//교환요청 리스트
 	public List<MroOrderBean> getExchangeListCtl() {
 		List<MroOrderBean> list = mseIYJ.getExchangeList();
+		String message = "";
+		
+		if(list.isEmpty()) {
+			message = "교환요청된 목록이 없습니다.";
+		}else {
+			return list;
+		}
 		//System.out.println(list);
 		return list;
 	}

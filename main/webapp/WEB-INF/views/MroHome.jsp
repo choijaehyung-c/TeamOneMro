@@ -29,6 +29,9 @@
 	
 	<div id="refundSpace"></div>
 	<div name="exchangeList" onClick="ReceiveExchangeDetail()"> 공급사 교환목록 : ${exchangeList} </div>
+	
+	
+	<div id="detailSpace" style="margin-top:50px;"></div>
 	  
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
