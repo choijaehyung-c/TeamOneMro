@@ -51,7 +51,16 @@ public class MroServiceCtlYJ {
 	List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		List<MroOrderDetailBean> od;
 		od = dao.getOrderDetail(osCode);
-		System.out.println(od);
+		
+		for(int i=0; i<od.size(); i++) {
+			if(od.get(i).getOd_stcode().equals("OC")) {
+				od.get(i).setOd_stcode("구매확정");
+			}else if(od.get(i).getOd_stcode().equals("RR")) {
+				od.get(i).setOd_stcode("반품요청");
+			}else if(od.get(i).getOd_stcode().equals("ER")) {
+				od.get(i).setOd_stcode("교환요청");
+			}
+		}
 		
 		return od;
 	}

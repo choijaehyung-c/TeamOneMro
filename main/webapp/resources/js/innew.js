@@ -75,7 +75,7 @@ function getOrderDetailM(data){
 	
 	let HTML = "";
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity  +"</div>";
 	
 	}
 	space.innerHTML=HTML;
@@ -114,8 +114,7 @@ function getRefundDetailListM(data){
 	let HTML = "";
 
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
-	
+	HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity + "[상태 - " + data[i].od_stcode + "]" + "</div>";
 	}
  	
 	space.innerHTML=HTML;
@@ -154,14 +153,14 @@ function getExchangeDetailListM(data){
 	
 	let HTML = "";
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity + "[상태 - " + data[i].od_stcode + "]" +"</div>";
 	
 	}
 	space.innerHTML= HTML;
 	
 }
 
-
+//공급사쪽
 function supplyReceiveRefundListForm(){
 	postAjaxJson('supplyReceiveRefundListForm','supplyRefundList','j');
 }
@@ -205,13 +204,28 @@ function getAsDetailListS(data){
 
 
 function responseRefund(oscode, osstate){
-	alert(oscode);
-	alert(osstate);
+	//alert(oscode);
+	//alert(osstate);
+	if(osstate=="RC"){
+	if(confirm("주문번호"+ oscode+"의 반품요청을 수락하시겠습니까?")){
 	let sendJsonData = {os_code:oscode, os_state:osstate};
 	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('supplyResponseRefund','refundResult', 'j', clientData);
-	alert(clientData);
-	
+	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
+	}
+}else{
+	if(confirm("주문번호" + oscode+ "의 반품요청을 거절하시겠습니까?")){
+	let sendJsonData = {os_code:oscode, os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
+	}
+}
+}
+
+function refundResult(message){
+
+	if(message!=""){
+		alert(message);
+	}
 }
 
 
