@@ -2,12 +2,15 @@ package mrone.teamone.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -69,11 +72,13 @@ public class OneControllerIYJ {
 	}
 	
 	//공급사 교환리스트 뽑아오는 메서드
-	@GetMapping("/supplyReceiveExchangeListForm")
-	public ModelAndView supplyReceiveExchangeListForm() {
+	@PostMapping("/supplyReceiveExchangeListForm")
+	@ResponseBody
+	public List<MroOrderBean> supplyReceiveExchangeListForm() {
+		List<MroOrderBean> list;
 		System.out.println("공급사 교환리스트");
-		mav = ssin.supplyReceiveExchangeListForm();
-		return mav;
+		list = ssin.supplyReceiveExchangeListForm();
+		return list;
 	}
 	
 	//supply 반품디테일
@@ -90,6 +95,23 @@ public class OneControllerIYJ {
 	public String supplyResponseRefund(@RequestBody MroOrderBean mo){
 		//System.out.println(mo);
 		return ssin.supplyResponseRefund(mo);
+	}
+	
+	//supply 교환 응답
+	@PostMapping("/supplyResponseExchange")
+	@ResponseBody
+	public String supplyResponseExchange(@RequestBody MroOrderBean mo){
+		//System.out.println(mo);
+		return ssin.supplyResponseExchange(mo);
+	}
+	
+	//supply 검색결과
+	@PostMapping("/supplySearchAs")
+	@ResponseBody
+	public String supplySearchAs(@RequestBody MroOrderBean mo){
+		System.out.println("word");
+		System.out.println(mo);
+		return ssin.supplySearchAs(mo);
 	}
 	
 	

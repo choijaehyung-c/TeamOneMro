@@ -63,18 +63,22 @@ public class SupplyServiceIYJ {
 		return list;
 	}
 
-	public ModelAndView supplyReceiveExchangeListForm() {
-		mav = new ModelAndView();
+	public List<MroOrderBean> supplyReceiveExchangeListForm() {
 		mod= new MroOrderDetailBean();
-		List<MroOrderDetailBean> list;
+		List<MroOrderBean> list;
 
 		mod.setOd_prspcode("KR001D"); //Session이 없어서 강제로 넣어줌(교환있는 회사)
 		mod.setOs_state("ER");
-		mav.setViewName("MroHome");
-		mav.addObject("exchangeList",dao.getRefundListSp(mod));
-		//System.out.println(dao.getRefundListSp(mod));
 
-		return mav;
+		list = dao.getRefundListSp(mod);
+
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOs_state().equals("ER")) {
+				list.get(i).setOs_state("교환요청");
+			}
+		}
+
+		return list;
 	}
 
 	//반품 또는 교환 디테일
@@ -92,6 +96,8 @@ public class SupplyServiceIYJ {
 				list.get(i).setOd_stcode("반품처리");
 			}else if(list.get(i).getOd_stcode().equals("OR")) {
 				list.get(i).setOd_stcode("주문요청");
+			}else if(list.get(i).getOd_stcode().equals("ER")) {
+				list.get(i).setOd_stcode("교환요청");
 			}
 		}
 
@@ -107,25 +113,26 @@ public class SupplyServiceIYJ {
 		//System.out.println(mo);
 		if(mo.getOs_state().equals("RC")) {
 			System.out.println("수락");
-			//원래 있었던 주문코드 OD : RR->RC로 업데이트됐고
+			//1. 원래 있었던 주문코드 OrderDetail테이블 : RR->RC로 업데이트됐고
 			if(dao.supplyResponseRefund(mo)) {
-				//원래 있었언 주문코드 OS : RR->RC 업데이트 됐고,
+				//2. 원래 있었던 주문코드 Orders테이블 : RR->RC 업데이트 됐고,
 				if(dao.supplyResponseRefundOS(mo)) {
-					//새로운 주문 코드 생성OS
+					//3. 새로운 주문코드 생성OS(parent먼저)
 					if(this.insNewOrders(mo)) {
 						System.out.println("ins성공!!!");
-						this.setTransactionResult(true); // commit완료
-						//새로운 주문코드 OD
+						
+						//4. 새로운 주문코드 생성 OD
 						if(this.insNewOrderDetail(originOsCode)) {
 							message="반품요청이 정상적으로 처리되었습니다.";
 							System.out.println("반품처리 완성");
-
+							this.setTransactionResult(true); // commit완료
 						}
 					}else {
-						this.setTransactionResult(false); //rollback
+						
 					}
 				}
 			}else {
+				this.setTransactionResult(false); //rollback
 				System.out.println("업데이트 실패");
 				message = "반품처리에 실패했습니다. 잠시후 다시 시도해주세요";
 			}
@@ -200,6 +207,31 @@ public class SupplyServiceIYJ {
 	}
 
 
+	//교환 요청에 대한 응답 
+	public String supplyResponseExchange(MroOrderBean mo) {
+		String message="";
+		
+		//교환요청에 수락이면
+		if(mo.getOs_state().equals("EC")) {
+			System.out.println("교환수락");
+		
+		}else {//교환요청이 거절이면 (EE)
+			System.out.println("교환거절");
+			
+		}
+		
+		
+		return message;
+	}
+	
+	
+	//검색결과
+	public String supplySearchAs(MroOrderBean mo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	//transaction Configuration
 	private void setTransactionConf(int propagation, int isolationLevel, boolean isRead) {
 		def = new DefaultTransactionDefinition();
@@ -219,5 +251,6 @@ public class SupplyServiceIYJ {
 			tx.rollback(status);
 		}
 	}
+
 
 }
