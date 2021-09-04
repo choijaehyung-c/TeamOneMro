@@ -226,9 +226,25 @@ public class SupplyServiceIYJ {
 	
 	
 	//검색결과
-	public String supplySearchAs(MroOrderBean mo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MroOrderBean> supplySearchAs(MroOrderBean mo) {
+		List<MroOrderBean> list;
+		list = dao.supplySearchAs(mo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOs_state().equals("OR")) {
+				list.get(i).setOs_state("주문요청");
+			}if(list.get(i).getOs_state().equals("RR")) {
+				list.get(i).setOs_state("반품요청");
+			}if(list.get(i).getOs_state().equals("ER")) {
+				 list.get(i).setOs_state("교환요청");
+			}if(list.get(i).getOs_state().equals("OC")) {
+				list.get(i).setOs_state("구매확정");
+			}
+			
+		}
+			
+		
+		return list;
 	}
 
 	

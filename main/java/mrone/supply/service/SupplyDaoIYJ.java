@@ -100,6 +100,11 @@ public class SupplyDaoIYJ {
 		return this.convertToBoolean(list);
 	}
 	
+	List<MroOrderBean> supplySearchAs(MroOrderBean mo){
+		
+		return sql.selectList("supplySearchAs", mo);
+	}
+	
 	
 	
 	boolean convertToBoolean(int data) {

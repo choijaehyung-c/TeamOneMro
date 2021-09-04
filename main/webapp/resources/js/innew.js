@@ -297,8 +297,24 @@ function supplySearch(){
 	postAjaxJson('supplySearchAs','supplySearchResult','j', clientData);
 }
 
-function supplySearchResult(result){
-	alert(result);
+function supplySearchResult(data){
+	let space = document.getElementById("refundSpace");
+	
+	let html = "<div>검색목록</div>";
+	
+	if(data!=""){
+	for(i=0; i<data.length; i++){
+		if(data[i].os_state =="교환요청"){
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].os_code+"','ER')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		}else{
+		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].os_code+"','RR')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		}
+	  }
+	}else{
+		html += "검색결과가 없습니다.";
+	}
+	
+	space.innerHTML=html;
 }
 
 

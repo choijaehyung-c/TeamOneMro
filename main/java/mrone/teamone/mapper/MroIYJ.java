@@ -23,4 +23,5 @@ public interface MroIYJ {
 	void getCount();
 	void insNewOrders(MroOrderBean mo);
 	void insNewOrderDetail(List<MroOrderDetailBean> mod);
+	void supplySearchAs(MroOrderBean mo);
 }
