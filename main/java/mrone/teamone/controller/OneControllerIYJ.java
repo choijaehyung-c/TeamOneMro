@@ -80,7 +80,7 @@ public class OneControllerIYJ {
 	@PostMapping("/supplyReceiveAsDetail")
 	@ResponseBody
 	public List<MroOrderDetailBean> supplyReceiveAsDetail(@RequestBody MroOrderBean mo){
-		System.out.println(mo);
+		//System.out.println(mo);
 		return ssin.supplyReceiveAsDetail(mo);
 	}
 	

@@ -12,7 +12,7 @@ import mrone.teamone.beans.MroOrderDetailBean;
 
 @Repository
 public class SupplyDaoIYJ {
-	
+
 	@Autowired
 	SqlSessionTemplate sql;
 
@@ -22,22 +22,41 @@ public class SupplyDaoIYJ {
 		return list;
 	}
 
-	 List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo) {
+	List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo) {
 		List<MroOrderDetailBean> list = sql.selectList("supplyReceiveAsDetail",mo);
 		return list;
 	}
 
-	 boolean supplyResponseRefund(MroOrderBean mo) {
-		
+	boolean supplyResponseRefund(MroOrderBean mo) {
+
 		return this.convertToBoolean(sql.update("supplyResponseRefund", mo));
 	}
-	 
-	 List<MroOrderDetailBean> supplyOCInfo(MroOrderBean mo) {
-		 return sql.selectList("supplyOCInfo",mo);
-	 }
-	 
-	 boolean convertToBoolean(int data) {
-		 return data>0?true:false;
-	 }
+
+	List<MroOrderDetailBean> supplyOCInfo(MroOrderBean mo) {
+		return sql.selectList("supplyOCInfo",mo);
+	}
+
+	//오늘날짜 몇번까지 만들어졌는지 확인 + 숫자 증가
+	String getCount() {
+
+		int number;
+
+		if(sql.selectOne("getCount")!=null) {
+			number = sql.selectOne("getCount");
+		}else {
+			number = 0;
+		}
+		String result = (number+1) + ""; 
+
+		for(int add = result.length(); add<5; add++) {
+			result = "0" + result;
+		}
+		System.out.println(result);
+		return result;
+	}
+
+	boolean convertToBoolean(int data) {
+		return data>0?true:false;
+	}
 
 }

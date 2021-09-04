@@ -51,14 +51,15 @@
     </select>
     
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
-     <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >
-    	SELECT OSV.OS_CODE,
+     <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >		
+		    SELECT OSV.OS_CODE,
        		OSV.OS_CLCODE,
       	 	OSV.CL_NAME,
        		OSV.OS_DATE,
-       		OSV.OS_STATE
+       		ODV.OD_STCODE AS OS_STATE
 		FROM ORDERDETAILVIEW ODV INNER JOIN ORDERSVIEW OSV ON ODV.OD_OSCODE = OSV.OS_CODE
-		WHERE OS_STATE=#{os_state} AND OD_PRSPCODE= #{od_prspcode}
+		WHERE OD_STCODE=#{os_state} AND OD_PRSPCODE=#{od_prspcode}
+        GROUP BY OSV.OS_CODE ,OSV.OS_CLCODE, OSV.CL_NAME, OSV.OS_DATE, ODV.OD_STCODE
     </select>
     
     <select id="supplyReceiveAsDetail" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
@@ -72,6 +73,14 @@
     
     <!-- 구매확정이 있으면, 그 레코드의 정보들을 가져와라-->
 	<select id="supplyOCInfo" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
-		SELECT * FROM OD WHERE OD_OSCODE=#{os_code}
+		SELECT * FROM OD WHERE OD_OSCODE=#{os_code} AND OD_STCODE='OC'
 	</select>
+	
+	<!-- 오늘날짜의 마지막 주문코드 -->
+	<select id="getCount" resultType="int">
+		SELECT
+		MAX(TO_NUMBER(SUBSTR(OS_CODE,7,5))) FROM OS WHERE SUBSTR(OS_CODE,1,6) =
+		TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+	
     </mapper>

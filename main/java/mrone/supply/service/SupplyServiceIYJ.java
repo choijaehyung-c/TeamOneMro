@@ -84,7 +84,7 @@ public class SupplyServiceIYJ {
 				list.get(i).setOd_stcode("반품처리");
 			}
 		}
-		System.out.println(list);
+		
 		return list;
 	}
 
@@ -93,7 +93,7 @@ public class SupplyServiceIYJ {
 		String message="";
 		List<MroOrderDetailBean> ocList;
 		
-		System.out.println(mo);
+		//System.out.println(mo);
 		if(mo.getOs_state().equals("RC")) {
 			System.out.println("수락");
 			//원래 있었던 주문코드 RR->RC로 업데이트됐고
@@ -104,10 +104,11 @@ public class SupplyServiceIYJ {
 				for(int i=0; i<ocList.size(); i++) {		
 					if(ocList.get(i).getOd_stcode().equals("OC")) {
 						//새로운 주문코드를 만든다. 그 주문코드의 oc의 정보들을 넣기 od,os인설트
-						SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-						Calendar cal = Calendar.getInstance();
+						mo.setOs_code(dao.getCount()); //오늘날짜+1 의 새로운 주문코드 생성
+						System.out.println(mo.getOs_code());
+						System.out.println();
 						System.out.println("반품처리 완료");
-						//mo.setOs_code();
+						
 					message="반품처리가 수락되었습니다.";
 				}else {
 					//System.out.println("새로운 주문서번호가없음");
@@ -129,6 +130,8 @@ public class SupplyServiceIYJ {
 		}		
 		return message;
 	}
+	
+	
 
 
 }

@@ -16,4 +16,5 @@ public interface MroIYJ {
 	void supplyReceiveAsDetail(MroOrderBean mo);
 	void supplyResponseRefund(MroOrderBean mo);
 	void supplyOCInfo(MroOrderBean mo);
+	void getCount();
 }
