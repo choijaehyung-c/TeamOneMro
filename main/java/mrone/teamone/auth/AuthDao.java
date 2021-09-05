@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mrone.teamone.beans.AccessBean;
+import mrone.teamone.beans.AccessHistoryBean;
 import mrone.teamone.beans.MroAccessBean;
 
 @Repository
@@ -14,21 +15,17 @@ public class AuthDao {
 	SqlSessionTemplate sql;
 	
 	// 해당 아이디 단일 로그인 체크
-	boolean getAccessHistorySum(MroAccessBean ma){
-		return convertToBoolean(sql.selectOne("getAccessHistorySum",ma));
+	boolean getAccessHistorySum(AccessHistoryBean ah){
+		return convertToBoolean(sql.selectOne("getAccessHistorySum",ah));
 	}
 
 	// 해당 아이디 아이피 브라우저 로그아웃전 체크
-	boolean getLogOutAccessHistorySum(MroAccessBean ma){
-		return convertToBoolean(sql.selectOne("getLogOutAccessHistorySum",ma));
+	boolean getLogOutAccessHistorySum(AccessHistoryBean ah){
+		return convertToBoolean(sql.selectOne("getLogOutAccessHistorySum",ah));
 	}
 	
-	String getLastAccessInfo(MroAccessBean ma) {
-		return sql.selectOne("getLastAccessInfo",ma);
-	}
-	
-	boolean forceLogout(MroAccessBean ma) {
-		return convertToBoolean(sql.insert("forceLogout", ma));
+	String getLastAccessInfo(AccessHistoryBean ah) {
+		return sql.selectOne("getLastAccessInfo",ah);
 	}
 	
 	boolean isUserId(AccessBean ab) {
@@ -42,9 +39,14 @@ public class AuthDao {
 	String getGrade(AccessBean ab){
 		return sql.selectOne("", ab);
 	}
-	boolean insAccessHistory(MroAccessBean ma) {
-		System.out.println(ma.getAhm_browser()+ma.getAhm_code()+ma.getAhm_method()+ma.getAhm_privateip()+ma.getAhm_publicip()+ma.getMd_pwd());
-		return convertToBoolean(sql.insert("insAccessHistory", ma));
+	
+	boolean forceLogout(AccessHistoryBean ah) {
+		return convertToBoolean(ah.getAh_table().equals("AHM")?sql.insert("forceLogoutMro", ah):sql.insert("forceLogoutSupply", ah));
+	}
+	
+	boolean insAccessHistory(AccessHistoryBean ah) {
+		System.out.println(ah.getAh_browser()+ah.getAh_code()+ah.getAh_method()+ah.getAh_privateip()+ah.getAh_publicip()+ah.getAh_pwd());
+		return convertToBoolean(ah.getAh_table().equals("AHM")? sql.insert("insAccessHistoryMro", ah): sql.insert("insAccessHistorySupply", ah));
 	}
 	
 	private boolean convertToBoolean(int data) {

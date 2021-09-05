@@ -9,6 +9,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.auth.Authentication;
+import mrone.teamone.beans.AccessHistoryBean;
 import mrone.teamone.beans.MroAccessBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
@@ -32,34 +34,27 @@ public class OneController {
 	@Autowired
 	Authentication auth;
 	@Autowired
-	private ProjectUtils pu;
-	@Autowired
 	Encryption enc;
 	
 	@RequestMapping(value = "/", method = {RequestMethod.POST,RequestMethod.GET} )
-	public ModelAndView home(@CookieValue(value = "key", required = false) Cookie ck) {
+	public ModelAndView home(@CookieValue(value = "keykey", required = false)Cookie ck,HttpServletResponse res) {
 		mav = auth.start(ck);
+		if(ck !=null)res.addCookie(ck);
 		return mav;
 	}
 	
 	@PostMapping("/AccessMro")
-	public ModelAndView accessMro(@ModelAttribute MroAccessBean ma,HttpServletResponse response) {
-		mav = auth.accessMroCtl(ma);
-		try {
-			if(pu.getAttribute("ck").equals(ma.getAhm_code())) {
-			Cookie cookie = new Cookie("key", enc.aesEncode(ma.getAhm_code(),"session"));
-			cookie.setMaxAge(36000); // 쿠키 유효기간 설정 (초 단위)
-			response.addCookie(cookie);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public ModelAndView accessMro(@ModelAttribute AccessHistoryBean ah,HttpServletResponse res) {
+		Cookie ck = new Cookie("keykey",null);
+		mav = auth.accessMroCtl(ah,ck);
+		if(ck.getValue()!=null) res.addCookie(ck);
 		return mav;
 	}
 	
 	@PostMapping("/AccessOutMro")
-	public ModelAndView accessOutMro(@ModelAttribute MroAccessBean ma) {
-		mav = auth.accessOutMroCtl(ma);
+	public ModelAndView accessOutMro(@ModelAttribute AccessHistoryBean ah,@CookieValue(value = "keykey", required = false) Cookie ck,HttpServletResponse res) {
+		mav = auth.accessOutMroCtl(ah,ck);
+		res.addCookie(ck);
 		return mav;
 	}
 	
