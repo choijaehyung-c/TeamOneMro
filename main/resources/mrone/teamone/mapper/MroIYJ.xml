@@ -77,6 +77,16 @@
  		UPDATE OS SET OS_STATE = #{os_state} WHERE OS_CODE=#{os_code} AND OS_STATE='RR'
     </update>
     
+    <!-- 교환 OD 테이블 요청 -> 수락 또는 거절 -->
+      <update id="supplyResponseExchangeOD" parameterType="mrone.teamone.beans.MroOrderBean">
+    	UPDATE OD SET OD_STCODE=#{os_state} WHERE OD_OSCODE=#{os_code} AND OD_STCODE='ER'
+    </update>
+    
+    <!-- 교환 OS 테이블 요청 -> ER인거 업데이트 -->
+      <update id="supplyResponseExchangeOS" parameterType="mrone.teamone.beans.MroOrderBean">
+   		 UPDATE OS SET OS_STATE = #{os_state} WHERE OS_CODE=#{os_code} AND OS_STATE='ER'
+    </update>
+    
     <select id="supplyOSInfo" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderBean">
     	SELECT * FROM OS WHERE OS_CODE= #{os_code}
     </select>
@@ -86,6 +96,11 @@
 		SELECT * FROM OD WHERE OD_OSCODE= #{osCode} AND OD_STCODE='OC'
 	</select>
 	
+	<!-- 폐기된 애들이 있으면, 그 레코드의 정보들을 가져와라 -->
+	
+	<select id="supplyPDInfo" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean">
+		SELECT * FROM OD WHERE OD_OSCODE= #{osCode} AND OD_STCODE='PD'
+	</select>
 	<!-- 오늘날짜의 마지막 주문코드 -->
 	<select id="getCount" resultType="int">
 		SELECT
@@ -95,7 +110,7 @@
 	
 	<!-- OS에 새로운 주문코드+레코드 추가 -->
 	<insert id="insNewOrders" parameterType="mrone.teamone.beans.MroOrderBean">
-		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||#{os_code},#{os_clcode},SYSDATE,#{os_state})	
+		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},SYSDATE,#{os_state})	
 	</insert>
 	
 	<!-- OD에 새로운 주문코드+레코드 추가 -->

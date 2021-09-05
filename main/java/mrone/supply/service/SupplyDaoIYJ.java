@@ -28,12 +28,19 @@ public class SupplyDaoIYJ {
 	}
 
 	boolean supplyResponseRefund(MroOrderBean mo) {
-
 		return this.convertToBoolean(sql.update("supplyResponseRefund", mo));
 	}
 	
 	boolean supplyResponseRefundOS(MroOrderBean mo) {
 		return this.convertToBoolean(sql.update("supplyResponseRefundOS",mo));
+	}
+	
+	boolean supplyResponseExchangeOD(MroOrderBean mo) {
+		return this.convertToBoolean(sql.update("supplyResponseExchangeOD",mo));
+	}
+	
+	boolean supplyResponseExchangeOS(MroOrderBean mo) {
+		return this.convertToBoolean(sql.update("supplyResponseExchangeOS",mo));
 	}
 
 	//주문코드의 os정보
@@ -45,6 +52,10 @@ public class SupplyDaoIYJ {
 	 //주문코드의 od정보
 	List<MroOrderDetailBean> supplyOCInfo(String osCode) {
 		return sql.selectList("supplyOCInfo",osCode);
+	}
+	
+	List<MroOrderDetailBean> supplyPDInfo(String osCode) {
+		return sql.selectList("supplyPDInfo",osCode);
 	}
 	
 	//오늘날짜 몇번까지 만들어졌는지 확인 
@@ -66,7 +77,7 @@ public class SupplyDaoIYJ {
 		return result;
 	}
 
-	//오늘날짜 몇번까지 만들어졌는지 확인 + 숫자 증가
+	//오늘날짜 몇번까지 만들어졌는지 확인 + 숫자 증가 (시퀀스 때문에 사용할까 말까 상의해야함.)
 	String getCount() {
 
 		int number;

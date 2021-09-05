@@ -111,24 +111,28 @@ public class SupplyServiceIYJ {
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
 		//System.out.println(mo);
-		if(mo.getOs_state().equals("RC")) {
+		if(mo.getOs_state().equals("PD")) {
 			System.out.println("수락");
-			//1. 원래 있었던 주문코드 OrderDetail테이블 : RR->RC로 업데이트됐고
+			//1. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
 			if(dao.supplyResponseRefund(mo)) {
-				//2. 원래 있었던 주문코드 Orders테이블 : RR->RC 업데이트 됐고,
+				System.out.println(mo);
+				//2. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
 				if(dao.supplyResponseRefundOS(mo)) {
-					//3. 새로운 주문코드 생성OS(parent먼저)
-					if(this.insNewOrders(mo)) {
-						System.out.println("ins성공!!!");
-						
-						//4. 새로운 주문코드 생성 OD
-						if(this.insNewOrderDetail(originOsCode)) {
-							message="반품요청이 정상적으로 처리되었습니다.";
-							System.out.println("반품처리 완성");
-							this.setTransactionResult(true); // commit완료
+					//3. OS 테이블 : 새로운 주문코드 추가(parent먼저)(구매확정)
+					if(this.insNewOrdersOC(mo)) {
+						System.out.println("ins성공!!!");					
+						//4. OD 테이블 : 새로운 주문코드 추가(구매확정)
+						if(this.insNewOrderDetailOC(originOsCode)) {
+							//5. OS 테이블 : 새로운 주문코드 추가(반품처리)
+							if(this.insNewOrderRC(mo)) {
+								//6. OD 테이블 : 새로운 주문코드 추가 (반품처리)
+								if(this.insNewOrderDetailRC(originOsCode)) {
+									message="반품요청이 정상적으로 처리되었습니다.";
+									System.out.println("반품처리 완성");
+									this.setTransactionResult(true); // commit완료
+								}
+							}
 						}
-					}else {
-						
 					}
 				}
 			}else {
@@ -140,6 +144,7 @@ public class SupplyServiceIYJ {
 
 		}else {
 			//RR-> FF로 업데이트
+			System.out.println(mo);
 			if(dao.supplyResponseRefund(mo)) {
 				System.out.println("거절");
 				message = "반품요청이 거절되었습니다.";
@@ -149,29 +154,30 @@ public class SupplyServiceIYJ {
 	}
 
 
-	public boolean insNewOrders(MroOrderBean mo) {
+	//3. OS테이블에 OC구매확정된 레코드 추가
+	private boolean insNewOrdersOC(MroOrderBean mo) {
 		List<MroOrderBean> list;
 		boolean insert= false;
 
 		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
 		list = dao.supplyOSInfo(mo);
-		mo.setOs_code(dao.getCount());
+		//mo.setOs_code(dao.getCount());
 		mo.setOs_clcode(list.get(0).getOs_clcode());
 		mo.setOs_state("OC");
 
-		System.out.println("insNewOS : "+mo);
+		System.out.println("OS테이블 구매확정레코드 : "+mo);
 		if(dao.insNewOrders(mo)) {
-			System.out.println("ins성공");
+			System.out.println("구매확정 레코드 추가 성공(OS)");
 			insert=true;
 
 
 		}
-
 		return insert;
 	}
 
 
-	public boolean insNewOrderDetail(String osCode) {//Boolean
+	//4. OD에 구매확정된 애들이 모여있는 레코드 추가
+	private boolean insNewOrderDetailOC(String osCode) {//Boolean
 		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
 		List<MroOrderDetailBean> ocList;
 		boolean insert= false;
@@ -189,7 +195,7 @@ public class SupplyServiceIYJ {
 				result.setOd_prspcode(ocList.get(i).getOd_prspcode());
 				result.setOd_prcode(ocList.get(i).getOd_prcode());
 				result.setOd_quantity(ocList.get(i).getOd_quantity());
-				result.setOd_stcode(ocList.get(i).getOd_stcode());
+				result.setOd_stcode("OC");
 
 				mod.add(result);
 
@@ -207,47 +213,115 @@ public class SupplyServiceIYJ {
 	}
 
 
-	//교환 요청에 대한 응답 
-	public String supplyResponseExchange(MroOrderBean mo) {
-		String message="";
-		
-		//교환요청에 수락이면
-		if(mo.getOs_state().equals("EC")) {
-			System.out.println("교환수락");
-		
-		}else {//교환요청이 거절이면 (EE)
-			System.out.println("교환거절");
-			
+
+	//5. 반품처리 된 녀석들을 위한 OS테이블에 주문코드가 생김.
+	private boolean insNewOrderRC(MroOrderBean mo) {
+		List<MroOrderBean> list;
+		boolean insert= false;
+
+		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
+		list = dao.supplyOSInfo(mo);
+		//mo.setOs_code(dao.getCount());
+		mo.setOs_clcode(list.get(0).getOs_clcode());
+		mo.setOs_state("RC");
+
+		System.out.println("OS테이블 반품처리 레코드 : "+mo);
+		if(dao.insNewOrders(mo)) {
+			System.out.println("반품처리 레코드 성공 추가 성공(OS)");
+			insert=true;
 		}
+
+		return insert;
+	}
+	
+	//6. OD테이블에 RC를 위한 주문코드 레코드 추가
+	private boolean insNewOrderDetailRC(String osCode) {
+		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
+		List<MroOrderDetailBean> ocList;
+		boolean insert= false;
 		
-		
-		return message;
+		System.out.println("insOD : "+osCode);
+
+		//그 주문코드에 PD가 있다면 
+		ocList = dao.supplyPDInfo(osCode);
+
+		System.out.println("초기 :  "+ocList);
+		for(int i=0; i<ocList.size(); i++) {		
+			if(ocList.get(i).getOd_stcode().equals("PD")) {
+				//새로운 주문코드를 만든다. 그 주문코드의 PD의 정보들을 넣기 od,os인설트
+				MroOrderDetailBean result  = new MroOrderDetailBean();
+				result.setOd_oscode(dao.checkCount());
+				result.setOd_prspcode(ocList.get(i).getOd_prspcode());
+				result.setOd_prcode(ocList.get(i).getOd_prcode());
+				result.setOd_quantity(ocList.get(i).getOd_quantity());
+				result.setOd_stcode("RC");
+
+				mod.add(result);
+
+			}else {
+				System.out.println("새로운 주문서번호가없음");
+
+			}		
+		} 
+
+		if(dao.insNewOrderDetail(mod)) { // 새로운 주문서번호 생성으로 OD INSERT가 됐으면
+			insert = true;
+		}
+		return insert;
 	}
 	
 	
+	//교환 요청에 대한 응답 
+	public String supplyResponseExchange(MroOrderBean mo) {
+		String message="";
+
+		//교환요청에 수락이면
+		if(mo.getOs_state().equals("EC")) {
+			//OD 테이블 :  오리지널 주문코드 ER-> EC(폐기)
+			if(dao.supplyResponseExchangeOD(mo)) {
+				if(dao.supplyResponseExchangeOS(mo)) {
+					message="교환요청이 정상적으로 처리되었습니다.";
+					System.out.println("교환수락");
+				}
+			}
+		}else {//교환요청이 거절이면 (EE)
+			if(dao.supplyResponseExchangeOD(mo)) {
+				if(dao.supplyResponseExchangeOS(mo)) {
+					message="교환요청이 거절 처리되었습니다.";
+					System.out.println("교환거절");
+				}
+			}
+
+		}
+
+
+		return message;
+	}
+
+
 	//검색결과
 	public List<MroOrderBean> supplySearchAs(MroOrderBean mo) {
 		List<MroOrderBean> list;
 		list = dao.supplySearchAs(mo);
-		
+
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getOs_state().equals("OR")) {
 				list.get(i).setOs_state("주문요청");
 			}if(list.get(i).getOs_state().equals("RR")) {
 				list.get(i).setOs_state("반품요청");
 			}if(list.get(i).getOs_state().equals("ER")) {
-				 list.get(i).setOs_state("교환요청");
+				list.get(i).setOs_state("교환요청");
 			}if(list.get(i).getOs_state().equals("OC")) {
 				list.get(i).setOs_state("구매확정");
 			}
-			
+
 		}
-			
-		
+
+
 		return list;
 	}
 
-	
+
 	//transaction Configuration
 	private void setTransactionConf(int propagation, int isolationLevel, boolean isRead) {
 		def = new DefaultTransactionDefinition();
