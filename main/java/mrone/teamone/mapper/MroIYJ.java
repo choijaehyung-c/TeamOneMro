@@ -20,8 +20,11 @@ public interface MroIYJ {
 	void supplyResponseRefundOS(MroOrderBean mo); // os 업데이트
 	void supplyOSInfo(MroOrderBean mo);
 	void supplyOCInfo(String osCode);
+	void supplyPDInfo(String osCode);
 	void getCount();
 	void insNewOrders(MroOrderBean mo);
 	void insNewOrderDetail(List<MroOrderDetailBean> mod);
 	void supplySearchAs(MroOrderBean mo);
+	void supplyResponseExchangeOD(MroOrderBean mo);
+	void supplyResponseExchangeOS(MroOrderBean mo);
 }
