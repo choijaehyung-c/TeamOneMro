@@ -311,10 +311,10 @@ function supplySearchResult(data){
 	
 	if(data!=""){
 	for(i=0; i<data.length; i++){
-		if(data[i].os_state =="교환요청"){
-		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].os_code+"','ER')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		if(data[i].re_state =="교환요청"){
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].re_code+"','ER')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
 		}else{
-		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].os_code+"','RR')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].re_code+"','RR')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
 		}
 	  }
 	}else{

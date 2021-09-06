@@ -106,9 +106,9 @@ public class OneControllerIYJ {
 	//supply 검색결과
 	@PostMapping("/supplySearchAs")
 	@ResponseBody
-	public List<MroOrderBean> supplySearchAs(@RequestBody MroOrderBean mo){
+	public List<RequestOrderBean> supplySearchAs(@RequestBody RequestOrderBean re){
 		
-		return ssin.supplySearchAs(mo);
+		return ssin.supplySearchAs(re);
 	}
 	
 	

@@ -113,9 +113,9 @@
 		INSERT INTO OD VALUES(#{od_prspcode},TO_CHAR(SYSDATE,'YYMMDD')||#{od_oscode},#{od_stcode},#{od_prcode},#{od_quantity})
 	</insert>
 	
-	<select id="supplySearchAs" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderBean">
-		SELECT * FROM ORDERSVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%'
-		<!--   SELECT * FROM REQUESTVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%' -->
+	<select id="supplySearchAs" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean">
+		<!--SELECT * FROM ORDERSVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%'-->
+		   SELECT * FROM REQUESTVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%' 
 	</select>
 	
 	<insert id="makeDeliveryLocate">

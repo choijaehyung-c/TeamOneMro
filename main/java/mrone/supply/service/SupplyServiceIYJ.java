@@ -312,19 +312,21 @@ public class SupplyServiceIYJ {
 
 
 	//검색결과
-	public List<MroOrderBean> supplySearchAs(MroOrderBean mo) {
-		List<MroOrderBean> list;
-		list = dao.supplySearchAs(mo);
+	public List<RequestOrderBean> supplySearchAs(RequestOrderBean re) {
+		List<RequestOrderBean> list;
+		list = dao.supplySearchAs(re);
 
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getOs_state().equals("OR")) {
-				list.get(i).setOs_state("주문요청");
-			}if(list.get(i).getOs_state().equals("RR")) {
-				list.get(i).setOs_state("반품요청");
-			}if(list.get(i).getOs_state().equals("ER")) {
-				list.get(i).setOs_state("교환요청");
-			}if(list.get(i).getOs_state().equals("OC")) {
-				list.get(i).setOs_state("구매확정");
+			if(list.get(i).getRe_state().equals("OR")) {
+				list.get(i).setRe_state("주문요청");
+			}if(list.get(i).getRe_state().equals("RR")) {
+				list.get(i).setRe_state("반품요청");
+			}if(list.get(i).getRe_state().equals("ER")) {
+				list.get(i).setRe_state("교환요청");
+			}if(list.get(i).getRe_state().equals("OC")) {
+				list.get(i).setRe_state("구매확정");
+			}if(list.get(i).getRe_state().equals("OA")) {
+				list.get(i).setRe_state("주문수락");
 			}
 
 		}
