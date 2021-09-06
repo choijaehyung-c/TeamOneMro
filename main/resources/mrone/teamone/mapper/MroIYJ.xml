@@ -122,4 +122,18 @@
 		SELECT * FROM ORDERSVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%'
 	</select>
 	
+	<insert id="makeDeliveryLocate">
+		INSERT INTO LC VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_LOCATION_NUM.NEXTVAL,'00.000000','000.000000',TO_CHAR(SYSDATE,'YYMMDD'))
+	</insert>
+	
+	<select id="maxLCcode" resultType="string">
+		SELECT 
+		MAX(TO_NUMBER(SUBSTR(LC_CODE,1,9))) AS lccode FROM LC WHERE SUBSTR(LC_CODE,1,6) =
+		TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+	
+	<insert id="supplyAskDelivery" parameterType="mrone.teamone.beans.DeliveryBean">
+		INSERT INTO DL VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_DELIVERY_NUM.NEXTVAL, #{dl_oscode},#{dl_dscode},#{dl_dvcode},#{dl_lccode})
+	</insert>
+	
     </mapper>

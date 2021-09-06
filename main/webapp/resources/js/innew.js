@@ -266,7 +266,7 @@ function getAsDetailListS2(data){
 	 html += "<div> 상품코드: "+data[i].od_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].od_quantity+ "  상태: "+data[i].od_stcode +"</div>";
 	}
 	
-	 html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EC')\">수락</div>";
+	 html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EA')\">수락</div>";
      html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EE')\">거절</div>";
 
 	list.innerHTML=html;

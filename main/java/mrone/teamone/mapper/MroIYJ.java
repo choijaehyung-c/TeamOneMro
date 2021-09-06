@@ -2,6 +2,7 @@ package mrone.teamone.mapper;
 
 import java.util.List;
 
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 
@@ -27,4 +28,7 @@ public interface MroIYJ {
 	void supplySearchAs(MroOrderBean mo);
 	void supplyResponseExchangeOD(MroOrderBean mo);
 	void supplyResponseExchangeOS(MroOrderBean mo);
+	void supplyAskDelivery(DeliveryBean db);
+	void makeDeliveryLocate();
+	void maxLCcode();
 }
