@@ -13,26 +13,68 @@
 	RE_SPCODE,
 	RE_DATE,
 	RE_STATE
-	FROM RE WHERE RE_STATE = 'W'AND RE_SPCODE = #{sp}
+	FROM RE WHERE RE_STATE = 'OR'AND RE_SPCODE = #{sp}
+    </select>
+    
+    <select id="getSupplyClearOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
+	SELECT 
+	RE_CODE,
+	RE_CLCODE,
+	RE_SPCODE,
+	RE_DATE,
+	RE_STATE
+	FROM RE WHERE RE_STATE = 'OA'AND RE_SPCODE = #{sp}
     </select>
     
     <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
 	SELECT 
 	RD_PRSPCODE, 
 	RD_RECODE, 
-	RD_PRCODE, 
+	PR_CODE, 
 	RD_QUANTITY, 
 	RD_STCODE 
-	FROM RD WHERE RD_RECODE = #{re_code}
+	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{re_code}
+    </select>
+    
+    <select id="getSupplyClearOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+	SELECT 
+	RD_PRSPCODE, 
+	RD_RECODE, 
+	PR_CODE, 
+	RD_QUANTITY, 
+	RD_STCODE 
+	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{re_code}
     </select>
     
     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
-	UPDATE REQUEST SET RE_STATE = 'S' WHERE RE_CODE = #{rd_recode}
+	UPDATE REQUEST SET RE_STATE = 'OA' WHERE RE_CODE = #{rd_recode}
     </select>
     
     <select id="updateRequestOrderState2" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
-	UPDATE REQUESTDETAIL SET RD_STCODE = 'S' WHERE RD_RECODE = #{rd_recode}
+	UPDATE REQUESTDETAIL SET RD_STCODE = 'OA' WHERE RD_RECODE = #{rd_recode}
     </select>
+    
+    <insert id="insertDL" parameterType="mrone.teamone.beans.RequestOrderDetailBean" >
+	INSERT INTO DELIVERY VALUES ('222222222', #{rd_recode}, '1', 'ANY000', '000000000')
+    </insert>
+    
+    <select id="getDLlist"  resultType="mrone.teamone.beans.DeliveryBean">
+	SELECT 
+	DL_CODE, 
+	DL_OSCODE, 
+	DS_CODE, 
+	DS_NAME, 
+	DV_CODE, 
+	DV_NAME, 
+    DL_LCCODE 
+	FROM DL INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE INNER JOIN "DV" ON DL.DL_DVCODE = DV.DV_CODE
+    </select>
+    
+    <update id="updateDL" parameterType="mrone.teamone.beans.DeliveryBean">
+ 		UPDATE DL SET DL_DSCODE = '2', DL_DVCODE = #{dl_dvcode} WHERE DL_CODE = #{dl_code}
+    </update>
+    
+   
     
 </mapper>
 

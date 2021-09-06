@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 
@@ -33,6 +33,14 @@ public class SupplyServiceCtlNSB {
 		return reList;
 	}
 	
+List<RequestOrderBean> clearOrderlist() {
+		
+		List<RequestOrderBean> reList = null;
+		reList = dao.clearOrderlist();
+
+		return reList;
+	}
+	
 	List<RequestOrderBean> waitOrderlistD(RequestOrderBean rb) {
 		
 		List<RequestOrderBean> reList = null;
@@ -47,20 +55,48 @@ public class SupplyServiceCtlNSB {
 		return reList;
 	}
 	
-	String responseOrder(RequestOrderDetailBean rdb) {
+	List<RequestOrderBean> clearOrderlistD(RequestOrderBean rb) {
 		
+		List<RequestOrderBean> reList = null;
+		
+		reList = dao.clearOrderlistD(rb);
+		
+		return reList;
+	}
+	
+	String responseOrder(RequestOrderDetailBean rdb) {		
 	String message= null;
 		rdb.setRd_recode(rdb.getRd_recode());
 		for(int i=0; i<rdb.getRd_recode().length(); i++) {
 			if(dao.responseOrder(rdb)) {
 				if(dao.responseOrder2(rdb)) {
-					message = "접수완료";
+					message = "접수완료";		
 				}
+		 }				 
 		}
-						 
-		}			
+		dao.insertDL(rdb);
 		return message;
 	}
+	
+	List<DeliveryBean> getDLlist() {	
+		List<DeliveryBean> reList = null;	
+			reList = dao.getDLlist();	
+		return reList;
+	}
+	
+
+	String updateDL(DeliveryBean db) {		
+	String message= null;
+		db.setDl_code(db.getDl_code());
+		db.setDl_dvcode(db.getDl_dvcode());	
+			if(dao.updateDL(db)) {				
+					message = "배정완료";					
+		 }				 
+	
+		return message;
+	}
+	
+	
 }
 		
 			

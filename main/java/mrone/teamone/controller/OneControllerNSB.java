@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import mrone.supply.service.SupplyServiceEntrance;
+import mrone.supply.service.SupplyServiceEntranceNSB;
 import mrone.teamone.auth.Authentication;
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.Encryption;
@@ -36,7 +37,7 @@ public class OneControllerNSB {
 	@Autowired
 	Encryption enc;
 	@Autowired
-	SupplyServiceEntrance sse; 
+	SupplyServiceEntranceNSB sse; 
 	
 	
 	@GetMapping("/supplyReceiveWaitOrderListForm")
@@ -52,16 +53,30 @@ public class OneControllerNSB {
 		List<RequestOrderBean> reList = null;
 		reList = sse.RequestWaitOrderListCtl();
 		System.out.println(sse.RequestWaitOrderListCtl());
-		return reList;
-		
-		
+		return reList;	
+	}
+	
+	@PostMapping("/getSupplyReceiveClearOrderList")
+	public List<RequestOrderBean> supplyReceiveClearOrderList() {
+		List<RequestOrderBean> reList = null;
+		reList = sse.RequestClearOrderListCtl();
+		System.out.println(sse.RequestClearOrderListCtl());
+		return reList;	
 	}
 	
 	@PostMapping("/getSupplyReceiveWaitOrderListD")
 	public List<RequestOrderBean> supplyReceiveWaitOrderListD(@RequestBody List<RequestOrderBean> list ) {
 		
-		System.out.println("dd");
+		System.out.println(sse.RequestWaitOrderListCtlD(list.get(0)));
 		return sse.RequestWaitOrderListCtlD(list.get(0));
+		
+	}
+	
+	@PostMapping("/getSupplyReceiveClearOrderListD")
+	public List<RequestOrderBean> supplyReceiveClearOrderListD(@RequestBody List<RequestOrderBean> list ) {
+		
+		System.out.println(sse.RequestClearOrderListCtlD(list.get(0)));
+		return sse.RequestClearOrderListCtlD(list.get(0));
 		
 	}
 	
@@ -72,4 +87,21 @@ public class OneControllerNSB {
 		return message;
 		
 	}
+	
+	@PostMapping("/getDLlist")
+	public List<DeliveryBean> getDLList() {
+		List<DeliveryBean> reList = null;
+		reList = sse.getDLlist();
+		System.out.println(sse.getDLlist());
+		return reList;	
+	}
+	
+	@PostMapping("/choiceDV")
+	public String updateDL(@RequestBody List<DeliveryBean> list ) {
+		String message = sse.updateDL(list.get(0));
+		
+		return message;
+		
+	}
+	
 }
