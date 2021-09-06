@@ -5,6 +5,7 @@ import java.util.List;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.RequestOrderBean;
 
 public interface MroIYJ {
 	void getSupplyList();
@@ -15,19 +16,19 @@ public interface MroIYJ {
 	void getExchangeList();
 	//void getRefundDetail(String osCode);
 	//void getExchangeDetail(String osCode);
-	void getRefundListSp(MroOrderDetailBean mod);
-	void supplyReceiveAsDetail(MroOrderBean mo);
-	void supplyResponseRefund(MroOrderBean mo); //od 업데이트
-	void supplyResponseRefundOS(MroOrderBean mo); // os 업데이트
-	void supplyOSInfo(MroOrderBean mo);
+	void getRefundListSp(RequestOrderBean re);
+	void supplyReceiveAsDetail(RequestOrderBean re);
+	void supplyResponseRefund(RequestOrderBean re); //od 업데이트
+	void supplyResponseRefundOS(RequestOrderBean re); // os 업데이트
+	void supplyOSInfo(RequestOrderBean re);
 	void supplyOCInfo(String osCode);
 	void supplyPDInfo(String osCode);
 	void getCount();
-	void insNewOrders(MroOrderBean mo);
+	void insNewOrders(RequestOrderBean re);
 	void insNewOrderDetail(List<MroOrderDetailBean> mod);
-	void supplySearchAs(MroOrderBean mo);
-	void supplyResponseExchangeOD(MroOrderBean mo);
-	void supplyResponseExchangeOS(MroOrderBean mo);
+	void supplySearchAs(RequestOrderBean re);
+	void supplyResponseExchangeOD(RequestOrderBean re);
+	void supplyResponseExchangeOS(RequestOrderBean re);
 	void supplyAskDelivery(DeliveryBean db);
 	void makeDeliveryLocate();
 	void maxLCcode();

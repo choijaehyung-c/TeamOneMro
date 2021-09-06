@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 
 @Repository
 public class SupplyDaoIYJ {
@@ -17,23 +19,23 @@ public class SupplyDaoIYJ {
 	@Autowired
 	SqlSessionTemplate sql;
 
-	List<MroOrderBean> getRefundListSp(MroOrderDetailBean mod) {
-		List<MroOrderBean> list = sql.selectList("getRefundListSp",mod);
+	List<RequestOrderBean> getRefundListSp(RequestOrderBean re) {
+		List<RequestOrderBean> list = sql.selectList("getRefundListSp",re);
 		//System.out.println(list);
 		return list;
 	}
 
-	List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo) {
-		List<MroOrderDetailBean> list = sql.selectList("supplyReceiveAsDetail",mo);
+	List<RequestOrderDetailBean> supplyReceiveAsDetail(RequestOrderBean ro) {
+		List<RequestOrderDetailBean> list = sql.selectList("supplyReceiveAsDetail",ro);
 		return list;
 	}
 
-	boolean supplyResponseRefund(MroOrderBean mo) {
-		return this.convertToBoolean(sql.update("supplyResponseRefund", mo));
+	boolean supplyResponseRefund(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseRefund", re));
 	}
 	
-	boolean supplyResponseRefundOS(MroOrderBean mo) {
-		return this.convertToBoolean(sql.update("supplyResponseRefundOS",mo));
+	boolean supplyResponseRefundOS(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseRefundOS",re));
 	}
 	
 	boolean supplyResponseExchangeOD(MroOrderBean mo) {
@@ -45,9 +47,9 @@ public class SupplyDaoIYJ {
 	}
 
 	//주문코드의 os정보
-	 List<MroOrderBean> supplyOSInfo(MroOrderBean mo) {
+	 List<MroOrderBean> supplyOSInfo(RequestOrderBean re) {
 		
-		return sql.selectList("supplyOSInfo", mo);
+		return sql.selectList("supplyOSInfo", re);
 	}
 	
 	 //주문코드의 od정보
@@ -78,28 +80,11 @@ public class SupplyDaoIYJ {
 		return result;
 	}
 
-	//오늘날짜 몇번까지 만들어졌는지 확인 + 숫자 증가 (시퀀스 때문에 사용할까 말까 상의해야함.)
-	String getCount() {
 
-		int number;
-
-		if(sql.selectOne("getCount")!=null) {
-			number = sql.selectOne("getCount");
-		}else {
-			number = 0;
-		}
-		String result = (number+1) + ""; 
-
-		for(int add = result.length(); add<5; add++) {
-			result = "0" + result;
-		}
 	
-		return result;
-	}
-	
-	boolean insNewOrders(MroOrderBean mo) {
-		System.out.println("dao : "+mo);
-		return this.convertToBoolean(sql.insert("insNewOrders",mo));
+	boolean insNewOrders(RequestOrderBean re) {
+		System.out.println("dao : "+re);
+		return this.convertToBoolean(sql.insert("insNewOrders",re));
 	}
 
 	

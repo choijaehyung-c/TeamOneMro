@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.ProjectUtils;
 
 @Service
@@ -32,20 +34,20 @@ public class SupplyServiceIYJ {
 	private DefaultTransactionDefinition def; //isolation과 propagation을 위한
 	private TransactionStatus status;
 
-	MroOrderDetailBean mod;
+	RequestOrderBean re;
 
-	public List<MroOrderBean> supplyReceiveRefundListForm() {
-		mod= new MroOrderDetailBean();
-		List<MroOrderBean> list;
+	public List<RequestOrderBean> supplyReceiveRefundListForm() {
+		re= new RequestOrderBean();
+		List<RequestOrderBean> list;
 
-		mod.setOd_prspcode("KR001D");//Session이 없어서 강제로 넣어줌
-		mod.setOs_state("RR");
+		re.setRe_spcode("KR001D");//Session이 없어서 강제로 넣어줌
+		re.setRe_state("RR");
 
-		list = dao.getRefundListSp(mod);
+		list = dao.getRefundListSp(re);
 
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getOs_state().equals("RR")) {
-				list.get(i).setOs_state("반품요청");
+			if(list.get(i).getRe_state().equals("RR")) {
+				list.get(i).setRe_state("반품요청");
 			}
 		}
 
@@ -64,18 +66,18 @@ public class SupplyServiceIYJ {
 		return list;
 	}
 
-	public List<MroOrderBean> supplyReceiveExchangeListForm() {
-		mod= new MroOrderDetailBean();
-		List<MroOrderBean> list;
+	public List<RequestOrderBean> supplyReceiveExchangeListForm() {
+		re= new RequestOrderBean();
+		List<RequestOrderBean> list;
 
-		mod.setOd_prspcode("KR001D"); //Session이 없어서 강제로 넣어줌(교환있는 회사)
-		mod.setOs_state("ER");
+		re.setRe_spcode("KR001D");//Session이 없어서 강제로 넣어줌
+		re.setRe_state("ER");
 
-		list = dao.getRefundListSp(mod);
+		list = dao.getRefundListSp(re);
 
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getOs_state().equals("ER")) {
-				list.get(i).setOs_state("교환요청");
+			if(list.get(i).getRe_state().equals("ER")) {
+				list.get(i).setRe_state("교환요청");
 			}
 		}
 
@@ -83,22 +85,22 @@ public class SupplyServiceIYJ {
 	}
 
 	//반품 또는 교환 디테일
-	public List<MroOrderDetailBean> supplyReceiveAsDetail(MroOrderBean mo){
-		List<MroOrderDetailBean> list;
+	public List<RequestOrderDetailBean> supplyReceiveAsDetail(RequestOrderBean ro){
+		List<RequestOrderDetailBean> list;
 
-		list = dao.supplyReceiveAsDetail(mo);
+		list = dao.supplyReceiveAsDetail(ro);
 
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getOd_stcode().equals("RR")) {
-				list.get(i).setOd_stcode("반품요청");
-			}else if(list.get(i).getOd_stcode().equals("OC")) {
-				list.get(i).setOd_stcode("구매확정");
-			}else if(list.get(i).getOd_stcode().equals("RC")){
-				list.get(i).setOd_stcode("반품처리");
-			}else if(list.get(i).getOd_stcode().equals("OR")) {
-				list.get(i).setOd_stcode("주문요청");
-			}else if(list.get(i).getOd_stcode().equals("ER")) {
-				list.get(i).setOd_stcode("교환요청");
+			if(list.get(i).getRd_stcode().equals("RR")) {
+				list.get(i).setRd_stcode("반품요청");
+			}else if(list.get(i).getRd_stcode().equals("OC")) {
+				list.get(i).setRd_stcode("구매확정");
+			}else if(list.get(i).getRd_stcode().equals("RC")){
+				list.get(i).setRd_stcode("반품처리");
+			}else if(list.get(i).getRd_stcode().equals("OR")) {
+				list.get(i).setRd_stcode("주문요청");
+			}else if(list.get(i).getRd_stcode().equals("ER")) {
+				list.get(i).setRd_stcode("교환요청");
 			}
 		}
 
@@ -106,25 +108,25 @@ public class SupplyServiceIYJ {
 	}
 
 	//공급사 - 반품에 대한 응답(거절(FF)or수락(RC))
-	public String supplyResponseRefund(MroOrderBean mo) {
+	public String supplyResponseRefund(RequestOrderBean ro) {
 		String message="";
-		String originOsCode= mo.getOs_code();
+		String originOsCode= re.getRe_code();
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
 		//System.out.println(mo);
-		if(mo.getOs_state().equals("PD")) {
+		if(re.getRe_state().equals("PD")) {
 			System.out.println("수락");
 			//1. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
-			if(dao.supplyResponseRefund(mo)) {
+			if(dao.supplyResponseRefund(re)) {
 				//2. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
-				if(dao.supplyResponseRefundOS(mo)) {
+				if(dao.supplyResponseRefundOS(re)) {
 					//3. OS 테이블 : 새로운 주문코드 추가(parent먼저)(구매확정)
-					if(this.insNewOrdersOC(mo)) {
+					if(this.insNewOrdersOC(re)) {
 						System.out.println("ins성공!!!");					
 						//4. OD 테이블 : 새로운 주문코드 추가(구매확정)
 						if(this.insNewOrderDetailOC(originOsCode)) {
 							//5. OS 테이블 : 새로운 주문코드 추가(반품처리)
-							if(this.insNewOrderRC(mo)) {
+							if(this.insNewOrderRC(re)) {
 								//6. OD 테이블 : 새로운 주문코드 추가 (반품처리)
 								if(this.insNewOrderDetailRC(originOsCode)) {
 									message="반품요청이 정상적으로 처리되었습니다.";
@@ -144,8 +146,8 @@ public class SupplyServiceIYJ {
 
 		}else {
 			//RR-> FF로 업데이트
-			System.out.println(mo);
-			if(dao.supplyResponseRefund(mo)) {
+			System.out.println(re);
+			if(dao.supplyResponseRefund(re)) {
 				System.out.println("거절");
 				message = "반품요청이 거절되었습니다.";
 			}
@@ -155,18 +157,18 @@ public class SupplyServiceIYJ {
 
 
 	//3. OS테이블에 OC구매확정된 레코드 추가
-	private boolean insNewOrdersOC(MroOrderBean mo) {
+	private boolean insNewOrdersOC(RequestOrderBean re) {
 		List<MroOrderBean> list;
 		boolean insert= false;
 
 		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
-		list = dao.supplyOSInfo(mo);
+		list = dao.supplyOSInfo(re);
 		//mo.setOs_code(dao.getCount());
-		mo.setOs_clcode(list.get(0).getOs_clcode());
-		mo.setOs_state("OC");
+		re.setRe_clcode(list.get(0).getOs_clcode());
+		re.setRe_state("OC");
 
-		System.out.println("OS테이블 구매확정레코드 : "+mo);
-		if(dao.insNewOrders(mo)) {
+		System.out.println("OS테이블 구매확정레코드 : "+re);
+		if(dao.insNewOrders(re)) {
 			System.out.println("구매확정 레코드 추가 성공(OS)");
 			insert=true;
 
@@ -215,18 +217,18 @@ public class SupplyServiceIYJ {
 
 
 	//5. 반품처리 된 녀석들을 위한 OS테이블에 주문코드가 생김.
-	private boolean insNewOrderRC(MroOrderBean mo) {
+	private boolean insNewOrderRC(RequestOrderBean re) {
 		List<MroOrderBean> list;
 		boolean insert= false;
 
 		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
-		list = dao.supplyOSInfo(mo);
+		list = dao.supplyOSInfo(re);
 		//mo.setOs_code(dao.getCount());
-		mo.setOs_clcode(list.get(0).getOs_clcode());
-		mo.setOs_state("RA");
+		re.setRe_clcode(list.get(0).getOs_clcode());
+		re.setRe_state("RA");
 
-		System.out.println("OS테이블 반품처리 레코드 : "+mo);
-		if(dao.insNewOrders(mo)) {
+		System.out.println("OS테이블 반품처리 레코드 : "+re);
+		if(dao.insNewOrders(re)) {
 			System.out.println("반품처리 레코드 성공 추가 성공(OS)");
 			insert=true;
 		}
