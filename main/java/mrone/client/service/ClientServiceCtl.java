@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
+import mrone.mro.service.MroServiceEntranceCJH;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
@@ -30,9 +32,22 @@ public class ClientServiceCtl {
 	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
+	@Autowired
+	MroServiceEntranceCJH msec;
 	
+	String clientRequestCtl(ClientOrderBean co,String type){
+		co.setOs_state(type);
+		this.clientRequestProcess(co);
+		RequestOrderBean ro = new RequestOrderBean();
+		ro.setRe_clcode("");
+		ro.setRe_oscode("");
+		ro.setRe_spcode("");
+		ro.setRd(null);
+		
+		return type.equals("OR")?msec.mroRequestOrder(ro):type.equals("RR")?msec.mroRequestRefund(ro):msec.mroRequestExchange(ro);
+	}
 	
-	String clientRequestCtl(ClientOrderBean co){
+	String clientRequestProcess(ClientOrderBean co) {
 		String result = "failure";
 		
 		boolean tran = false;
@@ -58,16 +73,9 @@ public class ClientServiceCtl {
 				if (dao.insClientOrder(co)) {
 					System.out.println("in1");
 					int tranCount = 0;
-					for (int i = 0; i < co.getOd().size(); i++) {
-						System.out.println("in2_"+i);
-						System.out.println(dao.getOrderData(co)+co.getOs_state());
-						System.out.println(co.getOd().get(i).getOd_prcode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_prspcode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_quantity()+"SSS");
+					for (int i = 0; i < co.getOd().size(); i++) {	
 						co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
 						co.getOd().get(i).setOd_stcode(co.getOs_state());
-						System.out.println(co.getOd().get(i).getOd_oscode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_stcode()+"SSS");
 						if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 							break;
 						}
@@ -86,8 +94,6 @@ public class ClientServiceCtl {
 
 		return result;
 	}
-	
-	
 
 
 	public List<TaxBean> clientGetTaxbillListCtl(ClientInfoBean ci) throws Exception {

@@ -15,5 +15,6 @@ public class RequestOrderDetailBean {
 		private int pr_tax;
 		private int rd_quantity;	
 		private String rd_stcode; //?
+		private String rd_note;
 		List<RequestOrderDetailBean> detail;//?
 }
