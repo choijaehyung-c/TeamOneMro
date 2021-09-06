@@ -5,6 +5,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import mrone.mro.service.MroServiceEntranceCJH;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
@@ -37,18 +39,28 @@ public class ClientServiceCtl {
 	
 	String clientRequestCtl(ClientOrderBean co,String type){
 		co.setOs_state(type);
-		this.clientRequestProcess(co);
+		String result = "failed";
+		if(this.clientRequestProcess(co)) {
 		RequestOrderBean ro = new RequestOrderBean();
-		ro.setRe_clcode("");
-		ro.setRe_oscode("");
-		ro.setRe_spcode("");
-		ro.setRd(null);
-		
-		return type.equals("OR")?msec.mroRequestOrder(ro):type.equals("RR")?msec.mroRequestRefund(ro):msec.mroRequestExchange(ro);
+		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
+		ro.setRe_clcode(co.getOs_clcode());
+		ro.setRe_oscode(co.getOs_code());
+		ro.setRe_spcode(co.getSp_code());
+			for(int i = 0 ; i<co.getOd().size(); i++) {
+				RequestOrderDetailBean rd = new RequestOrderDetailBean();
+				 rd.setRd_prspcode(co.getOd().get(i).getOd_prspcode());
+				 rd.setRd_prcode(co.getOd().get(i).getOd_prcode());
+				 rd.setRd_quantity(co.getOd().get(i).getOd_quantity());
+				 list.add(rd);
+			}
+		ro.setRd(list);
+		result=type.equals("OR")?msec.mroRequestOrder(ro):type.equals("RR")?msec.mroRequestRefund(ro):msec.mroRequestExchange(ro);
+		}
+		return result;
 	}
 	
-	String clientRequestProcess(ClientOrderBean co) {
-		String result = "failure";
+	boolean clientRequestProcess(ClientOrderBean co) {
+		//String result = "failure";
 		
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
@@ -84,7 +96,7 @@ public class ClientServiceCtl {
 					System.out.println(tranCount+":"+co.getOd().size());
 					if (tranCount == co.getOd().size()) {
 						tran = true;
-						result = dao.getOrderData(co);
+						//result = dao.getOrderData(co);
 					}
 
 				}
@@ -92,7 +104,7 @@ public class ClientServiceCtl {
 		}
 		pu.setTransactionResult(tran);
 
-		return result;
+		return tran;
 	}
 
 

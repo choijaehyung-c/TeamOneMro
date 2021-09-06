@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.client.service.ClientServiceEntrance;
@@ -42,6 +43,11 @@ public class OneControllerCJH {
 		mav = new ModelAndView();
 		mav.setViewName("clientApiCJH");
 		return mav;
+	}
+	
+	@GetMapping("/vueTest")
+	public String vueTetstst() {
+		return "supHome";
 	}
 	
 }
