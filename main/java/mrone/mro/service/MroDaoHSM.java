@@ -50,9 +50,24 @@ public class MroDaoHSM {
 		return convertToBoolean(sql.update("updatePCToPD", pb));
 	}
 	
-	boolean convertToBoolean(int data) {
-			return data>0? true : false;
+	public boolean mroResponseDeleteProduct(ProductBean pb) {
+		return convertToBoolean(sql.update("mroResponseDeleteProduct", pb));
 	}
+
+	public boolean stcodeCheck(ProductBean pb) {
+		return convertToBoolean(sql.selectOne("stcodeCheck", pb));
+	}
+	
+	public boolean deleteStcode(ProductBean pb) {
+		return convertToBoolean(sql.delete("deleteStcode", pb));
+	}
+
+	boolean convertToBoolean(int data) {
+		return data>0? true : false;
+	}
+
+
+	
 
 
 

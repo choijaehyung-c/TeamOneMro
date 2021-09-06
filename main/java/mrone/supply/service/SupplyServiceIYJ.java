@@ -11,6 +11,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.servlet.ModelAndView;
 
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.utill.ProjectUtils;
@@ -115,7 +116,6 @@ public class SupplyServiceIYJ {
 			System.out.println("수락");
 			//1. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
 			if(dao.supplyResponseRefund(mo)) {
-				System.out.println(mo);
 				//2. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
 				if(dao.supplyResponseRefundOS(mo)) {
 					//3. OS 테이블 : 새로운 주문코드 추가(parent먼저)(구매확정)
@@ -223,7 +223,7 @@ public class SupplyServiceIYJ {
 		list = dao.supplyOSInfo(mo);
 		//mo.setOs_code(dao.getCount());
 		mo.setOs_clcode(list.get(0).getOs_clcode());
-		mo.setOs_state("RC");
+		mo.setOs_state("RA");
 
 		System.out.println("OS테이블 반품처리 레코드 : "+mo);
 		if(dao.insNewOrders(mo)) {
@@ -233,13 +233,13 @@ public class SupplyServiceIYJ {
 
 		return insert;
 	}
-	
+
 	//6. OD테이블에 RC를 위한 주문코드 레코드 추가
 	private boolean insNewOrderDetailRC(String osCode) {
 		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
 		List<MroOrderDetailBean> ocList;
 		boolean insert= false;
-		
+
 		System.out.println("insOD : "+osCode);
 
 		//그 주문코드에 PD가 있다면 
@@ -254,7 +254,7 @@ public class SupplyServiceIYJ {
 				result.setOd_prspcode(ocList.get(i).getOd_prspcode());
 				result.setOd_prcode(ocList.get(i).getOd_prcode());
 				result.setOd_quantity(ocList.get(i).getOd_quantity());
-				result.setOd_stcode("RC");
+				result.setOd_stcode("RA");
 
 				mod.add(result);
 
@@ -269,19 +269,29 @@ public class SupplyServiceIYJ {
 		}
 		return insert;
 	}
-	
-	
+
+
 	//교환 요청에 대한 응답 
 	public String supplyResponseExchange(MroOrderBean mo) {
 		String message="";
+		DeliveryBean db = new DeliveryBean();
+		db.setDl_oscode(mo.getOs_code());
+		db.setDl_dvcode("IYJ032");
+		db.setDl_dscode("1");
+
 
 		//교환요청에 수락이면
-		if(mo.getOs_state().equals("EC")) {
+		if(mo.getOs_state().equals("EA")) {
 			//OD 테이블 :  오리지널 주문코드 ER-> EC(폐기)
 			if(dao.supplyResponseExchangeOD(mo)) {
 				if(dao.supplyResponseExchangeOS(mo)) {
-					message="교환요청이 정상적으로 처리되었습니다.";
-					System.out.println("교환수락");
+					if(dao.makeDeliveryLocate()) {
+						db.setDl_lccode(dao.maxLCcode());//마지막 운송장번호를 가져와서 lcCode에넣는다.								
+						if(dao.supplyAskDelivery(db)) { //운송장번호 발급
+							message="교환요청이 정상적으로 처리되었습니다.";
+							System.out.println("교환수락");
+						}
+					}
 				}
 			}
 		}else {//교환요청이 거절이면 (EE)

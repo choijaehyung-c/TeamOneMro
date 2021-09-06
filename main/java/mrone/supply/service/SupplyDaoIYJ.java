@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 
@@ -116,11 +117,26 @@ public class SupplyDaoIYJ {
 		return sql.selectList("supplySearchAs", mo);
 	}
 	
+	//교환 배달요청
+	 boolean supplyAskDelivery(DeliveryBean db) {
+		System.out.println("배달요청 : " + db);
+		return this.convertToBoolean(sql.insert("supplyAskDelivery", db));
+	}
 	
+	//배달 locate만들기
+	boolean makeDeliveryLocate() {
+		return this.convertToBoolean(sql.insert("makeDeliveryLocate"));
+	}
+	
+	String maxLCcode() {				
+		return sql.selectOne("maxLCcode");
+	}
 	
 	boolean convertToBoolean(int data) {
 		return data>0?true:false;
 	}
+
+
 
 
 

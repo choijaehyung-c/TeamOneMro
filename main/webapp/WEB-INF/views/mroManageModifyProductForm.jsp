@@ -13,6 +13,8 @@
 
 <div id="RequestProductListBox">
 </div>
+<div id="DeleteRequestProductListBox">
+</div>
 
 
 <div id="DetailModal" style="display:none; width:100%; heigth:100%;">
@@ -21,5 +23,9 @@
 	<div id="ProductDetailInfo"></div>
 	</div>
 </div>
+
+
+
+<div onClick = "supplyCallProductDetail()">supply수정할 상품디테일</div>
 </body>
 </html>
