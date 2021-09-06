@@ -74,6 +74,55 @@
  		UPDATE DL SET DL_DSCODE = '2', DL_DVCODE = #{dl_dvcode} WHERE DL_CODE = #{dl_code}
     </update>
     
+    <select id="getTaxCL"  resultType="mrone.teamone.beans.ClientInfoBean">
+	SELECT 
+	CL_CODE, 
+	CL_NAME, 
+	CL_ADDRESS, 
+	CL_CORPNUM   
+	FROM CL
+    </select>
+    
+    <select id="choiceSPInfo"  resultType="mrone.teamone.beans.SupplyInfoBean">
+	SELECT 
+	SP_CODE, 
+	SP_NAME, 
+	SP_ADDRESS, 
+	SP_CORPNUM,  
+	SP_TEL, 
+	SP_BTYPE, 
+	SP_BKIND  
+	FROM SP WHERE SP_CODE = 'KR001D'
+    </select>
+    
+     <select id="choiceCLInfo"  resultType="mrone.teamone.beans.ClientInfoBean">
+	SELECT 
+	CL_CODE, 
+	CL_NAME, 
+	CL_ADDRESS, 
+	CL_CORPNUM,  
+	CL_HP, 
+	CL_BTYPE, 
+	CL_BKIND  
+	FROM CL WHERE CL_CODE = #{cl_code}
+    </select>
+    
+    <select id="getTaxDill"  resultType="mrone.teamone.beans.RequestOrderBean">
+	SELECT 
+	RE_CODE, 
+	RE_CLCODE, 
+	CL_NAME   
+	FROM RE INNER JOIN CL ON RE.RE_CLCODE = CL.CL_CODE WHERE RE_SPCODE = 'KR001D'
+    </select>
+    
+    <select id="choiceDillInfo"  resultType="mrone.teamone.beans.RequestOrderDetailBean">
+	SELECT 
+	PR_NAME, 
+	RD_QUANTITY, 
+	PR_PRICE, 
+	PR_TAX 
+	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_PRSPCODE = 'KR001D'AND RD_RECODE = #{rd_recode}
+    </select>
    
     
 </mapper>
