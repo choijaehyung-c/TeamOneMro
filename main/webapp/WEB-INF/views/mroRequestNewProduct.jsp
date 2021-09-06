@@ -14,12 +14,15 @@
 <div id="RequestProductListBox">
 </div>
 
-
 <div id="DetailModal" style="display:none; width:100%; heigth:100%;">
 	<div style="width:500px; heigth:500px">
 	<div onClick="modalClose()" style="float:right; display:inline;">X</div>
 	<div id="ProductDetailInfo"></div>
 	</div>
 </div>
+
+<div onClick = "">supply상품디테일</div>
+
+
 </body>
 </html>

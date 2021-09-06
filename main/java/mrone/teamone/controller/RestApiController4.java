@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mrone.mro.service.MroServiceCtlHSM;
+import mrone.supply.service.SupplyServiceHSM;
 import mrone.teamone.beans.ProductBean;
 
 @RestController
@@ -19,10 +20,12 @@ public class RestApiController4 {
 	@Autowired
 	MroServiceCtlHSM msch;
 	
+	@Autowired
+	SupplyServiceHSM ssch;
+	
 	//새 상품 등록 요청리스트 가져오기
 	@PostMapping("/GetRequestRegisterNewProductList")
 	public List<ProductBean> getRequestRegisterNewProductList(){
-		//System.out.println("Restcontroller진입");
 		return msch.getRequestRegisterNewProductList();
 	}
 	
@@ -63,4 +66,38 @@ public class RestApiController4 {
 		System.out.println("mroResponseNewProduct 진입");
 		return msch.mroResponseModifyProduct(pb);
 	}
+	
+	
+	
+	
+	
+	
+	
+	// 서플라이 
+	
+	//물건 디테일 가져오기
+	@PostMapping("/SupplyGetProductDetail")
+	public ProductBean supplyGetProductDetail(@RequestBody ProductBean pb){
+		return ssch.supplyGetProductDetail(pb);
+	}
+	
+	//수정할 물품 입력정보 요청넣기
+	@PostMapping("/SupplyRequestModify")
+	public String supplyRequestModify(@RequestBody ProductBean pb){
+		return ssch.supplyRequestModify(pb);
+	}
+	
+	//수량 업데이트
+	@PostMapping("/SupplyModifyStock")
+	public String supplyModifyStock(@RequestBody ProductBean pb){
+		return ssch.supplyModifyStock(pb);
+	}
+	
+	//상품 삭제요청
+	@PostMapping("/SupplyRequestDelete")
+	public String supplyRequestDelete(@RequestBody ProductBean pb){
+		return ssch.supplyRequestDelete(pb);
+	}
+	
+	
 }

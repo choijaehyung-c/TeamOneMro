@@ -1,3 +1,4 @@
+
 package mrone.teamone.beans;
 
 import lombok.Data;

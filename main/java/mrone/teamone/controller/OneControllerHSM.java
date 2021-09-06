@@ -19,7 +19,7 @@ public class OneControllerHSM {
 	@Autowired
 	MroServiceEntrance mse;
 	@Autowired
-	private ProjectUtils pu;
+	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
 	@Autowired
