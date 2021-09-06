@@ -98,9 +98,9 @@ public class OneControllerIYJ {
 	//supply 교환 응답
 	@PostMapping("/supplyResponseExchange")
 	@ResponseBody
-	public String supplyResponseExchange(@RequestBody MroOrderBean mo){
+	public String supplyResponseExchange(@RequestBody RequestOrderBean re){
 		//System.out.println(mo);
-		return ssin.supplyResponseExchange(mo);
+		return ssin.supplyResponseExchange(re);
 	}
 	
 	//supply 검색결과

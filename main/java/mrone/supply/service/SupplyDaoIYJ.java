@@ -33,34 +33,61 @@ public class SupplyDaoIYJ {
 	boolean supplyResponseRefund(RequestOrderBean re) {
 		return this.convertToBoolean(sql.update("supplyResponseRefund", re));
 	}
-	
+
 	boolean supplyResponseRefundOS(RequestOrderBean re) {
 		return this.convertToBoolean(sql.update("supplyResponseRefundOS",re));
 	}
-	
-	boolean supplyResponseExchangeOD(MroOrderBean mo) {
-		return this.convertToBoolean(sql.update("supplyResponseExchangeOD",mo));
-	}
-	
-	boolean supplyResponseExchangeOS(MroOrderBean mo) {
-		return this.convertToBoolean(sql.update("supplyResponseExchangeOS",mo));
+
+	boolean supplyResponseRefundRD(RequestOrderBean re) {
+
+		return this.convertToBoolean(sql.update("supplyResponseRefundRD",re));
 	}
 
-	//주문코드의 os정보
-	 List<MroOrderBean> supplyOSInfo(RequestOrderBean re) {
+	boolean supplyResponseRefundRE(RequestOrderBean re) {
+
+		return this.convertToBoolean(sql.update("supplyResponseRefundRE",re));
+	}
+
+	boolean supplyResponseExchangeOD(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseExchangeOD",re));
+	}
+
+	boolean supplyResponseExchangeOS(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseExchangeOS",re));
+	}
+	
+	List<MroOrderDetailBean> selRequest(RequestOrderBean re) {
+		return sql.selectList("selRequest",re);
+
+	}
+
+	boolean insNewOrders(RequestOrderBean re) {
+		return this.convertToBoolean(sql.insert("insNewOrders", re));
+	}
+
+	boolean insNewOd(List<MroOrderDetailBean> mod) {
+		int list=0;
 		
-		return sql.selectList("supplyOSInfo", re);
+		for(int i=0; i<mod.size(); i++) {
+			list = sql.insert("insNewOd", mod.get(i));
+		}		
+		return this.convertToBoolean(list);
 	}
 	
-	 //주문코드의 od정보
-	List<MroOrderDetailBean> supplyOCInfo(String osCode) {
-		return sql.selectList("supplyOCInfo",osCode);
+	boolean insNewRequest(RequestOrderBean re) {
+		return this.convertToBoolean(sql.insert("insNewRequest",re));
 	}
-	
-	List<MroOrderDetailBean> supplyPDInfo(String osCode) {
-		return sql.selectList("supplyPDInfo",osCode);
+
+	boolean insNewRd(List<MroOrderDetailBean> mod) {
+	int list=0;
+		
+		for(int i=0; i<mod.size(); i++) {
+			list = sql.insert("insNewRd", mod.get(i));
+		}		
+		return this.convertToBoolean(list);
 	}
-	
+
+
 	//오늘날짜 몇번까지 만들어졌는지 확인 
 	String checkCount() {
 
@@ -76,50 +103,39 @@ public class SupplyDaoIYJ {
 		for(int add = result.length(); add<5; add++) {
 			result = "0" + result;
 		}
-	
+
 		return result;
 	}
 
 
-	
-	boolean insNewOrders(RequestOrderBean re) {
-		System.out.println("dao : "+re);
-		return this.convertToBoolean(sql.insert("insNewOrders",re));
-	}
-
-	
-	boolean insNewOrderDetail(List<MroOrderDetailBean> mod) {
-		int list=0;
-		System.out.println(mod);
-		for(int i=0; i<mod.size(); i++) {
-			list = sql.insert("insNewOrderDetail", mod.get(i));
-		}		
-		return this.convertToBoolean(list);
-	}
-	
 	List<RequestOrderBean> supplySearchAs(RequestOrderBean re){
-		
+
 		return sql.selectList("supplySearchAs", re);
 	}
-	
+
 	//교환 배달요청
-	 boolean supplyAskDelivery(DeliveryBean db) {
+	boolean supplyAskDelivery(DeliveryBean db) {
 		System.out.println("배달요청 : " + db);
 		return this.convertToBoolean(sql.insert("supplyAskDelivery", db));
 	}
-	
+
 	//배달 locate만들기
 	boolean makeDeliveryLocate() {
 		return this.convertToBoolean(sql.insert("makeDeliveryLocate"));
 	}
-	
+
 	String maxLCcode() {				
 		return sql.selectOne("maxLCcode");
 	}
-	
+
 	boolean convertToBoolean(int data) {
 		return data>0?true:false;
 	}
+
+
+
+
+
 
 
 

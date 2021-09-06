@@ -14,22 +14,25 @@ public interface MroIYJ {
 	void getOrderDetail(String osCode); //주문대기, 반품요청, 교환요청 상세보기
 	void getRefundList();
 	void getExchangeList();
-	//void getRefundDetail(String osCode);
-	//void getExchangeDetail(String osCode);
+	
+	//공급사
 	void getRefundListSp(RequestOrderBean re);
 	void supplyReceiveAsDetail(RequestOrderBean re);
 	void supplyResponseRefund(RequestOrderBean re); //od 업데이트
 	void supplyResponseRefundOS(RequestOrderBean re); // os 업데이트
-	void supplyOSInfo(RequestOrderBean re);
-	void supplyOCInfo(String osCode);
-	void supplyPDInfo(String osCode);
+	void supplyResponseRefundRD(RequestOrderBean re);
+	void supplyResponseRefundRE(RequestOrderBean re);
 	void getCount();
-	void insNewOrders(RequestOrderBean re);
-	void insNewOrderDetail(List<MroOrderDetailBean> mod);
 	void supplySearchAs(RequestOrderBean re);
 	void supplyResponseExchangeOD(RequestOrderBean re);
 	void supplyResponseExchangeOS(RequestOrderBean re);
 	void supplyAskDelivery(DeliveryBean db);
 	void makeDeliveryLocate();
 	void maxLCcode();
+	
+	void selRequest(RequestOrderBean re);
+	void insNewOrders(RequestOrderBean re);
+	void insNewOd(List<MroOrderDetailBean> mod);
+	void insNewRequest(RequestOrderBean re);
+	void insNewRd(List<MroOrderDetailBean> mod);
 }

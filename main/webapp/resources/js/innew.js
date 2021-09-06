@@ -207,18 +207,18 @@ function getAsDetailListS(data){
 }
 
 
-function responseRefund(rdcode, restate){
+function responseRefund(recode, restate){
 	//alert(oscode);
 	//alert(osstate);
-	if(osstate=="PD"){ //폐기
-	if(confirm("주문번호"+ rdcode+"의 반품요청을 수락하시겠습니까?")){
-	let sendJsonData = {re_code:rdcode, re_state:restate};
+	if(restate=="PD"){ //폐기
+	if(confirm("주문번호"+recode+"의 반품요청을 수락하시겠습니까?")){
+	let sendJsonData = {re_code:recode, re_state:restate};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
 	}
 }else{
-	if(confirm("주문번호" + rdcode+ "의 반품요청을 거절하시겠습니까?")){
-	let sendJsonData = {re_code:rdcode, re_state:restate};
+	if(confirm("주문번호" + recode+ "의 반품요청을 거절하시겠습니까?")){
+	let sendJsonData = {re_code:recode, re_state:restate};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
 	}
@@ -243,7 +243,7 @@ function supplyExchangeList(data){
 	let html = "<div>교환목록</div>";
   if(data!=""){	
 	for(i=0; i<data.length; i++){
-		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].os_code+"','ER')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].re_code+"','ER')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
 	  }
    }else {
 	    html +="<div>교환신청 목록이 없습니다.</div>";
@@ -252,37 +252,37 @@ function supplyExchangeList(data){
 	space.innerHTML=html;
 }
 
-function ReceiveExchangeDetail(oscode,osstate){
-	let sendJsonData = {os_code:oscode,os_state:osstate};
+function ReceiveExchangeDetail(recode,restate){
+	let sendJsonData = {re_code:recode,re_state:restate};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('supplyReceiveAsDetail','getAsDetailListS2','j',clientData);
 }
 
 function getAsDetailListS2(data){
 	let list = document.getElementById("detailSpace");
-	let html = "<div><주문코드 : "+data[0].od_oscode+" 교환내역></div>";
+	let html = "<div><주문코드 : "+data[0].rd_recode+" 교환내역></div>";
 	
 	for(i=0; i<data.length; i++){
-	 html += "<div> 상품코드: "+data[i].od_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].od_quantity+ "  상태: "+data[i].od_stcode +"</div>";
+	 html += "<div> 상품코드: "+data[i].rd_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].rd_quantity+ "  상태: "+data[i].rd_stcode +"</div>";
 	}
 	
-	 html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EA')\">수락</div>";
-     html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EE')\">거절</div>";
+	 html += "<div onClick=\"responseExchange('"+data[0].rd_recode+"','EA')\">수락</div>";
+     html += "<div onClick=\"responseExchange('"+data[0].rd_recode+"','EE')\">거절</div>";
 
 	list.innerHTML=html;
 }
 
-function responseExchange(oscode,osstate){
+function responseExchange(recode,restate){
 	
-	if(osstate=="EC"){
-	if(confirm("주문번호"+ oscode+"의 교환요청을 수락하시겠습니까?")){
-	let sendJsonData = {os_code:oscode, os_state:osstate};
+	if(restate=="EC"){
+	if(confirm("주문번호"+ recode+"의 교환요청을 수락하시겠습니까?")){
+	let sendJsonData = {re_code:recode, re_state:restate};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('supplyResponseExchange','exchangeResult', 's', clientData);
 	}
 }else{
-	if(confirm("주문번호" + oscode+ "의 교환요청을 거절하시겠습니까?")){
-	let sendJsonData = {os_code:oscode, os_state:osstate};
+	if(confirm("주문번호" + recode+ "의 교환요청을 거절하시겠습니까?")){
+	let sendJsonData = {re_code:recode, re_state:restate};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('supplyResponseExchange','exchangeResult', 's', clientData);
 	}

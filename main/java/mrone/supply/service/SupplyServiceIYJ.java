@@ -35,6 +35,7 @@ public class SupplyServiceIYJ {
 	private TransactionStatus status;
 
 	RequestOrderBean re;
+	MroOrderDetailBean mod;
 
 	public List<RequestOrderBean> supplyReceiveRefundListForm() {
 		re= new RequestOrderBean();
@@ -108,30 +109,48 @@ public class SupplyServiceIYJ {
 	}
 
 	//공급사 - 반품에 대한 응답(거절(FF)or수락(RC))
-	public String supplyResponseRefund(RequestOrderBean ro) {
+	public String supplyResponseRefund(RequestOrderBean re) {
 		String message="";
-		String originOsCode= re.getRe_code();
+		String originCode= re.getRe_code();
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
-		//System.out.println(mo);
 		if(re.getRe_state().equals("PD")) {
 			System.out.println("수락");
-			//1. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
-			if(dao.supplyResponseRefund(re)) {
-				//2. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
-				if(dao.supplyResponseRefundOS(re)) {
-					//3. OS 테이블 : 새로운 주문코드 추가(parent먼저)(구매확정)
-					if(this.insNewOrdersOC(re)) {
-						System.out.println("ins성공!!!");					
-						//4. OD 테이블 : 새로운 주문코드 추가(구매확정)
-						if(this.insNewOrderDetailOC(originOsCode)) {
-							//5. OS 테이블 : 새로운 주문코드 추가(반품처리)
-							if(this.insNewOrderRC(re)) {
-								//6. OD 테이블 : 새로운 주문코드 추가 (반품처리)
-								if(this.insNewOrderDetailRC(originOsCode)) {
-									message="반품요청이 정상적으로 처리되었습니다.";
-									System.out.println("반품처리 완성");
-									this.setTransactionResult(true); // commit완료
+			//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
+			if(this.insNewOrdersRA(re)) {
+				//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
+				if(this.insNewOdRA(re)) {
+					//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
+					if(this.insNewRequestRA(re)) {
+						//4. RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
+						if(this.insNewRdRA(re)) {
+							System.out.println("os성공");
+							//5.OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
+							if(this.insOrdersOC(re)) {
+								//6. OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
+								if(this.insNewOdOC(re)) {
+									//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
+									if(this.insNewRequestOC(re)) {
+										//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
+										if(this.insNewRdOC(re)) {
+											//9. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
+											if(dao.supplyResponseRefund(re)) {
+												//10. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
+												if(dao.supplyResponseRefundOS(re)) {
+													//11. RD 테이블: 오리지널 주문코드 RR->PD(폐기)
+													if(dao.supplyResponseRefundRD(re)) {
+														// 12. RE테이블:오리지널 주문 코드 RR->PD(폐기)
+														if(dao.supplyResponseRefundRE(re)) {
+															message="반품요청이 정상적으로 처리되었습니다.";
+															System.out.println("반품처리 완성");
+															this.setTransactionResult(true); // commit완료
+															
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -155,138 +174,238 @@ public class SupplyServiceIYJ {
 		return message;
 	}
 
-
-	//3. OS테이블에 OC구매확정된 레코드 추가
-	private boolean insNewOrdersOC(RequestOrderBean re) {
-		List<MroOrderBean> list;
-		boolean insert= false;
-
-		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
-		list = dao.supplyOSInfo(re);
-		//mo.setOs_code(dao.getCount());
-		re.setRe_clcode(list.get(0).getOs_clcode());
-		re.setRe_state("OC");
-
-		System.out.println("OS테이블 구매확정레코드 : "+re);
-		if(dao.insNewOrders(re)) {
-			System.out.println("구매확정 레코드 추가 성공(OS)");
-			insert=true;
-
-
-		}
-		return insert;
-	}
-
-
-	//4. OD에 구매확정된 애들이 모여있는 레코드 추가
-	private boolean insNewOrderDetailOC(String osCode) {//Boolean
+	//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
+	private boolean insNewRdOC(RequestOrderBean re) {
 		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
-		List<MroOrderDetailBean> ocList;
-		boolean insert= false;
-		System.out.println("insOD : "+osCode);
+		List<MroOrderDetailBean> rrList;
+		boolean insert = false;
 
-		//그 주문코드에 OC가 있다면 
-		ocList = dao.supplyOCInfo(osCode);
-
-		System.out.println("초기 :  "+ocList);
-		for(int i=0; i<ocList.size(); i++) {		
-			if(ocList.get(i).getOd_stcode().equals("OC")) {
+		re.setRe_state("OC");
+		rrList = dao.selRequest(re);
+		System.out.println(rrList);//RR인 애들만 뽑아옴.
+		if(rrList!=null) {
+			for(int i=0; i<rrList.size(); i++) {		
 				//새로운 주문코드를 만든다. 그 주문코드의 oc의 정보들을 넣기 od,os인설트
 				MroOrderDetailBean result  = new MroOrderDetailBean();
 				result.setOd_oscode(dao.checkCount());
-				result.setOd_prspcode(ocList.get(i).getOd_prspcode());
-				result.setOd_prcode(ocList.get(i).getOd_prcode());
-				result.setOd_quantity(ocList.get(i).getOd_quantity());
+				result.setOd_prcode(rrList.get(i).getOd_prcode());
+				result.setOd_prspcode(rrList.get(i).getOd_prspcode());
 				result.setOd_stcode("OC");
+				result.setOd_quantity(rrList.get(i).getOd_quantity());
+				//note오면 note추가
 
 				mod.add(result);
-
-			}else {
-				System.out.println("새로운 주문서번호가없음");
-
-			}		
-		} 
-
-		if(dao.insNewOrderDetail(mod)) { // 새로운 주문서번호 생성으로 OD INSERT가 됐으면
-			System.out.println(mod);
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+		if(dao.insNewRd(mod)) {
 			insert = true;
 		}
 		return insert;
 	}
 
+	//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
+	private boolean insNewRequestOC(RequestOrderBean re) {
+		List<MroOrderDetailBean> list;
+		boolean insert = false;
 
+		re.setRe_state("OC");
+		list = dao.selRequest(re);
+		if(list!=null) {
+			re.setRe_oscode(dao.checkCount());
+			re.setRe_clcode(list.get(0).getOs_clcode());	
+			re.setRe_state("OC");
+			re.setRe_spcode(list.get(0).getOd_prspcode());
 
-	//5. 반품처리 된 녀석들을 위한 OS테이블에 주문코드가 생김.
-	private boolean insNewOrderRC(RequestOrderBean re) {
-		List<MroOrderBean> list;
-		boolean insert= false;
-
-		//그 주문코드에 OC가 있다면 OS에 OC로 삽입
-		list = dao.supplyOSInfo(re);
-		//mo.setOs_code(dao.getCount());
-		re.setRe_clcode(list.get(0).getOs_clcode());
-		re.setRe_state("RA");
-
-		System.out.println("OS테이블 반품처리 레코드 : "+re);
-		if(dao.insNewOrders(re)) {
-			System.out.println("반품처리 레코드 성공 추가 성공(OS)");
-			insert=true;
+			if(dao.insNewRequest(re)) {
+				insert = true;
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
 		}
 
 		return insert;
 	}
 
-	//6. OD테이블에 RC를 위한 주문코드 레코드 추가
-	private boolean insNewOrderDetailRC(String osCode) {
+	//6.OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
+	private boolean insNewOdOC(RequestOrderBean re) {
 		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
-		List<MroOrderDetailBean> ocList;
-		boolean insert= false;
+		List<MroOrderDetailBean> rrList;
+		boolean insert = false;
 
-		System.out.println("insOD : "+osCode);
-
-		//그 주문코드에 PD가 있다면 
-		ocList = dao.supplyPDInfo(osCode);
-
-		System.out.println("초기 :  "+ocList);
-		for(int i=0; i<ocList.size(); i++) {		
-			if(ocList.get(i).getOd_stcode().equals("PD")) {
-				//새로운 주문코드를 만든다. 그 주문코드의 PD의 정보들을 넣기 od,os인설트
+		re.setRe_state("OC");
+		rrList = dao.selRequest(re);
+		System.out.println(rrList);//RR인 애들만 뽑아옴.
+		if(rrList!=null) {
+			for(int i=0; i<rrList.size(); i++) {		
+				//새로운 주문코드를 만든다. 그 주문코드의 oc의 정보들을 넣기 od,os인설트
 				MroOrderDetailBean result  = new MroOrderDetailBean();
 				result.setOd_oscode(dao.checkCount());
-				result.setOd_prspcode(ocList.get(i).getOd_prspcode());
-				result.setOd_prcode(ocList.get(i).getOd_prcode());
-				result.setOd_quantity(ocList.get(i).getOd_quantity());
-				result.setOd_stcode("RA");
+				result.setOd_prcode(rrList.get(i).getOd_prcode());
+				result.setOd_prspcode(rrList.get(i).getOd_prspcode());
+				result.setOd_stcode("OC");
+				result.setOd_quantity(rrList.get(i).getOd_quantity());
+				//note오면 note추가
 
 				mod.add(result);
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+		if(dao.insNewOd(mod)) {
+			insert = true;
+		}
+		return insert;
 
-			}else {
-				System.out.println("새로운 주문서번호가없음");
+	}
 
-			}		
-		} 
+	//5. OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
+	private boolean insOrdersOC(RequestOrderBean re) {
+		List<MroOrderDetailBean> list;
+		boolean insert = false;
 
-		if(dao.insNewOrderDetail(mod)) { // 새로운 주문서번호 생성으로 OD INSERT가 됐으면
+		re.setRe_state("OC");
+		list = dao.selRequest(re);
+		if(list!=null) {
+			re.setRe_clcode(list.get(0).getOs_clcode());	
+			re.setRe_state("OC");
+
+			if(dao.insNewOrders(re)) {
+				insert = true;
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+
+		return insert;
+
+	}
+
+	//4.RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
+	private boolean insNewRdRA(RequestOrderBean re) {
+		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
+		List<MroOrderDetailBean> rrList;
+		boolean insert = false;
+
+		re.setRe_state("RR");
+		rrList = dao.selRequest(re);
+		System.out.println(rrList);//RR인 애들만 뽑아옴.
+		if(rrList!=null) {
+			for(int i=0; i<rrList.size(); i++) {		
+				//새로운 주문코드를 만든다. 그 주문코드의 oc의 정보들을 넣기 od,os인설트
+				MroOrderDetailBean result  = new MroOrderDetailBean();
+				result.setOd_oscode(dao.checkCount());
+				result.setOd_prcode(rrList.get(i).getOd_prcode());
+				result.setOd_prspcode(rrList.get(i).getOd_prspcode());
+				result.setOd_stcode("RA");
+				result.setOd_quantity(rrList.get(i).getOd_quantity());
+				//note오면 note추가
+
+				mod.add(result);
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+		if(dao.insNewRd(mod)) {
 			insert = true;
 		}
 		return insert;
 	}
 
 
+	//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
+	private boolean insNewRequestRA(RequestOrderBean re) {
+		List<MroOrderDetailBean> list;
+		boolean insert = false;
+
+		re.setRe_state("RR");
+		list = dao.selRequest(re);
+		if(list!=null) {
+			re.setRe_oscode(dao.checkCount());
+			re.setRe_clcode(list.get(0).getOs_clcode());	
+			re.setRe_state("RA");
+			re.setRe_spcode(list.get(0).getOd_prspcode());
+
+			if(dao.insNewRequest(re)) {
+				insert = true;
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+
+		return insert;
+	}
+
+
+
+	//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
+	private boolean insNewOdRA(RequestOrderBean re) {
+		List<MroOrderDetailBean> mod = new ArrayList<MroOrderDetailBean>();
+		List<MroOrderDetailBean> rrList;
+		boolean insert = false;
+
+		re.setRe_state("RR");
+		rrList = dao.selRequest(re);
+		System.out.println(rrList);//RR인 애들만 뽑아옴.
+		if(rrList!=null) {
+			for(int i=0; i<rrList.size(); i++) {		
+				//새로운 주문코드를 만든다. 그 주문코드의 oc의 정보들을 넣기 od,os인설트
+				MroOrderDetailBean result  = new MroOrderDetailBean();
+				result.setOd_oscode(dao.checkCount());
+				result.setOd_prcode(rrList.get(i).getOd_prcode());
+				result.setOd_prspcode(rrList.get(i).getOd_prspcode());
+				result.setOd_stcode("RA");
+				result.setOd_quantity(rrList.get(i).getOd_quantity());
+				//note오면 note추가
+
+				mod.add(result);
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+		if(dao.insNewOd(mod)) {
+			insert = true;
+		}
+		return insert;
+
+	}
+
+	//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
+	private boolean insNewOrdersRA(RequestOrderBean re) {
+		List<MroOrderDetailBean> list;
+		boolean insert = false;
+
+		re.setRe_state("RR");
+		list = dao.selRequest(re);
+		if(list!=null) {		
+			re.setRe_clcode(list.get(0).getOs_clcode());	
+			re.setRe_state("RA");
+
+			if(dao.insNewOrders(re)) {
+				insert = true;
+			}
+		}else {
+			System.out.println("새로운 주문번호 없음");
+		}
+
+		return insert;
+	}
+
 	//교환 요청에 대한 응답 
-	public String supplyResponseExchange(MroOrderBean mo) {
+	public String supplyResponseExchange(RequestOrderBean re) {
 		String message="";
 		DeliveryBean db = new DeliveryBean();
-		db.setDl_oscode(mo.getOs_code());
+		db.setDl_oscode(re.getRe_code());
 		db.setDl_dvcode("IYJ032");
 		db.setDl_dscode("1");
 
 
 		//교환요청에 수락이면
-		if(mo.getOs_state().equals("EA")) {
+		if(re.getRe_state().equals("EA")) {
 			//OD 테이블 :  오리지널 주문코드 ER-> EC(폐기)
-			if(dao.supplyResponseExchangeOD(mo)) {
-				if(dao.supplyResponseExchangeOS(mo)) {
+			if(dao.supplyResponseExchangeOD(re)) {
+				if(dao.supplyResponseExchangeOS(re)) {
 					if(dao.makeDeliveryLocate()) {
 						db.setDl_lccode(dao.maxLCcode());//마지막 운송장번호를 가져와서 lcCode에넣는다.								
 						if(dao.supplyAskDelivery(db)) { //운송장번호 발급
@@ -297,8 +416,8 @@ public class SupplyServiceIYJ {
 				}
 			}
 		}else {//교환요청이 거절이면 (EE)
-			if(dao.supplyResponseExchangeOD(mo)) {
-				if(dao.supplyResponseExchangeOS(mo)) {
+			if(dao.supplyResponseExchangeOD(re)) {
+				if(dao.supplyResponseExchangeOS(re)) {
 					message="교환요청이 거절 처리되었습니다.";
 					System.out.println("교환거절");
 				}
