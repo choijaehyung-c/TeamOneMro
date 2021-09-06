@@ -40,12 +40,12 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="text" name="ahm_code" class="form-control form-control-user"
+                                            <input type="text" name="ah_code" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Your Code">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name ="md_pwd" class="form-control form-control-user"
+                                            <input type="password" name ="ah_pwd" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">

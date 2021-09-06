@@ -51,16 +51,18 @@
     </select>
     
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
-     <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >
-    	SELECT OSV.OS_CODE,
+     <select id="getRefundListSp" parameterType="mrone.teamone.beans.MroOrderDetailBean" resultType="mrone.teamone.beans.MroOrderBean" >		
+		    SELECT OSV.OS_CODE,
        		OSV.OS_CLCODE,
       	 	OSV.CL_NAME,
        		OSV.OS_DATE,
-       		OSV.OS_STATE
+       		ODV.OD_STCODE AS OS_STATE
 		FROM ORDERDETAILVIEW ODV INNER JOIN ORDERSVIEW OSV ON ODV.OD_OSCODE = OSV.OS_CODE
-		WHERE OS_STATE=#{os_state} AND OD_PRSPCODE= #{od_prspcode}
+		WHERE OD_STCODE=#{os_state} AND OD_PRSPCODE=#{od_prspcode}
+        GROUP BY OSV.OS_CODE ,OSV.OS_CLCODE, OSV.CL_NAME, OSV.OS_DATE, ODV.OD_STCODE
     </select>
     
+    <!-- 상세리스트 -->
     <select id="supplyReceiveAsDetail" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE=#{os_code}
     </select>
@@ -70,8 +72,54 @@
     	UPDATE OD SET OD_STCODE=#{os_state} WHERE OD_OSCODE=#{os_code} AND OD_STCODE='RR'
     </update>
     
-    <!-- 구매확정이 있으면, 그 레코드의 정보들을 가져와라-->
-	<select id="supplyOCInfo" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
-		SELECT * FROM OD WHERE OD_OSCODE=#{os_code}
+    <!-- 반품 OS테이블 RR인거 업데이트ㅡ -->
+    <update id="supplyResponseRefundOS" parameterType="mrone.teamone.beans.MroOrderBean">
+ 		UPDATE OS SET OS_STATE = #{os_state} WHERE OS_CODE=#{os_code} AND OS_STATE='RR'
+    </update>
+    
+    <!-- 교환 OD 테이블 요청 -> 수락 또는 거절 -->
+      <update id="supplyResponseExchangeOD" parameterType="mrone.teamone.beans.MroOrderBean">
+    	UPDATE OD SET OD_STCODE=#{os_state} WHERE OD_OSCODE=#{os_code} AND OD_STCODE='ER'
+    </update>
+    
+    <!-- 교환 OS 테이블 요청 -> ER인거 업데이트 -->
+      <update id="supplyResponseExchangeOS" parameterType="mrone.teamone.beans.MroOrderBean">
+   		 UPDATE OS SET OS_STATE = #{os_state} WHERE OS_CODE=#{os_code} AND OS_STATE='ER'
+    </update>
+    
+    <select id="supplyOSInfo" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderBean">
+    	SELECT * FROM OS WHERE OS_CODE= #{os_code}
+    </select>
+    
+    <!-- 구매확정이 있으면, 그 레코드의 정보들을 가져와라 OD테이블-->
+	<select id="supplyOCInfo" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean">
+		SELECT * FROM OD WHERE OD_OSCODE= #{osCode} AND OD_STCODE='OC'
 	</select>
+	
+	<!-- 폐기된 애들이 있으면, 그 레코드의 정보들을 가져와라 -->
+	
+	<select id="supplyPDInfo" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean">
+		SELECT * FROM OD WHERE OD_OSCODE= #{osCode} AND OD_STCODE='PD'
+	</select>
+	<!-- 오늘날짜의 마지막 주문코드 -->
+	<select id="getCount" resultType="int">
+		SELECT
+		MAX(TO_NUMBER(SUBSTR(OS_CODE,7,5))) FROM OS WHERE SUBSTR(OS_CODE,1,6) =
+		TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+	
+	<!-- OS에 새로운 주문코드+레코드 추가 -->
+	<insert id="insNewOrders" parameterType="mrone.teamone.beans.MroOrderBean">
+		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},SYSDATE,#{os_state})	
+	</insert>
+	
+	<!-- OD에 새로운 주문코드+레코드 추가 -->
+	<insert id="insNewOrderDetail" parameterType="mrone.teamone.beans.MroOrderDetailBean">
+		INSERT INTO OD VALUES(#{od_prspcode},TO_CHAR(SYSDATE,'YYMMDD')||#{od_oscode},#{od_stcode},#{od_prcode},#{od_quantity})
+	</insert>
+	
+	<select id="supplySearchAs" parameterType="mrone.teamone.beans.MroOrderBean" resultType="mrone.teamone.beans.MroOrderBean">
+		SELECT * FROM ORDERSVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%'
+	</select>
+	
     </mapper>

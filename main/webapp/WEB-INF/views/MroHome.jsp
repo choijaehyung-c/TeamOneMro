@@ -13,22 +13,19 @@
 
 
 <body onLoad="supplyReceiveRefundListForm()">
+	
+	<input type="text" name="word"/><button onClick="supplySearch()"> 검 색 </button>
 
-
-	<div> 공급사 목록 : ${Slist} </div>
+	<div style="margin-top:50px;"> 공급사 목록 : ${Slist} </div>
 	<div> 고객사 목록 : ${Clist} </div>
 
 
 <!--  	<div  id="mOrderList"> <div v-for:"list2 in list" onclick="orderDetail()">{{list}}</div> </div> 	
 	<input v-model:"msg" type="text"/>-->
 	
-	<div onClick="orderDetail()">주문 목록 : ${WorderList }</div>
-	<div id="getWaitList" name="getWaitList"></div>
-	<input type="hidden" value="${WorderList}" name="OD_OSCODE" />
 	
-	
-	<div id="refundSpace"></div>
-	<div name="exchangeList" onClick="ReceiveExchangeDetail()"> 공급사 교환목록 : ${exchangeList} </div>
+	<div id="refundSpace" style="margin-top:50px;"></div>
+	<input type="button" name="exchangeList" onClick="ReceiveExchangeList()" value="교환목록 불러오기"/>
 	
 	
 	<div id="detailSpace" style="margin-top:50px;"></div>

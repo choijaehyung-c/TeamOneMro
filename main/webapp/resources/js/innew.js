@@ -75,7 +75,7 @@ function getOrderDetailM(data){
 	
 	let HTML = "";
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity  +"</div>";
 	
 	}
 	space.innerHTML=HTML;
@@ -114,8 +114,7 @@ function getRefundDetailListM(data){
 	let HTML = "";
 
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name +"</div>"
-	
+	HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity + "[상태 - " + data[i].od_stcode + "]" + "</div>";
 	}
  	
 	space.innerHTML=HTML;
@@ -154,14 +153,14 @@ function getExchangeDetailListM(data){
 	
 	let HTML = "";
 	for(i=0; i<data.length; i++){
-	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 : "+ data[i].sp_name + "		상품코드 : " + data[i].od_prcode + "		상품이름 : " + data[i].pr_name +"</div>"
+	 HTML += "<div>"+ "(공급사 코드"+ data[i].od_prspcode + ") 공급사 :"+ data[i].sp_name + "	상품코드 : " + data[i].od_prcode + "	상품이름 : " + data[i].pr_name + "  갯수 : "+ data[i].od_quantity + "[상태 - " + data[i].od_stcode + "]" +"</div>";
 	
 	}
 	space.innerHTML= HTML;
 	
 }
 
-
+//공급사쪽
 function supplyReceiveRefundListForm(){
 	postAjaxJson('supplyReceiveRefundListForm','supplyRefundList','j');
 }
@@ -172,9 +171,13 @@ function supplyRefundList(data){
 	
 	let html = "<div>반품목록</div>";
 	
+   if(data!=""){	
 	for(i=0; i<data.length; i++){
 		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].os_code+"','RR')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
-	}
+	 }
+   }else{
+		html += "<div>반품신청 목록이 없습니다.</div>";
+}	
 	
 	space.innerHTML=html;
 }
@@ -197,7 +200,7 @@ function getAsDetailListS(data){
 	 html += "<div> 상품코드: "+data[i].od_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].od_quantity+ "  상태: "+data[i].od_stcode +"</div>";
 	}
 	
-	 html += "<div onClick=\"responseRefund('"+data[0].od_oscode+"','RC')\">수락</div>";
+	 html += "<div onClick=\"responseRefund('"+data[0].od_oscode+"','PD')\">수락</div>";
      html += "<div onClick=\"responseRefund('"+data[0].od_oscode+"','FF')\">거절</div>";
 
 	list.innerHTML=html;
@@ -205,16 +208,121 @@ function getAsDetailListS(data){
 
 
 function responseRefund(oscode, osstate){
-	alert(oscode);
-	alert(osstate);
+	//alert(oscode);
+	//alert(osstate);
+	if(osstate=="PD"){ //폐기
+	if(confirm("주문번호"+ oscode+"의 반품요청을 수락하시겠습니까?")){
 	let sendJsonData = {os_code:oscode, os_state:osstate};
 	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('supplyResponseRefund','refundResult', 'j', clientData);
-	alert(clientData);
-	
+	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
+	}
+}else{
+	if(confirm("주문번호" + oscode+ "의 반품요청을 거절하시겠습니까?")){
+	let sendJsonData = {os_code:oscode, os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyResponseRefund','refundResult', 's', clientData);
+	}
+}
 }
 
+function refundResult(message){
 
+	if(message!=""){
+		alert(message);
+	}
+}
+
+//공급사 교환리스트 
+function ReceiveExchangeList(){
+	postAjaxJson('supplyReceiveExchangeListForm','supplyExchangeList','j');
+}
+
+function supplyExchangeList(data){
+	let space = document.getElementById("refundSpace");
+	
+	let html = "<div>교환목록</div>";
+  if(data!=""){	
+	for(i=0; i<data.length; i++){
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].os_code+"','ER')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+	  }
+   }else {
+	    html +="<div>교환신청 목록이 없습니다.</div>";
+}
+	
+	space.innerHTML=html;
+}
+
+function ReceiveExchangeDetail(oscode,osstate){
+	let sendJsonData = {os_code:oscode,os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyReceiveAsDetail','getAsDetailListS2','j',clientData);
+}
+
+function getAsDetailListS2(data){
+	let list = document.getElementById("detailSpace");
+	let html = "<div><주문코드 : "+data[0].od_oscode+" 교환내역></div>";
+	
+	for(i=0; i<data.length; i++){
+	 html += "<div> 상품코드: "+data[i].od_prcode + "  상품이름: " +data[i].pr_name + "  주문갯수: " + data[i].od_quantity+ "  상태: "+data[i].od_stcode +"</div>";
+	}
+	
+	 html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EC')\">수락</div>";
+     html += "<div onClick=\"responseExchange('"+data[0].od_oscode+"','EE')\">거절</div>";
+
+	list.innerHTML=html;
+}
+
+function responseExchange(oscode,osstate){
+	
+	if(osstate=="EC"){
+	if(confirm("주문번호"+ oscode+"의 교환요청을 수락하시겠습니까?")){
+	let sendJsonData = {os_code:oscode, os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyResponseExchange','exchangeResult', 's', clientData);
+	}
+}else{
+	if(confirm("주문번호" + oscode+ "의 교환요청을 거절하시겠습니까?")){
+	let sendJsonData = {os_code:oscode, os_state:osstate};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplyResponseExchange','exchangeResult', 's', clientData);
+	}
+  }
+}
+
+function exchangeResult(message){
+
+	if(message!=""){
+		alert(message);
+	}
+}
+
+function supplySearch(){
+	let word = document.getElementsByName("word")[0].value;
+	
+	let sendJsonData = {word:word};
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson('supplySearchAs','supplySearchResult','j', clientData);
+}
+
+function supplySearchResult(data){
+	let space = document.getElementById("refundSpace");
+	
+	let html = "<div>검색목록</div>";
+	
+	if(data!=""){
+	for(i=0; i<data.length; i++){
+		if(data[i].os_state =="교환요청"){
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].os_code+"','ER')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		}else{
+		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].os_code+"','RR')\">주문코드 : "+data[i].os_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].os_state + "  주문날짜 : "+ data[i].os_date +"</div>";
+		}
+	  }
+	}else{
+		html += "검색결과가 없습니다.";
+	}
+	
+	space.innerHTML=html;
+}
 
 
 

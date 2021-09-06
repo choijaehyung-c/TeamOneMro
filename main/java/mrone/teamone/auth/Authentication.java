@@ -1,14 +1,13 @@
 package mrone.teamone.auth;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.AccessBean;
-import mrone.teamone.beans.MroAccessBean;
+import mrone.teamone.beans.AccessHistoryBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -24,22 +23,23 @@ public class Authentication {
 	@Autowired
 	AuthDao dao;
 	
-	public ModelAndView accessMroCtl(MroAccessBean ma) {
+	public ModelAndView accessMroCtl(AccessHistoryBean ah,Cookie ck) {
+		ah.setAh_table("AHM");//임시
 		mav = new ModelAndView();
 		try {
 			//해당 아이디 로그인이 어딘가에서 된상태(db에 로그인상태)
-			if(dao.getAccessHistorySum(ma)) {
+			if(dao.getAccessHistorySum(ah)) {
 				// 그 로그인이 다른브라우저에 되어 있을경우 강제종료후 로그인
-				if(!(ma.getAhm_browser()+ma.getAhm_publicip()+ma.getAhm_privateip()).equals(dao.getLastAccessInfo(ma))) {	 
-					if(dao.forceLogout(ma)) {
+				if(!(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip()).equals(dao.getLastAccessInfo(ah))) {	 
+					if(dao.forceLogout(ah)) {
 						System.out.print("강제로그아웃성공");
-						loginProcess(mav,ma);
+						loginProcessMro(mav,ah,ck);
 						System.out.println("다른브라우저로그인성공");
 					}
 				}else {
 					if(pu.getAttribute("userSs")==null){//서버 로그인이 되어있지만 세션이 만료된 경우
-						dao.forceLogout(ma);
-						loginProcess(mav,ma);
+						dao.forceLogout(ah);
+						loginProcessMro(mav,ah,ck);
 					}else {//서버 로그인이 되어있고 세션이 살아 있는 경우(같은 브라우저,새탭 페이지안바뀐 로그인버튼)
 						mav.setViewName("redirect:/");
 					}
@@ -47,7 +47,7 @@ public class Authentication {
 			//해당 아이디가 로그인이 안되어있을경우(db에 로그아웃상태)
 			}else{
 				System.out.println("222");
-				loginProcess(mav,ma);
+				loginProcessMro(mav,ah,ck);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -55,10 +55,21 @@ public class Authentication {
 		return mav;
 	}
 
-	private void loginProcess(ModelAndView mav,MroAccessBean ma) {
+	private void loginProcessMro(ModelAndView mav,AccessHistoryBean ah,Cookie ck) {
 		AccessBean ab = new AccessBean();
-		ab.setId(ma.getAhm_code());
-		ab.setPwd(ma.getMd_pwd());
+		if(ah.getAh_table().equals("AHM")){
+			ab.setId(ah.getAh_code());
+			ab.setPwd(ah.getAh_pwd());
+			ab.setCol("MD_CODE");
+			ab.setCol2("MD_PWD");
+			ab.setTable("MRD");
+		}else {
+			ab.setId(ah.getAh_sdspcode()+ah.getAh_code());
+			ab.setPwd(ah.getAh_pwd());
+			ab.setCol("SD_SPCODE||SD_CODE");
+			ab.setCol2("SD_PWD");
+			ab.setTable("SD");
+		}
 		
 		try {	
 			if(pu.getAttribute("userSs")==null){
@@ -66,14 +77,15 @@ public class Authentication {
 				if(dao.isUserId(ab)){
 					System.out.println("아이디검증성공");
 					ab.setPwd(enc.aesEncode(ab.getPwd(), ab.getId()));
-					
 					if(dao.checkPwd(ab)){
 						System.out.println("로그인성공");
-						if(tf = dao.insAccessHistory(ma)) {
+						if(tf = dao.insAccessHistory(ah)) {
 							System.out.println("기록성공");
 							mav.setViewName("redirect:/");
+							ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));
+							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
 							pu.setAttribute("userSs",enc.aesEncode(ab.getId(),"session"));
-							pu.setAttribute("ck",ab.getId());
+							pu.setAttribute("type","mro");
 						}
 					}
 				}
@@ -87,17 +99,18 @@ public class Authentication {
 		}
 	}
 	
-	public ModelAndView accessOutMroCtl(MroAccessBean ma) {
+	public ModelAndView accessOutMroCtl(AccessHistoryBean ah,Cookie ck) {
+		if(ck != null)ah.setAh_table(ck.getValue().substring(0,3).equals("mro")?"AHM":"AHS");
 		mav = new ModelAndView();
 		try {
 			if(pu.getAttribute("userSs") != null) {
-				ma.setAhm_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-				if(dao.getLogOutAccessHistorySum(ma)) {
-					dao.insAccessHistory(ma);
+				ah.setAh_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				if(dao.getLogOutAccessHistorySum(ah)) {
+					dao.insAccessHistory(ah);
 				}
-				pu.removeAttribute("userSs");
-				//쿠키 지우는거
-				pu.removeAttribute("ck");
+				pu.removeAttribute("userSs");				
+				pu.removeAttribute("type");
+				ah.setCk(ah.getAh_code());
 				mav.setViewName("redirect:/");
 				mav.addObject("message","alert('로그아웃 되었습니다.');");
 				System.out.println("로그아웃ctl성공");
@@ -105,7 +118,10 @@ public class Authentication {
 				mav.setViewName("redirect:/");
 				mav.addObject("message","alert('이미 로그아웃 되었습니다.');");
 			}
+			ck.setMaxAge(0);//쿠키소멸
+			ck.setValue(null);//쿠키소멸
 		} catch (Exception e) {
+			System.out.println("no ck");
 			e.printStackTrace();
 		}
 		return mav;
@@ -115,41 +131,37 @@ public class Authentication {
 	
 	public ModelAndView start(Cookie ck) {
 		mav = new ModelAndView();
-		MroAccessBean ma = new MroAccessBean();
+		AccessHistoryBean ah = new AccessHistoryBean();
 		// userSs 유저 세션
+		if(ck != null) {
+			ah.setAh_table(ck.getValue().substring(0,3).equals("mro")?"AHM":"AHS"); 
 		try {
 			//브라우저에 일단 세션이 남아 있는 경우
 			if(pu.getAttribute("userSs")!=null){
-				ma.setAhm_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				ah.setAh_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 				//남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
-				if(dao.getAccessHistorySum(ma) && ck.getValue().equals((String)pu.getAttribute("userSs"))) {
-					mav.setViewName("home");
+				if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
+					mav.setViewName(ah.getAh_table().equals("AHM")?"home":"supHome");
 				//남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
 				}else{
-					//쿠키도삭제
-					System.out.println("asd");
 					pu.removeAttribute("userSs");
+					pu.removeAttribute("type");
 					mav.setViewName("accessForm");
+					ck.setMaxAge(0);//쿠키소멸
+					ck.setValue(null);//쿠키소멸
 				}
 			//브라우저에 해당사이트 할당된 세션이 없음
 			}else {
+				ck.setMaxAge(0);//쿠키소멸
+				ck.setValue(null);//쿠키소멸
 				mav.setViewName("accessForm");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}else {
+		mav.setViewName("accessForm");
+	}
 		return mav;
 	}
-
-	
-	
-	/*
-	 * Cookie cookie = new Cookie("key", "hihicookie"); cookie.setMaxAge(3600); //
-	 * 쿠키 유효기간 설정 (초 단위) response.addCookie(cookie); try {
-	 * ss.setAttribute("session", "hihisession"); } catch (Exception e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); }
-	 */
-	
-	
-
 }

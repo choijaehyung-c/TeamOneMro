@@ -1,5 +1,7 @@
 package mrone.teamone.mapper;
 
+import java.util.List;
+
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 
@@ -14,6 +16,15 @@ public interface MroIYJ {
 	//void getExchangeDetail(String osCode);
 	void getRefundListSp(MroOrderDetailBean mod);
 	void supplyReceiveAsDetail(MroOrderBean mo);
-	void supplyResponseRefund(MroOrderBean mo);
-	void supplyOCInfo(MroOrderBean mo);
+	void supplyResponseRefund(MroOrderBean mo); //od 업데이트
+	void supplyResponseRefundOS(MroOrderBean mo); // os 업데이트
+	void supplyOSInfo(MroOrderBean mo);
+	void supplyOCInfo(String osCode);
+	void supplyPDInfo(String osCode);
+	void getCount();
+	void insNewOrders(MroOrderBean mo);
+	void insNewOrderDetail(List<MroOrderDetailBean> mod);
+	void supplySearchAs(MroOrderBean mo);
+	void supplyResponseExchangeOD(MroOrderBean mo);
+	void supplyResponseExchangeOS(MroOrderBean mo);
 }

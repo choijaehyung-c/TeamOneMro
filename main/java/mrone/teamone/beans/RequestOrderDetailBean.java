@@ -9,8 +9,11 @@ import lombok.Data;
 public class RequestOrderDetailBean {
 		private String rd_prspcode;
 		private String rd_recode;
-		private String rd_prcode;
-		private String rd_quantity;
-		private String rd_stcode;
-		List<RequestOrderDetailBean> detail;
+		private String pr_code;
+		private String pr_name;
+		private int pr_price;
+		private int pr_tax;
+		private int rd_quantity;	
+		private String rd_stcode; //?
+		List<RequestOrderDetailBean> detail;//?
 }
