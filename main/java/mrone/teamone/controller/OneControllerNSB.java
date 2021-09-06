@@ -22,9 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.supply.service.SupplyServiceEntranceNSB;
 import mrone.teamone.auth.Authentication;
+import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
+import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.utill.Encryption;
 
 
@@ -44,6 +46,14 @@ public class OneControllerNSB {
 	public ModelAndView supplyReceiveWaitOrderListForm() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("supplyhomeNSB");
+		return mav;
+
+	}
+	
+	@GetMapping("/issueTaxBillForm")
+	public ModelAndView issueTaxBillForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("issueTaxBillForm");
 		return mav;
 
 	}
@@ -102,6 +112,40 @@ public class OneControllerNSB {
 		
 		return message;
 		
+	}
+	
+	@PostMapping("/getTaxCL")
+	public List<ClientInfoBean> getTaxCL() {
+		List<ClientInfoBean> reList = null;
+		reList = sse.getTaxCL();
+	
+		return reList;			
+	}
+	
+	@PostMapping("/getchoiceCLInfo")
+	public List<ClientInfoBean> getchoiceCLInfo(@RequestBody List<ClientInfoBean> list ) {
+		System.out.println(sse.choiceCLInfoCtl(list.get(0)));
+		return sse.choiceCLInfoCtl(list.get(0));	
+	}
+	
+	@PostMapping("/getChoiceSPInfo")
+	public List<SupplyInfoBean> getchoiceSPInfo(@RequestBody List<SupplyInfoBean> list ) {
+		System.out.println(sse.choiceSPInfoCtl(list.get(0)));
+		return sse.choiceSPInfoCtl(list.get(0));	
+	}
+	
+	@PostMapping("/getTaxDill")
+	public List<RequestOrderBean> getTaxDill() {
+		List<RequestOrderBean> reList = null;
+		reList = sse.getTaxDill();
+		System.out.println(sse.getTaxDill());
+		return reList;			
+	}
+	
+	@PostMapping("/getchoiceDillInfo")
+	public List<RequestOrderDetailBean> getchoiceDillInfo(@RequestBody List<RequestOrderDetailBean> list ) {
+		System.out.println(sse.choiceDillInfoCtl(list.get(0)));
+		return sse.choiceDillInfoCtl(list.get(0));	
 	}
 	
 }

@@ -97,9 +97,9 @@ public class SupplyDaoIYJ {
 		return this.convertToBoolean(list);
 	}
 	
-	List<MroOrderBean> supplySearchAs(MroOrderBean mo){
+	List<RequestOrderBean> supplySearchAs(RequestOrderBean re){
 		
-		return sql.selectList("supplySearchAs", mo);
+		return sql.selectList("supplySearchAs", re);
 	}
 	
 	//교환 배달요청

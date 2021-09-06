@@ -22,6 +22,9 @@
 	<input type = "button" onClick="delivery()" value = "배송관리"></input>
 	<div id = "DLlist"></div>
 	
+	<input type = "button" onClick="issueTaxBillForm()" value = "세금계산서 발행"></input>
+	
+	
 		
 </body>
 </html>

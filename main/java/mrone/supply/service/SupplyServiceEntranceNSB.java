@@ -7,9 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
+import mrone.teamone.beans.SupplyInfoBean;
 
 
 @Service
@@ -62,5 +64,33 @@ public class SupplyServiceEntranceNSB {
 		
 		return message;
 	}
+	
+	public List<ClientInfoBean> getTaxCL() {			
+		List<ClientInfoBean> reList = null;
+		reList = sscn.getTaxCL();
+		return reList;
+	}
+	
+public List<ClientInfoBean> choiceCLInfoCtl(ClientInfoBean cb) {			
+		
+		
+		return sscn.choiceCLInfo(cb);
+	}
+
+public List<SupplyInfoBean> choiceSPInfoCtl(SupplyInfoBean sb) {			
+
+	return sscn.choiceSPInfo(sb);
+}
+
+public List<RequestOrderBean> getTaxDill() {			
+	List<RequestOrderBean> reList = null;
+	reList = sscn.getTaxDill();
+	return reList;
+}
+
+public List<RequestOrderDetailBean> choiceDillInfoCtl(RequestOrderDetailBean rdb) {			
+
+	return sscn.choiceDillInfo(rdb);
+}
 	
 }
