@@ -116,35 +116,36 @@ public class SupplyServiceIYJ {
 
 		if(re.getRe_state().equals("PD")) {
 			System.out.println("수락");
-			//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
-			if(this.insNewOrdersRA(re)) {
-				//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
-				if(this.insNewOdRA(re)) {
-					//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
-					if(this.insNewRequestRA(re)) {
-						//4. RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
-						if(this.insNewRdRA(re)) {
-							System.out.println("os성공");
-							//5.OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
-							if(this.insOrdersOC(re)) {
-								//6. OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
-								if(this.insNewOdOC(re)) {
-									//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
-									if(this.insNewRequestOC(re)) {
-										//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
-										if(this.insNewRdOC(re)) {
-											//9. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
-											if(dao.supplyResponseRefund(re)) {
-												//10. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
-												if(dao.supplyResponseRefundOS(re)) {
-													//11. RD 테이블: 오리지널 주문코드 RR->PD(폐기)
-													if(dao.supplyResponseRefundRD(re)) {
-														// 12. RE테이블:오리지널 주문 코드 RR->PD(폐기)
-														if(dao.supplyResponseRefundRE(re)) {
+			//9. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
+			if(dao.supplyResponseRefund(re)) {
+				//10. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
+				if(dao.supplyResponseRefundOS(re)) {
+					//11. RD 테이블: 오리지널 주문코드 RR->PD(폐기)
+					if(dao.supplyResponseRefundRD(re)) {
+						// 12. RE테이블:오리지널 주문 코드 RR->PD(폐기)
+						if(dao.supplyResponseRefundRE(re)) {
+							//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
+							if(this.insNewOrdersRA(re)) {
+								//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
+								if(this.insNewOdRA(re)) {
+									//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
+									if(this.insNewRequestRA(re)) {
+										//4. RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
+										if(this.insNewRdRA(re)) {
+											System.out.println("os성공");
+											//5.OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
+											if(this.insOrdersOC(re)) {
+												//6. OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
+												if(this.insNewOdOC(re)) {
+													//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
+													if(this.insNewRequestOC(re)) {
+														//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
+														if(this.insNewRdOC(re)) {
+
 															message="반품요청이 정상적으로 처리되었습니다.";
 															System.out.println("반품처리 완성");
 															this.setTransactionResult(true); // commit완료
-															
+
 														}
 													}
 												}
@@ -164,13 +165,20 @@ public class SupplyServiceIYJ {
 
 
 		}else {
-			//RR-> FF로 업데이트
+			//RR-> FF로 업데이트 -> 거절하면 다 FF가 되는데,,,그럼 세금계산서할때 FF도 조회해야함..OC로 바꿀수도없고..
 			System.out.println(re);
-			if(dao.supplyResponseRefund(re)) {
-				System.out.println("거절");
-				message = "반품요청이 거절되었습니다.";
-			}
-		}		
+			re.setRe_state("OC");
+			if(dao.supplyResponseRefund(re)) {	
+				if(dao.supplyResponseRefundOS(re)) {
+					if(dao.supplyResponseRefundRD(re)) {
+						if(dao.supplyResponseRefundRE(re)) {
+							System.out.println("거절");
+							message = "반품요청이 거절되었습니다.";							
+						}
+					}
+				}
+			}		
+		}
 		return message;
 	}
 
@@ -288,7 +296,7 @@ public class SupplyServiceIYJ {
 		List<MroOrderDetailBean> rrList;
 		boolean insert = false;
 
-		re.setRe_state("RR");
+		re.setRe_state("PD");
 		rrList = dao.selRequest(re);
 		System.out.println(rrList);//RR인 애들만 뽑아옴.
 		if(rrList!=null) {
@@ -319,7 +327,7 @@ public class SupplyServiceIYJ {
 		List<MroOrderDetailBean> list;
 		boolean insert = false;
 
-		re.setRe_state("RR");
+		re.setRe_state("PD");
 		list = dao.selRequest(re);
 		if(list!=null) {
 			re.setRe_oscode(dao.checkCount());
@@ -345,7 +353,7 @@ public class SupplyServiceIYJ {
 		List<MroOrderDetailBean> rrList;
 		boolean insert = false;
 
-		re.setRe_state("RR");
+		re.setRe_state("PD");
 		rrList = dao.selRequest(re);
 		System.out.println(rrList);//RR인 애들만 뽑아옴.
 		if(rrList!=null) {
@@ -376,7 +384,7 @@ public class SupplyServiceIYJ {
 		List<MroOrderDetailBean> list;
 		boolean insert = false;
 
-		re.setRe_state("RR");
+		re.setRe_state("PD");
 		list = dao.selRequest(re);
 		if(list!=null) {		
 			re.setRe_clcode(list.get(0).getOs_clcode());	
@@ -406,20 +414,29 @@ public class SupplyServiceIYJ {
 			//OD 테이블 :  오리지널 주문코드 ER-> EC(폐기)
 			if(dao.supplyResponseExchangeOD(re)) {
 				if(dao.supplyResponseExchangeOS(re)) {
-					if(dao.makeDeliveryLocate()) {
-						db.setDl_lccode(dao.maxLCcode());//마지막 운송장번호를 가져와서 lcCode에넣는다.								
-						if(dao.supplyAskDelivery(db)) { //운송장번호 발급
-							message="교환요청이 정상적으로 처리되었습니다.";
-							System.out.println("교환수락");
+					if(dao.supplyResponseExchageRD(re)) {
+						if(dao.supplyResponseExchageRE(re)) {
+							if(dao.makeDeliveryLocate()) {
+								db.setDl_lccode(dao.maxLCcode());//마지막 운송장번호를 가져와서 lcCode에넣는다.								
+								if(dao.supplyAskDelivery(db)) { //운송장번호 발급
+									message="교환요청이 정상적으로 처리되었습니다.";
+									System.out.println("교환수락");
+								}
+							}
 						}
 					}
 				}
 			}
 		}else {//교환요청이 거절이면 (EE)
+			re.setRe_state("OC");//거절 누르면 OC로 들어감
 			if(dao.supplyResponseExchangeOD(re)) {
 				if(dao.supplyResponseExchangeOS(re)) {
-					message="교환요청이 거절 처리되었습니다.";
-					System.out.println("교환거절");
+					if(dao.supplyResponseExchageRD(re)) {
+						if(dao.supplyResponseExchageRE(re)) {
+							message="교환요청이 거절 처리되었습니다.";
+							System.out.println("교환거절");
+						}
+					}
 				}
 			}
 

@@ -56,10 +56,11 @@
        		REV.RE_CLCODE,
       	 	REV.CL_NAME,
        		REV.RE_DATE,
+            REV.CL_HP,
        		RDV.RD_STCODE AS RE_STATE
 		FROM REQUESTVIEW REV INNER JOIN REQUESTDETAILVIEW RDV ON rev.re_code = rdv.rd_recode
 		WHERE RD_STCODE=#{re_state} AND RD_PRSPCODE=#{re_spcode}
-        GROUP BY REV.RE_CODE ,REV.RE_CLCODE, REV.CL_NAME,REV.RE_DATE, RDV.RD_STCODE
+        GROUP BY REV.RE_CODE ,REV.RE_CLCODE, REV.CL_NAME,REV.RE_DATE, RDV.RD_STCODE, REV.CL_HP
     </select>
     
     <!-- 상세리스트 -->
@@ -69,22 +70,22 @@
     
     <!-- 반품요청->반품처리로 (수락) 업데이트 -->
     <update id="supplyResponseRefund" parameterType="mrone.teamone.beans.RequestOrderBean">
-    	UPDATE OD SET OD_STCODE='PD' WHERE OD_OSCODE=#{re_code} AND OD_STCODE='RR'
+    	UPDATE OD SET OD_STCODE=#{re_state} WHERE OD_OSCODE=#{re_code} AND OD_STCODE='RR'
     </update>
     
     <!-- 반품 OS테이블 RR인거 업데이트ㅡ -->
     <update id="supplyResponseRefundOS" parameterType="mrone.teamone.beans.RequestOrderBean">
- 		UPDATE OS SET OS_STATE = 'PD' WHERE OS_CODE=#{re_code} AND OS_STATE='RR'
+ 		UPDATE OS SET OS_STATE = #{re_state} WHERE OS_CODE=#{re_code} AND OS_STATE='RR'
     </update>
     
     <!-- 반품 RD테이블 RR인거 업데이트ㅡ -->
     <update id="supplyResponseRefundRD" parameterType="mrone.teamone.beans.RequestOrderBean">
- 		UPDATE RD SET RD_STCODE = 'PD' WHERE RD_RECODE=#{re_code} AND RD_STCODE='RR'
+ 		UPDATE RD SET RD_STCODE = #{re_state} WHERE RD_RECODE=#{re_code} AND RD_STCODE='RR'
     </update>
     
     <!-- 반품 RE테이블 RR인거 업데이트ㅡ -->
     <update id="supplyResponseRefundRE" parameterType="mrone.teamone.beans.RequestOrderBean">
- 		UPDATE RE SET RE_STATE = 'PD' WHERE RE_CODE=#{re_code} AND RE_STATE='RR'
+ 		UPDATE RE SET RE_STATE = #{re_state} WHERE RE_CODE=#{re_code} AND RE_STATE='RR'
     </update>
     
     <!-- 쓰는거 -->
@@ -130,6 +131,14 @@
    		 UPDATE OS SET OS_STATE = #{re_state} WHERE OS_CODE=#{re_code} AND OS_STATE='ER'
     </update>
     
+     <update id="supplyResponseExchageRD" parameterType="mrone.teamone.beans.RequestOrderBean">
+ 		UPDATE RD SET RD_STCODE = #{re_state} WHERE RD_RECODE=#{re_code} AND RD_STCODE='ER'
+    </update>
+    
+    
+    <update id="supplyResponseExchageRE" parameterType="mrone.teamone.beans.RequestOrderBean">
+ 		UPDATE RE SET RE_STATE = #{re_state} WHERE RE_CODE=#{re_code} AND RE_STATE='ER'
+    </update>
  	
 	<select id="supplySearchAs" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean">
 		   SELECT * FROM REQUESTVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%' 

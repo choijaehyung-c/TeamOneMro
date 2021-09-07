@@ -15,5 +15,6 @@ public class RequestOrderBean {
 	private String re_date;
 	private String re_state;
 	private String word;
+	private String cl_hp;
 	private List<RequestOrderDetailBean> rd;
 }

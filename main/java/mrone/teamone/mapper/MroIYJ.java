@@ -26,6 +26,8 @@ public interface MroIYJ {
 	void supplySearchAs(RequestOrderBean re);
 	void supplyResponseExchangeOD(RequestOrderBean re);
 	void supplyResponseExchangeOS(RequestOrderBean re);
+	void supplyResponseExchageRD(RequestOrderBean re);
+	void supplyResponseExchageRE(RequestOrderBean re);
 	void supplyAskDelivery(DeliveryBean db);
 	void makeDeliveryLocate();
 	void maxLCcode();

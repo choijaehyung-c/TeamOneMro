@@ -173,7 +173,7 @@ function supplyRefundList(data){
 	
    if(data!=""){	
 	for(i=0; i<data.length; i++){
-		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].re_code+"','RR')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
+		html += "<div onClick=\"ReceiveRefundDetail('"+data[i].re_code+"','RR')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name+" ( "+data[i].cl_hp +" ) " + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
 	 }
    }else{
 		html += "<div>반품신청 목록이 없습니다.</div>";
@@ -201,7 +201,7 @@ function getAsDetailListS(data){
 	}
 	
 	 html += "<div onClick=\"responseRefund('"+data[0].rd_recode+"','PD')\">수락</div>";
-     html += "<div onClick=\"responseRefund('"+data[0].rd_recode+"','FF')\">거절</div>";
+     html += "<div onClick=\"responseRefund('"+data[0].rd_recode+"','FF')\">거절(거절을 누르시면, 구매확정 처리가 됩니다. 그전에 고객사와 통화해주시기 바랍니다.)</div>";
 
 	list.innerHTML=html;
 }
@@ -243,7 +243,7 @@ function supplyExchangeList(data){
 	let html = "<div>교환목록</div>";
   if(data!=""){	
 	for(i=0; i<data.length; i++){
-		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].re_code+"','ER')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name + " 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
+		html += "<div onClick=\"ReceiveExchangeDetail('"+data[i].re_code+"','ER')\">주문코드 : "+data[i].re_code+ " 고객사 : "+ data[i].cl_name +" ( "+ data[i].cl_hp + " ) " +" 상태 : "+ data[i].re_state + "  주문날짜 : "+ data[i].re_date +"</div>";
 	  }
    }else {
 	    html +="<div>교환신청 목록이 없습니다.</div>";
@@ -267,7 +267,7 @@ function getAsDetailListS2(data){
 	}
 	
 	 html += "<div onClick=\"responseExchange('"+data[0].rd_recode+"','EA')\">수락</div>";
-     html += "<div onClick=\"responseExchange('"+data[0].rd_recode+"','EE')\">거절</div>";
+     html += "<div onClick=\"responseExchange('"+data[0].rd_recode+"','EE')\">거절 (교환거절을 하시면, 구매확정이 됩니다. 그전에 고객사와 통화해주세요.)</div>";
 
 	list.innerHTML=html;
 }

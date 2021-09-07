@@ -56,6 +56,14 @@ public class SupplyDaoIYJ {
 		return this.convertToBoolean(sql.update("supplyResponseExchangeOS",re));
 	}
 	
+	boolean supplyResponseExchageRD(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseExchageRD", re));
+	}
+	
+	boolean supplyResponseExchageRE(RequestOrderBean re) {
+		return this.convertToBoolean(sql.update("supplyResponseExchageRE",re));
+	}
+	
 	List<MroOrderDetailBean> selRequest(RequestOrderBean re) {
 		return sql.selectList("selRequest",re);
 
