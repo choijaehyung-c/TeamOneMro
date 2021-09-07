@@ -1,6 +1,8 @@
 package mrone.supply.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +85,29 @@ public class SupplyServiceHSM {
 				message = "fail";
 			}
 		}
+		return message;
+	}
+
+
+	public List<ProductBean> getCate() {
+		return dao.getCate();
+	}
+
+
+	public String supplyRequestNewProduct(ProductBean pb) {
+		String message = "";
+			pb.setPr_spcode("KR001G");
+			pb.setPr_code("2002002002");
+			pb.setPr_tax(String.valueOf(Integer.parseInt(pb.getPr_price())/10));
+			pb.setPr_spbkind("KL");
+			pb.setPr_stcode("PR");
+			System.out.println(pb);
+			if(dao.supplyRequestNewProduct(pb)) {
+				message = "success";
+			}else {
+				message = "fail";
+			}
+			
 		return message;
 	}
 

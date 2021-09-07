@@ -21,7 +21,7 @@
 	</div>
 </div>
 
-<div onClick = "">supply상품디테일</div>
+<div onClick ="getCate()">새 상품 추가 요청</div>
 
 
 </body>

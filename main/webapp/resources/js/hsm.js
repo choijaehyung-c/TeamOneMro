@@ -247,6 +247,52 @@ function supplyRequestDelete(){
 	postAjaxJson('SupplyRequestDelete','testtest', 's', clientData);
 }
 
+
+//상품신청시 카테고리 가져오기
+function getCate(){
+	postAjaxJson('GetCate','inputProductInfo', 'j');
+}
+// 상품신청
+function inputProductInfo(jsonData){
+	let modal = document.getElementById("DetailModal");
+	modal.style.display = "block";
+		
+	let data = "<div>새 상품 추가</div>";
+		data += "<div>상품이름</div><input id='pr_name' type='text'><br>";
+		data += "<div>상품가격</div><input id='pr_price' type='text'><br>";
+		data += "<div>재고</div><input id='pr_stock' type='text'><br>";
+		data += "<div>원산지</div><input id='pr_origin' type='text'><br>";
+		data += "<div>카테고리</div><select id='CG'>";
+			for(i=0; i<jsonData.length; i++){
+				data += `<option value='${jsonData[i].cate}'>${jsonData[i].cate_name}</option>`;
+			}
+		data += "</select><br>";
+		data += "<div>사진</div><input id = 'pr_image' type='text'><br>";
+		data += "<div>정보</div><input id='pr_info' type='text'><br>";
+		data += `<div onClick ="supplyRequestNewProduct()">추가요청</div>`;
+	ProductDetailInfo.innerHTML = data;
+}
+
+function supplyRequestNewProduct(){
+	let prname = document.getElementById("pr_name").value;
+	let prprice = document.getElementById("pr_price").value;
+	let prstock = document.getElementById("pr_stock").value;
+	let prorigin = document.getElementById("pr_origin").value;
+	let primage = document.getElementById("pr_image").value;
+	let cate = document.getElementById("CG").value;
+	let catename = CG.options[CG.selectedIndex].text;
+	let prinfo = document.getElementById("pr_info").value;
+	
+	let sendJsonData = {pr_image:primage, pr_name:prname,
+						pr_price:prprice, pr_stock:prstock,
+						pr_origin:prorigin, pr_info:prinfo,
+						cate:cate, cate_name:catename};
+	let clientData = JSON.stringify(sendJsonData);
+		alert(clientData);
+	postAjaxJson('SupplyRequestNewProduct','testtest', 's', clientData);
+}
+
+
 function testtest(msg){
 	alert(msg);
 }

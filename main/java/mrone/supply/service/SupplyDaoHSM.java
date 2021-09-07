@@ -46,9 +46,21 @@ public class SupplyDaoHSM {
 		return convertToBoolean(sql.update("updateSupplyRequestModify", pb));
 	}
 
+	public List<ProductBean> getCate() {
+		return sql.selectList("getCate");
+	}
+
+	public boolean supplyRequestNewProduct(ProductBean pb) {
+		return convertToBoolean(sql.insert("supplyRequestNewProduct", pb));
+	}
+	
 	boolean convertToBoolean(int data) {
 		return data>0? true : false;
 	}
+
+
+
+
 
 
 

@@ -33,5 +33,14 @@
     	UPDATE PR SET PR_STOCK = #{pr_stock}, PR_NAME = #{pr_name}, PR_PRICE = #{pr_price}, PR_INFO = #{pr_info}, PR_ORIGIN = #{pr_origin} WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
     </update>
     
+    <select id="getCate" resultType="mrone.teamone.beans.CGBean">
+    	SELECT * FROM CG
+    </select>
+    
+    <insert id = "supplyRequestNewProduct" parameterType="mrone.teamone.beans.ProductBean">
+    	INSERT INTO PR(PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE, PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN, PR_SPBKIND, PR_STCODE, CATE, CATE_NAME)
+    	  VALUES (#{pr_spcode}, #{pr_code}, #{pr_stock}, #{pr_name}, #{pr_image}, #{pr_price}, #{pr_tax}, #{pr_info}, #{pr_origin}, #{pr_spbkind}, #{pr_stcode}, #{cate}, #{cate_name})
+    </insert>
+    
     
     </mapper>

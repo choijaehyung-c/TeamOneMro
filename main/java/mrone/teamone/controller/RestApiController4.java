@@ -99,5 +99,15 @@ public class RestApiController4 {
 		return ssch.supplyRequestDelete(pb);
 	}
 	
+	//새 상품 등록요청시 카테고리 가져오기
+	@PostMapping("/GetCate")
+	public List<ProductBean> getCate(){
+		return ssch.getCate();
+	}
 	
+	//추가할 상품정보 정보 보내기
+	@PostMapping("/SupplyRequestNewProduct")
+	public String supplyRequestNewProduct(@RequestBody ProductBean pb){
+		return ssch.supplyRequestNewProduct(pb);
+	}
 }
