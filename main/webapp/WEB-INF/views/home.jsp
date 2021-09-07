@@ -15,7 +15,7 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
     
-    <body class="sb-nav-fixed" id="frameVue">
+    <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE</a>
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -107,13 +107,11 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-              <div id="vuezone">
-                <main>
-                	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
-                	<div id="mOrderList" v-for="item in orderList">{{item.os_code}}</div>
-                	<div id="mOrderDetail"></div>
+                <main style="height: 100%; width: 100%;">
+                	<div id="mainVue" style="height: 100%; width: 100%;">
+                		<template v-if="page[0].show"><div v-for="ii in supplyList" @click="datata(ii.sp_code)">{{ii.sp_name}}</div></template>
+                	</div>
                 </main>
-             </div> 
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  

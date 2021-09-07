@@ -114,7 +114,7 @@
             <button onclick="getCateProduct()">asdasdasdasd</button>
               	<div id="supplyVueZone"  style="height: 100%; width: 100%; " >
               		<template v-if="display[0].show"><div>test111111111</div></template>
-              		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" >test222222222</div></template>
+              		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" ></div></template>
               		<template v-if="display[2].show" ><div style="background:#4641D9;width:100%; height:100%; box-sizing: content-box;">test333333333{{msg}}</div></template>
               	</div>
              </main>
