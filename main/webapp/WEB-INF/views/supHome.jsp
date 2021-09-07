@@ -108,6 +108,10 @@
             </div>
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
+            <div ><input type="file" name="file1" /><input type="text" name="multitext"/>
+			<button id="upup" onclick="uploadFileAjax()">업로드</button></div>
+            
+            <button onclick="getCateProduct()">asdasdasdasd</button>
               	<div id="supplyVueZone"  style="height: 100%; width: 100%; " >
               		<template v-if="display[0].show"><div>test111111111</div></template>
               		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" >test222222222</div></template>

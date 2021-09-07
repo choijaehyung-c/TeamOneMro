@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.SupplySearchBean;
 
@@ -25,6 +26,10 @@ class SupplyServiceCtlCjh {
 	
 	List<SupplySearchBean> getSearchSupplyDealCtl(String word){
 		return dao.getSearchSupplyDeal(word);
+	}
+	
+	List<ProductBean> getSupplyCateProductList(ProductBean pb){
+		return dao.getSupplyCateProductList(pb);
 	}
 	
 

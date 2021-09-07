@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mrone.client.service.ClientServiceEntrance;
+import mrone.supply.service.SupplyServiceEntranceCJH;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.TaxBean;
 
 @RestController
@@ -20,7 +22,8 @@ public class RestApiController1 {
 
 	@Autowired
 	private ClientServiceEntrance cse;
-
+	@Autowired
+	private SupplyServiceEntranceCJH ssec;
 	
 	@PostMapping("/clientOrder")
 	public String clientOrderApi(@RequestBody ClientOrderBean co){
@@ -49,5 +52,10 @@ public class RestApiController1 {
 		return cse.clientGetTaxbillDetail(ci);
 	}
 	
+	@PostMapping("/getSupplyCateProductList")
+	public List<ProductBean> getSupplyCateProductList(@RequestBody ProductBean pr){
+		return ssec.getSupplyCateProductList(pr);
+	}
 	
+	//@ModelAttribute
 }

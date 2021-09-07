@@ -97,3 +97,36 @@ function change2(){
 	main.changeHome2();
 }
 
+function getCateProduct(){
+	let cdata = {"pr_spcode":"KR002C","cate":"TC"};
+	postAjaxJson('getSupplyCateProductList','tetessettse','j',JSON.stringify(cdata));
+}
+
+function tetessettse(ddd){
+	console.log(ddd);
+}
+
+
+
+function uploadFileAjax(){
+	let file = document.getElementsByName("file1")[0];
+	let multitext = document.getElementsByName("multitext")[0];
+	let ajax = new XMLHttpRequest();
+	
+	ajax.onreadystatechange=function(){
+		if(ajax.readyState==4 && ajax.status == 200){
+			let data = ajax.responseText;
+			upupupup(data);
+		}
+	}
+	ajax.open("POST","schedule/fileUpload");
+	
+	let formData = new FormData();
+	console.log(file.files.length);
+	
+	for(i=0;i<file.files.length;i++){
+	formData.append('file1',file.files[i],file.files[i].name);}
+	formData.append('multitext',multitext.value);
+	
+	ajax.send(formData);
+}
