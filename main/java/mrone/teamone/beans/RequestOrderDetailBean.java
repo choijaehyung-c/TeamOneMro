@@ -8,8 +8,9 @@ import lombok.Data;
 @Data
 public class RequestOrderDetailBean {
 		private String rd_prspcode;
+		private String sp_name;
 		private String rd_recode;
-		private String pr_code;
+		private String rd_prcode;
 		private String pr_name;
 		private int pr_price;
 		private int pr_tax;

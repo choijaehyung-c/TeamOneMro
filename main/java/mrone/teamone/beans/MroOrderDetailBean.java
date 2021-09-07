@@ -15,6 +15,7 @@ public class MroOrderDetailBean {
 	private String od_quantity; //주문갯수
 	private String os_state;//상태
 	private String od_stcode;//od테이블의 상태
+	private String os_clcode;
 
 }
 

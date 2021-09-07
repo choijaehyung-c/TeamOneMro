@@ -10,7 +10,7 @@
         <meta name="author" content="" />
         <title>MRONE</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="resources/css/styles.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
@@ -39,7 +39,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <div class="nav-link">
+                            <div class="nav-link" onclick="change1()">
                                 
                                 Dashboard
                             </div>
@@ -95,10 +95,10 @@
                         
                             
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <div class="nav-link" >
+                            <div class="nav-link" onclick="change2()">
                                 Test3
                             </div>
-                            <div class="nav-link" >
+                            <div class="nav-link" onclick="change3()">
                                 Test4
                             </div>
                             
@@ -107,22 +107,25 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-              <div id="vuezone">
-                <main>
-                	<!-- <iframe src="" style="height: 90vh; width:100%; frameborder=0; overflow:auto; scrolling=no; " id="main_iframe">Please visit in a browser that supports iFrame.</iframe> -->
-                	<div id="mOrderList" v-for="item in orderList">{{item.os_code}}</div>
-                	<div id="mOrderDetail"></div>
-                </main>
-             </div> 
+            <main style="height: 100%; width: 100%;">
+              	<div id="supplyVueZone"  style="height: 100%; width: 100%; " >
+              		<template v-if="display[0].show"><div>test111111111</div></template>
+              		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" >test222222222</div></template>
+              		<template v-if="display[2].show" ><div style="background:#4641D9;width:100%; height:100%; box-sizing: content-box;">test333333333{{msg}}</div></template>
+              	</div>
+             </main>
             </div>
         </div>
-        <script src="resources/js/scripts.js"></script>  
-        <script src="resources/js/datatables-simple-demo.js"></script>
+        <!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
+        <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>  
+        <script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
+		
         
     </body>
 </html>
