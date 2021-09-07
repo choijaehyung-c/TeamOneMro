@@ -65,12 +65,10 @@ public class ProjectUtils {
         return RequestContextHolder.getRequestAttributes().getSessionId();
     }
     
-    public String setFile(MultipartFile file) {
+    public String setFile(MultipartFile file){
     	String fileInfo =null;
-    	String uploadLocation = "C:"+File.separator+"Users"+File.separator+"HAYANG"+File.separator+
-    			"Desktop"+File.separator+ "SpringWorkSpace" +File.separator+"spring_mvc"+File.separator+
-    			"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+
-    			"file"+File.separator;
+    	String uploadLocation = "."+File.separator+"src"+File.separator+"main"+File.separator+
+    			"webapp"+File.separator+ "resources" +File.separator+"file"+File.separator;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 				Calendar cal = Calendar.getInstance();
@@ -91,10 +89,8 @@ public class ProjectUtils {
     
     public String[] setFile(MultipartFile[] file) {
     	String[] fileInfo = new String[file.length];
-    	String uploadLocation = "C:"+File.separator+"Users"+File.separator+"HAYANG"+File.separator+
-    			"Desktop"+File.separator+ "SpringWorkSpace" +File.separator+"spring_mvc"+File.separator+
-    			"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+
-    			"file"+File.separator;
+    	String uploadLocation = "."+File.separator+"src"+File.separator+"main"+File.separator+
+    			"webapp"+File.separator+ "resources" +File.separator+"file"+File.separator;
     	
     	for(int i=0; i<file.length;i++) {
 			try {
