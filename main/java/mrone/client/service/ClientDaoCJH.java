@@ -13,7 +13,7 @@ import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.TaxBean;
 
 @Repository
-public class ClientDaoCJH {
+class ClientDaoCJH {
 	@Autowired
 	SqlSessionTemplate sql;
 	

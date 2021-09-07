@@ -25,7 +25,7 @@ import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
 @Service
-public class ClientServiceCtl {
+class ClientServiceCtl {
 	@Autowired
 	ClientDaoCJH dao;
 	@Autowired
