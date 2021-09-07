@@ -154,10 +154,12 @@ function spInfo(){
 		postAjaxJson('getChoiceSPInfo','inputSPInfo',clientData);
 }
 
+
+
 function inputSPInfo(jsonData){
 	let inputHtml = "";
 	let inputList = document.getElementById("spInfo");
-			
+			submit(inputList);
 		console.log(jsonData);
 		for(i=0; i<jsonData.length; i++){
 		
@@ -248,6 +250,8 @@ function choiceDillInfo(recode){
 }
 
 function inputDillInfo(jsonData){
+
+	
 	let inputHtml = "";
 	let inputList = document.getElementById("dillInfo");
 			
@@ -256,15 +260,10 @@ function inputDillInfo(jsonData){
 		inputHtml += "<div id = 'prname'>" +"품명:"+jsonData[i].pr_name+"</div>"
 		inputHtml += "<div id = 'rdquantity'>" +"수량:"+jsonData[i].rd_quantity+"</div>"
 		inputHtml += "<div id = 'prprice'>" +"공급가액:"+jsonData[i].pr_price+"</div>"
-		inputHtml += "<div id = 'prtax'>" +"세액:"+jsonData[i].pr_tax+"</div>"
-	
-		}			
-		
+		inputHtml += "<div id = 'prtax'>" +"세액:"+jsonData[i].pr_tax+"</div>"	
+		}					
 		inputList.innerHTML = inputHtml;
-	
 }
-
-
 
 
 function getAjax(jobCode,fn,clientData=""){
