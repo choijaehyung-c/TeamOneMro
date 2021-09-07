@@ -15,7 +15,7 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
     
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" id="frameVue">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE</a>
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -121,8 +121,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/mro.js"></script>
+
         
     </body>
 </html>
