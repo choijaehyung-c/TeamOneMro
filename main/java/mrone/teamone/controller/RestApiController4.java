@@ -1,16 +1,25 @@
 package mrone.teamone.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import mrone.mro.service.MroServiceCtlHSM;
 import mrone.supply.service.SupplyServiceHSM;
 import mrone.teamone.beans.ProductBean;
+import mrone.teamone.utill.ProjectUtils;
 
 @RestController
 @RequestMapping("/HSM")
@@ -22,6 +31,9 @@ public class RestApiController4 {
 	
 	@Autowired
 	SupplyServiceHSM ssch;
+	
+	@Autowired
+	ProjectUtils pu;
 	
 	//새 상품 등록 요청리스트 가져오기
 	@PostMapping("/GetRequestRegisterNewProductList")
@@ -107,7 +119,10 @@ public class RestApiController4 {
 	
 	//추가할 상품정보 정보 보내기
 	@PostMapping("/SupplyRequestNewProduct")
-	public String supplyRequestNewProduct(@RequestBody ProductBean pb){
-		return ssch.supplyRequestNewProduct(pb);
+	public String supplyRequestNewProduct(@ModelAttribute ProductBean pb){
+		System.out.println(pb.getFile().getOriginalFilename());
+		System.out.println(pu.setFile(pb.getFile()));
+		
+		return null/* ssch.supplyRequestNewProduct(pb) */;
 	}
 }

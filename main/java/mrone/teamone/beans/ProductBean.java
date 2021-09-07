@@ -1,6 +1,8 @@
 
 package mrone.teamone.beans;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -19,4 +21,5 @@ public class ProductBean {
 	private String cate;
 	private String cate_name;
 	private String word; //검색어
+	private MultipartFile file;
 }

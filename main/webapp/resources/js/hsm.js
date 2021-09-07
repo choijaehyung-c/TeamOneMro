@@ -267,14 +267,14 @@ function inputProductInfo(jsonData){
 				data += `<option value='${jsonData[i].cate}'>${jsonData[i].cate_name}</option>`;
 			}
 		data += "</select><br>";
-		data += "<div>사진</div><input id = 'pr_image' type='file' value='파일찾기'><br>";
+		data += "<div>사진</div><input id = 'file' type='file'><br>";
 		data += "<div>정보</div><input id='pr_info' type='text'><br>";
 		data += `<div onClick ="supplyRequestNewProduct()">추가요청</div>`;
 	ProductDetailInfo.innerHTML = data;
 }
 //입력받은 상품정보 인서트하기
 function supplyRequestNewProduct(){
-	let prname = document.getElementById("pr_name").value;
+	/*let prname = document.getElementById("pr_name").value;
 	let prprice = document.getElementById("pr_price").value;
 	let prstock = document.getElementById("pr_stock").value;
 	let prorigin = document.getElementById("pr_origin").value;
@@ -289,12 +289,47 @@ function supplyRequestNewProduct(){
 						cate:cate, cate_name:catename};
 	let clientData = JSON.stringify(sendJsonData);
 		alert(clientData);
-	postAjaxJson('SupplyRequestNewProduct','testtest', 's', clientData);
+	postAjaxJson('SupplyRequestNewProduct','testtest', 's', clientData);*/
+	uploadFileAjax();
 }
 
 
 function testtest(msg){
 	alert(msg);
+}
+
+function uploadFileAjax(){
+	let prname = document.getElementById("pr_name").value;
+	let prprice = document.getElementById("pr_price").value;
+	let prstock = document.getElementById("pr_stock").value;
+	let prorigin = document.getElementById("pr_origin").value;
+	let cate = document.getElementById("CG").value;
+	let catename = CG.options[CG.selectedIndex].text;
+	let prinfo = document.getElementById("pr_info").value;
+	let file = document.getElementById("file");
+	
+	let ajax = new XMLHttpRequest();
+	
+	ajax.onreadystatechange=function(){
+		if(ajax.readyState==4 && ajax.status == 200){
+			let data = ajax.responseText;
+			upupupup(data);
+		}
+	}
+	ajax.open("POST","SupplyRequestNewProduct");
+	
+	let formData = new FormData();
+	console.log(file.files.length);
+	formData.append('file',file.files[0],file.files[0].name);
+	formData.append('pr_name',prname);
+	formData.append('pr_price',prprice);
+	formData.append('pr_stock',prstock);
+	formData.append('pr_origin',prorigin);
+	formData.append('cate',cate);
+	formData.append('cate_name',catename);
+	formData.append('pr_info',prinfo);
+	
+	ajax.send(formData);
 }
 
 

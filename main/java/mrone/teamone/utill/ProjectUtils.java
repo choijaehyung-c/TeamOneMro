@@ -67,8 +67,17 @@ public class ProjectUtils {
     
     public String setFile(MultipartFile file){
     	String fileInfo =null;
-    	String uploadLocation = "."+File.separator+"src"+File.separator+"main"+File.separator+
-    			"webapp"+File.separator+ "resources" +File.separator+"file"+File.separator;
+    	
+    	
+		String uploadLocation = 
+				"C:"+File.separator+"Users"+File.separator+"chl"+File.separator+"Desktop"+File.separator+"springworkspace"+File.separator+"Mro_Platform"+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"file"+File.separator
+				/*
+								 * File.separator+".."+File.separator+".."+File.separator+".."+File.separator+
+								 * ".."+File.separator+
+								 */
+				/*+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"file"+File.separator*/;
+    	//System.out.println(ProjectUtils.class.getResource("").getPath());
+    	System.out.println(uploadLocation);
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 				Calendar cal = Calendar.getInstance();
@@ -77,6 +86,11 @@ public class ProjectUtils {
 				File sfile = new File(uploadLocation,saveFileName);
 				file.transferTo(sfile);
 				fileInfo = uploadLocation+saveFileName;
+				
+				/*
+				 * byte[] data = file.getBytes(); FileOutputStream fos = new
+				 * FileOutputStream(uploadLocation+saveFileName); fos.write(data); fos.close();
+				 */
 				System.out.println("업로드성공");
 			}
 			
