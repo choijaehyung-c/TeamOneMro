@@ -28,6 +28,13 @@
 	<input type="button" name="exchangeList" onClick="ReceiveExchangeList()" value="교환목록 불러오기"/>
 	
 	<div id="detailSpace" style="margin-top:50px;"></div>
+	
+	
+	<input type="text" name="word"/><button onClick="productSearch()"> 상품검색 </button>
+	<button onClick="category()" value="카테고리">카테고리</button>
+	
+	<div id="cate"></div>
+	<div id="product"></div>
 	  
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
