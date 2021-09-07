@@ -267,7 +267,7 @@ function inputProductInfo(jsonData){
 				data += `<option value='${jsonData[i].cate}'>${jsonData[i].cate_name}</option>`;
 			}
 		data += "</select><br>";
-		data += "<div>사진</div><input id = 'pr_image' type='text'><br>";
+		data += "<div>사진</div><input id = 'pr_image' type='file' value='파일찾기'><br>";
 		data += "<div>정보</div><input id='pr_info' type='text'><br>";
 		data += `<div onClick ="supplyRequestNewProduct()">추가요청</div>`;
 	ProductDetailInfo.innerHTML = data;
