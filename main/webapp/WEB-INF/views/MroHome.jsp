@@ -27,7 +27,6 @@
 	<div id="refundSpace" style="margin-top:50px;"></div>
 	<input type="button" name="exchangeList" onClick="ReceiveExchangeList()" value="교환목록 불러오기"/>
 	
-	
 	<div id="detailSpace" style="margin-top:50px;"></div>
 	  
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>

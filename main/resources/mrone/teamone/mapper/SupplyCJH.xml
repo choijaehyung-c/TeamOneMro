@@ -19,4 +19,8 @@
 		WHERE CL_CODE||CL_NAME||CL_ADDRESS||CL_CORPNUM||CL_HP||RE_CODE||RE_DATE LIKE '%' || #{word} || '%'	
 	</select>
 	
+	<select id="getSupplyCateProductList" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
+		SELECT PR_NAME,PR_CODE,PR_PRICE,PR_STOCK FROM PR WHERE PR_SPCODE = #{pr_spcode} AND CATE = #{cate} AND PR_STCODE = 'PC'
+	</select>
+	
 </mapper>

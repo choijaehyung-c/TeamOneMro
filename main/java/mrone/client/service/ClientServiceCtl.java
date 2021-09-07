@@ -5,6 +5,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -16,24 +17,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
+import mrone.mro.service.MroServiceEntranceCJH;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.RequestOrderBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
 @Service
-public class ClientServiceCtl {
+class ClientServiceCtl {
 	@Autowired
 	ClientDaoCJH dao;
 	@Autowired
 	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
+	@Autowired
+	MroServiceEntranceCJH msec;
 	
+	String clientRequestCtl(ClientOrderBean co,String type){
+		co.setOs_state(type);
+		String result = "failed";
+		if(this.clientRequestProcess(co)) {
+		RequestOrderBean ro = new RequestOrderBean();
+		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
+		ro.setRe_clcode(co.getOs_clcode());
+		ro.setRe_oscode(co.getOs_code());
+		ro.setRe_spcode(co.getSp_code());
+			for(int i = 0 ; i<co.getOd().size(); i++) {
+				RequestOrderDetailBean rd = new RequestOrderDetailBean();
+				 rd.setRd_prspcode(co.getOd().get(i).getOd_prspcode());
+				 rd.setRd_prcode(co.getOd().get(i).getOd_prcode());
+				 rd.setRd_quantity(co.getOd().get(i).getOd_quantity());
+				 list.add(rd);
+			}
+		ro.setRd(list);
+		result=type.equals("OR")?msec.mroRequestOrder(ro):type.equals("RR")?msec.mroRequestRefund(ro):msec.mroRequestExchange(ro);
+		}
+		return result;
+	}
 	
-	String clientRequestCtl(ClientOrderBean co){
-		String result = "failure";
+	boolean clientRequestProcess(ClientOrderBean co) {
+		//String result = "failure";
 		
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
@@ -58,16 +85,9 @@ public class ClientServiceCtl {
 				if (dao.insClientOrder(co)) {
 					System.out.println("in1");
 					int tranCount = 0;
-					for (int i = 0; i < co.getOd().size(); i++) {
-						System.out.println("in2_"+i);
-						System.out.println(dao.getOrderData(co)+co.getOs_state());
-						System.out.println(co.getOd().get(i).getOd_prcode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_prspcode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_quantity()+"SSS");
+					for (int i = 0; i < co.getOd().size(); i++) {	
 						co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
 						co.getOd().get(i).setOd_stcode(co.getOs_state());
-						System.out.println(co.getOd().get(i).getOd_oscode()+"SSS");
-						System.out.println(co.getOd().get(i).getOd_stcode()+"SSS");
 						if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 							break;
 						}
@@ -76,7 +96,7 @@ public class ClientServiceCtl {
 					System.out.println(tranCount+":"+co.getOd().size());
 					if (tranCount == co.getOd().size()) {
 						tran = true;
-						result = dao.getOrderData(co);
+						//result = dao.getOrderData(co);
 					}
 
 				}
@@ -84,10 +104,8 @@ public class ClientServiceCtl {
 		}
 		pu.setTransactionResult(tran);
 
-		return result;
+		return tran;
 	}
-	
-	
 
 
 	public List<TaxBean> clientGetTaxbillListCtl(ClientInfoBean ci) throws Exception {

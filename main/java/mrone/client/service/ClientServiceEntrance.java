@@ -15,18 +15,15 @@ public class ClientServiceEntrance {
 	ClientServiceCtl csc;
 	
 	public String clientRequestOrder(ClientOrderBean co) {
-		co.setOs_state("PR");
-		return csc.clientRequestCtl(co);
+		return csc.clientRequestCtl(co,"OR");
 	}
 	
 	public String clientRequestRefund(ClientOrderBean co) {
-		co.setOs_state("RR");
-		return csc.clientRequestCtl(co);
+		return csc.clientRequestCtl(co,"RR");
 	}
 	
 	public String clientRequestExchange(ClientOrderBean co) {
-		co.setOs_state("ER");
-		return csc.clientRequestCtl(co);
+		return csc.clientRequestCtl(co,"ER");
 	}
 	
 	public List<TaxBean> clientGetTaxbill(ClientInfoBean ci) throws Exception {
