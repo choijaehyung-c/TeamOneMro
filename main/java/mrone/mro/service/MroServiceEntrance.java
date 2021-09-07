@@ -63,33 +63,27 @@ public class MroServiceEntrance {
 	}
 
 	public List<ProductBean> getRequestRegisterNewProductList() {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.getRequestRegisterNewProductList();
 	}
 
 	public String mroResponseModifyProduct(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.mroResponseModifyProduct(pb);
 	}
 
 	public ProductBean mroGetModifyProductDetail(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.mroGetModifyProductDetail(pb);
 	}
 
 	public List<ProductBean> callModifyRequestList() {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.callModifyRequestList();
 	}
 
 	public String mroResponseNewProduct(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.mroResponseNewProduct(pb);
 	}
 
 	public ProductBean mroGetNewProductDetail(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		return msc.mroGetNewProductDetail(pb);
 	}
 
 }
