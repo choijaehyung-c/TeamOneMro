@@ -1,5 +1,5 @@
 package mrone.teamone.mapper;
 
-public interface MroCjh {
+public interface Supply {
 
 }

@@ -3,9 +3,63 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="mrone.teamone.mapper.SupplyNSB">
+<mapper namespace="mrone.teamone.mapper.Supply">
+	<select id="getSupplyDealList" resultType="mrone.teamone.beans.RequestOrderBean" parameterType="string">
+		SELECT * FROM RE WHERE RE_SPCODE = #{re_spcode} AND RE_STATE = 'OC'
+	</select>
+	
+	<select id="getSupplyDealDetail" resultType="mrone.teamone.beans.RequestOrderDetailBean" parameterType="string">
+		SELECT RD_PRSPCODE,RD_RECODE,RD_QUANTITY,PR_CODE,PR_NAME,PR_PRICE,PR_TAX 
+		FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD.RD_RECODE = #{re_code} AND RD.RD_STCODE = 'OC';
+	</select>
+	
+	<select id="getSearchSupplyDeal" resultType="mrone.teamone.beans.SupplySearchBean" parameterType="string">
+		SELECT CL_CODE,CL_NAME,CL_ADDRESS,CL_CORPNUM,CL_HP,RE_CODE,RE_DATE FROM RE 
+		INNER JOIN "CL" ON RE.RE_CLCODE = "CL".CL_CODE 
+		WHERE CL_CODE||CL_NAME||CL_ADDRESS||CL_CORPNUM||CL_HP||RE_CODE||RE_DATE LIKE '%' || #{word} || '%'	
+	</select>
+	
+	<select id="getSupplyCateProductList" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
+		SELECT PR_NAME,PR_CODE,PR_PRICE,PR_STOCK FROM PR WHERE PR_SPCODE = #{pr_spcode} AND CATE = #{cate} AND PR_STCODE = 'PC'
+	</select>
+	
+	<select id="supplyGetProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
+    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'PC'
+    </select>
     
-
+    <update id="supplyModifyStock" parameterType="mrone.teamone.beans.ProductBean">
+    	UPDATE PR SET PR_STOCK = #{pr_stock} WHERE PR_CODE = #{pr_code} AND PR_STCODE ='PC'
+    </update>
+    
+    <insert id= "supplyRequestModify" parameterType="mrone.teamone.beans.ProductBean">
+    	INSERT INTO PR(PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE, PR_PRICE, PR_TAX, PR_INFO,
+    				   PR_ORIGIN, PR_SPBKIND, PR_STCODE, CATE, CATE_NAME)
+    	  VALUES (#{pr_spcode}, #{pr_code}, #{pr_stock}, #{pr_name}, #{pr_image}, #{pr_price}, #{pr_tax}, #{pr_info},
+    	  		  #{pr_origin}, #{pr_spbkind}, #{pr_stcode}, #{cate}, #{cate_name})
+    </insert>
+    
+    <insert id= "supplyRequestDelete" parameterType="mrone.teamone.beans.ProductBean" >
+    	INSERT INTO PR(PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE, PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN, PR_SPBKIND, PR_STCODE, CATE, CATE_NAME)
+    	  VALUES (#{pr_spcode}, #{pr_code}, #{pr_stock}, #{pr_name}, #{pr_image}, #{pr_price}, #{pr_tax}, #{pr_info}, #{pr_origin}, #{pr_spbkind}, #{pr_stcode}, #{cate}, #{cate_name})
+    </insert>
+    
+     <select id="MRCheck" parameterType="mrone.teamone.beans.ProductBean" resultType="int">
+    	SELECT COUNT(*) FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
+    </select>
+    
+    <update id="updateSupplyRequestModify" parameterType="mrone.teamone.beans.ProductBean">
+    	UPDATE PR SET PR_STOCK = #{pr_stock}, PR_NAME = #{pr_name}, PR_PRICE = #{pr_price}, PR_INFO = #{pr_info}, PR_ORIGIN = #{pr_origin} WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
+    </update>
+    
+    <select id="getCate" resultType="mrone.teamone.beans.CGBean">
+    	SELECT * FROM CG
+    </select>
+    
+    <insert id = "supplyRequestNewProduct" parameterType="mrone.teamone.beans.ProductBean">
+    	INSERT INTO PR(PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE, PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN, PR_SPBKIND, PR_STCODE, CATE, CATE_NAME)
+    	  VALUES (#{pr_spcode}, #{pr_code}, #{pr_stock}, #{pr_name}, #{pr_image}, #{pr_price}, #{pr_tax}, #{pr_info}, #{pr_origin}, #{pr_spbkind}, #{pr_stcode}, #{cate}, #{cate_name})
+    </insert>
+    
     <select id="getSupplyWaitOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
 	SELECT 
 	RE_CODE,
@@ -123,7 +177,5 @@
 	PR_TAX 
 	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_PRSPCODE = 'KR001D'AND RD_RECODE = #{rd_recode}
     </select>
-   
-    
+	
 </mapper>
-

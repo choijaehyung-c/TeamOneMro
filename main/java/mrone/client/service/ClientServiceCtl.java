@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
-import mrone.mro.service.MroServiceEntranceCJH;
+import mrone.mro.service.MroServiceEntrance;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.RequestOrderBean;
@@ -35,7 +35,7 @@ class ClientServiceCtl {
 	@Autowired
 	Encryption enc;
 	@Autowired
-	MroServiceEntranceCJH msec;
+	MroServiceEntrance msec;
 	
 	String clientRequestCtl(ClientOrderBean co,String type){
 		co.setOs_state(type);
