@@ -105,73 +105,71 @@ public class SupplyServiceEntrance {
 	}
 
 	public List<ProductBean> supplySearchProduct(ProductBean pd) {
-		// TODO Auto-generated method stub
-		return null;
+		return ssc.supplySearchProduct(pd);
 	}
 
 	public List<ProductBean> supplyProductList(ProductBean pd) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyProductList(pd);
 	}
 
 	public List<ProductBean> supplyGetCategory() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyGetCategory();
 	}
 
 	public List<RequestOrderBean> supplySearchAs(RequestOrderBean re) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ssc.supplySearchAs(re);
 	}
 
 	public String supplyResponseExchange(RequestOrderBean re) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ssc.supplyResponseExchange(re);
 	}
 
 	public String supplyResponseRefund(RequestOrderBean ro) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ssc.supplyResponseRefund(ro);
 	}
 
 	public List<RequestOrderDetailBean> supplyReceiveAsDetail(RequestOrderBean ro) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyReceiveAsDetail(ro);
 	}
 
 	public List<RequestOrderBean> supplyReceiveExchangeListForm() {
-		// TODO Auto-generated method stub
-		return null;
+		return ssc.supplyReceiveExchangeListForm();
 	}
 
 	public List<RequestOrderBean> supplyReceiveRefundListForm() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyReceiveRefundListForm();
 	}
 
 	public List<ProductBean> getCate() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ssc.getCate();
 	}
 
 	public String supplyRequestDelete(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyRequestDelete(pb);
 	}
 
 	public String supplyModifyStock(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ssc.supplyModifyStock(pb);
 	}
 
 	public String supplyRequestModify(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyRequestModify(pb);
 	}
 
 	public ProductBean supplyGetProductDetail(ProductBean pb) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ssc.supplyGetProductDetail(pb);
 	}
 	
 }

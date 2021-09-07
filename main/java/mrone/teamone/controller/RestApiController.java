@@ -226,14 +226,14 @@ public class RestApiController {
 	}
 	
 	@PostMapping("/mroSupplyListForm")
-	public String mroSupplyListForm() {
-		return "";
+	public List<SupplyInfoBean> mroSupplyListForm() {
+		return mse.SupplyListCtl();
 	}
 	
 	@PostMapping("/mroClientListForm")
-	public String morClientListForm() {
-		//System.out.println("고객사목록");
-		return "";
+	public List<ClientInfoBean> morClientListForm() {
+
+		return mse.ClientListCtl();
 	}
 	//---
 	@PostMapping("/clientOrder")

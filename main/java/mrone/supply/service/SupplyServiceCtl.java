@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
 import mrone.teamone.beans.ClientInfoBean;
@@ -16,6 +17,8 @@ import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.utill.ProjectUtils;
 
+
+@Service
 class SupplyServiceCtl {
 	@Autowired
 	SupplyDao dao;
