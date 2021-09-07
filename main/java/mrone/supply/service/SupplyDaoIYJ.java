@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 
@@ -138,6 +139,23 @@ public class SupplyDaoIYJ {
 
 	boolean convertToBoolean(int data) {
 		return data>0?true:false;
+	}
+
+	//공급사 카테고리 받아오는 메서드
+	public List<ProductBean> supplyGetCategory() {
+		
+		
+		return sql.selectList("supplyGetCategory");
+	}
+
+	public List<ProductBean> supplyProductList(ProductBean pd) {
+		
+		return sql.selectList("supplyProductList",pd);
+	}
+
+	public List<ProductBean> supplySearchProduct(ProductBean pd) {
+		
+		return sql.selectList("supplySearchProduct", pd);
 	}
 
 

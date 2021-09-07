@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.ProjectUtils;
@@ -116,36 +117,37 @@ public class SupplyServiceIYJ {
 
 		if(re.getRe_state().equals("PD")) {
 			System.out.println("수락");
-			//9. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
-			if(dao.supplyResponseRefund(re)) {
-				//10. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
-				if(dao.supplyResponseRefundOS(re)) {
-					//11. RD 테이블: 오리지널 주문코드 RR->PD(폐기)
-					if(dao.supplyResponseRefundRD(re)) {
-						// 12. RE테이블:오리지널 주문 코드 RR->PD(폐기)
-						if(dao.supplyResponseRefundRE(re)) {
-							//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
-							if(this.insNewOrdersRA(re)) {
-								//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
-								if(this.insNewOdRA(re)) {
-									//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
-									if(this.insNewRequestRA(re)) {
-										//4. RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
-										if(this.insNewRdRA(re)) {
-											System.out.println("os성공");
-											//5.OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
-											if(this.insOrdersOC(re)) {
-												//6. OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
-												if(this.insNewOdOC(re)) {
-													//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
-													if(this.insNewRequestOC(re)) {
-														//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
-														if(this.insNewRdOC(re)) {
 
-															message="반품요청이 정상적으로 처리되었습니다.";
-															System.out.println("반품처리 완성");
-															this.setTransactionResult(true); // commit완료
-
+			try {
+				//9. OD 테이블 : 오리지널 주문코드 RR-> PD(폐기)
+				if(dao.supplyResponseRefund(re)) {
+					//10. OS 테이블 : 오리지널 주문코드  RR->PD(폐기),
+					if(dao.supplyResponseRefundOS(re)) {
+						//11. RD 테이블: 오리지널 주문코드 RR->PD(폐기)
+						if(dao.supplyResponseRefundRD(re)) {
+							// 12. RE테이블:오리지널 주문 코드 RR->PD(폐기)
+							if(dao.supplyResponseRefundRE(re)) {
+								//1. os 테이블 : RR인 애들을 위한 새로운 주문코드 생성
+								if(this.insNewOrdersRA(re)) {
+									//2. od 테이블 : RR인애들을 위한 새로운 주문코드 생성
+									if(this.insNewOdRA(re)) {
+										//3. RE테이블 : RR인애들을 위한 새로운 주문코드 생성
+										if(this.insNewRequestRA(re)) {
+											//4. RD테이블 : RR인 애들을 위한 새로운 주문코드 생성
+											if(this.insNewRdRA(re)) {
+												System.out.println("os성공");
+												//5.OS테이블 : OC인 애들을 위한 새로운 주문코드 생성
+												if(this.insOrdersOC(re)) {
+													//6. OD 테이블 : OC인 애들을 위한 새로운 주문코드 생성
+													if(this.insNewOdOC(re)) {
+														//7. RE테이블 : OC인 애들을 위한 새로운 주문코드 생성
+														if(this.insNewRequestOC(re)) {
+															//8. RD테이블 : OC인 애들을 위한 새로운 주문코드 생성
+															if(this.insNewRdOC(re)) {
+																message="반품요청이 정상적으로 처리되었습니다.";
+																System.out.println("반품처리 완성");
+																this.setTransactionResult(true); // commit완료
+															}
 														}
 													}
 												}
@@ -157,7 +159,7 @@ public class SupplyServiceIYJ {
 						}
 					}
 				}
-			}else {
+			}catch (Exception e) {
 				this.setTransactionResult(false); //rollback
 				System.out.println("업데이트 실패");
 				message = "반품처리에 실패했습니다. 잠시후 다시 시도해주세요";
@@ -490,6 +492,34 @@ public class SupplyServiceIYJ {
 		}else {
 			tx.rollback(status);
 		}
+	}
+
+	public List<ProductBean> supplyGetCategory() {
+		
+		List<ProductBean> list=null;
+			
+		list =dao.supplyGetCategory();
+		//System.out.println(list);
+		return list;
+	}
+
+	public List<ProductBean> supplyProductList(ProductBean pd) {
+		pd.setPr_spcode("KR001D");
+		List<ProductBean> list;
+		
+		list = dao.supplyProductList(pd);
+		//System.out.println(list);
+	
+		return list;
+	}
+
+	public List<ProductBean> supplySearchProduct(ProductBean pd) {
+		pd.setPr_spcode("KR001D");
+		List<ProductBean> list;
+		
+		list = dao.supplySearchProduct(pd);
+	System.out.println(list);
+		return list;
 	}
 
 

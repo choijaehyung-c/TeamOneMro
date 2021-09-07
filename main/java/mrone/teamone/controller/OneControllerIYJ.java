@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mrone.mro.service.MroServiceEntrance;
 import mrone.supply.service.SupplyServiceIYJ;
-import mrone.teamone.beans.MroOrderBean;
+import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.Encryption;
@@ -109,6 +109,37 @@ public class OneControllerIYJ {
 	public List<RequestOrderBean> supplySearchAs(@RequestBody RequestOrderBean re){
 		
 		return ssin.supplySearchAs(re);
+	}
+	
+	//supply 카테고리를 위한 페이지 이동
+	@GetMapping("/supplyGetCategoryForm")
+	public String supplyGetCategoryForm(){
+		
+		return "MroHome";
+	}
+	
+	//supply 카테고리를 불러옴
+	@PostMapping("/supplyGetCategory")
+	@ResponseBody
+	public List<ProductBean> supplyGetCategory(){
+		
+		return ssin.supplyGetCategory();
+	}
+	
+	//supply 카테고리 물품 받아옴
+	@PostMapping("/supplyProductList")
+	@ResponseBody
+	public List<ProductBean> supplyProductList(@RequestBody ProductBean pd){
+		//System.out.println(pd + "ddd");
+		return ssin.supplyProductList(pd);
+	}
+	
+	//supply 검색어로 물품가져옴
+	@PostMapping("/supplySearchProduct")
+	@ResponseBody
+	public List<ProductBean> supplySearchProduct(@RequestBody ProductBean pd){
+		System.out.println(pd.getWord());
+		return ssin.supplySearchProduct(pd);
 	}
 	
 	

@@ -164,4 +164,17 @@
 		INSERT INTO DL VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_DELIVERY_NUM.NEXTVAL, #{dl_oscode},#{dl_dscode},#{dl_dvcode},#{dl_lccode})
 	</insert>
 	
+	
+	<select id="supplyGetCategory" resultType="mrone.teamone.beans.ProductBean">
+		SELECT * FROM CG
+	</select>
+	
+	<select id="supplyProductList" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
+		SELECT * FROM PR WHERE PR_SPCODE=#{pr_spcode} AND CATE=#{cate}
+	</select>
+	
+	<select id="supplySearchProduct" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
+		SELECT * FROM PRODUCTVIEW WHERE PR_SPCODE=#{pr_spcode} AND "WORD" LIKE '%'|| #{word}||'%'
+	</select>
+	
     </mapper>

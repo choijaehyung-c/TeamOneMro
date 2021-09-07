@@ -18,4 +18,5 @@ public class ProductBean {
 	private String pr_stcode;
 	private String cate;
 	private String cate_name;
+	private String word; //검색어
 }
