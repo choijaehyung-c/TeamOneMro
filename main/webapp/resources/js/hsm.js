@@ -272,7 +272,7 @@ function inputProductInfo(jsonData){
 		data += `<div onClick ="supplyRequestNewProduct()">추가요청</div>`;
 	ProductDetailInfo.innerHTML = data;
 }
-
+//입력받은 상품정보 인서트하기
 function supplyRequestNewProduct(){
 	let prname = document.getElementById("pr_name").value;
 	let prprice = document.getElementById("pr_price").value;

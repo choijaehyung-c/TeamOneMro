@@ -324,9 +324,65 @@ function supplySearchResult(data){
 	space.innerHTML=html;
 }
 
+function category(){
+		postAjaxJson('supplyGetCategory','getCate','j');
+}
 
+function getCate(jsonData){
+	let cate = document.getElementById("cate");
+	
+	let html  = "<div>카테고리 목록</div>";
+	
+	for(i=0; i<jsonData.length; i++){
+		html += "<div onClick=\"getProductList('"+jsonData[i].cate+"')\">"+ jsonData[i].cate_name+"</div>";
+	}
+	
+	cate.innerHTML=html;
+}
 
+function getProductList(cate){
+	//alert(cate);
+	let sendData = {cate:cate};
+	let clientData = JSON.stringify(sendData);
+	postAjaxJson('supplyProductList','getProduct','j',clientData);
+}
 
+function getProduct(data){
+	let list = document.getElementById("product");
+	let html = "<div></div>";
+	
+	if(data!=""){
+		for(i=0; i<data.length; i++){
+		html+= "<div> " +" 상품코드 : "+data[i].pr_code+ " 상품 재고 : "+data[i].pr_stock+" 상품 이름 : " +data[i].pr_name+ " 상품정보 : " +data[i].pr_info+" 원산지: " +data[i].pr_origin+ " 상품가격 : " + data[i].pr_price+ "원 상품이미지 : "+ "<img src=\'"+data[i].pr_image+"'\/>" +"</div><br>";
+		}
+	}else{
+		alert("해당 카테고리에 등록된 상품이 없습니다.");
+	}
+	list.innerHTML = html;
+}
+
+function productSearch(){
+	let word = document.getElementsByName("word")[1];
+
+	let send = {word:word.value};
+	let clientData = JSON.stringify(send);
+	postAjaxJson('supplySearchProduct','searchProduct','j',clientData);
+	
+}
+
+function searchProduct(data){
+	let list = document.getElementById("product");
+	let html = "<div></div>";
+	
+	if(data!=""){
+		for(i=0; i<data.length; i++){
+		html+= "<div> " +" 상품코드 : "+data[i].pr_code+ " 상품 재고 : "+data[i].pr_stock+" 상품 이름 : " +data[i].pr_name+ " 상품정보 : " +data[i].pr_info+" 원산지: " +data[i].pr_origin+ " 상품가격 : " + data[i].pr_price+ "원 상품이미지 : "+ "<img src=\'"+data[i].pr_image+"'\/>" +"</div><br>";
+		}
+	}else{
+		alert("해당 카테고리에 등록된 상품이 없습니다.");
+	}
+	list.innerHTML = html;
+}
 
 /*const orderList = new Vue({
 	el: "#mOrderList",
