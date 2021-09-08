@@ -14,11 +14,6 @@
 </head>
 <body>
 
-	<header>
-		<div>
-			<p>본 사이트는 승인된 사용자만 이용 가능합니다. 접속 권한이 없으신 사용자는 고객센터로 먼저 연락부탁드립니다.</p>
-		</div>
-	</header>
 	<body class="bg-gradient-primary">
 
     <div class="container">
@@ -39,6 +34,13 @@
                                         <h1 class="h4 text-gray-900 mb-4"><img class="main_img" src="resources/img/logo.png"/></h1>
                                     </div>
                                     <form class="user">
+                                    	<div class="btn-groupS" role="group" aria-label="Basic radio toggle button group">
+										  <input type="radio" class="btn-checkS" name="btnradio" id="btnradio1" autocomplete="off" checked="">
+										  <label class="btnS btn-outline-primaryS" for="btnradio1">Radio 1</label>
+										  <input type="radio" class="btn-checkS" name="btnradio" id="btnradio2" autocomplete="off" checked="">
+										  <label class="btnS btn-outline-primaryS" for="btnradio2">Radio 2</label>
+										</div>
+                                    
                                         <div class="form-group">
                                             <input type="text" name="ah_code" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
@@ -49,11 +51,7 @@
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
+                                            
                                         </div>
                                         <div onclick="readyAccessMro('1','/AccessMro')" class="btn btn-primary btn-user btn-block">
                                             Login
@@ -61,7 +59,6 @@
                                         <hr>
 
                                     </form>
-                                    <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
@@ -81,14 +78,12 @@
     
     <footer>
     	<p>
-    		<span class="font_bold">(주)MRONE</span>
-    		 | 인천 미추홀구 매소홀로 488번길 6-32 태승빌딩 5층 | 사업자등록번호: 202-1081-900	
+    		인천 미추홀구 매소홀로 488번길 6-32 태승빌딩 5층 | 사업자등록번호: 202-1081-900 | H.P : 032-876-3332
     	</p>
-    	<p>
-			<span class="font_red"> 전화 : +032-876-3332 </span> 
-			| 이메일 : i_innew0731@naver.com
-    	</p>
-    	<p class="copyright">Copyright ⓒ 
+    	
+    	<p class="copyright">
+    	<span class="font_bold">(주)MRONE</span>
+    	Copyright ⓒ 
     	<span class="font_blk">BMIT.</span> All rights reserved.
     	</p>
     </footer>
