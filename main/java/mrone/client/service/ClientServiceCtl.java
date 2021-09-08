@@ -40,17 +40,25 @@ class ClientServiceCtl {
 	String clientRequestCtl(ClientOrderBean co,String type){
 		co.setOs_state(type);
 		String result = "failed";
-		if(this.clientRequestProcess(co)) {
+		if(this.clientOrderProcess(co)) {
 		RequestOrderBean ro = new RequestOrderBean();
 		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
 		ro.setRe_clcode(co.getOs_clcode());
 		ro.setRe_oscode(co.getOs_code());
 		ro.setRe_spcode(co.getSp_code());
+		ro.setRe_state(co.getOs_state());
+		if(co.getOs_origin()!=null) {
+			ro.setRe_origin(co.getOs_origin());
+		}
 			for(int i = 0 ; i<co.getOd().size(); i++) {
 				RequestOrderDetailBean rd = new RequestOrderDetailBean();
 				 rd.setRd_prspcode(co.getOd().get(i).getOd_prspcode());
 				 rd.setRd_prcode(co.getOd().get(i).getOd_prcode());
 				 rd.setRd_quantity(co.getOd().get(i).getOd_quantity());
+				 rd.setRd_stcode(co.getOd().get(i).getOd_stcode());
+				 if(co.getOd().get(i).getOd_note() != null) {
+					 rd.setRd_note(co.getOd().get(i).getOd_note());
+				 }
 				 list.add(rd);
 			}
 		ro.setRd(list);
@@ -59,7 +67,7 @@ class ClientServiceCtl {
 		return result;
 	}
 	
-	boolean clientRequestProcess(ClientOrderBean co) {
+	boolean clientOrderProcess(ClientOrderBean co) {
 		//String result = "failure";
 		
 		boolean tran = false;
@@ -68,16 +76,12 @@ class ClientServiceCtl {
 		ClientInfoBean ci = new ClientInfoBean();
 		ci.setCl_code(co.getOs_clcode());
 		try {
-			
 			//ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
-			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");
-		} catch (Exception e) {
-		}
+			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+		} catch (Exception e) {System.out.println("error csc");}
 
 		if (dao.isClient(ci)) {
-			System.out.println("test11");
 			if (dao.isClientPwd(ci)) {
-				System.out.println("test11");
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				Calendar cal = Calendar.getInstance();
 				co.setOs_date(sdf.format(cal.getTime()));
@@ -87,7 +91,6 @@ class ClientServiceCtl {
 					int tranCount = 0;
 					for (int i = 0; i < co.getOd().size(); i++) {	
 						co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
-						co.getOd().get(i).setOd_stcode(co.getOs_state());
 						if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 							break;
 						}

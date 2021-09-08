@@ -87,7 +87,7 @@ public class Authentication {
 								pu.setAttribute("type","mro");
 							}else {
 								ck.setValue("sup"+enc.aesEncode(ah.getAh_code(),"session"));
-								pu.setAttribute("type",ah.getAh_sdspcode());
+								pu.setAttribute("type",enc.aesEncode(ah.getAh_sdspcode(),ah.getAh_code()));
 								
 							}
 							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
@@ -107,23 +107,12 @@ public class Authentication {
 	
 	public ModelAndView accessOutMroCtl(AccessHistoryBean ah,Cookie ck) {
 		if(ck != null)ah.setAh_table(ck.getValue().substring(0,3).equals("mro")?"AHM":"AHS");
-		if(ah.getAh_table().equals("AHS")) {
-			try {
-				ah.setAh_sdspcode((String)pu.getAttribute("type"));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		}
-		
-		
 		mav = new ModelAndView();
 		try {
 			if(pu.getAttribute("userSs") != null) {
 				ah.setAh_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-				if(dao.getLogOutAccessHistorySum(ah)) {
-					dao.insAccessHistory(ah);
-				}
+				if(ah.getAh_table().equals("AHS")) ah.setAh_sdspcode(enc.aesDecode((String)pu.getAttribute("type"),ah.getAh_code()));
+				if(dao.getLogOutAccessHistorySum(ah)) dao.insAccessHistory(ah);
 				pu.removeAttribute("userSs");				
 				pu.removeAttribute("type");
 				mav.setViewName("redirect:/");
@@ -136,7 +125,7 @@ public class Authentication {
 			ck.setMaxAge(0);//쿠키소멸
 			ck.setValue(null);//쿠키소멸
 		} catch (Exception e) {
-			System.out.println("no ck");
+			System.out.println("로그아웃 실패");
 			e.printStackTrace();
 		}
 		return mav;
