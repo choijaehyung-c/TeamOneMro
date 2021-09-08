@@ -102,13 +102,14 @@ public class MroDao {
 
 	// 주문대기,반품요청, 교환요청 디테일
 	List<MroOrderDetailBean> getOrderDetail(String osCode) {
-
+		System.out.println(osCode);
+		System.out.println(sql.selectList("getOrderDetail", osCode));
 		return sql.selectList("getOrderDetail", osCode);
 	}
 
 	// 반품요청 리스트
 	List<MroOrderBean> getRefundList() {
-
+		System.out.println(sql.selectList("getRefundList"));
 		return sql.selectList("getRefundList");
 	}
 

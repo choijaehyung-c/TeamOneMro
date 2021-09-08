@@ -1,8 +1,11 @@
+
 const mainVue = new Vue({
 	el:"#mainVue",
 	data:{
-		page:[{show:false}],
-		supplyList:[]
+		page:[{show:false/*주문리스트*/},{show:false/*주문디테일*/},{show:false/*환불리스트*/}
+		,{show:false/*교환리스트*/}],
+		orderList:[],
+		orderListDetail:[]
 	},
 	methods:{
 		resetPage:function(){
@@ -10,27 +13,66 @@ const mainVue = new Vue({
 				this.page[i].show=false;
 			}
 		},
-		supplyListPage:function(){
+		mroOrderListPage:function(){
+			
 			this.resetPage();
 			this.page[0].show=true;
-			postAjaxJson('vue/mroSupplyListForm','supplyListVue','j');
+			postAjaxJson('vue/mroOrderListForm','ListVue','j');
 		},
-		datata:function(data){
-			alert(data);
+		mroOrderListDetail:function(oscode){
+			alert(oscode);									
+			postAjaxJson('vue/mroGetOrderDetail','ListDetailVue','j', oscode);
+			this.page[1].show=true;
+		},
+		close:function(num){
+			this.page[num].show=false;
+			
+		},
+		mroRefundListPage:function(){
+			this.resetPage();
+			this.page[2].show=true;
+			postAjaxJson('vue/mroRefundListForm','ListVue','j');
+		},
+		mroRefundListDetail:function(oscode){
+			alert(oscode);									
+			postAjaxJson('vue/mroGetRefundDetail','ListDetailVue','j', oscode);
+			this.page[1].show=true;
+		},
+		mroExchangeListPage:function(){
+			this.resetPage();
+			this.page[3].show=true;
+			postAjaxJson('vue/mroExchangeListForm','ListVue','j');
+		},
+		mroExchangeListDetail:function(oscode){
+			alert(oscode);									
+			postAjaxJson('vue/mroGetExchangeDetail','ListDetailVue','j', oscode);
+			this.page[1].show=true;
 		}
+		
 	}
 });
 
-function supplyList(){
-	mainVue.supplyListPage();
-}
-
-function supplyListVue(jsondata){
-	mainVue.supplyList = jsondata;
+function mroOrderList(){
+	mainVue.mroOrderListPage();
 }
 
 
+function ListVue(jsondata){
+	mainVue.orderList = jsondata;
+}
 
+
+function ListDetailVue(jsondata){	
+	mainVue.orderListDetail = jsondata;
+}
+
+function mroRefundList(){
+	mainVue.mroRefundListPage();
+}
+
+function mroExchangeList(){
+	mainVue.mroExchangeListPage();
+}
 
 
 

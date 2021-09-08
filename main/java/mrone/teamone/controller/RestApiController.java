@@ -279,7 +279,6 @@ public class RestApiController {
 		//주문대기 상세보기
 		@PostMapping("/mroGetOrderDetail")
 		public List<MroOrderDetailBean> mroGetOrderDetail(@RequestBody String osCode){
-			System.out.println(osCode);
 			
 			return mse.getOrderDetail(osCode);
 			

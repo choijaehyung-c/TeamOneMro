@@ -185,7 +185,7 @@ class MroServiceCtl {
 				od.get(i).setOd_stcode("교환요청");
 			}
 		}
-
+		System.out.println(od);
 		return od;
 	}
 
