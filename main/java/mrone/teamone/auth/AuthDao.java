@@ -29,6 +29,7 @@ public class AuthDao {
 	}
 	
 	boolean isUserId(AccessBean ab) {
+		System.out.println("ddd55");
 		return convertToBoolean(sql.selectOne("isUserId", ab));
 	}
 

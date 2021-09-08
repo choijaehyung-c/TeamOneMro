@@ -5,12 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.min.js"></script>
 	 <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
     <link href="resources/css/access.css" rel="stylesheet" type="text/css">
-    
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+   
 </head>
 <body>
 
@@ -35,10 +33,10 @@
                                     </div>
                                     <form class="user">
                                     	<div class="btn-groupS" role="group" aria-label="Basic radio toggle button group">
-										  <input type="radio" class="btn-checkS" name="btnradio" id="btnradio1" autocomplete="off" checked="">
-										  <label class="btnS btn-outline-primaryS" for="btnradio1">Radio 1</label>
-										  <input type="radio" class="btn-checkS" name="btnradio" id="btnradio2" autocomplete="off" checked="">
-										  <label class="btnS btn-outline-primaryS" for="btnradio2">Radio 2</label>
+										  <input type="radio" class="btn-checkS" name="ah_table" id="btnradio1" autocomplete="off" checked value="AHM">
+										  <label class="btnS btn-outline-primaryS" for="btnradio1">운영사 로그인</label>
+										  <input type="radio" class="btn-checkS" name="ah_table" id="btnradio2" autocomplete="off" value="AHS">
+										  <label class="btnS btn-outline-primaryS" for="btnradio2">고객사 로그인</label>
 										</div>
                                     
                                         <div class="form-group">
@@ -87,16 +85,5 @@
     	<span class="font_blk">BMIT.</span> All rights reserved.
     	</p>
     </footer>
-
-    <!-- Bootstrap core JavaScript-->
-   <!--  <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-  <!--    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-
-    <!-- Custom scripts for all pages-->
-   <!--   <script src="js/sb-admin-2.min.js"></script> --> 
-	
 </body>
 </html>

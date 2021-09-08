@@ -24,7 +24,7 @@ public class Authentication {
 	AuthDao dao;
 	
 	public ModelAndView accessMroCtl(AccessHistoryBean ah,Cookie ck) {
-		ah.setAh_table("AHM");//임시
+		//ah.setAh_table("AHM");//임시
 		mav = new ModelAndView();
 		try {
 			//해당 아이디 로그인이 어딘가에서 된상태(db에 로그인상태)
@@ -56,6 +56,7 @@ public class Authentication {
 	}
 
 	private void loginProcessMro(ModelAndView mav,AccessHistoryBean ah,Cookie ck) {
+		System.out.println("ddd");
 		AccessBean ab = new AccessBean();
 		if(ah.getAh_table().equals("AHM")){
 			ab.setId(ah.getAh_code());
@@ -64,6 +65,7 @@ public class Authentication {
 			ab.setCol2("MD_PWD");
 			ab.setTable("MRD");
 		}else {
+			System.out.println("ddd33");
 			ab.setId(ah.getAh_sdspcode()+ah.getAh_code());
 			ab.setPwd(ah.getAh_pwd());
 			ab.setCol("SD_SPCODE||SD_CODE");

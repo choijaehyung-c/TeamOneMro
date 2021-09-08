@@ -101,14 +101,21 @@ function readyAccessMro(data, jc) {
 }
 
 function sendAccessInfo(Ip){
-	
+
 	const method = makeInput("hidden","ah_method",inout);
 	const publicIp = makeInput("hidden","ah_publicip",Ip.ip);
 	const privateIp = makeInput("hidden","ah_privateip",location.host);
 	const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
-	let Id = document.getElementsByName("ah_code")[0];
-	let Pwd = document.getElementsByName("ah_pwd")[0];
+	const Id = document.getElementsByName("ah_code")[0];
+	const Pwd = document.getElementsByName("ah_pwd")[0];
+	let type;
+	for(i=0;i<2;i++){
+		if(document.getElementsByName("ah_table")[i].checked){
+			type=document.getElementsByName("ah_table")[i];
+		}
+	}
 	
+	console.log(type.value);
 	let	f = makeForm(jobCodeField,"post");
 	
 	f.appendChild(Id);
@@ -117,6 +124,7 @@ function sendAccessInfo(Ip){
 	f.appendChild(publicIp);
 	f.appendChild(privateIp);
 	f.appendChild(browser);
+	f.appendChild(type);
 	
 	document.body.appendChild(f);
 	f.submit();
