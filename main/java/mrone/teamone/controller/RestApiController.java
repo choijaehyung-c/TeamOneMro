@@ -235,6 +235,15 @@ public class RestApiController {
 
 		return mse.ClientListCtl();
 	}
+	
+	//new
+	@PostMapping("/searchSupply")
+	public List<ClientInfoBean> mroSearchClientList(@RequestBody String word){
+		System.out.println(word);
+		System.out.println(mse.mroSearchSupplyList(word));
+		return mse.mroSearchSupplyList(word);
+	}
+	
 	//---
 	@PostMapping("/clientOrder")
 	public String clientOrderApi(@RequestBody ClientOrderBean co){

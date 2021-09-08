@@ -120,6 +120,12 @@ public class MroDao {
 	boolean convertToBoolean(int data) {
 		return data > 0 ? true : false;
 	}
+
+	//new
+	List<ClientInfoBean> mroSearchSupplyList(String word) {
+	
+		return sql.selectList("getSearchSupplyList",word);
+	}
 	
 	
 }

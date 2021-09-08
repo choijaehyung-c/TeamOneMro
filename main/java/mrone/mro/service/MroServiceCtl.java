@@ -211,4 +211,10 @@ class MroServiceCtl {
 		return list;
 	}
 
+	//new
+	 List<ClientInfoBean> mroSearchSupplyList(String word) {
+		
+		return dao.mroSearchSupplyList(word);
+	}
+
 }

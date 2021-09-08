@@ -86,4 +86,10 @@ public class MroServiceEntrance {
 		return msc.mroGetNewProductDetail(pb);
 	}
 
+	//new
+	public List<ClientInfoBean> mroSearchSupplyList(String word) {
+		
+		return msc.mroSearchSupplyList(word);
+	}
+
 }

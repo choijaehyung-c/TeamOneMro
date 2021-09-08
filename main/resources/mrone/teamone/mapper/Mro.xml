@@ -102,5 +102,16 @@
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
  
+ 	<select id="getSearchSupplyList" parameterType="string" resultType="mrone.teamone.beans.SupplyInfoBean">
+ 	   SELECT SP.SP_CODE ,
+       SP.SP_NAME,
+       SP.SP_TEL,
+       SP.SP_ADDRESS,
+       SP.SP_CORPNUM,
+       SP.SP_BKIND,
+       BKIND.BK_NAME
+		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+        WHERE SP_NAME LIKE '%' || #{word} || '%'	
+ 	</select>
 
 </mapper>
