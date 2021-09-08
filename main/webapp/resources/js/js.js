@@ -108,6 +108,8 @@ function sendAccessInfo(Ip){
 	const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
 	const Id = document.getElementsByName("ah_code")[0];
 	const Pwd = document.getElementsByName("ah_pwd")[0];
+	
+	
 	let type;
 	for(i=0;i<2;i++){
 		if(document.getElementsByName("ah_table")[i].checked){
@@ -115,9 +117,10 @@ function sendAccessInfo(Ip){
 		}
 	}
 	
-	console.log(type.value);
 	let	f = makeForm(jobCodeField,"post");
-	
+	if(type.value=="AHS"){
+	const spcode = document.getElementsByName("ah_sdspcode")[0];
+	f.appendChild(spcode);}
 	f.appendChild(Id);
 	f.appendChild(Pwd);
 	f.appendChild(method);
@@ -144,4 +147,17 @@ function accessOut(Ip){
 	
 	document.body.appendChild(f);
 	f.submit();
+}
+
+function typeChange(){
+	
+	if($("input[name='ah_table']:checked").val()=="AHS"){
+		$('#insertPoint').html(
+			`<div class="form-group">
+             <input type="text" name="ah_sdspcode" class="form-control form-control-user" placeholder="Office Code"></div>`);
+	}else{
+		$('#insertPoint').html('');
+	}
+	
+	
 }

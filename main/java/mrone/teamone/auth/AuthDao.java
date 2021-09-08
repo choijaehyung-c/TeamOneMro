@@ -46,7 +46,6 @@ public class AuthDao {
 	}
 	
 	boolean insAccessHistory(AccessHistoryBean ah) {
-		System.out.println(ah.getAh_browser()+ah.getAh_code()+ah.getAh_method()+ah.getAh_privateip()+ah.getAh_publicip()+ah.getAh_pwd());
 		return convertToBoolean(ah.getAh_table().equals("AHM")? sql.insert("insAccessHistoryMro", ah): sql.insert("insAccessHistorySupply", ah));
 	}
 	

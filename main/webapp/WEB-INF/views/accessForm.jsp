@@ -10,7 +10,7 @@
     <link href="resources/css/access.css" rel="stylesheet" type="text/css">
    
 </head>
-<body>
+<body onload="typeChange()">
 
 	<body class="bg-gradient-primary">
 
@@ -32,17 +32,17 @@
                                         <h1 class="h4 text-gray-900 mb-4"><img class="main_img" src="resources/img/logo.png"/></h1>
                                     </div>
                                     <form class="user">
-                                    	<div class="btn-groupS" role="group" aria-label="Basic radio toggle button group">
+                                    	<div class="btn-groupS" role="group" aria-label="Basic radio toggle button group" onchange="typeChange()">
 										  <input type="radio" class="btn-checkS" name="ah_table" id="btnradio1" autocomplete="off" checked value="AHM">
 										  <label class="btnS btn-outline-primaryS" for="btnradio1">운영사 로그인</label>
 										  <input type="radio" class="btn-checkS" name="ah_table" id="btnradio2" autocomplete="off" value="AHS">
-										  <label class="btnS btn-outline-primaryS" for="btnradio2">고객사 로그인</label>
+										  <label class="btnS btn-outline-primaryS" for="btnradio2">공급사 로그인</label>
 										</div>
-                                    
+                                    	<div id="insertPoint"></div>
                                         <div class="form-group">
                                             <input type="text" name="ah_code" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Your Code">
+                                                placeholder="Access Code">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name ="ah_pwd" class="form-control form-control-user"
