@@ -274,13 +274,18 @@ class SupplyServiceCtl {
 				ro.getRd().get(i).setRd_recode(sr.getOs_code());
 				dao.updReasonOD(ro.getRd().get(i));}
 			}
-		}else if(sr.getAfter().equals("RA")){
+		}else if(sr.getAfter().equals("RA")){//수락
 			//반품안한거 새주문
 			RequestOrderBean newRo = new RequestOrderBean();
 			ClientOrderBean newCo = new ClientOrderBean();
-			newRo.setRd(dao.getNewRDForRefund(sr));
-			newCo.setOd(dao.getNewODForRefund(sr));
-			cse.clientOrderProcess(newCo,"");
+			String clcode = dao.getCLForRefund(sr.getRe_code());
+			newRo.setRe_clcode(clcode);
+			newCo.setOs_clcode(clcode);
+			newRo.setRe_state("OA");
+			newCo.setOs_state("OA");
+			newRo.setRd(dao.getNewRDForRefund(sr.getRe_code()));
+			newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
+			cse.clientOrderProcess(newCo,newRo.getRd().get(0).getRd_prspcode());
 			mse.mroRequestProcess(newRo);
 			
 			//오리진 주문,발주서 폐기처리

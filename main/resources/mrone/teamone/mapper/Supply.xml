@@ -37,12 +37,16 @@
 		SELECT OS_ORIGIN FROM OS WHERE OS_CODE = #{os_code}
 	</select>
 	
-	<select id="getNewODForRefund" parameterType="mrone.teamone.beans.SupplyResponse" resultType="mrone.teamone.beans.OrderDetailBean">
-		SELECT OD_PRSPCODE,OD_PRCODE,OD_QUANTITY FROM OD WHERE OD_OSCODE = #{re_code} AND OD_STCODE = 'OA'
+	<select id="getNewODForRefund" parameterType="string" resultType="mrone.teamone.beans.OrderDetailBean">
+		SELECT OD_PRSPCODE,OD_STCODE,OD_PRCODE,OD_QUANTITY FROM OD WHERE OD_OSCODE = #{re_code} AND OD_STCODE = 'OA'
 	</select>
 	
-	<select id="getNewRDForRefund" parameterType="mrone.teamone.beans.SupplyResponse" resultType="mrone.teamone.beans.RequestOrderDetailBean">
-		SELECT RD_PRSPCODE,RD_PRCODE,RD_QUANTITY FROM RD WHERE RD_RECODE = #{os_code} AND RD_STCODE = 'OA'
+	<select id="getNewRDForRefund" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+		SELECT RD_PRSPCODE,RD_STCODE,RD_PRCODE,RD_QUANTITY FROM RD WHERE RD_RECODE = #{os_code} AND RD_STCODE = 'OA'
+	</select>
+
+	<select id="getCLForRefund" parameterType="string" resultType="string">
+		SELECT RE_CLCODE FROM RE WHERE RE_CODE = #{re_code} AND RE_STATE = 'FF'
 	</select>
 
 <!--	

@@ -54,11 +54,16 @@ public class SupplyDao {
 		return sql.selectOne("getOSOriginCode",os_code);
 	}
 	
-	List<RequestOrderDetailBean> getNewRDForRefund(SupplyResponse sr){
-		return sql.selectList("getNewRDForRefund", sr);
+	List<RequestOrderDetailBean> getNewRDForRefund(String re_code){
+		return sql.selectList("getNewRDForRefund", re_code);
 	}
-	List<OrderDetailBean> getNewODForRefund(SupplyResponse sr){
-		return sql.selectList("getNewODForRefund", sr);
+	
+	List<OrderDetailBean> getNewODForRefund(String os_code){
+		return sql.selectList("getNewODForRefund", os_code);
+	}
+	
+	String getCLForRefund(String re_code) {
+		return sql.selectOne("getCLForRefund",re_code);
 	}
 	
 	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
