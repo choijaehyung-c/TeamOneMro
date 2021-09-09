@@ -57,6 +57,7 @@
     	DELETE FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode} 
     </delete>
 
+   <!-- 수정 -->
 	<select id="getSupplyList" resultType="mrone.teamone.beans.SupplyInfoBean">
 		SELECT SP.SP_CODE ,
        SP.SP_NAME,
@@ -65,9 +66,10 @@
        SP.SP_CORPNUM,
        SP.SP_BKIND,
        BKIND.BK_NAME
-		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE WHERE "STATE"='MEMBER'
     </select>
     
+    <!-- 수정 -->
     <select id="getClientList" resultType="mrone.teamone.beans.ClientInfoBean">
     	
     	SELECT CL.CL_CODE,
@@ -78,7 +80,7 @@
      	 CL.CL_BTYPE,
       	 CL.CL_BKIND,
      	 BK.BK_NAME
-		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE
+		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE WHERE "STATE"='MEMBER'
     </select>
     
     <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">   
@@ -102,6 +104,7 @@
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
  
+ <!-- new -->
  	<select id="getSearchSupplyList" parameterType="string" resultType="mrone.teamone.beans.SupplyInfoBean">
  	   SELECT SP.SP_CODE ,
        SP.SP_NAME,
@@ -111,7 +114,31 @@
        SP.SP_BKIND,
        BKIND.BK_NAME
 		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
-        WHERE SP_NAME LIKE '%' || #{word} || '%'	
+        WHERE SP_NAME LIKE '%' || #{word} || '%' AND "STATE"='MEMBER'	
  	</select>
-
+ 
+ <!-- new -->
+ 	<select id="getSearchClientList" parameterType="string" resultType="mrone.teamone.beans.ClientInfoBean">
+ 		SELECT CL.CL_CODE ,
+        CL.CL_NAME,
+       CL.CL_HP,
+       CL.CL_ADDRESS,
+       CL.CL_CORPNUM,
+       CL.CL_BKIND,
+       BKIND.BK_NAME
+		FROM CL INNER JOIN BKIND ON CL.CL_BKIND = BKIND.BK_CODE
+        WHERE CL_NAME LIKE '%' || #{word} || '%' AND "STATE"='MEMBER'	
+ 	</select>
+	
+	<!-- new -->
+	<update id="mroDelClient" parameterType="string" >
+		UPDATE CL SET "STATE"='NONMEMBER' WHERE CL_CODE=#{code}
+	</update>
+	
+	<!-- new -->
+	<update id="mroDelSupply" parameterType="string" >
+		UPDATE SP SET "STATE"='NONMEMBER' WHERE SP_CODE=#{code}
+	</update>
+	
+	
 </mapper>

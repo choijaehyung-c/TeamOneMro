@@ -122,9 +122,27 @@ public class MroDao {
 	}
 
 	//new
-	List<ClientInfoBean> mroSearchSupplyList(String word) {
+	List<SupplyInfoBean> mroSearchSupplyList(String word) {
 	
 		return sql.selectList("getSearchSupplyList",word);
+	}
+	
+	//new
+	List<ClientInfoBean> mroSearchClientList(String word) {
+	
+		return sql.selectList("getSearchClientList",word);
+	}
+
+	//new
+	boolean mroDelClient(String code) {
+		
+		return this.convertToBoolean(sql.delete("mroDelClient",code));
+	}
+	
+	//new
+	 boolean mroDelSupply(String code) {
+		// TODO Auto-generated method stub
+		return this.convertToBoolean(sql.delete("mroDelSupply",code));
 	}
 	
 	
