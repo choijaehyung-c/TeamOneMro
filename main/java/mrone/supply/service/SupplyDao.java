@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
-import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.DeliveryInsert;
 import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
@@ -64,6 +64,23 @@ public class SupplyDao {
 	
 	String getCLForRefund(String re_code) {
 		return sql.selectOne("getCLForRefund",re_code);
+	}
+	
+	
+	String getDriver() {
+		return sql.selectOne("getDriver");
+	}
+	
+	boolean insertFirstLC(String os_code) {
+		return this.convertToBoolean(sql.insert("insertFirstLC", os_code));
+	}
+	
+	boolean insertFirstDL(DeliveryInsert di) {
+		return this.convertToBoolean(sql.insert("insertFirstDL",di));
+	}
+	
+	String getRecentlyLC(String os_code) {
+		return sql.selectOne("getRecentlyLC", os_code);
 	}
 	
 	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
@@ -253,15 +270,7 @@ public class SupplyDao {
 
 		return sql.selectList("supplySearchProduct", pd);
 	}
-	
-	boolean responseOrder(RequestOrderDetailBean rdb){
-		return this.convertToBoolean(sql.update("updateRequestOrderState", rdb));
-	}
-	
-	boolean responseOrder2(RequestOrderDetailBean rdb){		
-		return this.convertToBoolean(sql.update("updateRequestOrderState2", rdb));		
-	}
-	
+
 	
 	List<RequestOrderBean> waitOrderlist(){
 		String sp = null;
@@ -290,9 +299,6 @@ public class SupplyDao {
 		return reList;
 	}
 	
-	boolean insertDL(RequestOrderDetailBean rdb) {
-		return this.convertToBoolean(sql.insert("insertDL", rdb));
-	}
 	
 	boolean updateDL(DeliveryBean db) {
 		return this.convertToBoolean(sql.insert("updateDL", db));

@@ -60,12 +60,6 @@ public class SupplyServiceEntrance {
 		return ssc.clearOrderlistD(rb);
 	}
 	
-	public String responseOrder(RequestOrderDetailBean rdb) {			
-		String message = ssc.responseOrder(rdb);
-		
-		return message;
-	}
-	
 	public List<DeliveryBean> getDLlist() {			
 		List<DeliveryBean> reList = null;
 		reList = ssc.getDLlist();
@@ -122,10 +116,6 @@ public class SupplyServiceEntrance {
 	public List<RequestOrderBean> supplySearchAs(RequestOrderBean re) {
 
 		return ssc.supplySearchAs(re);
-	}
-
-	public String supplyResponseExchange(RequestOrderBean ro) {
-		return ssc.supplyResponseExchange(ro);
 	}
 
 	public String supplyResponseRefund(RequestOrderBean ro) {

@@ -11,6 +11,7 @@ import mrone.mro.service.MroServiceEntrance;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.DeliveryBean;
+import mrone.teamone.beans.DeliveryInsert;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -77,20 +78,6 @@ class SupplyServiceCtl {
 		List<RequestOrderBean> reList = null;
 		reList = dao.clearOrderlistD(rb);
 		return reList;
-	}
-
-	String responseOrder(RequestOrderDetailBean rdb) {
-		String message = null;
-		rdb.setRd_recode(rdb.getRd_recode());
-		for (int i = 0; i < rdb.getRd_recode().length(); i++) {
-			if (dao.responseOrder(rdb)) {
-				if (dao.responseOrder2(rdb)) {
-					message = "접수완료";
-				}
-			}
-		}
-		dao.insertDL(rdb);
-		return message;
 	}
 
 	List<DeliveryBean> getDLlist() {
@@ -258,7 +245,6 @@ class SupplyServiceCtl {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트 
 		//ro에 re_code, re_state에 수락 or 거절 코드 담아서옴, ro-rd에 거절사유+
 		//프론트에서 반품,교환 동시 진행 X (오리진코드로 이미 진행중인 반품,교환이 있으면 중복 접수X)
 		SupplyResponse sr = new SupplyResponse();
@@ -268,19 +254,9 @@ class SupplyServiceCtl {
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		
 		//수락,거절 공통 업데이트
-		if(this.updateRefundResponseProcess(sr)) {
+		if(this.updateResponseProcess(sr)) {
 			if (sr.getAfter().equals("FF")) {// 거절
-				for (int i = 0; i < ro.getRd().size(); i++) {
-					ro.getRd().get(i).setRd_stcode(sr.getAfter());
-					if (ro.getRd().get(i).getRd_note() != null) {
-						if (dao.updReasonRD(ro.getRd().get(i))) {
-							ro.getRd().get(i).setRd_recode(sr.getOs_code());
-							if (dao.updReasonOD(ro.getRd().get(i))) {
-								tran = true;
-							}
-						}
-					}
-				}
+				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
 				RequestOrderBean newRo = new RequestOrderBean();
@@ -300,7 +276,7 @@ class SupplyServiceCtl {
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
 						sr.setAfter("PD");
 						sr.setBefore("OA");
-						if(this.updateRefundResponseProcess(sr)) {
+						if(this.updateResponseProcess(sr)) {
 							tran = true;
 						}
 					}
@@ -312,7 +288,7 @@ class SupplyServiceCtl {
 		return tran?"success":"failed";
 	}
 	
-	boolean updateRefundResponseProcess(SupplyResponse sr) {
+	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
@@ -328,16 +304,75 @@ class SupplyServiceCtl {
 		pu.setTransactionResult(tran);
 		return tran;
 	}
+	
+	boolean updateReasonProcess(RequestOrderBean ro,SupplyResponse sr) {
+		boolean tran = false;
+		for (int i = 0; i < ro.getRd().size(); i++) {
+			ro.getRd().get(i).setRd_stcode(sr.getAfter());
+			if (ro.getRd().get(i).getRd_note() != null) {
+				if (dao.updReasonRD(ro.getRd().get(i))) {
+					ro.getRd().get(i).setRd_recode(sr.getOs_code());
+					if (dao.updReasonOD(ro.getRd().get(i))) {
+						tran = true;
+					}
+				}
+			}
+		}
+		return tran;
+	}
 
-	String supplyResponseExchange(RequestOrderBean ro) {
-		//수락
-		//들어온 re_code에 ER 코드 -> '교환수락' 주문서,발주서 업데이트 os od re rd
-		//해당 새 주문코드에 운송장
+	String supplyResponseCtl(RequestOrderBean ro,String decision) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		//decision == OA EA OF EF 요청 응답 st 코드
 		
-		//거절
-		//들어온 re_code에 ER 코드 -> '교환거절' 주문서,발주서 업데이트 os re / od rd ->   거절사유 입력 
+		SupplyResponse sr = new SupplyResponse();
+		if(decision.equals("OA") || decision.equals("OF")) {
+			sr.setAfter(decision);
+			sr.setBefore("OR");
+			sr.setRe_code(ro.getRe_code());
+			sr.setOs_code(dao.getInvolvedOscode(sr));
+			if(this.updateResponseProcess(sr)) {
+				if(decision.equals("OF")) {
+					tran = this.updateReasonProcess(ro,sr);
+				}else {
+					tran = this.issueDelivery(sr.getOs_code());
+				}
+			}
+			//수락일경우 -> 운송장 거절일경우 -> 거절 사유업데이트
+		}else if(decision.equals("EA") || decision.equals("EF")){
+			sr.setAfter(decision);
+			sr.setBefore("ER");
+			sr.setRe_code(ro.getRe_code());
+			sr.setOs_code(dao.getInvolvedOscode(sr));
+			if(this.updateResponseProcess(sr)) {
+				if(decision.equals("EF")) {
+					tran = this.updateReasonProcess(ro,sr);
+				}else {
+					tran = this.issueDelivery(sr.getOs_code());
+				}
+			}
+		}
 		
-		return null;
+
+		pu.setTransactionResult(tran);
+		return tran?"success":"failed";
+	}
+	
+	boolean issueDelivery(String oscode) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		DeliveryInsert di = new DeliveryInsert();
+		di.setOs_code(oscode);
+		di.setDv_code(dao.getDriver());
+		if(dao.insertFirstLC(oscode)) {
+			di.setLc_code(dao.getRecentlyLC(oscode));
+			if(dao.insertFirstDL(di))tran = true;
+		}
+		pu.setTransactionResult(tran);
+		return tran;
 	}
 
 
@@ -360,8 +395,6 @@ class SupplyServiceCtl {
 			}
 
 		}
-
-
 		return list;
 	}
 	

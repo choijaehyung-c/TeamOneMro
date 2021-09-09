@@ -84,13 +84,7 @@ public class RestApiController {
 		
 	}
 	
-	@PostMapping("/responseOrder")
-	public String responseOrder(@RequestBody List<RequestOrderDetailBean> list ) {
-		String message = sse.responseOrder(list.get(0));
-		
-		return message;
-		
-	}
+	
 	
 	@PostMapping("/getDLlist")
 	public List<DeliveryBean> getDLList() {
@@ -184,7 +178,7 @@ public class RestApiController {
 	
 	public String supplyResponseExchange(@RequestBody RequestOrderBean ro){
 		//System.out.println(mo);
-		return sse.supplyResponseExchange(ro);
+		return null;
 	}
 	
 	//supply 검색결과

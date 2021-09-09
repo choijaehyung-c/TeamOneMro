@@ -49,6 +49,22 @@
 		SELECT RE_CLCODE FROM RE WHERE RE_CODE = #{re_code} AND RE_STATE = 'FF'
 	</select>
 
+	<select id="getDriver" resultType="string">
+		SELECT DV_CODE FROM (SELECT DV_CODE FROM DV ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM = 1
+	</select>
+
+	<select id="getRecentlyLC" parameterType="string" resultType="string">
+		SELECT LC_CODE FROM (SELECT * FROM LC ORDER BY LC_DATE DESC) WHERE DL_OSCODE = #{os_code} AND ROWNUM = 1
+	</select>
+	
+	<insert id="insertFirstLC" parameterType="string">
+		INSERT INTO LC VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_LOCATION_NUM.NEXTVAL,'0','0',SYSDATE,#{os_code})
+	</insert>
+	
+	<insert id="insertFirstDL" parameterType="mrone.teamone.beans.DeliveryInsert">
+		INSERT INTO DL VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_DELIVERY_NUM.NEXTVAL,#{os_code},'1',#{dv_code},#{lc_code})
+	</insert>
+
 <!--	
 <insert id="insClientOrder" parameterType="mrone.teamone.beans.ClientOrderBean">
 		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},TO_DATE(#{os_date},'YYYYMMDDHH24miss'),#{os_state})
@@ -175,17 +191,17 @@
 	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{re_code}
     </select>
     
-    <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
+<!--     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
 	UPDATE REQUEST SET RE_STATE = 'OA' WHERE RE_CODE = #{rd_recode}
     </select>
     
     <select id="updateRequestOrderState2" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
 	UPDATE REQUESTDETAIL SET RD_STCODE = 'OA' WHERE RD_RECODE = #{rd_recode}
-    </select>
+    </select> -->
     
-    <insert id="insertDL" parameterType="mrone.teamone.beans.RequestOrderDetailBean" >
+<!--     <insert id="insertDL" parameterType="mrone.teamone.beans.RequestOrderDetailBean" >
 	INSERT INTO DELIVERY VALUES ('222222222', #{rd_recode}, '1', 'ANY000', '000000000')
-    </insert>
+    </insert> -->
     
     <select id="getDLlist"  resultType="mrone.teamone.beans.DeliveryBean">
 	SELECT 
@@ -346,11 +362,11 @@
 		MAX(TO_NUMBER(SUBSTR(OS_CODE,7,5))) FROM OS WHERE SUBSTR(OS_CODE,1,6) =
 		TO_CHAR(SYSDATE,'YYMMDD')
 	</select> -->
-	
+	<!-- 
 	<insert id="makeDeliveryLocate">
 		INSERT INTO LC VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_LOCATION_NUM.NEXTVAL,'0','0',SYSDATE)
 	</insert>
-	
+	 -->
 	<!-- <select id="maxLCcode" resultType="string">
 		SELECT 
 		MAX(TO_NUMBER(SUBSTR(LC_CODE,1,9))) AS lccode FROM LC WHERE SUBSTR(LC_CODE,1,6) =
