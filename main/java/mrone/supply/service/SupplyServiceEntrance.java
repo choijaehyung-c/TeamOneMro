@@ -123,27 +123,24 @@ public class SupplyServiceEntrance {
 		return ssc.supplySearchAs(re);
 	}
 
-	public String supplyResponseExchange(RequestOrderBean re) {
-
-		return ssc.supplyResponseExchange(re);
+	public String supplyResponseExchange(String re_code) {
+		return ssc.supplyResponseExchange(re_code);
 	}
 
-	public String supplyResponseRefund(RequestOrderBean ro) {
-
-		return ssc.supplyResponseRefund(ro);
+	public String supplyResponseRefund(String re_code) {
+		return ssc.supplyResponseRefund(re_code);
 	}
 
-	public List<RequestOrderDetailBean> supplyReceiveAsDetail(RequestOrderBean ro) {
+	public List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code) {
 		
-		return ssc.supplyReceiveAsDetail(ro);
+		return ssc.supplyReceiveAsDetail(re_code);
 	}
-
-	public List<RequestOrderBean> supplyReceiveExchangeListForm() {
+	
+	public List<RequestOrderBean> supplyReceiveExchangeListForm() {//c
 		return ssc.supplyReceiveExchangeListForm();
 	}
-
-	public List<RequestOrderBean> supplyReceiveRefundListForm() {
-		
+	
+	public List<RequestOrderBean> supplyReceiveRefundListForm() {//c
 		return ssc.supplyReceiveRefundListForm();
 	}
 

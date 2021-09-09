@@ -12,5 +12,6 @@ public class ClientOrderBean {
 	private String os_date;
 	private String os_state;
 	private String sp_code;
+	private String os_origin;
 	private List<OrderDetailBean> od;
 }

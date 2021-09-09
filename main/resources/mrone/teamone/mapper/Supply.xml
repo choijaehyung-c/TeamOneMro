@@ -180,45 +180,38 @@
     
        
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
-     <select id="getRefundListSp" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean" >		
-		    SELECT REV.RE_CODE,
-       		REV.RE_CLCODE,
-      	 	REV.CL_NAME,
-       		REV.RE_DATE,
-            REV.CL_HP,
-       		RDV.RD_STCODE AS RE_STATE
-		FROM REQUESTVIEW REV INNER JOIN REQUESTDETAILVIEW RDV ON rev.re_code = rdv.rd_recode 
-		WHERE RD_STCODE=#{re_state} AND RD_PRSPCODE=#{re_spcode}
-        GROUP BY REV.RE_CODE ,REV.RE_CLCODE, REV.CL_NAME,REV.RE_DATE, RDV.RD_STCODE, REV.CL_HP
+    <select id="getReceiveAsListSp" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean" >		
+		SELECT RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
+		WHERE RE.RE_STATE = #{re_state} AND RE.RE_SPCODE = #{sp_code}
     </select>
     
     <!-- 상세리스트 -->
-    <select id="supplyReceiveAsDetail" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
-    		SELECT * FROM REQUESTDETAILVIEW WHERE RD_RECODE=#{re_code}
+    <select id="supplyReceiveAsDetail" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+    	SELECT RD_PRCODE,RD_STCODE,PR_NAME,PR_PRICE,PR_TAX,PR_IMAGE,PR_INFO,PR_ORIGIN,CATE_NAME FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD.RD_RECODE = #{re_code}
     </select>
     
     <!-- 반품요청->반품처리로 (수락) 업데이트 -->
-    <update id="supplyResponseRefund" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!-- <update id="supplyResponseRefund" parameterType="mrone.teamone.beans.RequestOrderBean">
     	UPDATE OD SET OD_STCODE=#{re_state} WHERE OD_OSCODE=#{re_code} AND OD_STCODE='RR'
-    </update>
+    </update> -->
     
     <!-- 반품 OS테이블 RR인거 업데이트ㅡ -->
-    <update id="supplyResponseRefundOS" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!-- <update id="supplyResponseRefundOS" parameterType="mrone.teamone.beans.RequestOrderBean">
  		UPDATE OS SET OS_STATE = #{re_state} WHERE OS_CODE=#{re_code} AND OS_STATE='RR'
-    </update>
+    </update> -->
     
     <!-- 반품 RD테이블 RR인거 업데이트ㅡ -->
-    <update id="supplyResponseRefundRD" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!-- <update id="supplyResponseRefundRD" parameterType="mrone.teamone.beans.RequestOrderBean">
  		UPDATE RD SET RD_STCODE = #{re_state} WHERE RD_RECODE=#{re_code} AND RD_STCODE='RR'
-    </update>
+    </update> -->
     
     <!-- 반품 RE테이블 RR인거 업데이트ㅡ -->
-    <update id="supplyResponseRefundRE" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!-- <update id="supplyResponseRefundRE" parameterType="mrone.teamone.beans.RequestOrderBean">
  		UPDATE RE SET RE_STATE = #{re_state} WHERE RE_CODE=#{re_code} AND RE_STATE='RR'
-    </update>
+    </update> -->
     
     <!-- 쓰는거 -->
-    <select id="selRequest" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
+   <!--  <select id="selRequest" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.MroOrderDetailBean">
     	select od.od_prspcode,
        od.od_oscode,
        od.od_stcode,
@@ -228,70 +221,70 @@
        os.os_clcode
 	from od inner join os on od.od_oscode = os.os_code 
 	where OD_OSCODE= #{re_code} AND OD_STCODE=#{re_state}
-    </select>
+    </select> -->
     
     <!-- 쓰는거 -->
-    <insert id="insNewOrders" parameterType="mrone.teamone.beans.RequestOrderBean">
+   <!--  <insert id="insNewOrders" parameterType="mrone.teamone.beans.RequestOrderBean">
     	INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{re_clcode},SYSDATE,#{re_state})
-    </insert>
+    </insert> -->
     
     <!--  쓰는거-->
-    <insert id="insNewOd" parameterType="mrone.teamone.beans.MroOrderDetailBean">
+   <!--  <insert id="insNewOd" parameterType="mrone.teamone.beans.MroOrderDetailBean">
     	INSERT INTO OD VALUES (#{od_prspcode},TO_CHAR(SYSDATE,'YYMMDD')||#{od_oscode},#{od_stcode},#{od_prcode},#{od_quantity},'')
-    </insert>
+    </insert> -->
     
     <!-- 쓰는거 -->
-    <insert id= "insNewRequest" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!-- <insert id= "insNewRequest" parameterType="mrone.teamone.beans.RequestOrderBean">
     	INSERT INTO RE VALUES (TO_CHAR(SYSDATE,'YYMMDD')||#{re_oscode},#{re_clcode},#{re_spcode},TO_CHAR(SYSDATE,'YYMMDD')||#{re_oscode},SYSDATE,#{re_state})
-    </insert>
+    </insert> -->
     
     <!-- 쓰는거 -->
-    <insert id= "insNewRd" parameterType="mrone.teamone.beans.MroOrderDetailBean">
+   <!--  <insert id= "insNewRd" parameterType="mrone.teamone.beans.MroOrderDetailBean">
     	INSERT INTO RD VALUES (#{od_prspcode}, TO_CHAR(SYSDATE,'YYMMDD')||#{od_oscode},#{od_prcode},#{od_quantity},#{od_stcode},'')
-    </insert>
+    </insert> -->
     
     <!-- 교환 OD 테이블 요청 -> 수락 또는 거절 -->
-      <update id="supplyResponseExchangeOD" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!--   <update id="supplyResponseExchangeOD" parameterType="mrone.teamone.beans.RequestOrderBean">
     	UPDATE OD SET OD_STCODE=#{re_state} WHERE OD_OSCODE=#{re_code} AND OD_STCODE='ER'
-    </update>
+    </update> -->
     
     <!-- 교환 OS 테이블 요청 -> ER인거 업데이트 -->
-      <update id="supplyResponseExchangeOS" parameterType="mrone.teamone.beans.RequestOrderBean">
+     <!--  <update id="supplyResponseExchangeOS" parameterType="mrone.teamone.beans.RequestOrderBean">
    		 UPDATE OS SET OS_STATE = #{re_state} WHERE OS_CODE=#{re_code} AND OS_STATE='ER'
-    </update>
+    </update> -->
     
-     <update id="supplyResponseExchageRD" parameterType="mrone.teamone.beans.RequestOrderBean">
+    <!--  <update id="supplyResponseExchageRD" parameterType="mrone.teamone.beans.RequestOrderBean">
  		UPDATE RD SET RD_STCODE = #{re_state} WHERE RD_RECODE=#{re_code} AND RD_STCODE='ER'
-    </update>
+    </update> -->
     
-    
+    <!-- 
     <update id="supplyResponseExchageRE" parameterType="mrone.teamone.beans.RequestOrderBean">
  		UPDATE RE SET RE_STATE = #{re_state} WHERE RE_CODE=#{re_code} AND RE_STATE='ER'
-    </update>
+    </update> -->
  	
 	<select id="supplySearchAs" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean">
 		   SELECT * FROM REQUESTVIEW WHERE "WORD" LIKE '%'|| #{word} ||'%' 
 	</select>
 	
-	<select id="getCount" resultType="int">
+	<!-- <select id="getCount" resultType="int">
 		SELECT
 		MAX(TO_NUMBER(SUBSTR(OS_CODE,7,5))) FROM OS WHERE SUBSTR(OS_CODE,1,6) =
 		TO_CHAR(SYSDATE,'YYMMDD')
-	</select>
+	</select> -->
 	
 	<insert id="makeDeliveryLocate">
-		INSERT INTO LC VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_LOCATION_NUM.NEXTVAL,'00.000000','000.000000',TO_CHAR(SYSDATE,'YYMMDD'))
+		INSERT INTO LC VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_LOCATION_NUM.NEXTVAL,'0','0',SYSDATE)
 	</insert>
 	
-	<select id="maxLCcode" resultType="string">
+	<!-- <select id="maxLCcode" resultType="string">
 		SELECT 
 		MAX(TO_NUMBER(SUBSTR(LC_CODE,1,9))) AS lccode FROM LC WHERE SUBSTR(LC_CODE,1,6) =
 		TO_CHAR(SYSDATE,'YYMMDD')
-	</select>
+	</select> -->
 	
-	<insert id="supplyAskDelivery" parameterType="mrone.teamone.beans.DeliveryBean">
+	<!-- <insert id="supplyAskDelivery" parameterType="mrone.teamone.beans.DeliveryBean">
 		INSERT INTO DL VALUES (TO_CHAR(SYSDATE,'YYMMDD')||SEQ_DELIVERY_NUM.NEXTVAL, #{dl_oscode},#{dl_dscode},#{dl_dvcode},#{dl_lccode})
-	</insert>
+	</insert> -->
 	
 	
 	<select id="supplyGetCategory" resultType="mrone.teamone.beans.ProductBean">

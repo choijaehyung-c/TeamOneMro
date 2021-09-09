@@ -24,7 +24,6 @@ public class Authentication {
 	AuthDao dao;
 	
 	public ModelAndView accessMroCtl(AccessHistoryBean ah,Cookie ck) {
-		ah.setAh_table("AHM");//임시
 		mav = new ModelAndView();
 		try {
 			//해당 아이디 로그인이 어딘가에서 된상태(db에 로그인상태)
@@ -64,6 +63,7 @@ public class Authentication {
 			ab.setCol2("MD_PWD");
 			ab.setTable("MRD");
 		}else {
+			System.out.println("ddd33");
 			ab.setId(ah.getAh_sdspcode()+ah.getAh_code());
 			ab.setPwd(ah.getAh_pwd());
 			ab.setCol("SD_SPCODE||SD_CODE");
@@ -76,16 +76,22 @@ public class Authentication {
 				boolean tf = false;
 				if(dao.isUserId(ab)){
 					System.out.println("아이디검증성공");
-					ab.setPwd(enc.aesEncode(ab.getPwd(), ab.getId()));
+					ab.setPwd(enc.aesEncode(ab.getPwd(),ah.getAh_code()));
 					if(dao.checkPwd(ab)){
 						System.out.println("로그인성공");
 						if(tf = dao.insAccessHistory(ah)) {
 							System.out.println("기록성공");
 							mav.setViewName("redirect:/");
-							ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));
+							if(ah.getAh_table().equals("AHM")) {
+								ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));
+								pu.setAttribute("type","mro");
+							}else {
+								ck.setValue("sup"+enc.aesEncode(ah.getAh_code(),"session"));
+								pu.setAttribute("type",enc.aesEncode(ah.getAh_sdspcode(),ah.getAh_code()));
+								
+							}
 							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
-							pu.setAttribute("userSs",enc.aesEncode(ab.getId(),"session"));
-							pu.setAttribute("type","mro");
+							pu.setAttribute("userSs",enc.aesEncode(ah.getAh_code(),"session"));
 						}
 					}
 				}
@@ -105,12 +111,10 @@ public class Authentication {
 		try {
 			if(pu.getAttribute("userSs") != null) {
 				ah.setAh_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-				if(dao.getLogOutAccessHistorySum(ah)) {
-					dao.insAccessHistory(ah);
-				}
+				if(ah.getAh_table().equals("AHS")) ah.setAh_sdspcode(enc.aesDecode((String)pu.getAttribute("type"),ah.getAh_code()));
+				if(dao.getLogOutAccessHistorySum(ah)) dao.insAccessHistory(ah);
 				pu.removeAttribute("userSs");				
 				pu.removeAttribute("type");
-				ah.setCk(ah.getAh_code());
 				mav.setViewName("redirect:/");
 				mav.addObject("message","alert('로그아웃 되었습니다.');");
 				System.out.println("로그아웃ctl성공");
@@ -121,7 +125,7 @@ public class Authentication {
 			ck.setMaxAge(0);//쿠키소멸
 			ck.setValue(null);//쿠키소멸
 		} catch (Exception e) {
-			System.out.println("no ck");
+			System.out.println("로그아웃 실패");
 			e.printStackTrace();
 		}
 		return mav;
