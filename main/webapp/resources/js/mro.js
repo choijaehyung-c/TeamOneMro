@@ -19,8 +19,7 @@ const mainVue = new Vue({
 			this.page[0].show=true;
 			postAjaxJson('vue/mroOrderListForm','ListVue','j');
 		},
-		mroOrderListDetail:function(oscode){
-			alert(oscode);									
+		mroOrderListDetail:function(oscode){											
 			postAjaxJson('vue/mroGetOrderDetail','ListDetailVue','j', oscode);
 			this.page[1].show=true;
 		},
@@ -33,8 +32,7 @@ const mainVue = new Vue({
 			this.page[2].show=true;
 			postAjaxJson('vue/mroRefundListForm','ListVue','j');
 		},
-		mroRefundListDetail:function(oscode){
-			alert(oscode);									
+		mroRefundListDetail:function(oscode){								
 			postAjaxJson('vue/mroGetRefundDetail','ListDetailVue','j', oscode);
 			this.page[1].show=true;
 		},
@@ -43,8 +41,7 @@ const mainVue = new Vue({
 			this.page[3].show=true;
 			postAjaxJson('vue/mroExchangeListForm','ListVue','j');
 		},
-		mroExchangeListDetail:function(oscode){
-			alert(oscode);									
+		mroExchangeListDetail:function(oscode){								
 			postAjaxJson('vue/mroGetExchangeDetail','ListDetailVue','j', oscode);
 			this.page[1].show=true;
 		}

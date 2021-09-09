@@ -10,6 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>MRONE</title>
+ 
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
 	rel="stylesheet" />
@@ -145,22 +146,21 @@
 				
 				
 				<div v-if="page[1].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
-                  <div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                  <div style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
 						<table id="datatablesSimple" class="dataTable-table">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>공급사코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>상품코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>상품명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>상품수량</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>상태코드</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사코드</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사명</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>주문코드</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상품코드</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상품수량</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr v-for="old in orderListDetail" >
-												
 												<td>{{old.od_prspcode}}</td>
 												<td>{{old.sp_name}}</td>
 												<td>{{old.od_oscode}}</td>
@@ -168,26 +168,21 @@
 												<td>{{old.pr_name}}</td>
 												<td>{{old.od_quantity}}</td>
 												<td>{{old.od_stcode}}</td>
-												<button v-on:click="close(1)" >닫아</button>
-											</tr>																													
-										</tbody>
-						</table>
+											</tr>							
+											    <button class="btn-datatable"  v-on:click="close(1)"><img src="../../resources/img/close.png"></button>										  											   																																							
+						                </tbody>									  				
+						</table>							
+					  </div>
 					</div>
-					</div>
 					
-							
-					
-					
+
 					<template v-if="page[0].show" style="z-index: 3;">
 					
 						<div class="container-fluid px-4">
-							<h1 style = "padding=20px">주문목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">주문목록</li>
-							</ol>
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >주문목록</h1>
+						
 							<div class="card mb-4">
-								<div class="card-body">주문목록 확인 후 처리해주세요 [문의 :
+								<div class="card-body">※주문목록 확인 후 처리해주세요 [문의 :
 									nsb214@naver.com]</div>
 							</div>
 							<div class="card mb-4">
@@ -224,13 +219,10 @@
 					<template v-if="page[2].show" style="z-index:3;">
 					
 						<div class="container-fluid px-4">
-							<h1 style = "padding=20px">반품신청목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">반품신청목록</li>
-							</ol>
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >반품신청목록</h1>
+							
 							<div class="card mb-4">
-								<div class="card-body">반품신청목록 확인 후 처리해주세요 [문의 :
+								<div class="card-body">※반품신청목록 확인 후 처리해주세요 [문의 :
 									nsb214@naver.com]</div>
 							</div>
 							<div class="card mb-4">
@@ -267,13 +259,10 @@
 					<template v-if="page[3].show" style="z-index:3;">
 					
 						<div class="container-fluid px-4">
-							<h1 style = "padding=20px">교환신청목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">교환신청목록</li>
-							</ol>
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >교환신청목록</h1>
+							
 							<div class="card mb-4">
-								<div class="card-body">교환신청목록 확인 후 처리해주세요 [문의 :
+								<div class="card-body">※교환신청목록 확인 후 처리해주세요 [문의 :
 									nsb214@naver.com]</div>
 							</div>
 							<div class="card mb-4">
