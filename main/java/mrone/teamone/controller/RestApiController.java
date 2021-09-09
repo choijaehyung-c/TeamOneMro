@@ -166,25 +166,25 @@ public class RestApiController {
 	//supply 반품디테일
 	@PostMapping("/supplyReceiveAsDetail")
 	
-	public List<RequestOrderDetailBean> supplyReceiveAsDetail(@RequestBody RequestOrderBean ro){
-		//System.out.println(mo);
-		return sse.supplyReceiveAsDetail(ro);
+	public List<RequestOrderDetailBean> supplyReceiveAsDetail(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
+		//System.out.println(re_code);
+		return sse.supplyReceiveAsDetail(re_code);
 	}
 	
 	//supply 반품 응답
 	@PostMapping("/supplyResponseRefund")
 	
-	public String supplyResponseRefund(@RequestBody RequestOrderBean ro){
+	public String supplyResponseRefund(@ModelAttribute("re_code") String re_code){
 		//System.out.println(mo);
-		return sse.supplyResponseRefund(ro);
+		return sse.supplyResponseRefund(re_code);
 	}
 	
 	//supply 교환 응답
 	@PostMapping("/supplyResponseExchange")
 	
-	public String supplyResponseExchange(@RequestBody RequestOrderBean re){
+	public String supplyResponseExchange(@ModelAttribute("re_code") String re_code){
 		//System.out.println(mo);
-		return sse.supplyResponseExchange(re);
+		return sse.supplyResponseExchange(re_code);
 	}
 	
 	//supply 검색결과

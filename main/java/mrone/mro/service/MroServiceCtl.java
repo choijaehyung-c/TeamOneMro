@@ -25,6 +25,7 @@ class MroServiceCtl {
 	ProjectUtils pu;
 	
 	String mroRequestCtl(RequestOrderBean ro, String type) {
+		ro.setRe_state(type);
 		return this.mroRequestProcess(ro);
 	}
 
@@ -45,7 +46,6 @@ class MroServiceCtl {
 			int tranCount = 0;
 			for (int i = 0; i < ro.getRd().size(); i++) {
 				ro.getRd().get(i).setRd_recode(dao.getRequestOrderData(ro));
-				ro.getRd().get(i).setRd_stcode(ro.getRe_state());
 				if (!dao.insMroRequestOrderDetail(ro.getRd().get(i))) {
 					break;
 				}

@@ -8,5 +8,6 @@ public class OrderDetailBean {
 	private String od_oscode;
 	private String od_stcode;
 	private String od_prcode;
+	private String od_note;
 	private int od_quantity;
 }
