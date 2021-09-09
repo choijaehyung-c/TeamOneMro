@@ -18,11 +18,14 @@
 	</select>
 
 	<select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'PR'
+    	SELECT PR_CODE, PR_NAME, PR_STCODE, SP_NAME, CATE_NAME FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_STCODE = 'PR'
     </select>
     
     <select id="mroGetNewProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_CODE = #{pr_code}
+    	SELECT PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE,
+    		   PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN,
+    		   CATE_NAME, SP_NAME, SP_TEL, SP_ADDRESS, PR_STCODE 
+     	FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_CODE = #{pr_code}
     </select>
     
     <update id="mroResponseNewProduct" parameterType="mrone.teamone.beans.ProductBean">
@@ -30,11 +33,14 @@
     </update>
     
      <select id="callModifyRequestList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'MR' OR PR_STCODE = 'DR'
+    	SELECT PR_CODE, PR_NAME, PR_STCODE,  SP_NAME, CATE_NAME FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_STCODE = 'MR' OR PR_STCODE = 'DR'
     </select>
     
     <select id="mroGetModifyProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
+    	SELECT PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE,
+    		   PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN,
+    		   CATE_NAME, SP_NAME, SP_TEL, SP_ADDRESS, PR_STCODE 
+     	FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_CODE = #{pr_code} AND PR_STCODE= #{pr_stcode}
     </select>
     
     <update id="mroResponseModifyProduct" parameterType="mrone.teamone.beans.ProductBean">

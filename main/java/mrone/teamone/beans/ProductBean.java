@@ -21,5 +21,8 @@ public class ProductBean {
 	private String cate;
 	private String cate_name;
 	private String word; //검색어
+	private String sp_name;
+	private String sp_tel;
+	private String sp_address;
 	private MultipartFile file;
 }

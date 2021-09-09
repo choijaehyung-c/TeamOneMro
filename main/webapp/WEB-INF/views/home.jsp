@@ -78,8 +78,8 @@
                             </div>
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
-                                    <div class="nav-link" onClick="getNewProductRequest()">새상품 등록 요청건</div>
-                                    <div class="nav-link" onClick="getModifyRequest()">상품수정 요청건</div>                      
+                                    <div class="nav-link" onClick="getNewProductRequest('')">새상품 등록 요청건</div>
+                                    <div class="nav-link" onClick="getModifyRequest('')">상품수정 요청건</div>                      
                                 </nav>  
                             </div>
                             
@@ -106,12 +106,239 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-                <main style="height: 100%; width: 100%;">
-                	<div id="mainVue" style="height: 100%; width: 100%;">
-                		<template v-if="page[0].show"><div v-for="ii in supplyList" @click="datata(ii.sp_code)">{{ii.sp_name}}</div></template>
-                	</div>
+            <div id="layoutSidenav_content" style="height: 100%; width: 100%; table-layout: fixed;">
+
+                <main style="height: 100%; width: 100%; margin-top:0px;">
+           	
+            
+            <div id="mainVue" style="height: 100%; width: 100%;">
+              
+              
+              <!-- !!!!!!!!상품등록신청 모달!!!!!!!!!!!! -->
+              <div v-if="page[1].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                   				<img :src="mroGetNewProductDetail.pr_image">
+                   			<tbody>
+                 
+                            	<tr>
+                                	<td>회사명</td><td>{{mroGetNewProductDetail.sp_name}}</td>
+                                </tr>
+                            	<tr>
+                                	<td>전화번호</td><td>{{mroGetNewProductDetail.sp_tel}}</td>
+                                </tr>
+                            	<tr>
+                                	<td>주소</td><td>{{mroGetNewProductDetail.sp_address}}</td>
+                                </tr>
+                                <tr>
+                               		<td>상품명</td><td>{{mroGetNewProductDetail.pr_name}}</td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td>{{mroGetNewProductDetail.pr_price}}</td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td>{{mroGetNewProductDetail.pr_stock}}</td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td>{{mroGetNewProductDetail.pr_origin}}</td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td>{{mroGetNewProductDetail.pr_info}}</td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div style="text-align: center">
+                   		<button @click="mroResponseNewProduct(mroGetNewProductDetail.pr_code, 'PC')"  type="button" class="btn btn-dark">등록</button>
+                   		<button @click="mroResponseNewProduct(mroGetNewProductDetail.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                   		<button @click="modalClose(1)" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                  	</div>
+                   	</div>
+                		
+                		
+                		<template v-if="page[0].show" style="z-index: 3;">               		
+           
+        
+                   		
+                    <div class="container-fluid px-4">
+                    
+                    
+                        <h1 style="padding:20px">상품 등록신청 리스트</h1>
+                      
+                     
+                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                     	<div class="dataTable-search">
+                     		<input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                     	</div>
+                     </div>  
+                        <div class="card mb-4">
+                        	<div class="card-header">등록신청</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;"><a>회사명</a></th>
+                                            <th style="width: 10%;"><a>카테고리</a></th>
+                                            <th style="width: 70%;"><a>상품명</a></th>
+                                            <th style="width: 10%;" ><a></a></th>                                          
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="rnp in getNewProductRequestList">
+                                            <td @click="mroGetNewProductDetailPage(rnp.pr_code)">{{rnp.sp_name}}</td>
+                                            <td @click="mroGetNewProductDetailPage(rnp.pr_code)">{{rnp.cate_name}}</td>
+                                            <td @click="mroGetNewProductDetailPage(rnp.pr_code)">{{rnp.pr_name}}</td>
+                                            <td style="text-align: center">
+                                            	<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">등록</button>
+                   								<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                   		</div>
+                   	</template>
+                   	
+                   	
+  
+                   	
+          	 <!-- !!!!!!!!상품수정신청 모달!!!!!!!!!!!! -->
+              <div v-if="page[3].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                   				<img :src="mroGetModifyRequestDetail.pr_image">
+                   			<tbody>
+                 
+                            	<tr>
+                                	<td>회사명</td><td>{{mroGetModifyRequestDetail.sp_name}}</td>
+                                </tr>
+                            	<tr>
+                                	<td>전화번호</td><td>{{mroGetModifyRequestDetail.sp_tel}}</td>
+                                </tr>
+                            	<tr>
+                                	<td>주소</td><td>{{mroGetModifyRequestDetail.sp_address}}</td>
+                                </tr>
+                                <tr>
+                               		<td>상품명</td><td>{{mroGetModifyRequestDetail.pr_name}}</td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td>{{mroGetModifyRequestDetail.pr_price}}</td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td>{{mroGetModifyRequestDetail.pr_stock}}</td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td>{{mroGetModifyRequestDetail.pr_origin}}</td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td>{{mroGetModifyRequestDetail.pr_info}}</td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div style="text-align: center">
+                   		<button @click="mroResponseModifyProduct(mroGetModifyRequestDetail.pr_code, mroGetModifyRequestDetail.pr_stcode, '1')"  type="button" class="btn btn-dark">승인</button>
+                   		<button @click="mroResponseModifyProduct(mroGetModifyRequestDetail.pr_code, mroGetModifyRequestDetail.pr_stcode, '2')"  type="button" class="btn btn-dark">거절</button>
+                   		<button @click="modalClose(3)" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                  	</div>
+                   	</div>
+
+                   	
+                   	<!-- 수정신청리스트 -->
+                   	<template v-if="page[2].show" style="z-index: 3;">               		
+                    <div class="container-fluid px-4">
+
+                        <h1 style="padding:20px">상품 수정신청 리스트</h1>
+
+                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                     	<div class="dataTable-search">
+                     		<input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                     	</div>
+                     </div>  
+                        <div class="card mb-4">
+                        	<div class="card-header">수정요청</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;"><a>회사명</a></th>
+                                            <th style="width: 10%;"><a>카테고리</a></th>
+                                            <th style="width: 70%;"><a>상품명</a></th>
+                                            <th style="width: 10%;" ><a></a></th>                                            
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="rmp in modifyRequestList" v-if="rmp.pr_stcode =='MR'">
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '1')">{{rmp.sp_name}}</td>
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '1')">{{rmp.cate_name}}</td>
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '1')">{{rmp.pr_name}}</td>
+                                            <td style="text-align: center">
+                                            	<button @click="mroResponseModifyProduct(rmp.pr_code, rmp.pr_stcode, '1')"  type="button" class="btn btn-dark">승인</button>
+                   								<button @click="mroResponseModifyProduct(rmp.pr_code, rmp.pr_stcode, '2')"  type="button" class="btn btn-dark">거절</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="card mb-4">
+                        	<div class="card-header">삭제요청</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;"><a>회사명</a></th>
+                                            <th style="width: 10%;"><a>카테고리</a></th>
+                                            <th style="width: 70%;"><a>상품명</a></th>
+                                            <th style="width: 10%;" ><a></a></th>                                         
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="rmp in modifyRequestList" v-if="rmp.pr_stcode =='DR'">
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '2')">{{rmp.sp_name}}</td>
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '2')">{{rmp.cate_name}}</td>
+                                            <td @click="mroGetModifyProductDetailPage(rmp.pr_code, '2')">{{rmp.pr_name}}</td>
+                                            <td style="text-align: center">
+                                            	<button @click="mroResponseModifyProduct(rmp.pr_code, rmp.pr_stcode, '1')"  type="button" class="btn btn-dark">승인</button>
+                   								<button @click="mroResponseModifyProduct(rmp.pr_code, rmp.pr_stcode, '2')"  type="button" class="btn btn-dark">거절</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                      
+                    </div>
+                   		</div>
+                   	</template>
+                 
+
+
+                   	
+
+                   	</div>
+                   	
+                
                 </main>
+                	
             </div>
         </div>
         <script src="resources/js/scripts.js"></script>  
@@ -120,7 +347,5 @@
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/mro.js"></script>
-
-        
     </body>
 </html>
