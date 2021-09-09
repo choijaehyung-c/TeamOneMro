@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mrone.client.service.ClientServiceEntrance;
+import mrone.mro.service.MroServiceEntrance;
 import mrone.teamone.beans.ClientInfoBean;
+import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
@@ -25,7 +28,10 @@ class SupplyServiceCtl {
 	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
-	
+	@Autowired
+	ClientServiceEntrance cse;
+	@Autowired
+	MroServiceEntrance mse;
 	
 
 	List<RequestOrderBean> getSupplyDealListCtl(String re_spcode) {
@@ -269,9 +275,13 @@ class SupplyServiceCtl {
 				dao.updReasonOD(ro.getRd().get(i));}
 			}
 		}else if(sr.getAfter().equals("RA")){
-			//
+			//반품안한거 새주문
 			RequestOrderBean newRo = new RequestOrderBean();
-			
+			ClientOrderBean newCo = new ClientOrderBean();
+			newRo.setRd(dao.getNewRDForRefund(sr));
+			newCo.setOd(dao.getNewODForRefund(sr));
+			cse.clientOrderProcess(newCo,"");
+			mse.mroRequestProcess(newRo);
 			
 			//오리진 주문,발주서 폐기처리
 			sr.setRe_code(ro.getRe_origin());
@@ -287,7 +297,7 @@ class SupplyServiceCtl {
 		
 		//수락
 		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트
-		//들어온 re_code에 RR이 아닌 코드로 새 주문서 발주서 인설트 , 해당 새 주문코드에 운송장
+		//들어온 re_code에 RR이 아닌 코드로 새 주문서 발주서 인설트
 		//오리진 주문서 st코드 폐기처리 os od , os오리진 코드로 re테이블 re_oscode 셀렉후 해당 re_code st폐기
 		
 		//거절

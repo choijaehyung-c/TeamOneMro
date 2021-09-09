@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -53,14 +54,12 @@ public class SupplyDao {
 		return sql.selectOne("getOSOriginCode",os_code);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	List<RequestOrderDetailBean> getNewRDForRefund(SupplyResponse sr){
+		return sql.selectList("getNewRDForRefund", sr);
+	}
+	List<OrderDetailBean> getNewODForRefund(SupplyResponse sr){
+		return sql.selectList("getNewODForRefund", sr);
+	}
 	
 	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
 		return sql.selectList("getSupplyDealList", re_spcode);
