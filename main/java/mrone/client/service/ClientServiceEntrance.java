@@ -14,15 +14,15 @@ public class ClientServiceEntrance {
 	@Autowired
 	ClientServiceCtl csc;
 	
-	public String clientRequestOrder(ClientOrderBean co) {
+	public List<String> clientRequestOrder(ClientOrderBean co) {
 		return csc.clientRequestCtl(co,"OR");
 	}
 	
-	public String clientRequestRefund(ClientOrderBean co) {
+	public List<String> clientRequestRefund(ClientOrderBean co) {
 		return csc.clientRequestCtl(co,"RR");
 	}
 	
-	public String clientRequestExchange(ClientOrderBean co) {
+	public List<String> clientRequestExchange(ClientOrderBean co) {
 		return csc.clientRequestCtl(co,"ER");
 	}
 	
@@ -34,7 +34,7 @@ public class ClientServiceEntrance {
 		return csc.clientGetTaxbillDetailCtl(ci);
 	}
 	
-	public boolean clientOrderProcess(ClientOrderBean co, String sp_code) {
+	public String clientOrderProcess(ClientOrderBean co, String sp_code) {
 		return csc.clientOrderProcess(co, sp_code);
 	}
 

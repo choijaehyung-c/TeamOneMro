@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
 
 import mrone.client.service.ClientServiceEntrance;
 import mrone.mro.service.MroServiceEntrance;
@@ -254,8 +255,12 @@ class SupplyServiceCtl {
 
 	//공급사 - 반품에 대한 응답(거절(FF)or수락(RC))
 	String supplyResponseRefund(RequestOrderBean ro) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트 
 		//ro에 re_code, re_state에 수락 or 거절 코드 담아서옴, ro-rd에 거절사유+
+		//프론트에서 반품,교환 동시 진행 X (오리진코드로 이미 진행중인 반품,교환이 있으면 중복 접수X)
 		SupplyResponse sr = new SupplyResponse();
 		sr.setAfter(ro.getRe_state());
 		sr.setBefore("RR");
@@ -263,64 +268,65 @@ class SupplyServiceCtl {
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		
 		//수락,거절 공통 업데이트
-		this.updateRefundResponseProcess(sr);
-		
-		//거절 일시 업데이트
-		if(sr.getAfter().equals("FF")) {
-			for(int i = 0 ; i < ro.getRd().size(); i++) {
-				ro.getRd().get(i).setRd_stcode(sr.getAfter());
-				if(ro.getRd().get(i).getRd_note() != null) {
-				dao.updReasonRD(ro.getRd().get(i));
-				ro.getRd().get(i).setRd_recode(sr.getOs_code());
-				dao.updReasonOD(ro.getRd().get(i));}
+		if(this.updateRefundResponseProcess(sr)) {
+			if (sr.getAfter().equals("FF")) {// 거절
+				for (int i = 0; i < ro.getRd().size(); i++) {
+					ro.getRd().get(i).setRd_stcode(sr.getAfter());
+					if (ro.getRd().get(i).getRd_note() != null) {
+						if (dao.updReasonRD(ro.getRd().get(i))) {
+							ro.getRd().get(i).setRd_recode(sr.getOs_code());
+							if (dao.updReasonOD(ro.getRd().get(i))) {
+								tran = true;
+							}
+						}
+					}
+				}
+			} else if (sr.getAfter().equals("RA")) {// 수락
+				// 반품안한거 새주문
+				RequestOrderBean newRo = new RequestOrderBean();
+				ClientOrderBean newCo = new ClientOrderBean();
+				String clcode = dao.getCLForRefund(sr.getRe_code());
+				newRo.setRe_clcode(clcode);
+				newCo.setOs_clcode(clcode);
+				newRo.setRe_state("OA");
+				newCo.setOs_state("OA");
+				newRo.setRd(dao.getNewRDForRefund(sr.getRe_code()));
+				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
+				
+				if (cse.clientOrderProcess(newCo, newRo.getRd().get(0).getRd_prspcode()) != null) {
+					if (mse.mroRequestProcess(newRo)) {
+						// 오리진 주문,발주서 폐기처리
+						sr.setRe_code(ro.getRe_origin());
+						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
+						sr.setAfter("PD");
+						sr.setBefore("OA");
+						if(this.updateRefundResponseProcess(sr)) {
+							tran = true;
+						}
+					}
+				}
+				
 			}
-		}else if(sr.getAfter().equals("RA")){//수락
-			//반품안한거 새주문
-			RequestOrderBean newRo = new RequestOrderBean();
-			ClientOrderBean newCo = new ClientOrderBean();
-			String clcode = dao.getCLForRefund(sr.getRe_code());
-			newRo.setRe_clcode(clcode);
-			newCo.setOs_clcode(clcode);
-			newRo.setRe_state("OA");
-			newCo.setOs_state("OA");
-			newRo.setRd(dao.getNewRDForRefund(sr.getRe_code()));
-			newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
-			cse.clientOrderProcess(newCo,newRo.getRd().get(0).getRd_prspcode());
-			mse.mroRequestProcess(newRo);
-			
-			//오리진 주문,발주서 폐기처리
-			sr.setRe_code(ro.getRe_origin());
-			sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
-			sr.setAfter("PD");
-			sr.setBefore("OA");
-			this.updateRefundResponseProcess(sr);
 		}
-		
-		
-		
-		
-		
-		//수락
-		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트
-		//들어온 re_code에 RR이 아닌 코드로 새 주문서 발주서 인설트
-		//오리진 주문서 st코드 폐기처리 os od , os오리진 코드로 re테이블 re_oscode 셀렉후 해당 re_code st폐기
-		
-		//거절
-		//들어온 re_code에 RR 코드 -> '반품거절' 주문서,발주서 업데이트 os re / od rd ->   거절사유 입력 
-		return null;
+		pu.setTransactionResult(tran);
+		return tran?"success":"failed";
 	}
 	
 	boolean updateRefundResponseProcess(SupplyResponse sr) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		if (dao.updRequest(sr)) {
 			if (dao.updRequestDetail(sr)) {
 				if (dao.updOrder(sr)) {
 					if (dao.updOrderDetail(sr)) {
-
+						tran = true;
 					}
 				}
 			}
 		}
-		return true;
+		pu.setTransactionResult(tran);
+		return tran;
 	}
 
 	String supplyResponseExchange(RequestOrderBean ro) {

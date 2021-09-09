@@ -39,40 +39,35 @@ class ClientServiceCtl {
 	@Autowired
 	MroServiceEntrance msec;
 	
-	String clientRequestCtl(ClientOrderBean co,String type){
+	List<String> clientRequestCtl(ClientOrderBean co,String type){
 		ClientInfoBean ci = new ClientInfoBean();
 		ci.setCl_code(co.getOs_clcode());
-		int tCount = 0;
 		Set<String> sp = new HashSet<>();
-		
+		co.setOs_state(type);
 		//받아온 비밀번호 복호화해서 셋
 		try {//ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
 			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
 		} catch (Exception e) {System.out.println("error csc");}
 		
-		
+		List<String> oscodes = new ArrayList<String>();
 		if (dao.isClient(ci)) {
 			if (dao.isClientPwd(ci)) {
 				
-				co.setOs_state(type);
-				
 				for (int i = 0; i < co.getOd().size(); i++) { 
-					sp.add(co.getOd().get(i).getOd_prspcode());
-				}
+					sp.add(co.getOd().get(i).getOd_prspcode());}
 				
 				for(String sp_code : sp) {
-					if (this.clientOrderProcess(co,sp_code)) {
-						if(this.clientRequestProcess(co,sp_code))tCount++;
-					}
+					if (this.clientOrderProcess(co,sp_code)!=null) {
+						oscodes.add(co.getOd().get(0).getOd_oscode());
+						this.clientRequestProcess(co,sp_code);}
 				}
-				
 			}
 		}
 		
-		return (tCount == sp.size())? "success":"failed";
+		return oscodes;
 	}
 	
-	boolean clientOrderProcess(ClientOrderBean co, String sp_code) {
+	String clientOrderProcess(ClientOrderBean co, String sp_code) {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
@@ -91,12 +86,12 @@ class ClientServiceCtl {
 				}
 			}
 			System.out.println(tranCount + ":" + co.getOd().size());
-			if (tranCount == co.getOd().size())
-				tran = true;
+			if (tranCount == co.getOd().size())tran = true;
+			else co.getOd().get(0).setOd_oscode(null);
 
 		}
 		pu.setTransactionResult(tran);
-		return tran;
+		return co.getOd().get(0).getOd_oscode();
 	}
 	
 	boolean clientRequestProcess(ClientOrderBean co,String sp_code) {

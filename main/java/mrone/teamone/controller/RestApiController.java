@@ -237,17 +237,17 @@ public class RestApiController {
 	}
 	//---
 	@PostMapping("/clientOrder")
-	public String clientOrderApi(@RequestBody ClientOrderBean co){
+	public List<String> clientOrderApi(@RequestBody ClientOrderBean co){
 		return cse.clientRequestOrder(co);
 	}
 	
 	@PostMapping("/clientRefund")
-	public String clientRefundApi(@RequestBody ClientOrderBean co){	
+	public List<String> clientRefundApi(@RequestBody ClientOrderBean co){	
 		return cse.clientRequestRefund(co);
 	}
 	
 	@PostMapping("/clientExchange")
-	public String clientExchangeApi(@RequestBody ClientOrderBean co){
+	public List<String> clientExchangeApi(@RequestBody ClientOrderBean co){
 		return cse.clientRequestExchange(co);
 	}
 	
