@@ -36,6 +36,27 @@ public class RestApiController {
 	@Autowired
 	private MroServiceEntrance mse;
 	
+	
+	@PostMapping("/supplyResponseOrderOA")
+	public String supplyResponseOrderOA(@RequestBody RequestOrderBean ro) {
+		return sse.supplyResponseOrderOA(ro);
+	}
+	
+	@PostMapping("/supplyResponseOrderOF")
+	public String supplyResponseOrderOF(@RequestBody RequestOrderBean ro) {
+		return sse.supplyResponseOrderOF(ro);
+	}
+	
+	@PostMapping("/supplyResponseOrderEA")
+	public String supplyResponseOrderEA(@RequestBody RequestOrderBean ro) {
+		return sse.supplyResponseOrderEA(ro);
+	}
+	
+	@PostMapping("/supplyResponseOrderEF")
+	public String supplyResponseOrderEF(@RequestBody RequestOrderBean ro) {
+		return sse.supplyResponseOrderEF(ro);
+	}
+	
 	@GetMapping("/supplyReceiveWaitOrderListForm")
 	public ModelAndView supplyReceiveWaitOrderListForm() {
 		ModelAndView mav = new ModelAndView();
@@ -174,12 +195,12 @@ public class RestApiController {
 	}
 	
 	//supply 교환 응답
-	@PostMapping("/supplyResponseExchange")
-	
-	public String supplyResponseExchange(@RequestBody RequestOrderBean ro){
-		//System.out.println(mo);
-		return null;
-	}
+	/*
+	 * @PostMapping("/supplyResponseExchange")
+	 * 
+	 * public String supplyResponseExchange(@RequestBody RequestOrderBean ro){
+	 * //System.out.println(mo); return null; }
+	 */
 	
 	//supply 검색결과
 	@PostMapping("/supplySearchAs")

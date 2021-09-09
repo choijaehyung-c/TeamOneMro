@@ -131,6 +131,23 @@ public class SupplyServiceEntrance {
 		return ssc.supplyReceiveExchangeListForm();
 	}
 	
+	public String supplyResponseOrderOA(RequestOrderBean ro) {
+		String decision = "OA";
+		return ssc.supplyResponseCtl(ro,decision);
+	}
+	public String supplyResponseOrderOF(RequestOrderBean ro) {
+		String decision = "OF";
+		return ssc.supplyResponseCtl(ro,decision);
+	}
+	public String supplyResponseOrderEA(RequestOrderBean ro) {
+		String decision = "EA";
+		return ssc.supplyResponseCtl(ro,decision);
+	}
+	public String supplyResponseOrderEF(RequestOrderBean ro) {
+		String decision = "EF";
+		return ssc.supplyResponseCtl(ro,decision);
+	}
+	
 	public List<RequestOrderBean> supplyReceiveRefundListForm() {//c
 		return ssc.supplyReceiveRefundListForm();
 	}
