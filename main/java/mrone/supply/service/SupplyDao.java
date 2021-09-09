@@ -13,12 +13,54 @@ import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
+import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
 
 @Repository
 public class SupplyDao {
 	@Autowired
 	SqlSessionTemplate sql;
+	
+	boolean updRequest(SupplyResponse sr) {
+		return this.convertToBoolean( sql.update("updRequest", sr));
+	}
+	
+	boolean updRequestDetail(SupplyResponse sr) {
+		return this.convertToBoolean( sql.update("updRequestDetail", sr));
+	}
+	
+	boolean updOrder(SupplyResponse sr) {
+		return this.convertToBoolean( sql.update("updOrder", sr));
+	}
+	
+	boolean updOrderDetail(SupplyResponse sr) {
+		return this.convertToBoolean( sql.update("updOrderDetail", sr));
+	}
+	
+	String getInvolvedOscode(SupplyResponse sr) {
+		return sql.selectOne("getInvolvedOscode",sr); 
+	}
+	
+	boolean updReasonRD(RequestOrderDetailBean rd) {
+		return this.convertToBoolean(sql.update("updReasonRD",rd));
+	}
+	
+	boolean updReasonOD(RequestOrderDetailBean rd) {
+		return this.convertToBoolean(sql.update("updReasonOD",rd));
+	}
+	
+	String getOSOriginCode(String os_code) {
+		return sql.selectOne("getOSOriginCode",os_code);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
 		return sql.selectList("getSupplyDealList", re_spcode);

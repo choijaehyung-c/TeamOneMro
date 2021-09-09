@@ -50,15 +50,15 @@ public class MroServiceEntrance {
 		return msc.getExchangeList();
 	}
 	
-	public String mroRequestOrder(RequestOrderBean ro) {
+	public boolean mroRequestOrder(RequestOrderBean ro) {
 		return msc.mroRequestCtl(ro, "OR");
 	}
 
-	public String mroRequestRefund(RequestOrderBean ro) {
+	public boolean mroRequestRefund(RequestOrderBean ro) {
 		return msc.mroRequestCtl(ro, "RR");
 	}
 
-	public String mroRequestExchange(RequestOrderBean ro) {
+	public boolean mroRequestExchange(RequestOrderBean ro) {
 		return msc.mroRequestCtl(ro, "ER");
 	}
 
@@ -84,6 +84,10 @@ public class MroServiceEntrance {
 
 	public ProductBean mroGetNewProductDetail(ProductBean pb) {
 		return msc.mroGetNewProductDetail(pb);
+	}
+	
+	public boolean mroRequestProcess(RequestOrderBean ro) {
+		return msc.mroRequestProcess(ro);
 	}
 
 }

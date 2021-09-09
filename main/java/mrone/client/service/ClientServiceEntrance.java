@@ -33,5 +33,9 @@ public class ClientServiceEntrance {
 	public TaxBean clientGetTaxbillDetail(ClientInfoBean ci) throws Exception {
 		return csc.clientGetTaxbillDetailCtl(ci);
 	}
+	
+	public boolean clientOrderProcess(ClientOrderBean co, String sp_code) {
+		return csc.clientOrderProcess(co, sp_code);
+	}
 
 }

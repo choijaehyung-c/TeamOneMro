@@ -174,17 +174,17 @@ public class RestApiController {
 	//supply 반품 응답
 	@PostMapping("/supplyResponseRefund")
 	
-	public String supplyResponseRefund(@ModelAttribute("re_code") String re_code){
+	public String supplyResponseRefund(@RequestBody RequestOrderBean ro){
 		//System.out.println(mo);
-		return sse.supplyResponseRefund(re_code);
+		return sse.supplyResponseRefund(ro);
 	}
 	
 	//supply 교환 응답
 	@PostMapping("/supplyResponseExchange")
 	
-	public String supplyResponseExchange(@ModelAttribute("re_code") String re_code){
+	public String supplyResponseExchange(@RequestBody RequestOrderBean ro){
 		//System.out.println(mo);
-		return sse.supplyResponseExchange(re_code);
+		return sse.supplyResponseExchange(ro);
 	}
 	
 	//supply 검색결과

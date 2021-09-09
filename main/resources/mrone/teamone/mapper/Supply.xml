@@ -4,6 +4,70 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="mrone.teamone.mapper.Supply">
+
+	<update id="updRequest" parameterType="mrone.teamone.beans.SupplyResponse">
+		UPDATE RE SET RE_STATE = #{after} WHERE RE_CODE = #{re_code} AND RE_STATE = #{before}
+	</update>
+	
+	<update id="updRequestDetail" parameterType="mrone.teamone.beans.SupplyResponse">
+		UPDATE RD SET RD_STCODE = #{after} WHERE RD_RECODE = #{re_code} AND RD_STCODE = #{before}
+	</update>
+	
+	<update id="updOrder" parameterType="mrone.teamone.beans.SupplyResponse">
+		UPDATE OS SET OS_STATE = #{after} WHERE OS_CODE = #{os_code} AND OS_STATE = #{before}
+	</update>
+	
+	<update id="updOrderDetail" parameterType="mrone.teamone.beans.SupplyResponse">
+		UPDATE OD SET OD_STCODE = #{after} WHERE OD_OSCODE = #{os_code} AND OD_STCODE = #{before}
+	</update>
+
+	<select id="getInvolvedOscode" parameterType="mrone.teamone.beans.SupplyResponse" resultType="string">
+		SELECT RE_OSCODE FROM RE WHERE RE_CODE = #{re_code} AND RE_STATE = #{before}
+	</select>
+	
+	<update id="updReasonRD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
+		UPDATE RD SET RD_NOTE = #{rd_note} WHERE RD_RECODE = #{rd_recode} AND RD_STCODE = #{rd_stcode} AND RD_PRCODE = #{rd_prcode}
+	</update>
+	
+	<update id="updReasonOD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
+		UPDATE OD SET OD_NOTE = #{rd_note} WHERE OD_OSCODE = #{rd_recode} AND OD_STCODE = #{rd_stcode} AND OD_PRCODE = #{rd_prcode}
+	</update>
+	
+	
+	<select id="getOSOriginCode" parameterType="string" resultType="string">
+		SELECT OS_ORIGIN FROM OS WHERE OS_CODE = #{os_code}
+	</select>
+
+<!--	
+<insert id="insClientOrder" parameterType="mrone.teamone.beans.ClientOrderBean">
+		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},TO_DATE(#{os_date},'YYYYMMDDHH24miss'),#{os_state})
+	</insert>
+	
+	<insert id="insClientOrderDetail" parameterType="mrone.teamone.beans.ClientOrderBean">
+		INSERT INTO OD VALUES(#{od_prspcode},#{od_oscode},#{od_stcode},#{od_prcode},#{od_quantity})
+	</insert>
+	
+	<select id="getOrderData" parameterType="mrone.teamone.beans.ClientOrderBean" resultType="string">
+		SELECT OS_CODE FROM OS WHERE OS_CLCODE = #{os_clcode} and os_date = TO_DATE(#{os_date},'YYYYMMDDHH24miss')
+	</select> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<select id="getSupplyDealList" resultType="mrone.teamone.beans.RequestOrderBean" parameterType="string">
 		SELECT * FROM RE WHERE RE_SPCODE = #{re_spcode} AND RE_STATE = 'OC'
 	</select>
@@ -181,7 +245,7 @@
        
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
     <select id="getReceiveAsListSp" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean" >		
-		SELECT RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
+		SELECT RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP,RE_ORIGIN FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
 		WHERE RE.RE_STATE = #{re_state} AND RE.RE_SPCODE = #{sp_code}
     </select>
     

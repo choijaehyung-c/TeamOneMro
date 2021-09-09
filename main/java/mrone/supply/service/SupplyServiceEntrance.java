@@ -11,6 +11,7 @@ import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
+import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
 
 @Service
@@ -123,12 +124,12 @@ public class SupplyServiceEntrance {
 		return ssc.supplySearchAs(re);
 	}
 
-	public String supplyResponseExchange(String re_code) {
-		return ssc.supplyResponseExchange(re_code);
+	public String supplyResponseExchange(RequestOrderBean ro) {
+		return ssc.supplyResponseExchange(ro);
 	}
 
-	public String supplyResponseRefund(String re_code) {
-		return ssc.supplyResponseRefund(re_code);
+	public String supplyResponseRefund(RequestOrderBean ro) {
+		return ssc.supplyResponseRefund(ro);
 	}
 
 	public List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code) {

@@ -1,19 +1,17 @@
 package mrone.supply.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionDefinition;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
-import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
+import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
@@ -27,6 +25,8 @@ class SupplyServiceCtl {
 	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
+	
+	
 
 	List<RequestOrderBean> getSupplyDealListCtl(String re_spcode) {
 		return dao.getSupplyDealList(re_spcode);
@@ -247,24 +247,74 @@ class SupplyServiceCtl {
 	}
 
 	//공급사 - 반품에 대한 응답(거절(FF)or수락(RC))
-	String supplyResponseRefund(String re_code) {
+	String supplyResponseRefund(RequestOrderBean ro) {
+		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트 
+		//ro에 re_code, re_state에 수락 or 거절 코드 담아서옴, ro-rd에 거절사유+
+		SupplyResponse sr = new SupplyResponse();
+		sr.setAfter(ro.getRe_state());
+		sr.setBefore("RR");
+		sr.setRe_code(ro.getRe_code());
+		sr.setOs_code(dao.getInvolvedOscode(sr));
+		
+		//수락,거절 공통 업데이트
+		this.updateRefundResponseProcess(sr);
+		
+		//거절 일시 업데이트
+		if(sr.getAfter().equals("FF")) {
+			for(int i = 0 ; i < ro.getRd().size(); i++) {
+				ro.getRd().get(i).setRd_stcode(sr.getAfter());
+				if(ro.getRd().get(i).getRd_note() != null) {
+				dao.updReasonRD(ro.getRd().get(i));
+				ro.getRd().get(i).setRd_recode(sr.getOs_code());
+				dao.updReasonOD(ro.getRd().get(i));}
+			}
+		}else if(sr.getAfter().equals("RA")){
+			//
+			RequestOrderBean newRo = new RequestOrderBean();
+			
+			
+			//오리진 주문,발주서 폐기처리
+			sr.setRe_code(ro.getRe_origin());
+			sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
+			sr.setAfter("PD");
+			sr.setBefore("OA");
+			this.updateRefundResponseProcess(sr);
+		}
+		
+		
+		
+		
+		
 		//수락
-		//들어온 re_code에 RR 코드 -> '반품수락' 주문서,발주서 업데이트 os od re rd
-		//들어온 re_code에 RR이 아닌 코드로 새 (주문서,발주서) 인설트 os od re rd // 해당 새 주문코드에 운송장
-		//오리진 주문서 st코드 폐기처리 os od re rd
+		//들어온 re테이블 RR 코드 -> '반품수락' , os테이블 re에oscode로 '반품수락'업데이트
+		//들어온 re_code에 RR이 아닌 코드로 새 주문서 발주서 인설트 , 해당 새 주문코드에 운송장
+		//오리진 주문서 st코드 폐기처리 os od , os오리진 코드로 re테이블 re_oscode 셀렉후 해당 re_code st폐기
 		
 		//거절
 		//들어온 re_code에 RR 코드 -> '반품거절' 주문서,발주서 업데이트 os re / od rd ->   거절사유 입력 
 		return null;
 	}
+	
+	boolean updateRefundResponseProcess(SupplyResponse sr) {
+		if (dao.updRequest(sr)) {
+			if (dao.updRequestDetail(sr)) {
+				if (dao.updOrder(sr)) {
+					if (dao.updOrderDetail(sr)) {
 
-	String supplyResponseExchange(String re_code) {
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	String supplyResponseExchange(RequestOrderBean ro) {
 		//수락
 		//들어온 re_code에 ER 코드 -> '교환수락' 주문서,발주서 업데이트 os od re rd
 		//해당 새 주문코드에 운송장
 		
 		//거절
-		//들어온 re_code에 ER 코드 -> '반품거절' 주문서,발주서 업데이트 os re / od rd ->   거절사유 입력 
+		//들어온 re_code에 ER 코드 -> '교환거절' 주문서,발주서 업데이트 os re / od rd ->   거절사유 입력 
 		
 		return null;
 	}

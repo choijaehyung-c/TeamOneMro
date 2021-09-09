@@ -7,7 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -38,77 +40,98 @@ class ClientServiceCtl {
 	MroServiceEntrance msec;
 	
 	String clientRequestCtl(ClientOrderBean co,String type){
-		co.setOs_state(type);
-		String result = "failed";
-		if(this.clientOrderProcess(co)) {
+		ClientInfoBean ci = new ClientInfoBean();
+		ci.setCl_code(co.getOs_clcode());
+		int tCount = 0;
+		Set<String> sp = new HashSet<>();
+		
+		//받아온 비밀번호 복호화해서 셋
+		try {//ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
+			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+		} catch (Exception e) {System.out.println("error csc");}
+		
+		
+		if (dao.isClient(ci)) {
+			if (dao.isClientPwd(ci)) {
+				
+				co.setOs_state(type);
+				
+				for (int i = 0; i < co.getOd().size(); i++) { 
+					sp.add(co.getOd().get(i).getOd_prspcode());
+				}
+				
+				for(String sp_code : sp) {
+					if (this.clientOrderProcess(co,sp_code)) {
+						if(this.clientRequestProcess(co,sp_code))tCount++;
+					}
+				}
+				
+			}
+		}
+		
+		return (tCount == sp.size())? "success":"failed";
+	}
+	
+	boolean clientOrderProcess(ClientOrderBean co, String sp_code) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Calendar cal = Calendar.getInstance();
+		co.setOs_date(sdf.format(cal.getTime()));
+		if (dao.insClientOrder(co)) {
+			int tranCount = 0;
+			for (int i = 0; i < co.getOd().size(); i++) {
+				if (co.getOd().get(i).getOd_prspcode().equals(sp_code)) {
+					co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
+					if (!dao.insClientOrderDetail(co.getOd().get(i))) {
+						break;
+					}
+					tranCount++;
+				}
+			}
+			System.out.println(tranCount + ":" + co.getOd().size());
+			if (tranCount == co.getOd().size())
+				tran = true;
+
+		}
+		pu.setTransactionResult(tran);
+		return tran;
+	}
+	
+	boolean clientRequestProcess(ClientOrderBean co,String sp_code) {
+		boolean tf = false;
 		RequestOrderBean ro = new RequestOrderBean();
 		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
 		ro.setRe_clcode(co.getOs_clcode());
 		ro.setRe_oscode(co.getOs_code());
-		ro.setRe_spcode(co.getSp_code());
 		ro.setRe_state(co.getOs_state());
-		if(co.getOs_origin()!=null) {
+		ro.setRe_spcode(sp_code);
+		if (co.getOs_origin() != null) {
 			ro.setRe_origin(co.getOs_origin());
 		}
-			for(int i = 0 ; i<co.getOd().size(); i++) {
+		for (int i = 0; i < co.getOd().size(); i++) {
+			if(co.getOd().get(i).getOd_prspcode().equals(sp_code)){
 				RequestOrderDetailBean rd = new RequestOrderDetailBean();
-				 rd.setRd_prspcode(co.getOd().get(i).getOd_prspcode());
-				 rd.setRd_prcode(co.getOd().get(i).getOd_prcode());
-				 rd.setRd_quantity(co.getOd().get(i).getOd_quantity());
-				 rd.setRd_stcode(co.getOd().get(i).getOd_stcode());
-				 if(co.getOd().get(i).getOd_note() != null) {
-					 rd.setRd_note(co.getOd().get(i).getOd_note());
-				 }
-				 list.add(rd);
+				rd.setRd_prspcode(co.getOd().get(i).getOd_prspcode());
+				rd.setRd_prcode(co.getOd().get(i).getOd_prcode());
+				rd.setRd_quantity(co.getOd().get(i).getOd_quantity());
+				rd.setRd_stcode(co.getOd().get(i).getOd_stcode());
+				if (co.getOd().get(i).getOd_note() != null) {
+					rd.setRd_note(co.getOd().get(i).getOd_note());
+				}
+				list.add(rd);
 			}
-		ro.setRd(list);
-		result=type.equals("OR")?msec.mroRequestOrder(ro):type.equals("RR")?msec.mroRequestRefund(ro):msec.mroRequestExchange(ro);
 		}
-		return result;
+		ro.setRd(list);
+		if (co.getOs_state().equals("OR") ? msec.mroRequestOrder(ro)
+				: co.getOs_state().equals("RR") ? msec.mroRequestRefund(ro) : msec.mroRequestExchange(ro)) {
+			tf = true;
+		}
+		return tf;
 	}
 	
-	boolean clientOrderProcess(ClientOrderBean co) {
-		//String result = "failure";
-		
-		boolean tran = false;
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-		ClientInfoBean ci = new ClientInfoBean();
-		ci.setCl_code(co.getOs_clcode());
-		try {
-			//ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
-			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
-		} catch (Exception e) {System.out.println("error csc");}
-
-		if (dao.isClient(ci)) {
-			if (dao.isClientPwd(ci)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				Calendar cal = Calendar.getInstance();
-				co.setOs_date(sdf.format(cal.getTime()));
-				System.out.println( co.getOs_date());
-				if (dao.insClientOrder(co)) {
-					System.out.println("in1");
-					int tranCount = 0;
-					for (int i = 0; i < co.getOd().size(); i++) {	
-						co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
-						if (!dao.insClientOrderDetail(co.getOd().get(i))) {
-							break;
-						}
-						tranCount++;
-					}
-					System.out.println(tranCount+":"+co.getOd().size());
-					if (tranCount == co.getOd().size()) {
-						tran = true;
-						//result = dao.getOrderData(co);
-					}
-
-				}
-			}
-		}
-		pu.setTransactionResult(tran);
-
-		return tran;
-	}
+	
 
 
 	public List<TaxBean> clientGetTaxbillListCtl(ClientInfoBean ci) throws Exception {

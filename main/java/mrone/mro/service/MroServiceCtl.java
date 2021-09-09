@@ -24,13 +24,13 @@ class MroServiceCtl {
 	@Autowired
 	ProjectUtils pu;
 	
-	String mroRequestCtl(RequestOrderBean ro, String type) {
+	boolean mroRequestCtl(RequestOrderBean ro, String type) {
 		ro.setRe_state(type);
 		return this.mroRequestProcess(ro);
 	}
 
-	String mroRequestProcess(RequestOrderBean ro) {
-		String result = "failure";
+	boolean mroRequestProcess(RequestOrderBean ro) {
+		
 
 		boolean tran = false;
 
@@ -54,14 +54,14 @@ class MroServiceCtl {
 			System.out.println(tranCount + ":" + ro.getRd().size());
 			if (tranCount == ro.getRd().size()) {
 				tran = true;
-				result = ""; // dao.getOrderData(co);
+				 // dao.getOrderData(co);
 			}
 
 		}
 
 		pu.setTransactionResult(tran);
 
-		return result;
+		return tran;
 	}
 
 	List<ProductBean> getRequestRegisterNewProductList() {
