@@ -298,5 +298,10 @@
 	<select id="supplySearchProduct" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
 		SELECT * FROM PRODUCTVIEW WHERE PR_SPCODE=#{pr_spcode} AND "WORD" LIKE '%'|| #{word}||'%'
 	</select>
+
+
+	<select id="supplyAllProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
+		SELECT * FROM PR WHERE PR_SPCODE = #{sp_code}
+	</select>
 	
 </mapper>

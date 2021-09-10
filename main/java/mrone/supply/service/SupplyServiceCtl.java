@@ -308,4 +308,20 @@ class SupplyServiceCtl {
 		return dao.supplySearchProduct(pd);
 	}
 	
+	
+	
+	
+	
+	List<ProductBean> supplyAllProductList(){
+		String spcode =null;
+		try {
+			spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dao.supplyAllProductList(spcode);
+	}
+	
+	
+	
 }

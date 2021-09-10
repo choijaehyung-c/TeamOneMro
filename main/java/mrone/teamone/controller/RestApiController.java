@@ -405,5 +405,11 @@ public class RestApiController {
 			 */
 			return null/* sse.supplyRequestNewProduct(pb) */;
 		}
+		
+		//해당 회사가 판매하는 모든 상품 가져오기
+		@PostMapping("/SupplyAllProductList")
+		public List<ProductBean> supplyAllProductList(){
+			return sse.supplyAllProductList() ;
+		}
 	
 }

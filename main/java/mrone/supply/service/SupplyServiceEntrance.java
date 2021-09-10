@@ -169,4 +169,11 @@ public class SupplyServiceEntrance {
 		return ssc.supplyGetProductDetail(pb);
 	}
 	
+	
+	public List<ProductBean> supplyAllProductList(){
+		
+		return ssc.supplyAllProductList();
+	}
+	
+	
 }

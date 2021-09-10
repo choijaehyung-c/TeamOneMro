@@ -299,4 +299,10 @@ public class SupplyDao {
 		return reList;
 	}
 	
+	
+	List<ProductBean> supplyAllProductList(String sp_code){
+		
+		return sql.selectList("supplyAllProductList", sp_code);
+	}
+	
 }

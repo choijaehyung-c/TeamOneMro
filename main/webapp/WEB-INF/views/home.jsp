@@ -346,6 +346,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/mro.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/HSMmro.js"></script>
     </body>
 </html>
