@@ -14,4 +14,5 @@ public class ClientInfoBean {
 	private String cl_bkind;
 	private String bk_name; //업종이름 ex. 일반건설업, 사무용품...
 	private String tb_code;
+	private String cl_email;
 }

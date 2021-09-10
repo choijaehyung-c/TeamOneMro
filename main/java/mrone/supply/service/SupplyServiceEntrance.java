@@ -18,18 +18,18 @@ public class SupplyServiceEntrance {
 	@Autowired
 	SupplyServiceCtl ssc;
 	
-	public List<RequestOrderBean> getSupplyDealList(String re_spcode){
-		return ssc.getSupplyDealListCtl(re_spcode);
+	public List<RequestOrderBean> getSupplyDealList(){
+		return ssc.getSupplyDealListCtl();
 	}
 	
-	public RequestOrderBean getSupplyDealDetail(String re_code) {
+	public List<RequestOrderBean> getSupplyDealDetail(String re_code) {
 		return ssc.getSupplyDealDetailCtl(re_code);
 	}
 	
 	public List<SupplySearchBean> getSearchSupplyDeal(String word){
 		return ssc.getSearchSupplyDealCtl(word);
 	}
-	
+	////////////////////////////////////////////////////////////////////
 	public List<ProductBean> getSupplyCateProductList(ProductBean pr){
 		return ssc.getSupplyCateProductList(pr);
 	}
@@ -93,15 +93,15 @@ public class SupplyServiceEntrance {
 		return ssc.choiceSPInfo(sb);
 	}
 
-	public List<RequestOrderBean> getTaxDill() {
+	public List<RequestOrderBean> getTaxdeal() {
 		List<RequestOrderBean> reList = null;
-		reList = ssc.getTaxDill();
+		reList = ssc.getTaxdeal();
 		return reList;
 	}
 
-	public List<RequestOrderDetailBean> choiceDillInfoCtl(RequestOrderDetailBean rdb) {
+	public List<RequestOrderDetailBean> choicedealInfoCtl(RequestOrderDetailBean rdb) {
 
-		return ssc.choiceDillInfo(rdb);
+		return ssc.choicedealInfo(rdb);
 	}
 
 	public List<ProductBean> supplySearchProduct(ProductBean pd) {

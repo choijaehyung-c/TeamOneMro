@@ -20,11 +20,12 @@ public class SupplyDao {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
-		return sql.selectList("getSupplyDealList", re_spcode);
+	List<RequestOrderBean> getSupplyDealList(String spcode) {
+		System.out.println(sql.selectList("getSupplyDealList", spcode));
+		return sql.selectList("getSupplyDealList", spcode);
 	}
 
-	RequestOrderBean getSupplyDealDetail(String re_code) {
+	List<RequestOrderBean> getSupplyDealDetail(String re_code) {
 		return sql.selectOne("getSupplyDealDetail", re_code);
 	}
 
@@ -283,18 +284,18 @@ public class SupplyDao {
 		return reList;
 	}
 
-	List<RequestOrderBean> getTaxDill() {
+	List<RequestOrderBean> getTaxdeal() {
 		List<RequestOrderBean> reList = null;
-		reList = sql.selectList("getTaxDill");
+		reList = sql.selectList("getTaxdeal");
 		return reList;
 	}
 
-	List<RequestOrderDetailBean> choiceDillInfo(RequestOrderDetailBean rdb) {
+	List<RequestOrderDetailBean> choicedealInfo(RequestOrderDetailBean rdb) {
 
 		List<RequestOrderDetailBean> reList = null;
 		rdb.setRd_recode(rdb.getRd_recode());
 
-		reList = sql.selectList("choiceDillInfo", rdb);
+		reList = sql.selectList("choicedealInfo", rdb);
 
 		return reList;
 	}

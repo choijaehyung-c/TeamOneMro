@@ -24,6 +24,7 @@ import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
+import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.beans.TaxBean;
 
 @RestController
@@ -128,18 +129,33 @@ public class RestApiController {
 		return sse.choiceSPInfoCtl(list.get(0));	
 	}
 	
-	@PostMapping("/getTaxDill")
-	public List<RequestOrderBean> getTaxDill() {
+	@PostMapping("/getTaxDeal")
+	public List<RequestOrderBean> getTaxdeal() {
 		List<RequestOrderBean> reList = null;
-		reList = sse.getTaxDill();
-		System.out.println(sse.getTaxDill());
+		reList = sse.getTaxdeal();
+		System.out.println(sse.getTaxdeal());
 		return reList;			
 	}
 	
-	@PostMapping("/getchoiceDillInfo")
-	public List<RequestOrderDetailBean> getchoiceDillInfo(@RequestBody List<RequestOrderDetailBean> list ) {
-		System.out.println(sse.choiceDillInfoCtl(list.get(0)));
-		return sse.choiceDillInfoCtl(list.get(0));	
+	@PostMapping("/getchoiceDealInfo")
+	public List<RequestOrderDetailBean> getchoicedealInfo(@RequestBody List<RequestOrderDetailBean> list ) {
+		System.out.println(sse.choicedealInfoCtl(list.get(0)));
+		return sse.choicedealInfoCtl(list.get(0));	
+	}
+	//거래내역가져오기
+	@PostMapping("/getSupplyDealList")
+	public List<RequestOrderBean> getSupplyDealList() {
+		return sse.getSupplyDealList();			
+	}
+	//거래내역디테일
+	@PostMapping("/getSupplyDealDetail")
+	public List<RequestOrderBean> getSupplyDealDetail(String re_code) {
+		return sse.getSupplyDealDetail(re_code);			
+	}
+	//거래내역검색
+	@PostMapping("/getSearchSupplyDeal")
+	public List<SupplySearchBean> getSearchSupplyDeal(String word) {
+		return sse.getSearchSupplyDeal(word);			
 	}
 	
 	

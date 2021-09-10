@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
+import mrone.teamone.beans.AccessHistoryBean;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
+import mrone.teamone.beans.SupplyAccessBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.utill.Encryption;
@@ -27,12 +29,24 @@ class SupplyServiceCtl {
 	ProjectUtils pu;
 	@Autowired
 	Encryption enc;
-
-	List<RequestOrderBean> getSupplyDealListCtl(String re_spcode) {
-		return dao.getSupplyDealList(re_spcode);
+/////////////////////////////////////////////////////////
+	List<RequestOrderBean> getSupplyDealListCtl() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				System.out.println(spcode);
+			}
+		} catch (Exception e) {
+						
+			e.printStackTrace();
+		}
+		System.out.println(spcode+"dd");
+		return dao.getSupplyDealList(spcode);
+		
 	}
-
-	RequestOrderBean getSupplyDealDetailCtl(String re_code) {
+	//////////////////////////////////////////////////
+	List<RequestOrderBean> getSupplyDealDetailCtl(String re_code) {
 		return dao.getSupplyDealDetail(re_code);
 	}
 
@@ -121,15 +135,15 @@ class SupplyServiceCtl {
 		return reList;
 	}
 
-	List<RequestOrderBean> getTaxDill() {
+	List<RequestOrderBean> getTaxdeal() {
 		List<RequestOrderBean> reList = null;
-		reList = dao.getTaxDill();
+		reList = dao.getTaxdeal();
 		return reList;
 	}
 
-	List<RequestOrderDetailBean> choiceDillInfo(RequestOrderDetailBean rdb) {
+	List<RequestOrderDetailBean> choicedealInfo(RequestOrderDetailBean rdb) {
 		List<RequestOrderDetailBean> reList = null;
-		reList = dao.choiceDillInfo(rdb);
+		reList = dao.choicedealInfo(rdb);
 		return reList;
 	}
 //------------------------------------------------------------

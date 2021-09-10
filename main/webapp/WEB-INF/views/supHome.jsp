@@ -47,7 +47,7 @@
                         
                             <div class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 
-                                 거래처관리
+                                 상품관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -59,7 +59,7 @@
                             
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 
-                                주문관리
+                                수주관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
@@ -73,7 +73,7 @@
                             
                             
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">                                
-                                상품관리
+                                교환/반품
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
@@ -83,13 +83,16 @@
                                 </nav>  
                             </div>
                             
+                            <%-- --------------------------------- --%>
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">                                
-                                발주관리
+                                세금계산서
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages3" aria-labelledby="headingfour" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
-                                    <div class="nav-link" onClick="requestOrder()">발주하기</div>                
+                                    <div class="nav-link" onClick="supplyDealList()">거래내역 조회</div>                          
+                                    <div class="nav-link" onClick="supplyIssueTaxbill()">세금계산서 발행</div>
+                                    <div class="nav-link" onClick="supplyIssueTaxbillListForm()">세금계산서 내역</div>                 
                                 </nav>  
                             </div>
                         
@@ -106,29 +109,102 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-            <main style="height: 100%; width: 100%;">
-            <div ><input type="file" name="file1" /><input type="text" name="multitext"/>
-			<button id="upup" onclick="uploadFileAjax()">업로드</button></div>
-            
-            <button onclick="getCateProduct()">asdasdasdasd</button>
-              	<div id="supplyVueZone"  style="height: 100%; width: 100%; " >
-              		<template v-if="display[0].show"><div>test111111111</div></template>
-              		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" ></div></template>
-              		<template v-if="display[2].show" ><div style="background:#4641D9;width:100%; height:100%; box-sizing: content-box;">test333333333{{msg}}</div></template>
-              	</div>
-             </main>
             </div>
-        </div>
+            
+            
+            
+        <div id="layoutSidenav_content">
+			<main style="height: 100%; width: 100%;">
+				<div id="mainVue" style="height: 100%; width: 100%;">
+				
+				
+				<div v-if="page[1].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+                  <div style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+						<table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사코드</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사명</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>주문코드</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상품코드</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상품수량</a></th>
+												<th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="dld in dealListDetail" >
+												<td>{{dld.od_prspcode}}</td>
+												<td>{{dld.sp_name}}</td>
+												<td>{{dld.od_oscode}}</td>
+												<td>{{dld.od_prcode}}</td>
+												<td>{{dld.pr_name}}</td>
+												<td>{{dld.od_quantity}}</td>
+												<td>{{dld.od_stcode}}</td>
+											</tr>							
+											    <button class="btn-datatable"  v-on:click="close(1)"><img src="../../resources/img/close.png"></button>										  											   																																							
+						                </tbody>									  				
+						</table>							
+					  </div>
+					</div>
+					
+
+					<template v-if="page[0].show" style="z-index: 3;">
+					
+						<div class="container-fluid px-4">
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >주문목록</h1>
+						
+							<div class="card mb-4">
+								<div class="card-body">※거래내역 확인 [문의 : nsb214@naver.com]</div>
+							</div>
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i> 거래내역
+								</div>
+
+								<div class="card-body">
+									<table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 25%;"><a>발주코드</a></th>
+												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="dl in dealList"
+												@click="SupplyDealDetail(dl.re_code)">
+												<td>{{dl.re_code}}</td>
+												<td>{{dl.re_oscode}}</td>
+												<td>{{dl.re_clcode}}</td>
+												<td>{{dl.cl_name}}</td>
+											</tr>
+											</tbody>																	
+									</table>
+								</div>
+							</div>
+						</div>
+					</template>
+					
+					
+					
+					
+					
+					
+					
+				</div>
+			</main>
+		</div>
+		
+					
         <!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
-        <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>  
-        <script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
+        <script src="resources/js/scripts.js"></script>  
+        <script src="resources/js/datatables-simple-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>        
+        <script src="${pageContext.request.contextPath}/resources/js/supnsb.js"></script>
 		
         
     </body>
