@@ -11,6 +11,7 @@
         <title>MRONE</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
@@ -57,16 +58,15 @@
                                 </nav>
                             </div>
                             
-                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                           <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 
-                                주문관리
+                                수주관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <div class="nav-link" onClick="mroOrderList()">주문목록</div>
-                                    <div class="nav-link" onClick="mroRefundList()">반품목록</div>
-                                    <div class="nav-link" onClick="mroExchangeList()">교환목록</div>
+                                    <div class="nav-link" onClick="orderWaitList()">발주대기목록</div>
+                                    <div class="nav-link" onClick="orderReceiveList()">출고처리</div>
                                 </nav>  
                             </div>
                    
@@ -179,9 +179,270 @@
                          </div>
               			
               		</template>
+              		             		
               	</div>
              </main>
-            </div>
+             
+           
+            <main style="height: 100%; width: 100%;">
+              	<div id="supplyVue"  style="height: 100%; width: 100%; " >
+              	
+              	<div v-if="page[1].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+                  <div style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                  <table id="datatablesSimple" class="dataTable-table">
+                              <thead>
+                              <h5>주문코드 : {{orderDetail[0].rd_recode}}의 상세내역</h5>
+                                 <tr>
+                                    
+                                    <th data-sortable style="width: 12.3333%; background-color: #E0E0E0;"><a>상품이미지</a></th>                                    
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>상품코드</a></th>
+                                    <th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>상품수량</a></th>
+                                    
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>가격(세금)</a></th>                                   
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>총 가격</a></th>
+                                    <th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="li in orderDetail" >
+
+                                    <td><img :src="li.pr_image" width="70%" height="70%" alt="no search image"></td>
+                                    <td>{{li.rd_prcode}}</td>
+                                    <td>{{li.pr_name}}</td>
+                                    <td>{{li.rd_quantity}}</td>                                    
+                                    <td>{{li.pr_price}}원<div>({{li.pr_tax}}원)</div></td>
+                                    <td>{{li.pr_ttprice}}원</td>
+                                    <td>{{li.rd_stcode}}</td>
+                                 </tr>                                                                                                                                                                                                                                                                                                                          
+                                  </tbody>                                                                                                                                              
+                  </table>
+                  <div v-for="od in orderDetail" v-text="">총 가격 : {{}}</div>
+                  <div @click="respond(orderDetail[0].rd_recode)" class="align-top ms-1 btn btn-outline-dark btn-sm" style="position:relative; top:50%;left:42%;">접수확인</div>
+                  <div class="align-top ms-1 btn btn-outline-primary btn-sm" @click="close(1)" style="position:relative; top:50%;left:43%;">Close</div>                     
+                 </div>
+               </div>
+              		<template v-if="page[0].show" style="z-index: 3;">
+              		<h1 class="mt-4">수주 대기목록</h1>
+              				<ol class="breadcrumb mb-4">
+								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
+								<li class="breadcrumb-item active">수주대기 목록</li>
+							</ol>
+							<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+								<div class="dataTable-top">
+									<div class="dataTable-dropdown">
+										<span class="me-2" id="categoryBulkAction">
+											<select name="categoryBulkAction" class="d-inline w-auto form-select form-select-sm">
+												<option>Bulk Actions</option>
+												<option>Delete</option>
+											</select>
+											<button type="button" class="align-top ms-1 btn btn-outline-dark btn-sm">Apply</button>
+										</span>
+									<label>
+										<select class="dataTable-selector form-select form-select-sm">
+											<option value="5">5</option>
+											<option value="10" selected="">10</option>
+											<option value="15">15</option>
+											<option value="20">20</option>
+											<option value="25">25</option>
+										</select> entries per page
+									</label>
+								</div>
+							<div class="dataTable-search">
+								<input class="dataTable-input form-control form-control-sm" placeholder="Search..." type="text">
+							</div></div>
+							
+						<div class="dataTable-container border-0">
+							<table class="mb-0 table table-hover dataTable-table">
+								<thead>
+									<tr class="title">
+										<th data-sortable="false" style="width: 14.7704%;">ORDER ID</th>
+										<th data-sortable="" style="width: 27.7982%;"><a href="#" class="dataTable-sorter">NAME</a></th>
+										<th data-sortable="" style="width: 11.9491%;"><a href="#" class="dataTable-sorter">CONTACT</a></th>
+										<th data-sortable="" style="width: 11.9491%;" class="desc"><a href="#" class="dataTable-sorter">DATE</a></th>
+										<th data-sortable="" style="width: 16.2598%;"><a href="#" class="dataTable-sorter">TOTAL PRICE</a></th>
+										<th data-sortable="" style="width: 12.281%;"><a href="#" class="dataTable-sorter">STATE</a></th>
+										
+									</tr>
+								</thead>
+								
+								<tbody>
+									<tr class="align-middle"  v-for="list in orderList" >
+										<td>
+											<div class="form-check" >
+												<input type="checkbox" class="form-check-input"><label title="" class="form-check-label" >{{list.re_code}}</label>
+											</div>
+										</td>
+										<td @click="data(list.re_code)">
+										
+												<strong >{{list.cl_name}}</strong>
+												<br>
+												<span class="text-muted text-sm">{{list.re_clcode}}</span>
+											
+										</td>
+										<td>{{list.cl_hp}}</td>
+										<td>{{list.re_date}}</td>
+										<td></td>
+										<td>
+											<span class="badge text-warning bg-warning-light">{{list.re_state}}</span>
+										</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="dataTable-bottom">
+							<div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+								<nav class="dataTable-pagination">
+									<ul class="dataTable-pagination-list">
+										<li class="active"><a href="#" data-page="1">1</a></li>
+										<li class=""><a href="#" data-page="2">2</a></li>
+										<li class=""><a href="#" data-page="3">3</a></li>
+										<li class=""><a href="#" data-page="4">4</a></li>
+										<li class=""><a href="#" data-page="5">5</a></li>
+										<li class=""><a href="#" data-page="6">6</a></li>
+										<li class=""><a href="#" data-page="7">7</a></li>
+										<li class="ellipsis"><a href="#">…</a></li>
+										<li class=""><a href="#" data-page="10">10</a></li>
+										<li class="pager"><a href="#" data-page="2">›</a></li>
+									</ul>
+								</nav>
+							</div> 
+					 </div>					
+              		</template>
+              		
+              		<div v-if="page[3].show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+                  <div style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                  <table id="datatablesSimple" class="dataTable-table">
+                              <thead>
+                              <h5>주문코드 : {{deliveryDetail[0].rd_recode}}의 상세내역</h5>
+                                 <tr>
+                                    
+                                    <th data-sortable style="width: 12.3333%; background-color: #E0E0E0;"><a>상품이미지</a></th>                                    
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>상품코드</a></th>
+                                    <th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>상품수량</a></th>
+                                    
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>가격(세금)</a></th>                                   
+                                    <th data-sortable style="width: 10.3333%; background-color: #E0E0E0;"><a>총 가격</a></th>
+                                    <th data-sortable style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="li2 in deliveryDetail" >
+
+                                    <td><img :src="li2.pr_image" width="70%" height="70%" alt="no search image"/></td>
+                                    <td>{{li2.rd_prcode}}</td>
+                                    <td>{{li2.pr_name}}</td>
+                                    <td>{{li2.rd_quantity}}</td>                                    
+                                    <td>{{li2.pr_price}}원<div>({{li2.pr_tax}}원)</div></td>
+                                    <td>{{li2.pr_ttprice}}원</td>
+                                    <td>{{li2.rd_stcode}}</td>
+                                 </tr>                     
+                                     
+                                                                                                                                                                                                                                                                 
+                                  </tbody>                                                                                                                                              
+                  </table>
+                  <div @click="respond2(deliveryDetail[0].rd_recode)" class="align-top ms-1 btn btn-outline-dark btn-sm" style="position:relative; top:50%;left:42%;">출고</div>
+                  <div class="align-top ms-1 btn btn-outline-primary btn-sm" @click="close(3)" style="position:relative; top:50%;left:43%;">Close</div>                     
+                 </div>
+               </div>
+              		
+             		
+              		<template v-if="page[2].show" >
+              			<h1 class="mt-4">접수완료 목록</h1>
+              				<ol class="breadcrumb mb-4">
+								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
+								<li class="breadcrumb-item active">접수완료 목록</li>
+							</ol>
+							<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+								<div class="dataTable-top">
+									<div class="dataTable-dropdown">
+										<span class="me-2" id="categoryBulkAction">
+											<select name="categoryBulkAction" class="d-inline w-auto form-select form-select-sm">
+												<option>Bulk Actions</option>
+												<option>Delete</option>
+											</select>
+											<button type="button" class="align-top ms-1 btn btn-outline-dark btn-sm">Apply</button>
+										</span>
+									<label>
+										<select class="dataTable-selector form-select form-select-sm">
+											<option value="5">5</option>
+											<option value="10" selected="">10</option>
+											<option value="15">15</option>
+											<option value="20">20</option>
+											<option value="25">25</option>
+										</select> entries per page
+									</label>
+								</div>
+							<div class="dataTable-search">
+								<input class="dataTable-input form-control form-control-sm" placeholder="Search..." type="text">
+							</div></div>
+							
+						<div class="dataTable-container border-0">
+							<table class="mb-0 table table-hover dataTable-table">
+								<thead>
+									<tr class="title">
+										<th data-sortable="false" style="width: 14.7704%;">ORDER ID</th>
+										<th data-sortable="" style="width: 27.7982%;"><a href="#" class="dataTable-sorter">NAME</a></th>
+										<th data-sortable="" style="width: 11.9491%;"><a href="#" class="dataTable-sorter">CONTACT</a></th>
+										<th data-sortable="" style="width: 11.9491%;" class="desc"><a href="#" class="dataTable-sorter">DATE</a></th>
+										<th data-sortable="" style="width: 16.2598%;"><a href="#" class="dataTable-sorter">TOTAL PRICE</a></th>
+										<th data-sortable="" style="width: 12.281%;"><a href="#" class="dataTable-sorter">STATE</a></th>
+										
+									</tr>
+								</thead>
+								
+								<tbody>
+									<tr class="align-middle"  v-for="list in deliveryList" >
+										<td>
+											<div class="form-check" >
+												<input type="checkbox" class="form-check-input"><label title="" class="form-check-label" >{{list.re_code}}</label>
+											</div>
+										</td>
+										<td @click="data2(list.re_code)">
+										
+												<strong >{{list.cl_name}}</strong>
+												<br>
+												<span class="text-muted text-sm">{{list.re_clcode}}</span>
+											
+										</td>
+										<td>{{list.cl_hp}}</td>
+										<td>{{list.re_date}}</td>
+										<td></td>
+										<td>
+											<span class="badge text-warning bg-warning-light">{{list.re_state}}</span>
+										</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="dataTable-bottom">
+							<div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+								<nav class="dataTable-pagination">
+									<ul class="dataTable-pagination-list">
+										<li class="active"><a href="#" data-page="1">1</a></li>
+										<li class=""><a href="#" data-page="2">2</a></li>
+										<li class=""><a href="#" data-page="3">3</a></li>
+										<li class=""><a href="#" data-page="4">4</a></li>
+										<li class=""><a href="#" data-page="5">5</a></li>
+										<li class=""><a href="#" data-page="6">6</a></li>
+										<li class=""><a href="#" data-page="7">7</a></li>
+										<li class="ellipsis"><a href="#">…</a></li>
+										<li class=""><a href="#" data-page="10">10</a></li>
+										<li class="pager"><a href="#" data-page="2">›</a></li>
+									</ul>
+								</nav>
+							</div> 
+					 </div>					
+              		</template>
+              			
+              	</div>
+             </main>
+            
         </div>
         <!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
         <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>  
@@ -189,7 +450,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/innew.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
 		
