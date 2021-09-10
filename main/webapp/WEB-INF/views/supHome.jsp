@@ -72,14 +72,14 @@
                    
                             
                             
-                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">                                
-                                상품관리
+                            <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages55" aria-expanded="false" aria-controls="collapsePages55">                                
+                                교환 / 반품 관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
-                            <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapsePages55" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
-                                    <div class="nav-link" onClick="getNewProductRequest()">새상품 등록 요청건</div>
-                                    <div class="nav-link" onClick="getModifyRequest()">상품수정 요청건</div>                      
+                                    <div class="nav-link" onClick="getRefundListForm()">반품 요청 리스트</div>
+                                    <div class="nav-link" onClick="getExchangeListForm()">교환 요청 리스트</div>                      
                                 </nav>  
                             </div>
                             
@@ -92,8 +92,39 @@
                                     <div class="nav-link" onClick="requestOrder()">발주하기</div>                
                                 </nav>  
                             </div>
-                        
-                            
+                            <!--  -->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages5" aria-expanded="false" aria-controls="collapsePages5">
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                            </a>
+                            <div class="collapse" id="collapsePages5" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion" style="">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="login.html">Login</a>
+                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" href="password.html">Forgot Password</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Error
+                                        <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="false" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="401.html">401 Page</a>
+                                            <a class="nav-link" href="404.html">404 Page</a>
+                                            <a class="nav-link" href="500.html">500 Page</a>
+                                        </nav>
+                                    </div>
+                                </nav>
+                            </div>
+                        <!--  -->
+                       
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <div class="nav-link" onclick="change2()">
                                 Test3
@@ -108,14 +139,46 @@
             </div>
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
-            <div ><input type="file" name="file1" /><input type="text" name="multitext"/>
-			<button id="upup" onclick="uploadFileAjax()">업로드</button></div>
-            
-            <button onclick="getCateProduct()">asdasdasdasd</button>
-              	<div id="supplyVueZone"  style="height: 100%; width: 100%; " >
-              		<template v-if="display[0].show"><div>test111111111</div></template>
-              		<template v-if="display[1].show" ><div style="background:#ABF200;height: 100%; width: 100%;" ></div></template>
-              		<template v-if="display[2].show" ><div style="background:#4641D9;width:100%; height:100%; box-sizing: content-box;">test333333333{{msg}}</div></template>
+				<div id="supplyVueZone"  style="height: 100%; width: 100%;">
+              		<template v-if="display[0].show">
+              			 <div class="container-fluid px-4">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                        <div class="dataTable-search">
+                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                        </div>
+                     </div>  
+                        <div class="card mb-4">
+                           <div class="card-header">반품 요청 리스트</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 15%;"><a>회사명</a></th>
+                                            <th style="width: 15%;"><a>카테고리</a></th>
+                                            <th style="width: 50%;"><a>상품명</a></th>
+                                            <th style="width: 20%;" ><a></a></th>                                          
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="item in list">
+                                            <td >{{item.cl_name}}</td>
+                                            <td >{{item.re_date}}</td>
+                                            <td >{{item.cl_hp}}</td>
+                                            <td style="text-align: center">
+                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">등록</button>
+                                           <button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                         </div>
+              			
+              		</template>
               	</div>
              </main>
             </div>

@@ -273,7 +273,7 @@
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
     <select id="getReceiveAsListSp" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean" >		
 		SELECT RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP,RE_ORIGIN FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
-		WHERE RE.RE_STATE = #{re_state} AND RE.RE_SPCODE = #{sp_code}
+		WHERE RE.RE_STATE = #{re_state} AND RE.RE_SPCODE = #{re_spcode}
     </select>
     
     <!-- 상세리스트 -->

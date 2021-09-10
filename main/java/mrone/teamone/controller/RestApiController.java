@@ -160,12 +160,8 @@ public class RestApiController {
 	
 	//공급사 반품리스트 뽑아오는 메서드
 	@PostMapping("/supplyReceiveRefundListForm")
-	
 	public List<RequestOrderBean> supplyReceiveRefundListForm() {
-		List<RequestOrderBean> list;
-		System.out.println("공급사 반품리스트");
-		list = sse.supplyReceiveRefundListForm();
-		return list;
+		return sse.supplyReceiveRefundListForm();
 	}
 	
 	//공급사 교환리스트 뽑아오는 메서드
