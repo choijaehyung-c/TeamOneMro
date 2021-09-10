@@ -41,24 +41,26 @@ public class SupplyServiceEntrance {
 		return reList;
 	}
 	
+	
+	//수정
 	public List<RequestOrderBean> RequestClearOrderListCtl() {			
-		List<RequestOrderBean> reList = null;
-		reList = ssc.clearOrderlist();
-		return reList;
+		return ssc.clearOrderlist();
 	}
 	
-	
-	public List<RequestOrderBean> RequestWaitOrderListCtlD(RequestOrderBean rb) {			
+	//수정
+	public List<RequestOrderDetailBean> RequestWaitOrderListCtlD(String recode) {			
 		
 		
-		return ssc.waitOrderlistD(rb);
+		return ssc.waitOrderlistD(recode);
 	}
 	
-	public List<RequestOrderBean> RequestClearOrderListCtlD(RequestOrderBean rb) {			
+	//수정
+	public List<RequestOrderDetailBean> RequestClearOrderListCtlD(String recode) {			
 		
 		
-		return ssc.clearOrderlistD(rb);
+		return ssc.clearOrderlistD(recode);
 	}
+	
 	
 	public List<DeliveryBean> getDLlist() {			
 		List<DeliveryBean> reList = null;

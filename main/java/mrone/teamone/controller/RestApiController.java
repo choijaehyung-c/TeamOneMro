@@ -37,7 +37,7 @@ public class RestApiController {
 	private MroServiceEntrance mse;
 	
 	
-	@PostMapping("/supplyResponseOrderOA")
+	@PostMapping("/supplyResponseOrderOA")//주문수락
 	public String supplyResponseOrderOA(@RequestBody RequestOrderBean ro) {
 		return sse.supplyResponseOrderOA(ro);
 	}
@@ -81,29 +81,39 @@ public class RestApiController {
 		return reList;	
 	}
 	
+	//수정
 	@PostMapping("/getSupplyReceiveClearOrderList")
-	public List<RequestOrderBean> supplyReceiveClearOrderList() {
-		List<RequestOrderBean> reList = null;
-		reList = sse.RequestClearOrderListCtl();
+	public List<RequestOrderBean> supplyReceiveClearOrderList() {		
 		System.out.println(sse.RequestClearOrderListCtl());
-		return reList;	
+		return sse.RequestClearOrderListCtl();
 	}
 	
+	//수정
 	@PostMapping("/getSupplyReceiveWaitOrderListD")
-	public List<RequestOrderBean> supplyReceiveWaitOrderListD(@RequestBody List<RequestOrderBean> list ) {
-		
-		System.out.println(sse.RequestWaitOrderListCtlD(list.get(0)));
-		return sse.RequestWaitOrderListCtlD(list.get(0));
+	public List<RequestOrderDetailBean> supplyReceiveWaitOrderListD(@RequestBody String recode ) {
+		//System.out.println(recode);
+		System.out.println(sse.RequestWaitOrderListCtlD(recode));
+		return sse.RequestWaitOrderListCtlD(recode);
 		
 	}
 	
+	//수정
 	@PostMapping("/getSupplyReceiveClearOrderListD")
-	public List<RequestOrderBean> supplyReceiveClearOrderListD(@RequestBody List<RequestOrderBean> list ) {
-		
-		System.out.println(sse.RequestClearOrderListCtlD(list.get(0)));
-		return sse.RequestClearOrderListCtlD(list.get(0));
+	public List<RequestOrderDetailBean> supplyReceiveClearOrderListD(@RequestBody String recode ) {
+		System.out.println("수주접수 코드 : "+recode);
+		System.out.println(sse.RequestClearOrderListCtlD(recode));
+		return sse.RequestClearOrderListCtlD(recode);
 		
 	}
+	
+	//수정
+//	@PostMapping("/responseOrder")
+//	public String responseOrder(@RequestBody RequestOrderDetailBean rdb ) {
+//		//System.out.println("응답!!! "+list.getRd_recode());
+//		String message = sse.responseOrder(rdb);
+//		return message;
+//		
+//	}
 	
 	
 	

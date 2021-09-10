@@ -151,44 +151,66 @@
     	  VALUES (#{pr_spcode}, #{pr_code}, #{pr_stock}, #{pr_name}, #{pr_image}, #{pr_price}, #{pr_tax}, #{pr_info}, #{pr_origin}, #{pr_spbkind}, #{pr_stcode}, #{cate}, #{cate_name})
     </insert>
     
-    <select id="getSupplyWaitOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
+    <!-- 수정 -->
+    <select id="getSupplyWaitOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
+SELECT 
+	RE_CODE,
+	RE_CLCODE,
+	RE_SPCODE,
+	RE_DATE,
+	RE_STATE,
+    CL.CL_NAME,
+    CL.CL_HP
+	FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
+    WHERE RE_STATE = 'OR'AND RE_SPCODE = #{spcode}
+    </select>
+    
+    <!-- 수정 -->
+    <select id="getSupplyClearOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
 	SELECT 
 	RE_CODE,
 	RE_CLCODE,
 	RE_SPCODE,
 	RE_DATE,
-	RE_STATE
-	FROM RE WHERE RE_STATE = 'OR'AND RE_SPCODE = #{sp}
+	RE_STATE,
+    CL.CL_NAME,
+    CL.CL_HP
+	FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
+    WHERE RE_STATE = 'OA'AND RE_SPCODE = #{spcode}
     </select>
     
-    <select id="getSupplyClearOrderList" parameterType="String" resultType="mrone.teamone.beans.RequestOrderBean">
-	SELECT 
-	RE_CODE,
-	RE_CLCODE,
-	RE_SPCODE,
-	RE_DATE,
-	RE_STATE
-	FROM RE WHERE RE_STATE = 'OA'AND RE_SPCODE = #{sp}
-    </select>
-    
-    <select id="getSupplyWaitOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+    <!-- 수정 -->
+    <select id="getSupplyWaitOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
 	SELECT 
 	RD_PRSPCODE, 
 	RD_RECODE, 
-	PR_CODE, 
+	RD_PRCODE, 
 	RD_QUANTITY, 
-	RD_STCODE 
-	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{re_code}
-    </select>
+	RD_STCODE,
+    PR_IMAGE,
+    PR_PRICE,
+    PR_TAX,
+    SUM(PR_PRICE+PR_TAX)*RD_QUANTITY AS "PR_TTPRICE",
+    PR_NAME
+	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
+    GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE
+	    </select>
     
-    <select id="getSupplyClearOrderListD" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+    <!-- 수정 -->
+    <select id="getSupplyClearOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
 	SELECT 
 	RD_PRSPCODE, 
 	RD_RECODE, 
-	PR_CODE, 
+	RD_PRCODE, 
 	RD_QUANTITY, 
-	RD_STCODE 
-	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{re_code}
+	RD_STCODE,
+    PR_IMAGE,
+    PR_PRICE,
+    PR_TAX,
+    SUM(PR_PRICE+PR_TAX)*RD_QUANTITY AS "PR_TTPRICE",
+    PR_NAME
+	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
+    GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE
     </select>
     
 <!--     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">

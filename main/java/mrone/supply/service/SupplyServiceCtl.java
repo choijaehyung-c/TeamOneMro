@@ -52,31 +52,81 @@ class SupplyServiceCtl {
 		return dao.getSupplyCateProductList(pb);
 	}
 
+	// 수정
 	List<RequestOrderBean> waitOrderlist() {
 
 		List<RequestOrderBean> reList = null;
-		reList = dao.waitOrderlist();
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		reList = dao.waitOrderlist(spcode);
+
+		for(int i =0; i<reList.size(); i++) {
+			if(reList.get(i).getRe_state().equals("OR")) {
+				reList.get(i).setRe_state("주문요청");
+			}
+		}
 		return reList;
 	}
 
+	//수정
 	List<RequestOrderBean> clearOrderlist() {
+		
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
 
 		List<RequestOrderBean> reList = null;
-		reList = dao.clearOrderlist();
+		reList = dao.clearOrderlist(spcode);
+		
+		for(int i =0; i<reList.size(); i++) {
+			if(reList.get(i).getRe_state().equals("OA")) {
+				reList.get(i).setRe_state("주문수락");
+			}
+		}
+	
+		
 		return reList;
 	}
+	//수정
+	List<RequestOrderDetailBean> waitOrderlistD(String recode) {
 
-	List<RequestOrderBean> waitOrderlistD(RequestOrderBean rb) {
+		List<RequestOrderDetailBean> reList = null;
+		reList = dao.waitOrderlistD(recode);
 
-		List<RequestOrderBean> reList = null;
-		reList = dao.waitOrderlistD(rb);
+		for(int i=0; i<reList.size(); i++) {
+			if(reList.get(i).getRd_stcode().equals("OR")) {
+				reList.get(i).setRd_stcode("주문요청");
+			}
+				
+		}
 		return reList;
 	}
+	//수정
+	List<RequestOrderDetailBean> clearOrderlistD(String recode) {
 
-	List<RequestOrderBean> clearOrderlistD(RequestOrderBean rb) {
+		List<RequestOrderDetailBean> reList = null;
+		reList = dao.clearOrderlistD(recode);
 
-		List<RequestOrderBean> reList = null;
-		reList = dao.clearOrderlistD(rb);
+		for(int i=0; i<reList.size(); i++) {
+			if(reList.get(i).getRd_stcode().equals("OA")) {
+				reList.get(i).setRd_stcode("주문수락");
+			}
+				
+		}
 		return reList;
 	}
 

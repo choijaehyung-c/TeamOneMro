@@ -21,68 +21,68 @@ import mrone.teamone.beans.SupplySearchBean;
 public class SupplyDao {
 	@Autowired
 	SqlSessionTemplate sql;
-	
+
 	boolean updRequest(SupplyResponse sr) {
 		return this.convertToBoolean( sql.update("updRequest", sr));
 	}
-	
+
 	boolean updRequestDetail(SupplyResponse sr) {
 		return this.convertToBoolean( sql.update("updRequestDetail", sr));
 	}
-	
+
 	boolean updOrder(SupplyResponse sr) {
 		return this.convertToBoolean( sql.update("updOrder", sr));
 	}
-	
+
 	boolean updOrderDetail(SupplyResponse sr) {
 		return this.convertToBoolean( sql.update("updOrderDetail", sr));
 	}
-	
+
 	String getInvolvedOscode(SupplyResponse sr) {
 		return sql.selectOne("getInvolvedOscode",sr); 
 	}
-	
+
 	boolean updReasonRD(RequestOrderDetailBean rd) {
 		return this.convertToBoolean(sql.update("updReasonRD",rd));
 	}
-	
+
 	boolean updReasonOD(RequestOrderDetailBean rd) {
 		return this.convertToBoolean(sql.update("updReasonOD",rd));
 	}
-	
+
 	String getOSOriginCode(String os_code) {
 		return sql.selectOne("getOSOriginCode",os_code);
 	}
-	
+
 	List<RequestOrderDetailBean> getNewRDForRefund(String re_code){
 		return sql.selectList("getNewRDForRefund", re_code);
 	}
-	
+
 	List<OrderDetailBean> getNewODForRefund(String os_code){
 		return sql.selectList("getNewODForRefund", os_code);
 	}
-	
+
 	String getCLForRefund(String re_code) {
 		return sql.selectOne("getCLForRefund",re_code);
 	}
-	
-	
+
+
 	String getDriver() {
 		return sql.selectOne("getDriver");
 	}
-	
+
 	boolean insertFirstLC(String os_code) {
 		return this.convertToBoolean(sql.insert("insertFirstLC", os_code));
 	}
-	
+
 	boolean insertFirstDL(DeliveryInsert di) {
 		return this.convertToBoolean(sql.insert("insertFirstDL",di));
 	}
-	
+
 	String getRecentlyLC(String os_code) {
 		return sql.selectOne("getRecentlyLC", os_code);
 	}
-	
+
 	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
 		return sql.selectList("getSupplyDealList", re_spcode);
 	}
@@ -138,7 +138,7 @@ public class SupplyDao {
 		return data > 0 ? true : false;
 	}
 
-	
+
 	//supplyReceiveRefundListForm
 	List<RequestOrderBean> getReceiveAsListSp(RequestOrderBean ro) {
 		return sql.selectList("getReceiveAsListSp", ro);
@@ -271,35 +271,32 @@ public class SupplyDao {
 		return sql.selectList("supplySearchProduct", pd);
 	}
 
-	
-	List<RequestOrderBean> waitOrderlist(){
-		String sp = null;
-		sp = "KR001D";
-		return sql.selectList("getSupplyWaitOrderList",sp);
+
+	// 수정
+	List<RequestOrderBean> waitOrderlist(String spcode){
+
+		return sql.selectList("getSupplyWaitOrderList",spcode);
 	}
-	
-	List<RequestOrderBean> clearOrderlist(){
-		String sp = null;
-		sp = "KR001D";
-		return sql.selectList("getSupplyClearOrderList",sp);
+
+	//수정
+	List<RequestOrderBean> clearOrderlist(String spcode){
+		return sql.selectList("getSupplyClearOrderList",spcode);
 	}
-	
-	List<RequestOrderBean> waitOrderlistD(RequestOrderBean rb){
-		List<RequestOrderBean> reList = null;
-		rb.setRe_code(rb.getRe_code());
-		reList = sql.selectList("getSupplyWaitOrderListD",rb);
+
+	//수정
+	List<RequestOrderDetailBean> waitOrderlistD(String recode){
+		List<RequestOrderDetailBean> reList = null;
+
+		reList = sql.selectList("getSupplyWaitOrderListD",recode);
 		return reList;
 	}
-	
-	
-	List<RequestOrderBean> clearOrderlistD(RequestOrderBean rb){
-		List<RequestOrderBean> reList = null;
-		rb.setRe_code(rb.getRe_code());
-		reList = sql.selectList("getSupplyClearOrderListD",rb);
-		return reList;
+
+	//수정
+	List<RequestOrderDetailBean> clearOrderlistD(String recode){
+
+		return sql.selectList("getSupplyWaitOrderListD",recode);
 	}
-	
-	
+
 	boolean updateDL(DeliveryBean db) {
 		return this.convertToBoolean(sql.insert("updateDL", db));
 	}
@@ -350,5 +347,5 @@ public class SupplyDao {
 
 		return reList;
 	}
-	
+
 }
