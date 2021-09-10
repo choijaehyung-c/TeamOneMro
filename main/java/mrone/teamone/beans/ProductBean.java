@@ -22,4 +22,7 @@ public class ProductBean {
 	private String cate_name;
 	private String word; //검색어
 	private MultipartFile file;
+	private String sp_name;
+	private String sp_tel;
+	private String sp_address;
 }

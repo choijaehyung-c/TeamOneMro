@@ -210,5 +210,42 @@ class MroServiceCtl {
 		}
 		return list;
 	}
+	
+	
+	//new
+	 List<SupplyInfoBean> mroSearchSupplyList(String word) {
+		
+		return dao.mroSearchSupplyList(word);
+	}
+	 
+	 //new
+	 List<ClientInfoBean> mroSearchClientList(String word) {
+		
+		return dao.mroSearchClientList(word);
+	}
+
+	 //new
+	 String mroDelClient(String code) {
+		 String message=null;
+		
+		 if(dao.mroDelClient(code)) {//delet가 true
+			 message ="회원이 정상적으로 삭제 되었습니다.";
+		 }else {
+			 message="회원 삭제에 실패했습니다. 잠시후 다시 시도해주세요.";
+		 }
+		 
+		return message;
+	}
+	 //new
+	 String mroDelSupply(String code) {
+		String message=null;
+			
+		if(dao.mroDelSupply(code)) {
+			 message ="회원이 정상적으로 삭제 되었습니다.";
+		}else {
+			message="회원 삭제에 실패했습니다. 잠시후 다시 시도해주세요.";
+		}
+		return message;
+	}
 
 }

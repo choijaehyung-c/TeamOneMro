@@ -19,11 +19,14 @@
 	</select>
 
 	<select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'PR'
+    	 SELECT PR_CODE, PR_NAME, PR_STCODE, SP_NAME, CATE_NAME FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_STCODE = 'PR'
     </select>
     
     <select id="mroGetNewProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_CODE = #{pr_code}
+    	SELECT PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE,
+             PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN,
+             CATE_NAME, SP_NAME, SP_TEL, SP_ADDRESS, PR_STCODE 
+        FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_CODE = #{pr_code}
     </select>
     
     <update id="mroResponseNewProduct" parameterType="mrone.teamone.beans.ProductBean">
@@ -31,11 +34,14 @@
     </update>
     
      <select id="callModifyRequestList" resultType="mrone.teamone.beans.ProductBean">
-    	SELECT PR_CODE, PR_NAME, PR_STCODE FROM PR WHERE PR_STCODE = 'MR' OR PR_STCODE = 'DR'
+    	SELECT PR_CODE, PR_NAME, PR_STCODE,  SP_NAME, CATE_NAME FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_STCODE = 'MR' OR PR_STCODE = 'DR'
     </select>
     
     <select id="mroGetModifyProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
+    	 SELECT PR_SPCODE, PR_CODE, PR_STOCK, PR_NAME, PR_IMAGE,
+             PR_PRICE, PR_TAX, PR_INFO, PR_ORIGIN,
+             CATE_NAME, SP_NAME, SP_TEL, SP_ADDRESS, PR_STCODE 
+        FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE WHERE PR_CODE = #{pr_code} AND PR_STCODE= #{pr_stcode}
     </select>
     
     <update id="mroResponseModifyProduct" parameterType="mrone.teamone.beans.ProductBean">
@@ -66,7 +72,7 @@
        SP.SP_CORPNUM,
        SP.SP_BKIND,
        BKIND.BK_NAME
-		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE WHERE "STATE" ='MEMBER'
     </select>
     
     <select id="getClientList" resultType="mrone.teamone.beans.ClientInfoBean">
@@ -79,7 +85,7 @@
      	 CL.CL_BTYPE,
       	 CL.CL_BKIND,
      	 BK.BK_NAME
-		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE
+		FROM CL INNER JOIN BK ON CL_BKIND = BK.BK_CODE WHERE "STATE" ='MEMBER'
     </select>
     
     <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">   
@@ -103,5 +109,41 @@
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
  
+ 	<!-- new -->
+ 	<select id="getSearchSupplyList" parameterType="string" resultType="mrone.teamone.beans.SupplyInfoBean">
+ 	   SELECT SP.SP_CODE ,
+       SP.SP_NAME,
+       SP.SP_TEL,
+       SP.SP_ADDRESS,
+       SP.SP_CORPNUM,
+       SP.SP_BKIND,
+       BKIND.BK_NAME
+		FROM SP INNER JOIN BKIND ON SP.SP_BKIND = BKIND.BK_CODE
+        WHERE SP_NAME LIKE '%' || #{word} || '%' AND "STATE"='MEMBER'	
+ 	</select>
+ 
+ 	<!-- new -->
+ 	<select id="getSearchClientList" parameterType="string" resultType="mrone.teamone.beans.ClientInfoBean">
+ 		SELECT CL.CL_CODE ,
+        CL.CL_NAME,
+       CL.CL_HP,
+       CL.CL_ADDRESS,
+       CL.CL_CORPNUM,
+       CL.CL_BKIND,
+       BKIND.BK_NAME
+		FROM CL INNER JOIN BKIND ON CL.CL_BKIND = BKIND.BK_CODE
+        WHERE CL_NAME LIKE '%' || #{word} || '%' AND "STATE"='MEMBER'	
+ 	</select>
+	
+	<!-- new -->
+	<update id="mroDelClient" parameterType="string" >
+		UPDATE CL SET "STATE"='NONMEMBER' WHERE CL_CODE=#{code}
+	</update>
+	
+	<!-- new -->
+	<update id="mroDelSupply" parameterType="string" >
+		UPDATE SP SET "STATE"='NONMEMBER' WHERE SP_CODE=#{code}
+	</update>
+	
 
 </mapper>

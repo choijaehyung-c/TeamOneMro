@@ -417,4 +417,37 @@ public class RestApiController {
 			return null/* sse.supplyRequestNewProduct(pb) */;
 		}
 	
+		
+
+		// new
+		@PostMapping("/searchSupply")
+		public List<SupplyInfoBean> mroSearchSupplyList(@RequestBody String word) {
+			System.out.println("supply : " + word);
+			System.out.println(mse.mroSearchSupplyList(word));
+			return mse.mroSearchSupplyList(word);
+		}
+
+		// new
+		@PostMapping("/searchClient")
+		public List<ClientInfoBean> mroSearchClientList(@RequestBody String word) {
+			System.out.println("고객사 : " + word);
+			System.out.println(mse.mroSearchSupplyList(word));
+			return mse.mroSearchClientList(word);
+		}
+
+		// new
+		@PostMapping("/delClient")
+		public String mroDelClient(@RequestBody String code) {
+			System.out.println("고객사 : " + code);
+
+			return mse.mroDelClient(code);
+		}
+
+		// new
+		@PostMapping("/delSupply")
+		public String mroDelSupply(@RequestBody String code) {
+			System.out.println("공급사 : " + code);
+
+			return mse.mroDelSupply(code);
+		}
 }
