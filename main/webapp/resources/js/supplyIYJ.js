@@ -1,7 +1,7 @@
 const supplyVue = new Vue({
 	el:"#supplyVue",
 	data :{
-		display :[{show:false},{show:false},{show:false}],
+		display :[{show:false},{show:false},{show:false},{show:false}],
 		modal:{show:false},
 		modalDetailList:[],
 		modalDetail:{},
@@ -58,14 +58,18 @@ const supplyVue = new Vue({
 				this.modalDetailList[i].pr_ttprice =this.modalDetailList[i].pr_ttprice.toLocaleString();
 			}
 		},       
-		respond2:function(recode){ //출고처리
-			alert(recode);
+		respondDelivery:function(recode){ //출고처리
+			//alert(recode);
+			postAjaxJson('vue/supplyGoDelivery','updateDelivery','s',recode);
 		},
 		refusePage:function(){//수주거절 목록
 			postAjaxJson('vue/getSupplyRefuseOrderList','getRefuseList','j');
 		},
 		refuseListDetail:function(recode){
 			postAjaxJson('vue/getSupplyRefuseOrderD','getReceiveListD3','j',recode);
+		},
+		trackDeliveryPage:function(){//배송 출발 목록
+			postAjaxJson('vue/getTrackDeliveryList','getTrackingDelivery','j');	
 		}
       
 	}
@@ -121,6 +125,17 @@ function getReceiveListD2(data){
 	supplyVue.modalOpen();
 }
 
+//출고 완료
+function updateDelivery(msg){
+	if(msg!=""){
+		alert(msg);
+		supplyVue.modalClose();
+		supplyVue.changePage(3);
+	}else{
+		supplyVue.changePage(3);
+	}
+}
+
 //수주거절 목록 페이지 
 function orderRefuseList(){
 	supplyVue.refusePage();
@@ -131,9 +146,20 @@ function getRefuseList(jsondata){
 	supplyVue.list=jsondata;
 	supplyVue.changePage(2);
 }
-
+//수주거절 디테일목록
 function getReceiveListD3(data){
 	supplyVue.modalDetailList=data;
 	supplyVue.changeWon();
 	supplyVue.modalOpen();
+}
+
+//배송출발 페이지
+function trackDelivery(){
+	supplyVue.trackDeliveryPage();
+}
+
+//배송출발 목록
+function getTrackingDelivery(jsondata){
+	supplyVue.list=jsondata;
+	supplyVue.changePage(3);
 }

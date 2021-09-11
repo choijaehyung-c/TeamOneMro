@@ -246,6 +246,25 @@ SELECT
     GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE, RD_NOTE
     </select>
     
+    <!-- 추가 수정 -->  
+    <update id="supplyGoDelivery" parameterType="string">
+    	 UPDATE DL SET DL_DSCODE='2' WHERE DL_OSCODE=#{recode}
+    </update>
+    
+    <!-- 추가 수정  -->
+    <select id="getTrackDeliveryList" parameterType="string" resultType="mrone.teamone.beans.DeliveryBean">
+    	    SELECT DL.DL_CODE,
+           		DL.DL_OSCODE,
+           		DL.DL_DSCODE,
+           		DS.DS_NAME,
+           		DL.DL_DVCODE,
+           		DV.DV_NAME,
+           		DV.DV_HP
+   			 FROM DL INNER JOIN DV ON DL.DL_DVCODE = DV.DV_CODE
+            INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE
+    		WHERE DV_SPCODE=#{spcode} AND DL_DSCODE >= 2
+    </select>
+    
 <!--     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">
 	UPDATE REQUEST SET RE_STATE = 'OA' WHERE RE_CODE = #{rd_recode}
     </select>

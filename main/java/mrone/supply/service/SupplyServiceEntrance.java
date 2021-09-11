@@ -70,6 +70,18 @@ public class SupplyServiceEntrance {
 
 		return ssc.getSupplyRefuseOrderListDetail(recode);
 	}
+		
+	//수정1
+	public String supplyGoDelivery(String recode) {
+		
+		return ssc.supplyGoDelivery(recode);
+	}
+	
+	//수정1
+	public List<DeliveryBean> getTrackDeliveryList() {
+		
+		return ssc.getTrackDeliveryList();
+	}
 	
 	public List<DeliveryBean> getDLlist() {			
 		List<DeliveryBean> reList = null;
@@ -189,6 +201,4 @@ public class SupplyServiceEntrance {
 	}
 
 
-
-	
 }

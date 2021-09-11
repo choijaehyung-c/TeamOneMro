@@ -308,6 +308,20 @@ public class SupplyDao {
 			
 			return sql.selectList("getSupplyRefuseOrderListD",recode);
 	}
+	 
+	//수정1
+	boolean supplyGoDelivery(String recode) {
+			return this.convertToBoolean(sql.update("supplyGoDelivery", recode));
+	}
+	
+	//수정1
+	List<DeliveryBean> getTrackDeliveryList(String spcode) {
+		// TODO Auto-generated method stub
+		System.out.println(spcode);
+		return sql.selectList("getTrackDeliveryList", spcode);
+	}
+
+
 	boolean updateDL(DeliveryBean db) {
 		return this.convertToBoolean(sql.insert("updateDL", db));
 	}
@@ -358,8 +372,6 @@ public class SupplyDao {
 
 		return reList;
 	}
-
-
 
 	
 

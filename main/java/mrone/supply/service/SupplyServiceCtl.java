@@ -76,7 +76,7 @@ class SupplyServiceCtl {
 		return reList;
 	}
 
-
+	//수정1
 	List<RequestOrderBean> clearOrderlist() {
 		
 		String spcode = null;
@@ -165,6 +165,35 @@ class SupplyServiceCtl {
 				
 		}
 		return reList;
+	}
+	
+	//수정1
+	String supplyGoDelivery(String recode) {
+		String message;
+		
+		if(dao.supplyGoDelivery(recode)) {
+			message="상품이 고객사로 출발하였습니다.";
+		}else {
+			message="다시 시도해주세요.";
+		}
+		
+		return message;
+	}
+	
+	//수정1
+	List<DeliveryBean> getTrackDeliveryList() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+			//re, rd, os, od도 state를 배송으로 바꿔야...  cause-주문수락상태가 아닌데, 주문수락목록에 뜬다.
+
+		return dao.getTrackDeliveryList(spcode);
 	}
 
 	List<DeliveryBean> getDLlist() {

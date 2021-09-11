@@ -125,6 +125,22 @@ public class RestApiController {
 		
 	}
 	
+	//수정1
+	@PostMapping("/supplyGoDelivery")//배송출고시작 => 출고버튼(배송준비중->배송중으로 upd)
+	public String supplyGoDelivery(@RequestBody String recode) {	
+		System.out.println(sse.supplyGoDelivery(recode));
+		return sse.supplyGoDelivery(recode);
+		
+	}
+	
+	//수정1
+	@PostMapping("/getTrackDeliveryList")//배송 상태 확인 (배송중인 주문코드 확인)
+	public List<DeliveryBean> getTrackDeliveryList() {	
+		System.out.println(sse.getTrackDeliveryList());
+		return sse.getTrackDeliveryList();
+		
+	}
+	
 	
 	
 	

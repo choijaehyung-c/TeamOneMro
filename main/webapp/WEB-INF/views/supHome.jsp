@@ -10,19 +10,11 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>MRONE</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
-	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/resources/css/styles.css"
-	rel="stylesheet" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css"
-	rel="stylesheet" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
-	crossorigin="anonymous"></script>
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -89,9 +81,9 @@
 							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion"
 								id="sidenavAccordionPages">
-								<div class="nav-link" onClick="orderWaitList()">수주대기목록</div>
-								<div class="nav-link" onClick="orderReceiveList()">출고처리</div>
-								<div class="nav-link" onClick="orderRefuseList()">수주거절목록</div>
+								<div class="nav-link" onClick="orderWaitList()">수주목록</div>
+								<div class="nav-link" onClick="trackDelivery()">출고목록</div>
+
 							</nav>
 						</div>
 
@@ -270,11 +262,25 @@
 									style="position: relative; top: 50%; left: 80%;">Close</div>
 							</div>
 						</div>
-						<h1 class="mt-4">수주대기 목록</h1>
-
+						<h1 class="mt-4">수주 목록</h1>
 						<ol class="breadcrumb mb-4">
 							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
 							<li class="breadcrumb-item active">수주대기 목록</li>
+						</ol>
+						<ol class="breadcrumb mb-4">
+							<ul class="mb-5 nav nav-tabs" role="tablist">
+								<li class="nav-item" role="presentation">
+								<button type="button" role="tab" data-rb-event-key="allProducts"
+										aria-selected="true" class="nav-link active" onclick="orderWaitList()">수주대기목록</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button type="button" role="tab" data-rb-event-key="archived"
+										aria-selected="false" class="nav-link" onclick="orderRefuseList()">수주거절목록</button></li>
+								<li class="nav-item" role="presentation">
+									<button type="button" role="tab" data-rb-event-key="drafts"
+										aria-selected="false" class="nav-link" onclick="orderReceiveList()">수주완료목록</button></li>
+							</ul>
+
 						</ol>
 						<div
 							class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -369,7 +375,7 @@
 
 
 					<template v-if="display[1].show">
-						<h1 class="mt-4">접수완료 목록</h1>
+						<h1 class="mt-4">수주 목록</h1>
 
 						<div v-if="modal.show"
 							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -416,7 +422,7 @@
 
 									</tbody>
 								</table>
-								<div @click="respond2(modalDetailList[0].rd_recode)"
+								<div @click="respondDelivery(modalDetailList[0].rd_recode)"
 									class="align-top ms-1 btn btn-outline-dark btn-sm"
 									style="position: relative; top: 50%; left: 42%;">출고</div>
 								<div class="align-top ms-1 btn btn-outline-primary btn-sm"
@@ -426,7 +432,26 @@
 						</div>
 						<ol class="breadcrumb mb-4">
 							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-							<li class="breadcrumb-item active">접수완료 목록</li>
+							<li class="breadcrumb-item active">수주접수완료 목록</li>
+						</ol>
+						<ol class="breadcrumb mb-4">
+							<ul class="mb-5 nav nav-tabs" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button type="button" role="tab"
+										data-rb-event-key="allProducts" aria-selected="false"
+										class="nav-link" onclick="orderWaitList()">수주대기목록</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button type="button" role="tab" data-rb-event-key="archived"
+										aria-selected="false" class="nav-link"
+										onclick="orderRefuseList()">수주거절목록</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button type="button" role="tab" data-rb-event-key="drafts"
+										aria-selected="true" class="nav-link active"
+										onclick="orderReceiveList()">수주완료목록</button>
+								</li>
+							</ul>
 						</ol>
 						<div
 							class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -520,7 +545,7 @@
 					</template>
 
 					<template v-if="display[2].show">
-						<h1 class="mt-4">수주거절 목록</h1>
+						<h1 class="mt-4">수주 목록</h1>
 
 						<div v-if="modal.show"
 							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -578,6 +603,25 @@
 						<ol class="breadcrumb mb-4">
 							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
 							<li class="breadcrumb-item active">수주거절 목록</li>
+						</ol>
+						<ol class="breadcrumb mb-4">
+						<ul class="mb-5 nav nav-tabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button type="button" role="tab" data-rb-event-key="allProducts"
+									aria-selected="false" class="nav-link"
+									onclick="orderWaitList()">수주대기목록</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button type="button" role="tab" data-rb-event-key="archived"
+									aria-selected="true" class="nav-link active"
+									onclick="orderRefuseList()">수주거절목록</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button type="button" role="tab" data-rb-event-key="drafts"
+									aria-selected="false" class="nav-link"
+									onclick="orderReceiveList()">수주완료목록</button>
+							</li>
+						</ul>
 						</ol>
 						<div
 							class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -669,6 +713,103 @@
 							</div>
 						</div>
 					</template>
+<!-- ------------------------------------배송출발목록---------------------------------------------------------------- -->
+
+					<template v-if="display[3].show">
+						<h1 class="mt-4">배송 목록</h1>
+
+						<ol class="breadcrumb mb-4">
+							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
+							<li class="breadcrumb-item active">배송중 목록</li>
+						</ol>
+						<div
+							class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+							<div class="dataTable-top">
+								<div class="dataTable-dropdown">
+									<span class="me-2" id="categoryBulkAction"> <select
+										name="categoryBulkAction"
+										class="d-inline w-auto form-select form-select-sm">
+											<option>Bulk Actions</option>
+											<option>Delete</option>
+									</select>
+										<button type="button"
+											class="align-top ms-1 btn btn-outline-dark btn-sm">Apply</button>
+									</span> <label> <select
+										class="dataTable-selector form-select form-select-sm">
+											<option value="5">5</option>
+											<option value="10" selected="">10</option>
+											<option value="15">15</option>
+											<option value="20">20</option>
+											<option value="25">25</option>
+									</select> entries per page
+									</label>
+								</div>
+								<div class="dataTable-search">
+									<input class="dataTable-input form-control form-control-sm"
+										placeholder="Search..." type="text">
+								</div>
+							</div>
+
+							<div class="dataTable-container border-0">
+								<table class="mb-0 table table-hover dataTable-table">
+									<thead>
+										<tr class="title">
+											<th data-sortable="false" style="width: 14.7704%;">ORDER
+												ID</th>
+											<th data-sortable="" style="width: 11.9491%;" class="desc"><a
+												href="#" class="dataTable-sorter">DELIVERY CODE</a></th>	
+											<th data-sortable="" style="width: 27.7982%;"><a
+												href="#" class="dataTable-sorter">DRIVER NAME</a></th>
+											<th data-sortable="" style="width: 11.9491%;"><a
+												href="#" class="dataTable-sorter">CONTACT</a></th>											
+
+											<th data-sortable="" style="width: 12.281%;"><a href="#"
+												class="dataTable-sorter">DELIVERY STATE</a></th>
+
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr class="align-middle" v-for="li in list"
+											@click="refuseListDetail(li.re_code)">
+											<td>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input"><label
+														title="" class="form-check-label">{{li.dl_oscode}}</label>
+												</div>
+											</td>
+											<td>{{li.dl_code}}</td>
+											<td><strong>{{li.dv_name}}</strong> <br> <span
+												class="text-muted text-sm">{{li.dl_dvcode}}</span></td>
+											<td>{{li.dv_hp}}</td>
+											
+											<td><span class="badge text-warning bg-warning-light">{{li.ds_name}}</span>
+											</td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="dataTable-bottom">
+								<div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+								<nav class="dataTable-pagination">
+									<ul class="dataTable-pagination-list">
+										<li class="active"><a href="#" data-page="1">1</a></li>
+										<li class=""><a href="#" data-page="2">2</a></li>
+										<li class=""><a href="#" data-page="3">3</a></li>
+										<li class=""><a href="#" data-page="4">4</a></li>
+										<li class=""><a href="#" data-page="5">5</a></li>
+										<li class=""><a href="#" data-page="6">6</a></li>
+										<li class=""><a href="#" data-page="7">7</a></li>
+										<li class="ellipsis"><a href="#">…</a></li>
+										<li class=""><a href="#" data-page="10">10</a></li>
+										<li class="pager"><a href="#" data-page="2">›</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</template>
 
 				</div>
 
@@ -679,17 +820,12 @@
 		</div>
 	</div>
 	<!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script>
 
 
 
