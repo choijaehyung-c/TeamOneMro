@@ -42,9 +42,11 @@ public class RestApiController {
 		return sse.supplyResponseOrderOA(ro);
 	}
 	
+	//수정2
 	@PostMapping("/supplyResponseOrderOF")
-	public String supplyResponseOrderOF(@RequestBody RequestOrderBean ro) {
-		return sse.supplyResponseOrderOF(ro);
+	public String supplyResponseOrderOF(@RequestBody List<RequestOrderBean> ro) {
+		System.out.println("rest : "+ro);
+		return sse.supplyResponseOrderOF(ro.get(0));
 	}
 	
 	@PostMapping("/supplyResponseOrderEA")
@@ -81,14 +83,14 @@ public class RestApiController {
 		return reList;	
 	}
 	
-	//수정
+	
 	@PostMapping("/getSupplyReceiveClearOrderList")
 	public List<RequestOrderBean> supplyReceiveClearOrderList() {		
 		System.out.println(sse.RequestClearOrderListCtl());
 		return sse.RequestClearOrderListCtl();
 	}
 	
-	//수정
+
 	@PostMapping("/getSupplyReceiveWaitOrderListD")
 	public List<RequestOrderDetailBean> supplyReceiveWaitOrderListD(@RequestBody String recode ) {
 		//System.out.println(recode);
@@ -97,7 +99,7 @@ public class RestApiController {
 		
 	}
 	
-	//수정
+	
 	@PostMapping("/getSupplyReceiveClearOrderListD")
 	public List<RequestOrderDetailBean> supplyReceiveClearOrderListD(@RequestBody String recode ) {
 		System.out.println("수주접수 코드 : "+recode);
@@ -106,14 +108,24 @@ public class RestApiController {
 		
 	}
 	
-	//수정
-//	@PostMapping("/responseOrder")
-//	public String responseOrder(@RequestBody RequestOrderDetailBean rdb ) {
-//		//System.out.println("응답!!! "+list.getRd_recode());
-//		String message = sse.responseOrder(rdb);
-//		return message;
-//		
-//	}
+	
+	//수정1
+	@PostMapping("/getSupplyRefuseOrderList")
+	public List<RequestOrderBean> getSupplyRefuseOrderList() {	
+		System.out.println(sse.getSupplyRefuseOrderList());
+		return sse.getSupplyRefuseOrderList();
+		
+	}
+	
+	//수정1
+	@PostMapping("/getSupplyRefuseOrderD")
+	public List<RequestOrderDetailBean> getSupplyRefuseOrderD(@RequestBody String recode) {	
+		System.out.println(sse.getSupplyRefuseOrderListDetail(recode));
+		return sse.getSupplyRefuseOrderListDetail(recode);
+		
+	}
+	
+	
 	
 	
 	

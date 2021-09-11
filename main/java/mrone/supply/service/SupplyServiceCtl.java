@@ -52,7 +52,7 @@ class SupplyServiceCtl {
 		return dao.getSupplyCateProductList(pb);
 	}
 
-	// 수정
+
 	List<RequestOrderBean> waitOrderlist() {
 
 		List<RequestOrderBean> reList = null;
@@ -76,7 +76,7 @@ class SupplyServiceCtl {
 		return reList;
 	}
 
-	//수정
+
 	List<RequestOrderBean> clearOrderlist() {
 		
 		String spcode = null;
@@ -101,7 +101,7 @@ class SupplyServiceCtl {
 		
 		return reList;
 	}
-	//수정
+
 	List<RequestOrderDetailBean> waitOrderlistD(String recode) {
 
 		List<RequestOrderDetailBean> reList = null;
@@ -115,7 +115,7 @@ class SupplyServiceCtl {
 		}
 		return reList;
 	}
-	//수정
+	
 	List<RequestOrderDetailBean> clearOrderlistD(String recode) {
 
 		List<RequestOrderDetailBean> reList = null;
@@ -124,6 +124,43 @@ class SupplyServiceCtl {
 		for(int i=0; i<reList.size(); i++) {
 			if(reList.get(i).getRd_stcode().equals("OA")) {
 				reList.get(i).setRd_stcode("주문수락");
+			}
+				
+		}
+		return reList;
+	}
+	
+	//수정1
+	List<RequestOrderBean> getSupplyRefuseOrderList() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		List<RequestOrderBean> reList = null;
+		reList = dao.RefuseOrderlist(spcode);
+		
+		for(int i =0; i<reList.size(); i++) {
+			if(reList.get(i).getRe_state().equals("OF")) {
+				reList.get(i).setRe_state("주문거절");
+			}
+		} 
+		return reList;
+	}
+	
+	//수정1
+	List<RequestOrderDetailBean> getSupplyRefuseOrderListDetail(String recode) {
+		List<RequestOrderDetailBean> reList = null;
+		reList = dao.refuseOrderListD(recode);
+
+		for(int i=0; i<reList.size(); i++) {
+			if(reList.get(i).getRd_stcode().equals("OF")) {
+				reList.get(i).setRd_stcode("주문거절");
 			}
 				
 		}
@@ -351,7 +388,7 @@ class SupplyServiceCtl {
 				}
 			}
 		}
-		pu.setTransactionResult(tran);
+		//pu.setTransactionResult(tran);수정
 		return tran;
 	}
 	
@@ -359,6 +396,7 @@ class SupplyServiceCtl {
 		boolean tran = false;
 		for (int i = 0; i < ro.getRd().size(); i++) {
 			ro.getRd().get(i).setRd_stcode(sr.getAfter());
+			ro.getRd().get(i).setRd_recode(ro.getRe_code());//수정1
 			if (ro.getRd().get(i).getRd_note() != null) {
 				if (dao.updReasonRD(ro.getRd().get(i))) {
 					ro.getRd().get(i).setRd_recode(sr.getOs_code());
@@ -382,7 +420,7 @@ class SupplyServiceCtl {
 			sr.setAfter(decision);
 			sr.setBefore("OR");
 			sr.setRe_code(ro.getRe_code());
-			sr.setOs_code(dao.getInvolvedOscode(sr));
+			sr.setOs_code(dao.getInvolvedOscode(sr));//21090910001
 			if(this.updateResponseProcess(sr)) {
 				if(decision.equals("OF")) {
 					tran = this.updateReasonProcess(ro,sr);
@@ -406,8 +444,8 @@ class SupplyServiceCtl {
 		}
 		
 
-		pu.setTransactionResult(tran);
-		return tran?"success":"failed";
+		//pu.setTransactionResult(tran);수정1
+		return tran?"주문접수가 처리가 정상적으로 되었습니다.":"주문접수에 실패했습니다.";//수정1
 	}
 	
 	boolean issueDelivery(String oscode) {
@@ -461,5 +499,7 @@ class SupplyServiceCtl {
 		pd.setPr_spcode("KR001D");
 		return dao.supplySearchProduct(pd);
 	}
+
+
 	
 }

@@ -272,18 +272,18 @@ public class SupplyDao {
 	}
 
 
-	// 수정
+	
 	List<RequestOrderBean> waitOrderlist(String spcode){
 
 		return sql.selectList("getSupplyWaitOrderList",spcode);
 	}
 
-	//수정
+	
 	List<RequestOrderBean> clearOrderlist(String spcode){
 		return sql.selectList("getSupplyClearOrderList",spcode);
 	}
 
-	//수정
+
 	List<RequestOrderDetailBean> waitOrderlistD(String recode){
 		List<RequestOrderDetailBean> reList = null;
 
@@ -291,12 +291,23 @@ public class SupplyDao {
 		return reList;
 	}
 
-	//수정
+	
 	List<RequestOrderDetailBean> clearOrderlistD(String recode){
 
 		return sql.selectList("getSupplyWaitOrderListD",recode);
 	}
+	
+	//수정1
+	 List<RequestOrderBean> RefuseOrderlist(String spcode) {
+			
+			return sql.selectList("getRefuseOrderList",spcode);
+	}
 
+	 //수정1
+	 List<RequestOrderDetailBean> refuseOrderListD(String recode) {
+			
+			return sql.selectList("getSupplyRefuseOrderListD",recode);
+	}
 	boolean updateDL(DeliveryBean db) {
 		return this.convertToBoolean(sql.insert("updateDL", db));
 	}
@@ -347,5 +358,9 @@ public class SupplyDao {
 
 		return reList;
 	}
+
+
+
+	
 
 }
