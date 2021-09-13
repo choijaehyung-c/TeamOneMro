@@ -4,7 +4,6 @@ const supplyVue = new Vue({
 		display :[{show:false},{show:false},{show:false},{show:false},{show:false}],
 		modal:{show:false},
 		modalDetailList:[],
-		modalDetail:{},
 		list:[],
 		dupCheck:[]
 	},
@@ -28,10 +27,10 @@ const supplyVue = new Vue({
 		orderListDetail:function(recode){//수주대기 디테일	
 		postAjaxJson('vue/getSupplyReceiveWaitOrderListD','getReceiveListD','j',recode);		
 		},
-		respondOA:function(recode){ //수주대기 -  주문수락
-			sendData={re_code:recode};
+		respondOrder:function(recode){ //수주대기 -  주문수락
+			sendData={re_code:recode,re_state:"OA"};
 			let clientData = JSON.stringify(sendData);
-			postAjaxJson('vue/supplyResponseOrderOA','receiveOrderControll2','s',clientData);
+			postAjaxJson('vue/supplyResponseOrder','receiveOrderControll2','s',clientData);
 		},
 		respondOF:function(recode){//수주대기 - 주문거절
 			//let rd_note =prompt("거절사유를 입력해주세요.");
@@ -39,7 +38,7 @@ const supplyVue = new Vue({
 			let rd = [];
 			let rdnote = document.getElementsByName("rd_note");
 			let prcode = document.getElementsByName("rd_prcode");
-			sendData.push({re_code:recode,rd:rd});
+			sendData.push({re_code:recode,re_state:"OF",rd:rd});
 			
 			for(i=0; i<rdnote.length;i++){
 				let rdd = {rd_note:rdnote[i].value,rd_prcode:prcode[i].value};
@@ -50,7 +49,7 @@ const supplyVue = new Vue({
 				//rd.push({rd_note:values,rd_prcode:prcode});
 				let ClientData = JSON.stringify(sendData);
 
-				postAjaxJson('vue/supplyResponseOrderOF', 'receiveOrderControll2', 's', ClientData);
+				postAjaxJson('vue/supplyResponseOrder', 'receiveOrderControll2', 's', ClientData);
 				alert(ClientData);
 				
 		},	

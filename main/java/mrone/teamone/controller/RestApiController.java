@@ -73,7 +73,7 @@ public class RestApiController {
 		return mav;
 
 	}
-
+	//수정1
 	@PostMapping("/getSupplyReceiveWaitOrderList")
 	public List<RequestOrderBean> supplyReceiveWaitOrderList() {
 		List<RequestOrderBean> reList = null;

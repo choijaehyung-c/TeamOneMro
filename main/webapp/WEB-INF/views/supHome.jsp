@@ -236,10 +236,9 @@
 				</template>
 
 					<template v-if="display[0].show" style="z-index: 3;">
-						<div v-if="modal.show"
-							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
-							<div
-								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+				<div v-if="modal.show" style="height:100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+                     <div style="width:90%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
 								<table id="datatablesSimple" class="dataTable-table">
 									<thead>
 										<h5>주문코드 : {{modalDetailList[0].rd_recode}}의 상세내역</h5>
@@ -764,7 +763,7 @@
 											<th>순번</th>
 											<th>날짜</th>
 											<th>x위치</th>
-											<th>y위치</th>
+											<th>x위치</th>
 										</tr>
 									</thead>
 

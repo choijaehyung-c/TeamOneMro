@@ -52,7 +52,7 @@ class SupplyServiceCtl {
 		return dao.getSupplyCateProductList(pb);
 	}
 
-
+	//수정1
 	List<RequestOrderBean> waitOrderlist() {
 
 		List<RequestOrderBean> reList = null;
@@ -142,7 +142,7 @@ class SupplyServiceCtl {
 			e.printStackTrace();
 		}
 
-		List<RequestOrderBean> reList = null;
+	List<RequestOrderBean> reList = null;
 		reList = dao.RefuseOrderlist(spcode);
 		
 		for(int i =0; i<reList.size(); i++) {
@@ -435,7 +435,7 @@ class SupplyServiceCtl {
 		//pu.setTransactionResult(tran);수정
 		return tran;
 	}
-	
+	//수정1
 	boolean updateReasonProcess(RequestOrderBean ro,SupplyResponse sr) {
 		boolean tran = false;
 		for (int i = 0; i < ro.getRd().size(); i++) {

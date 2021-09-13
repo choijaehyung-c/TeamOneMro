@@ -34,7 +34,7 @@ public class SupplyServiceEntrance {
 	public List<ProductBean> getSupplyCateProductList(ProductBean pr){
 		return ssc.getSupplyCateProductList(pr);
 	}
-	
+	//수정1
 	public List<RequestOrderBean> RequestWaitOrderListCtl() {			
 		List<RequestOrderBean> reList = null;
 		reList = ssc.waitOrderlist();
@@ -48,16 +48,12 @@ public class SupplyServiceEntrance {
 	}
 	
 	
-	public List<RequestOrderDetailBean> RequestWaitOrderListCtlD(String recode) {			
-		
-		
+	public List<RequestOrderDetailBean> RequestWaitOrderListCtlD(String recode) {							
 		return ssc.waitOrderlistD(recode);
 	}
 	
 	
-	public List<RequestOrderDetailBean> RequestClearOrderListCtlD(String recode) {			
-		
-		
+	public List<RequestOrderDetailBean> RequestClearOrderListCtlD(String recode) {							
 		return ssc.clearOrderlistD(recode);
 	}
 	//수정1
