@@ -37,25 +37,12 @@ public class RestApiController {
 	private MroServiceEntrance mse;
 	
 	
-	@PostMapping("/supplyResponseOrderOA")//주문수락
-	public String supplyResponseOrderOA(@RequestBody RequestOrderBean ro) {
-		return sse.supplyResponseOrderOA(ro);
+	@PostMapping("/supplyResponseOrder")//주문수락
+	public String supplyResponseOrder(@RequestBody RequestOrderBean ro) {
+		System.out.println("test2");
+		return sse.supplyResponseOrder(ro);
 	}
 	
-	@PostMapping("/supplyResponseOrderOF")
-	public String supplyResponseOrderOF(@RequestBody RequestOrderBean ro) {
-		return sse.supplyResponseOrderOF(ro);
-	}
-	
-	@PostMapping("/supplyResponseOrderEA")
-	public String supplyResponseOrderEA(@RequestBody RequestOrderBean ro) {
-		return sse.supplyResponseOrderEA(ro);
-	}
-	
-	@PostMapping("/supplyResponseOrderEF")
-	public String supplyResponseOrderEF(@RequestBody RequestOrderBean ro) {
-		return sse.supplyResponseOrderEF(ro);
-	}
 	
 	@GetMapping("/supplyReceiveWaitOrderListForm")
 	public ModelAndView supplyReceiveWaitOrderListForm() {
@@ -178,24 +165,24 @@ public class RestApiController {
 	@PostMapping("/supplyReceiveExchangeListForm")
 	
 	public List<RequestOrderBean> supplyReceiveExchangeListForm() {
-		List<RequestOrderBean> list;
-		System.out.println("공급사 교환리스트");
-		list = sse.supplyReceiveExchangeListForm();
-		return list;
+		return sse.supplyReceiveExchangeListForm();
 	}
 	
 	//supply 반품디테일
-	@PostMapping("/supplyReceiveAsDetail")
-	
-	public List<RequestOrderDetailBean> supplyReceiveAsDetail(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
-		//System.out.println(re_code);
-		return sse.supplyReceiveAsDetail(re_code);
+	@PostMapping("/supplyReceiveAsDetailR")
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailR(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
+		return sse.supplyReceiveAsDetailRR(re_code);
+	}
+	//교환 디테일
+	@PostMapping("/supplyReceiveAsDetailE")
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailE(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
+		return sse.supplyReceiveAsDetailER(re_code);
 	}
 	
 	//supply 반품 응답
 	@PostMapping("/supplyResponseRefund")
-	
 	public String supplyResponseRefund(@RequestBody RequestOrderBean ro){
+		System.out.println("test3");
 		//System.out.println(mo);
 		return sse.supplyResponseRefund(ro);
 	}

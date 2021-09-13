@@ -1,5 +1,6 @@
 package mrone.supply.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,7 +272,18 @@ class SupplyServiceCtl {
 			ro.setRe_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
 			ro.setRe_state("RR");
 		} catch (Exception e) {e.printStackTrace();}
-		return dao.getReceiveAsListSp(ro);
+		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
+		for(int i=0;i<roList.size();i++) {
+			List<String> rd = dao.getPrnameAndCount(roList.get(i));
+			if(rd != null) {
+				if(rd.size()>1) {
+					roList.get(i).setWord(rd.get(0)+" 외 "+(rd.size()-1)+"건");
+				}else {
+					roList.get(i).setWord(rd.get(0)+rd.size()+" 1건");
+				}
+			}
+		}
+		return roList;
 	}
 	//수정완료 re에 st가 ER인 주문서 리턴
 	List<RequestOrderBean> supplyReceiveExchangeListForm() {
@@ -280,12 +292,28 @@ class SupplyServiceCtl {
 			ro.setRe_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
 			ro.setRe_state("ER");
 		} catch (Exception e) {e.printStackTrace();}
-		return dao.getReceiveAsListSp(ro);
+		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
+		for(int i=0;i<roList.size();i++) {
+			List<String> rd = dao.getPrnameAndCount(roList.get(i));
+			if(rd != null) {
+				if(rd.size()>1) {
+					roList.get(i).setWord(rd.get(0)+" 외 "+(rd.size()-1)+"건");
+				}else {
+					roList.get(i).setWord(rd.get(0)+rd.size()+" 1건");
+				}
+			}
+		}
+		
+		
+		return roList;
 	}
 
 	//수정완료 반품 또는 교환 디테일
-	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code){
-		List<RequestOrderDetailBean> list = dao.supplyReceiveAsDetail(re_code);
+	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code,String type){
+		RequestOrderBean ro = new RequestOrderBean();
+		ro.setRe_state(type);
+		ro.setRe_code(re_code);
+		List<RequestOrderDetailBean> list = dao.supplyReceiveAsDetail(ro);
 		for(int i=0;i<list.size();i++) {list.get(i).setPr_ttprice(list.get(i).getPr_price()+list.get(i).getPr_tax());}
 		return list;
 	}
@@ -302,6 +330,7 @@ class SupplyServiceCtl {
 		sr.setBefore("RR");
 		sr.setRe_code(ro.getRe_code());
 		sr.setOs_code(dao.getInvolvedOscode(sr));
+		System.out.println(sr.getOs_code());
 		
 		//수락,거절 공통 업데이트
 		if(this.updateResponseProcess(sr)) {
@@ -316,12 +345,25 @@ class SupplyServiceCtl {
 				newCo.setOs_clcode(clcode);
 				newRo.setRe_state("OA");
 				newCo.setOs_state("OA");
+				newRo.setRe_origin(sr.getRe_code());
+				newCo.setOs_origin(sr.getOs_code());
 				newRo.setRd(dao.getNewRDForRefund(sr.getRe_code()));
 				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
+				String spcode = null;
+				try {
+					if(pu.getAttribute("userSs") != null) {
+						spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
+					}
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				newRo.setRe_spcode(spcode);
 				
 				if (cse.clientOrderProcess(newCo, newRo.getRd().get(0).getRd_prspcode()) != null) {
 					if (mse.mroRequestProcess(newRo)) {
 						// 오리진 주문,발주서 폐기처리
+						System.out.println(ro.getRe_origin());
 						sr.setRe_code(ro.getRe_origin());
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
 						sr.setAfter("PD");
@@ -334,35 +376,21 @@ class SupplyServiceCtl {
 				
 			}
 		}
+		System.out.println(tran);
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
 	
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		if (dao.updRequest(sr)) {
+			System.out.println("gg0");
 			if (dao.updRequestDetail(sr)) {
+				System.out.println("gg1");
 				if (dao.updOrder(sr)) {
+					System.out.println("gg2");
 					if (dao.updOrderDetail(sr)) {
-						tran = true;
-					}
-				}
-			}
-		}
-		pu.setTransactionResult(tran);
-		return tran;
-	}
-	
-	boolean updateReasonProcess(RequestOrderBean ro,SupplyResponse sr) {
-		boolean tran = false;
-		for (int i = 0; i < ro.getRd().size(); i++) {
-			ro.getRd().get(i).setRd_stcode(sr.getAfter());
-			if (ro.getRd().get(i).getRd_note() != null) {
-				if (dao.updReasonRD(ro.getRd().get(i))) {
-					ro.getRd().get(i).setRd_recode(sr.getOs_code());
-					if (dao.updReasonOD(ro.getRd().get(i))) {
+						System.out.println("gg4");
 						tran = true;
 					}
 				}
@@ -371,12 +399,33 @@ class SupplyServiceCtl {
 		return tran;
 	}
 
-	String supplyResponseCtl(RequestOrderBean ro,String decision) {
+	boolean updateReasonProcess(RequestOrderBean ro,SupplyResponse sr) {
+		int count = 0;
+		for (int i = 0; i < ro.getRd().size(); i++) {
+			ro.getRd().get(i).setRd_stcode(sr.getAfter());
+			ro.getRd().get(i).setRd_recode(sr.getRe_code());
+			if (ro.getRd().get(i).getRd_note() != null) {
+				System.out.println(ro.getRd().get(i).getRd_note());
+				if (dao.updReasonRD(ro.getRd().get(i))) {
+					System.out.print(sr.getOs_code()+ro.getRd().get(i).getRd_note());
+					ro.getRd().get(i).setRd_recode(sr.getOs_code());
+					if (dao.updReasonOD(ro.getRd().get(i))) {
+						count++;
+					}
+				}
+			}
+		}
+		System.out.println((ro.getRd().size()+":::"+count));
+		return (ro.getRd().size()==count)?true:false;
+	}
+
+	String supplyResponseCtl(RequestOrderBean ro) {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		//decision == OA EA OF EF 요청 응답 st 코드
-		
+		String decision = ro.getRe_state();
+		System.out.println(decision+"asd");
 		SupplyResponse sr = new SupplyResponse();
 		if(decision.equals("OA") || decision.equals("OF")) {
 			sr.setAfter(decision);
@@ -396,24 +445,27 @@ class SupplyServiceCtl {
 			sr.setBefore("ER");
 			sr.setRe_code(ro.getRe_code());
 			sr.setOs_code(dao.getInvolvedOscode(sr));
+			System.out.println(sr.getOs_code());
+			System.out.println("tt0");
 			if(this.updateResponseProcess(sr)) {
+				System.out.println("tt1");
 				if(decision.equals("EF")) {
 					tran = this.updateReasonProcess(ro,sr);
+					System.out.println("tt2");
 				}else {
 					tran = this.issueDelivery(sr.getOs_code());
+					System.out.println("tt3");
 				}
 			}
 		}
 		
-
+		System.out.println(tran);
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
 	
 	boolean issueDelivery(String oscode) {
 		boolean tran = false;
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		DeliveryInsert di = new DeliveryInsert();
 		di.setOs_code(oscode);
 		di.setDv_code(dao.getDriver());
@@ -421,7 +473,6 @@ class SupplyServiceCtl {
 			di.setLc_code(dao.getRecentlyLC(oscode));
 			if(dao.insertFirstDL(di))tran = true;
 		}
-		pu.setTransactionResult(tran);
 		return tran;
 	}
 

@@ -39,7 +39,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                         	<br>
-                            <div class="nav-link">
+                            <div class="nav-link" onClick="tttset()">
                                 Dashboard
                             </div>
                             <div class="sb-sidenav-menu-heading">Cooperation</div>
@@ -97,6 +97,7 @@
 		<div id="layoutSidenav_content">
 			<main style="height: 100%; width: 100%;">
 				<div id="mainVue" style="height: 100%; width: 100%;">
+<!------------------------------------------------------------------------------------------------------------------------>
 					<template v-if="display[0].show" style="z-index: 3;">
 						<!-- !!!!!!!!상품등록신청 모달!!!!!!!!!!!! -->
 						<div v-if="modal.show"
@@ -339,11 +340,9 @@
 								</div>
 							</div>
 						</div>
-					</template>
-				
+					</template>	
 <!------------------------------------------------------------------------------------------------------------------------>
-
-                		<template v-if="display[2].show">
+                	<template v-if="display[2].show">
                 		<div class="container-fluid px-4">
 							<h1 class="mt-4">공급사 목록</h1>
 							<ol class="breadcrumb mb-4">
@@ -394,9 +393,8 @@
                 		</table>    
    	
                 		</template>               
-                		
-<!------------------------------------------------------------------------------------------------------------------------>                		
-                	    <template v-if="display[3].show">
+<!------------------------------------------------------------------------------------------------------------------------>		
+                	<template v-if="display[3].show">
                 		<div class="container-fluid px-4">
 							<h1 class="mt-4">고객사 목록</h1>
 							<ol class="breadcrumb mb-4">
@@ -448,7 +446,6 @@
    	
                 		</template>     
 <!------------------------------------------------------------------------------------------------------------------------>
-
 					<template v-if="display[4].show" style="z-index: 3;">
 						<div v-if="modal.show"
 							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -530,7 +527,6 @@
 						</div>
 					</template>
 <!------------------------------------------------------------------------------------------------------------------------>
-
 					<template v-if="display[5].show" style="z-index: 3;">
 						<div v-if="modal.show"
 							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -689,6 +685,7 @@
 							</div>
 						</div>
 					</template>
+<!------------------------------------------------------------------------------------------------------------------------>
 				</div>
 			</main>
 		</div>

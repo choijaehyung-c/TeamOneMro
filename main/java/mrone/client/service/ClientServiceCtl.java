@@ -79,6 +79,7 @@ class ClientServiceCtl {
 			for (int i = 0; i < co.getOd().size(); i++) {
 				if (co.getOd().get(i).getOd_prspcode().equals(sp_code)) {
 					co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
+					if(co.getOd().get(i).getOd_note()==null)co.getOd().get(i).setOd_note("");
 					if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 						break;
 					}

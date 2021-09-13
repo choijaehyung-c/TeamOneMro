@@ -30,7 +30,7 @@ function postAjaxForm(jobCode, fn, rType, clientData = "") {
 	ajax.send(clientData);
 	/*
 	보안성이 필요한 요청을 할때 form으로 전송!! ex)pwd를 파람으로 받는 잡일때 사용
-	clientData=`변수명(빈.OO)=${변수값}&변수명(빈.OO)=${변수값}`;
+	clientData=`변수명=${변수값}&변수명=${변수값}`;
 	백엔드 컨트롤러에서는 @ModelAttribute으로 받으면됨(빈도 받을 수 있음)
 	*/
 }

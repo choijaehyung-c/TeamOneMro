@@ -46,7 +46,7 @@
 	</select>
 
 	<select id="getCLForRefund" parameterType="string" resultType="string">
-		SELECT RE_CLCODE FROM RE WHERE RE_CODE = #{re_code} AND RE_STATE = 'FF'
+		SELECT RE_CLCODE FROM RE WHERE RE_CODE = #{re_code}
 	</select>
 
 	<select id="getDriver" resultType="string">
@@ -294,13 +294,18 @@ SELECT
        
     <!-- 공급사가 본인의 회사에 들어온 반품,교환리스트를 받는 쿼리 -->
     <select id="getReceiveAsListSp" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderBean" >		
-		SELECT RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP,RE_ORIGIN FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
+		SELECT RE_CODE,RE_CLCODE,TO_CHAR(RE_DATE,'YYYY-MM-DD') AS RE_DATE,CL_NAME,CL_HP,RE_ORIGIN,RE_STATE FROM RE INNER JOIN "CL" ON RE.RE_CLCODE = CL.CL_CODE 
 		WHERE RE.RE_STATE = #{re_state} AND RE.RE_SPCODE = #{re_spcode}
     </select>
     
     <!-- 상세리스트 -->
-    <select id="supplyReceiveAsDetail" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
-    	SELECT RD_PRCODE,RD_STCODE,PR_NAME,PR_PRICE,PR_TAX,PR_IMAGE,PR_INFO,PR_ORIGIN,CATE_NAME FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD.RD_RECODE = #{re_code}
+    <select id="supplyReceiveAsDetail" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+    	SELECT RD_PRCODE,RD_STCODE,PR_NAME,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,CATE_NAME,RD_RECODE FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE 
+    	WHERE RD.RD_RECODE = #{re_code} AND RD.RD_STCODE = #{re_state}
+    </select>
+    
+    <select id="getPrnameAndCount" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="string">
+    	SELECT PR_NAME FROM RD INNER JOIN PR ON PR.PR_SPCODE = RD.RD_PRSPCODE AND PR.PR_CODE = RD.RD_PRCODE WHERE RD_RECODE = #{re_code} AND RD_STCODE = #{re_state}
     </select>
     
     <!-- 반품요청->반품처리로 (수락) 업데이트 -->

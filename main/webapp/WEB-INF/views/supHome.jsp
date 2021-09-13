@@ -139,9 +139,43 @@
             </div>
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
-				<div id="supplyVueZone"  style="height: 100%; width: 100%;">
+				<div id="supplyVue"  style="height: 100%; width: 100%;">
               		<template v-if="display[0].show">
-              			 <div class="container-fluid px-4">
+              			<div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 30%;"><a>상품명</a></th>
+                                            <th style="width: 45%;"><a>상품정보</a></th>
+                                            <th style="width: 7.5%;"><a>가격</a></th>
+                                            <th style="width: 7.5%;"><a>카테고리</a></th>
+                                            <th style="width: 10%;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
+											<td>{{item.pr_name}}</td>
+											<td>{{item.pr_info}}</td>
+											<td>{{item.pr_ttprice}}</td>
+											<td>{{item.cate_name}}</td>
+											<td>{{item.pr_origin}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<div style="text-align: center">
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'RA','r')">수락</button>
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'FF','r')">거절</button>
+
+								</div>
+							</div>
+						</div>
+              		
+              		
+              			 <div class="container-fluid px-4" style="z-index: 3;">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
@@ -154,20 +188,20 @@
                                 <table id="datatablesSimple" class="dataTable-table">
                                     <thead>
                                         <tr>
-                                            <th style="width: 15%;"><a>회사명</a></th>
-                                            <th style="width: 15%;"><a>카테고리</a></th>
-                                            <th style="width: 50%;"><a>상품명</a></th>
+                                            <th style="width: 20%;"><a>고객사</a></th>
+                                            <th style="width: 40%;"><a>내용</a></th>
+                                            <th style="width: 20%;"><a>정보</a></th>
                                             <th style="width: 20%;" ><a></a></th>                                          
                                         </tr>
                                     </thead>
        
                                     <tbody>
-                                        <tr v-for="item in list">
+                                        <tr v-for="item in list" @click="getAsDetail(item.re_code,'r')">
                                             <td >{{item.cl_name}}</td>
-                                            <td >{{item.re_date}}</td>
-                                            <td >{{item.cl_hp}}</td>
+                                            <td >{{item.word}}</td>
+                                            <td >{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
-                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">등록</button>
+                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">수락</button>
                                            <button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
                                         </td>
                                         </tr>
@@ -179,11 +213,81 @@
                          </div>
               			
               		</template>
-              		             		
+              		<template v-if="display[1].show">
+            			<div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 30%;"><a>상품명</a></th>
+                                            <th style="width: 45%;"><a>상품정보</a></th>
+                                            <th style="width: 7.5%;"><a>가격</a></th>
+                                            <th style="width: 7.5%;"><a>카테고리</a></th>
+                                            <th style="width: 10%;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
+											<td>{{item.pr_name}}</td>
+											<td>{{item.pr_info}}</td>
+											<td>{{item.pr_ttprice}}</td>
+											<td>{{item.cate_name}}</td>
+											<td>{{item.pr_origin}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<div style="text-align: center">
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'EA','e')">수락</button>
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'EF','e')">거절</button>
+
+								</div>
+							</div>
+						</div>
+              			 			 <div class="container-fluid px-4">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                        <div class="dataTable-search">
+                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                        </div>
+                     </div>  
+                        <div class="card mb-4">
+                           <div class="card-header">교환 요청 리스트</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%;"><a>고객사</a></th>
+                                            <th style="width: 40%;"><a>내용</a></th>
+                                            <th style="width: 20%;"><a>정보</a></th>
+                                            <th style="width: 20%;" ><a></a></th>                                               
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="item in list" @click="getAsDetail(item.re_code,'e')">
+                                            <td >{{item.cl_name}}</td>
+                                            <td >{{item.word}}</td>
+                                            <td >{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td style="text-align: center">
+                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">수락</button>
+                                           <button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                         </div>
+              		</template>
+              		          <!-- RE_CODE,RE_CLCODE,RE_DATE,CL_NAME,CL_HP,RE_ORIGIN -->   		
               	</div>
              </main>
              
-           
+<!--            
             <main style="height: 100%; width: 100%;">
               	<div id="supplyVue"  style="height: 100%; width: 100%; " >
               	
@@ -442,7 +546,7 @@
               			
               	</div>
              </main>
-            
+             -->
         </div>
         <!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
         <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>  
@@ -450,10 +554,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
-		
+        <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
+		<%-- <script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script> --%>
         
     </body>
 </html>

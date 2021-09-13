@@ -124,32 +124,23 @@ public class SupplyServiceEntrance {
 		return ssc.supplyResponseRefund(ro);
 	}
 
-	public List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code) {
-		
-		return ssc.supplyReceiveAsDetail(re_code);
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailRR(String re_code) {
+		return ssc.supplyReceiveAsDetail(re_code,"RR");
+	}
+	
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailER(String re_code) {
+		return ssc.supplyReceiveAsDetail(re_code,"ER");
 	}
 	
 	public List<RequestOrderBean> supplyReceiveExchangeListForm() {//c
 		return ssc.supplyReceiveExchangeListForm();
 	}
 	
-	public String supplyResponseOrderOA(RequestOrderBean ro) {
-		String decision = "OA";
-		return ssc.supplyResponseCtl(ro,decision);
+	public String supplyResponseOrder(RequestOrderBean ro) {
+		System.out.println("test1");
+		return ssc.supplyResponseCtl(ro);
 	}
-	public String supplyResponseOrderOF(RequestOrderBean ro) {
-		String decision = "OF";
-		return ssc.supplyResponseCtl(ro,decision);
-	}
-	public String supplyResponseOrderEA(RequestOrderBean ro) {
-		String decision = "EA";
-		return ssc.supplyResponseCtl(ro,decision);
-	}
-	public String supplyResponseOrderEF(RequestOrderBean ro) {
-		String decision = "EF";
-		return ssc.supplyResponseCtl(ro,decision);
-	}
-	
+
 	public List<RequestOrderBean> supplyReceiveRefundListForm() {//c
 		return ssc.supplyReceiveRefundListForm();
 	}

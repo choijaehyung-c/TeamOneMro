@@ -1,5 +1,6 @@
 package mrone.supply.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -144,10 +145,13 @@ public class SupplyDao {
 		return sql.selectList("getReceiveAsListSp", ro);
 	}
 
-	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code) {
-		return sql.selectList("supplyReceiveAsDetail", re_code);
+	List<RequestOrderDetailBean> supplyReceiveAsDetail(RequestOrderBean ro) {
+		return sql.selectList("supplyReceiveAsDetail", ro);
 	}
 
+	List<String> getPrnameAndCount(RequestOrderBean re){
+		return sql.selectList("getPrnameAndCount",re);
+	}
 	/*
 	 * boolean supplyResponseRefund(RequestOrderBean re) { return
 	 * this.convertToBoolean(sql.update("supplyResponseRefund", re)); }
