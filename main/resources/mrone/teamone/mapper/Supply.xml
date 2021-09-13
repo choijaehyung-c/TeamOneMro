@@ -153,7 +153,7 @@
     
 
     <select id="getSupplyWaitOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
-SELECT 
+	SELECT 
 	RE_CODE,
 	RE_CLCODE,
 	RE_SPCODE,
