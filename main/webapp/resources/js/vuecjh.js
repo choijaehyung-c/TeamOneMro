@@ -210,12 +210,12 @@ function getExchangeListForm(msg=""){
 }
 /****************************************************************************/
 function getRefundList(jsondata){
-	main.changePage(2);
+	main.changePage(0);
 	main.pushData(jsondata);
 }
 
 function getExchangeList(jsondata){
-	main.changePage(3);
+	main.changePage(1);
 	main.pushData(jsondata);
 }
 
