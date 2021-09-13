@@ -67,18 +67,32 @@ class ClientServiceCtl {
 		return oscodes;
 	}
 	
+	String supplyRequestCtl(ClientOrderBean co, String type) {
+		co.setOs_state(type);
+		String oscode = null;
+		if (this.clientOrderProcess(co, co.getSp_code()) != null) {
+			oscode= co.getOd().get(0).getOd_oscode();
+			this.clientRequestProcess(co, co.getSp_code());
+		}
+
+		return oscode;
+	}
+	
 	String clientOrderProcess(ClientOrderBean co, String sp_code) {
 		boolean tran = false;
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
 		co.setOs_date(sdf.format(cal.getTime()));
+		System.out.println(co.getOs_date());
+		
+		if(co.getOs_origin()==null)co.setOs_origin("");
 		if (dao.insClientOrder(co)) {
 			int tranCount = 0;
+			String pOscode = dao.getOrderData(co);
+			co.setOs_code(pOscode);
 			for (int i = 0; i < co.getOd().size(); i++) {
 				if (co.getOd().get(i).getOd_prspcode().equals(sp_code)) {
-					co.getOd().get(i).setOd_oscode(dao.getOrderData(co));
+					co.getOd().get(i).setOd_oscode(pOscode);
 					if(co.getOd().get(i).getOd_note()==null)co.getOd().get(i).setOd_note("");
 					if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 						break;
@@ -91,7 +105,6 @@ class ClientServiceCtl {
 			else co.getOd().get(0).setOd_oscode(null);
 
 		}
-		pu.setTransactionResult(tran);
 		return co.getOd().get(0).getOd_oscode();
 	}
 	
@@ -100,6 +113,7 @@ class ClientServiceCtl {
 		RequestOrderBean ro = new RequestOrderBean();
 		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
 		ro.setRe_clcode(co.getOs_clcode());
+		System.out.println(co.getOs_code());
 		ro.setRe_oscode(co.getOs_code());
 		ro.setRe_state(co.getOs_state());
 		ro.setRe_spcode(sp_code);
@@ -120,7 +134,8 @@ class ClientServiceCtl {
 			}
 		}
 		ro.setRd(list);
-		if (co.getOs_state().equals("OR") ? msec.mroRequestOrder(ro)
+		
+		if (co.getOs_state().equals("OR")? msec.mroRequestOrder(ro):co.getOs_state().equals("OA")?msec.mroRequestReOrder(ro)
 				: co.getOs_state().equals("RR") ? msec.mroRequestRefund(ro) : msec.mroRequestExchange(ro)) {
 			tf = true;
 		}

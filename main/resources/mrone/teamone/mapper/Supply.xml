@@ -37,6 +37,10 @@
 		SELECT OS_ORIGIN FROM OS WHERE OS_CODE = #{os_code}
 	</select>
 	
+	<select id="getREOriginCode" parameterType="string" resultType="string">
+		SELECT RE_ORIGIN FROM RE WHERE RE_CODE = #{re_code}
+	</select>
+	
 	<select id="getNewODForRefund" parameterType="string" resultType="mrone.teamone.beans.OrderDetailBean">
 		SELECT OD_PRSPCODE,OD_STCODE,OD_PRCODE,OD_QUANTITY FROM OD WHERE OD_OSCODE = #{re_code} AND OD_STCODE = 'OA'
 	</select>
@@ -65,6 +69,7 @@
 		INSERT INTO DL VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_DELIVERY_NUM.NEXTVAL,#{os_code},'1',#{dv_code},#{lc_code})
 	</insert>
 
+	
 <!--	
 <insert id="insClientOrder" parameterType="mrone.teamone.beans.ClientOrderBean">
 		INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_CLIENT_ORDERNUMBER.NEXTVAL,#{os_clcode},TO_DATE(#{os_date},'YYYYMMDDHH24miss'),#{os_state})

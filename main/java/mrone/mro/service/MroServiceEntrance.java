@@ -53,6 +53,10 @@ public class MroServiceEntrance {
 	public boolean mroRequestOrder(RequestOrderBean ro) {
 		return msc.mroRequestCtl(ro, "OR");
 	}
+	
+	public boolean mroRequestReOrder(RequestOrderBean ro) {
+		return msc.mroRequestCtl(ro, "OA");
+	}
 
 	public boolean mroRequestRefund(RequestOrderBean ro) {
 		return msc.mroRequestCtl(ro, "RR");

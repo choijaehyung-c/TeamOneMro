@@ -341,13 +341,8 @@ class SupplyServiceCtl {
 				RequestOrderBean newRo = new RequestOrderBean();
 				ClientOrderBean newCo = new ClientOrderBean();
 				String clcode = dao.getCLForRefund(sr.getRe_code());
-				newRo.setRe_clcode(clcode);
 				newCo.setOs_clcode(clcode);
-				newRo.setRe_state("OA");
-				newCo.setOs_state("OA");
-				newRo.setRe_origin(sr.getRe_code());
 				newCo.setOs_origin(sr.getOs_code());
-				newRo.setRd(dao.getNewRDForRefund(sr.getRe_code()));
 				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
 				String spcode = null;
 				try {
@@ -358,20 +353,21 @@ class SupplyServiceCtl {
 
 					e.printStackTrace();
 				}
-				newRo.setRe_spcode(spcode);
-				
-				if (cse.clientOrderProcess(newCo, newRo.getRd().get(0).getRd_prspcode()) != null) {
-					if (mse.mroRequestProcess(newRo)) {
-						// 오리진 주문,발주서 폐기처리
-						System.out.println(ro.getRe_origin());
-						sr.setRe_code(ro.getRe_origin());
+				newCo.setSp_code(spcode);
+				String newOscode = cse.supplyRequestOrder(newCo);
+				if (newOscode!=null) {
+						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
+						sr.setRe_code(dao.getREOriginCode(ro.getRe_code()));
+						System.out.println(sr.getRe_code());
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
+						System.out.println(sr.getOs_code());
 						sr.setAfter("PD");
 						sr.setBefore("OA");
 						if(this.updateResponseProcess(sr)) {
 							tran = true;
+							issueDelivery(newOscode);
+							System.out.println(tran+"ttttt");
 						}
-					}
 				}
 				
 			}

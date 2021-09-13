@@ -26,6 +26,10 @@ public class ClientServiceEntrance {
 		return csc.clientRequestCtl(co,"ER");
 	}
 	
+	public String supplyRequestOrder(ClientOrderBean co) {
+		return csc.supplyRequestCtl(co,"OA");
+	}
+	
 	public List<TaxBean> clientGetTaxbill(ClientInfoBean ci) throws Exception {
 		return csc.clientGetTaxbillListCtl(ci);
 	}

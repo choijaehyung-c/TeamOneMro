@@ -54,6 +54,10 @@ public class SupplyDao {
 	String getOSOriginCode(String os_code) {
 		return sql.selectOne("getOSOriginCode",os_code);
 	}
+	
+	String getREOriginCode(String re_code) {
+		return sql.selectOne("getREOriginCode",re_code);
+	}
 
 	List<RequestOrderDetailBean> getNewRDForRefund(String re_code){
 		return sql.selectList("getNewRDForRefund", re_code);

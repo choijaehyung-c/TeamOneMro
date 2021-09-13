@@ -7,11 +7,11 @@
 
 	<insert id="insMroRequestOrder" parameterType="mrone.teamone.beans.RequestOrderBean">
 		INSERT INTO RE VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_MRO_REQUESTNUMBER.NEXTVAL,
-		#{re_clcode},#{re_spcode},TO_DATE(#{re_date},'YYYYMMDDHH24miss'),#{re_state},#{re_oscode},#{re_origin})
+		#{re_clcode},#{re_spcode},#{re_oscode},TO_DATE(#{re_date},'YYYYMMDDHH24miss'),#{re_state},#{re_origin})
 	</insert>
 
 	<insert id="insMroRequestOrderDetail" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
-		INSERT INTO RD VALUES(#{rd_prspcode},#{rd_recode},#{pr_code},#{rd_quantity},#{rd_stcode},#{rd_note})
+		INSERT INTO RD VALUES(#{rd_prspcode},#{rd_recode},#{rd_prcode},#{rd_quantity},#{rd_stcode},#{rd_note})
 	</insert>
 
 	<select id="getRequestOrderData" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="string">

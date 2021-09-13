@@ -34,13 +34,13 @@ class MroServiceCtl {
 
 		boolean tran = false;
 
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
 		ro.setRe_date(sdf.format(cal.getTime()));
-
+		
+		System.out.println(ro.getRe_date());
+		
 		if (dao.insMroRequestOrder(ro)) {
 			System.out.println("in1");
 			int tranCount = 0;
@@ -59,8 +59,7 @@ class MroServiceCtl {
 
 		}
 
-		pu.setTransactionResult(tran);
-
+		System.out.println("TEST"+tran);
 		return tran;
 	}
 
