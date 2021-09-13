@@ -183,7 +183,11 @@ const mainVue = new Vue({
 		/////////////////////////////////////////
 	mroExchangeListDetail:function(oscode){								
 			postAjaxJson('vue/mroGetExchangeDetail','ListDetailVue','j', oscode);
-		}	
+		},
+	searchWord:function(){
+		var word = document.getElementById
+	}	
+			
 	}
 });
 

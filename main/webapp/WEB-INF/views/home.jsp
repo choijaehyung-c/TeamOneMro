@@ -350,7 +350,7 @@
 								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
 								<li class="breadcrumb-item active">공급사 목록</li>
 							</ol>
-								<input type="text" class="form-control" name="word" placeholder="공급사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="search()" value="">검 색</span>
+								<input type="text" class="form-control" name="word"  placeholder="공급사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="search()" value="">검 색</span>
 								<div class="btn btn-secondary me-2 my-1" type="button" id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 공급사 등록</div>
 								                		<div class="modal fade" id="ModalLg" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">

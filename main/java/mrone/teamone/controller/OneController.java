@@ -35,6 +35,12 @@ public class OneController {
 		return mav;
 	}
 	
+	@GetMapping("/map")
+		public String map() {
+			return "map";
+		}
+	
+	
 	@PostMapping("/AccessMro")
 	public ModelAndView accessMro(@ModelAttribute AccessHistoryBean ah,HttpServletResponse res) {
 		Cookie ck = new Cookie("keykey",null);

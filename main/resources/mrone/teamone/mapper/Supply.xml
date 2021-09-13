@@ -24,14 +24,14 @@
 	<select id="getInvolvedOscode" parameterType="mrone.teamone.beans.SupplyResponse" resultType="string">
 		SELECT RE_OSCODE FROM RE WHERE RE_CODE = #{re_code} AND RE_STATE = #{before}
 	</select>
-	<!-- 수정1 -->
-	<update id="updReasonRD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
-		UPDATE RD SET RD_NOTE = #{rd_note} WHERE RD_RECODE = #{rd_recode} AND RD_STCODE = #{rd_stcode}
-	</update>
-	<!-- 수정1 -->
-	<update id="updReasonOD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
-		UPDATE OD SET OD_NOTE = #{rd_note} WHERE OD_OSCODE = #{rd_recode} AND OD_STCODE = #{rd_stcode} 
-	</update>
+	<!-- 수정-재형 -->
+   <update id="updReasonRD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
+      UPDATE RD SET RD_NOTE = #{rd_note} WHERE RD_RECODE = #{rd_recode} AND RD_STCODE = #{rd_stcode} AND RD_PRCODE = #{rd_prcode}
+   </update>
+   <!-- 수정-재형 -->
+   <update id="updReasonOD" parameterType="mrone.teamone.beans.RequestOrderDetailBean">
+      UPDATE OD SET OD_NOTE = #{rd_note} WHERE OD_OSCODE = #{rd_recode} AND OD_STCODE = #{rd_stcode} AND OD_PRCODE = #{rd_prcode}
+   </update>
 	
 	<select id="getOSOriginCode" parameterType="string" resultType="string">
 		SELECT OS_ORIGIN FROM OS WHERE OS_CODE = #{os_code}
@@ -263,6 +263,11 @@ SELECT
    			 FROM DL INNER JOIN DV ON DL.DL_DVCODE = DV.DV_CODE
             INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE
     		WHERE DV_SPCODE=#{spcode} AND DL_DSCODE >= 2
+    </select>
+    
+    <!-- 추가 수정 -->
+    <select id="getTrackDL" parameterType="string" resultType="mrone.teamone.beans.DeliveryBean">
+    	SELECT * FROM LC WHERE DL_OSCODE=#{recode}
     </select>
     
 <!--     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">

@@ -321,6 +321,11 @@ public class SupplyDao {
 		return sql.selectList("getTrackDeliveryList", spcode);
 	}
 
+	//수정1
+	List<DeliveryBean> getTrackDL(String recode) {
+		
+		return sql.selectList("getTrackDL", recode);
+	}
 
 	boolean updateDL(DeliveryBean db) {
 		return this.convertToBoolean(sql.insert("updateDL", db));
@@ -372,6 +377,8 @@ public class SupplyDao {
 
 		return reList;
 	}
+
+
 
 	
 

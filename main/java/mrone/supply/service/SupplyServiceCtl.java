@@ -195,6 +195,22 @@ class SupplyServiceCtl {
 
 		return dao.getTrackDeliveryList(spcode);
 	}
+	
+	//수정1
+	List<DeliveryBean> getTrackDL(String recode) {
+		List<DeliveryBean> list;
+		list = dao.getTrackDL(recode);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getLc_x().equals("0") && list.get(i).getLc_y().equals("0")) {
+				list.get(i).setLc_x("출고지");
+			}
+		}
+		
+		return list;
+	}
+
+
 
 	List<DeliveryBean> getDLlist() {
 		List<DeliveryBean> reList = null;
@@ -406,8 +422,7 @@ class SupplyServiceCtl {
 	
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
-		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+
 		if (dao.updRequest(sr)) {
 			if (dao.updRequestDetail(sr)) {
 				if (dao.updOrder(sr)) {
@@ -528,7 +543,6 @@ class SupplyServiceCtl {
 		pd.setPr_spcode("KR001D");
 		return dao.supplySearchProduct(pd);
 	}
-
 
 	
 }

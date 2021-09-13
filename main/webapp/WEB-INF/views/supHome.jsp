@@ -17,7 +17,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 </head>
 
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed" onLoad="change1()">
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<a class="navbar-brand ps-3" href="/">MRONE_SUPPLY</a>
 		<form
@@ -204,7 +204,36 @@
 		<div id="layoutSidenav_content">
 			<main style="height: 100%; width: 100%;">
 				<div id="supplyVue" style="height: 100%; width: 100%;">
+				<template v-if="display[4].show">
+						<ol class="breadcrumb mb-4">
+							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
+							<li class="breadcrumb-item active">chart</li>
+						</ol>
 
+
+						<div class="row">
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <svg class="svg-inline--fa fa-chart-bar fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-bar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M332.8 320h38.4c6.4 0 12.8-6.4 12.8-12.8V172.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V76.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-288 0h38.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zM496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"></path></svg><!-- <i class="fas fa-chart-bar me-1"></i> Font Awesome fontawesome.com -->
+                                        Bar Chart Example
+                                    </div>
+                                    <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="myBarChart" width="722" height="361" style="display: block; height: 289px; width: 578px;" class="chartjs-render-monitor"></canvas></div>
+                                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <svg class="svg-inline--fa fa-chart-pie fa-w-17 me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-pie" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 512" data-fa-i2svg=""><path fill="currentColor" d="M527.79 288H290.5l158.03 158.03c6.04 6.04 15.98 6.53 22.19.68 38.7-36.46 65.32-85.61 73.13-140.86 1.34-9.46-6.51-17.85-16.06-17.85zm-15.83-64.8C503.72 103.74 408.26 8.28 288.8.04 279.68-.59 272 7.1 272 16.24V240h223.77c9.14 0 16.82-7.68 16.19-16.8zM224 288V50.71c0-9.55-8.39-17.4-17.84-16.06C86.99 51.49-4.1 155.6.14 280.37 4.5 408.51 114.83 513.59 243.03 511.98c50.4-.63 96.97-16.87 135.26-44.03 7.9-5.6 8.42-17.23 1.57-24.08L224 288z"></path></svg><!-- <i class="fas fa-chart-pie me-1"></i> Font Awesome fontawesome.com -->
+                                        Pie Chart Example
+                                    </div>
+                                    <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="myPieChart" width="722" height="361" style="display: block; height: 289px; width: 578px;" class="chartjs-render-monitor"></canvas></div>
+                                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                                </div>
+                            </div>
+                        </div>
+				</template>
 
 					<template v-if="display[0].show" style="z-index: 3;">
 						<div v-if="modal.show"
@@ -232,13 +261,20 @@
 													가격</a></th>
 											<th data-sortable
 												style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
+											
 										</tr>
 									</thead>
 									<tbody>
-										<tr v-for="li in modalDetailList">
+										<tr v-for="(li,index) in modalDetailList" @click="insReason(index,li.rd_prcode)">
 
-											<td><img :src="li.pr_image" width="70%" height="70%"
-												alt="no search image"></td>
+											<td>
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" name="choose" @click="getCheckedVal()" :value=li.rd_prcode id="ch">
+												<label title="" class="form-check-label">
+														<img :src="li.pr_image" width="70%" height="70%" alt="no search image">
+												</label>
+											</div>
+											</td>
 											<td>{{li.rd_prcode}}</td>
 											<td>{{li.pr_name}}</td>
 											<td>{{li.rd_quantity}}</td>
@@ -250,7 +286,7 @@
 										</tr>
 									</tbody>
 								</table>
-
+								
 								<div @click="respondOA(modalDetailList[0].rd_recode)"
 									class="align-top ms-1 btn btn-outline-dark btn-sm"
 									style="position: relative; top: 50%; left: 42%;">접수확인</div>
@@ -268,7 +304,8 @@
 							<li class="breadcrumb-item active">수주대기 목록</li>
 						</ol>
 						<ol class="breadcrumb mb-4">
-							<ul class="mb-5 nav nav-tabs" role="tablist">
+	
+					 	<ul class="mb-5 nav nav-tabs" role="tablist">
 								<li class="nav-item" role="presentation">
 								<button type="button" role="tab" data-rb-event-key="allProducts"
 										aria-selected="true" class="nav-link active" onclick="orderWaitList()">수주대기목록</button>
@@ -422,9 +459,7 @@
 
 									</tbody>
 								</table>
-								<div @click="respondDelivery(modalDetailList[0].rd_recode)"
-									class="align-top ms-1 btn btn-outline-dark btn-sm"
-									style="position: relative; top: 50%; left: 42%;">출고</div>
+
 								<div class="align-top ms-1 btn btn-outline-primary btn-sm"
 									@click="modalClose()"
 									style="position: relative; top: 50%; left: 43%;">Close</div>
@@ -476,8 +511,8 @@
 									</label>
 								</div>
 								<div class="dataTable-search">
-									<input class="dataTable-input form-control form-control-sm"
-										placeholder="Search..." type="text">
+									<input id="INPUT" v-on:keyup.13='searchWord()' class="dataTable-input form-control form-control-sm"
+										placeholder="Search..." type="text"/>
 								</div>
 							</div>
 
@@ -605,7 +640,8 @@
 							<li class="breadcrumb-item active">수주거절 목록</li>
 						</ol>
 						<ol class="breadcrumb mb-4">
-						<ul class="mb-5 nav nav-tabs" role="tablist">
+
+					  	<ul class="mb-5 nav nav-tabs" role="tablist">
 							<li class="nav-item" role="presentation">
 								<button type="button" role="tab" data-rb-event-key="allProducts"
 									aria-selected="false" class="nav-link"
@@ -716,8 +752,38 @@
 <!-- ------------------------------------배송출발목록---------------------------------------------------------------- -->
 
 					<template v-if="display[3].show">
-						<h1 class="mt-4">배송 목록</h1>
+						<h1 class="mt-4">배송 목록</h1> <!-- 기사님이 물건을 가져갈때 버튼 누르면, 2로 업데이트 -->
+						<div v-if="modal.show"
+							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; margin-left:30%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<h5>주문코드 : {{modalDetailList[0].dl_oscode}}배송상태</h5>
+										<tr>
+											<th>순번</th>
+											<th>날짜</th>
+											<th>x위치</th>
+											<th>y위치</th>
+										</tr>
+									</thead>
 
+									<tbody>
+										<tr v-for="li in modalDetailList">
+											<td></td>
+											<td >{{li.lc_date}}</td>
+											<td >{{li.lc_x}}</td>
+											<td >{{li.lc_y}}</td>
+											
+										</tr>
+									</tbody>
+								</table>
+
+								<div class="align-top ms-1 btn btn-outline-primary btn-sm"
+									@click="modalClose()"
+									style="position: relative; top: 50%; left: 80%;">Close</div>
+							</div>
+						</div>
 						<ol class="breadcrumb mb-4">
 							<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
 							<li class="breadcrumb-item active">배송중 목록</li>
@@ -771,7 +837,7 @@
 
 									<tbody>
 										<tr class="align-middle" v-for="li in list"
-											@click="refuseListDetail(li.re_code)">
+											@click="deliveryState(li.dl_oscode)">
 											<td>
 												<div class="form-check">
 													<input type="checkbox" class="form-check-input"><label
@@ -826,6 +892,11 @@
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/chart-area-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/chart-bar-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/chart-pie-demo.js"></script>
+
 
 
 

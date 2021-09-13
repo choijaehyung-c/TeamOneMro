@@ -83,6 +83,12 @@ public class SupplyServiceEntrance {
 		return ssc.getTrackDeliveryList();
 	}
 	
+	//수정1
+	public List<DeliveryBean> getTrackDL(String recode) {
+
+		return ssc.getTrackDL(recode);
+	}
+
 	public List<DeliveryBean> getDLlist() {			
 		List<DeliveryBean> reList = null;
 		reList = ssc.getDLlist();
