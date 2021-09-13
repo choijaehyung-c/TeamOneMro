@@ -23,6 +23,60 @@ public class SupplyDao {
 	@Autowired
 	SqlSessionTemplate sql;
 
+	   List<RequestOrderBean> waitOrderlist(String spcode){
+
+		      return sql.selectList("getSupplyWaitOrderList",spcode);
+		   }
+
+		   
+		   List<RequestOrderBean> clearOrderlist(String spcode){
+		      return sql.selectList("getSupplyClearOrderList",spcode);
+		   }
+
+
+		   List<RequestOrderDetailBean> waitOrderlistD(String recode){
+		      List<RequestOrderDetailBean> reList = null;
+
+		      reList = sql.selectList("getSupplyWaitOrderListD",recode);
+		      return reList;
+		   }
+
+		   
+		   List<RequestOrderDetailBean> clearOrderlistD(String recode){
+
+		      return sql.selectList("getSupplyWaitOrderListD",recode);
+		   }
+		   
+		   //수정1
+		    List<RequestOrderBean> RefuseOrderlist(String spcode) {
+		         
+		         return sql.selectList("getRefuseOrderList",spcode);
+		   }
+
+		    //수정1
+		    List<RequestOrderDetailBean> refuseOrderListD(String recode) {
+		         
+		         return sql.selectList("getSupplyRefuseOrderListD",recode);
+		   }
+		    
+		   //수정1
+		   boolean supplyGoDelivery(String recode) {
+		         return this.convertToBoolean(sql.update("supplyGoDelivery", recode));
+		   }
+		   
+		   //수정1
+		   List<DeliveryBean> getTrackDeliveryList(String spcode) {
+		      // TODO Auto-generated method stub
+		      System.out.println(spcode);
+		      return sql.selectList("getTrackDeliveryList", spcode);
+		   }
+
+		   //수정1
+		   List<DeliveryBean> getTrackDL(String recode) {
+		      
+		      return sql.selectList("getTrackDL", recode);
+		   }
+	
 	List<ProductBean> supplyAllProductList(String sp_code){
 	      
 	      return sql.selectList("supplyAllProductList", sp_code);
@@ -304,32 +358,6 @@ public class SupplyDao {
 	public List<ProductBean> supplySearchProduct(ProductBean pd) {
 
 		return sql.selectList("supplySearchProduct", pd);
-	}
-
-
-	// 수정
-	List<RequestOrderBean> waitOrderlist(String spcode){
-
-		return sql.selectList("getSupplyWaitOrderList",spcode);
-	}
-
-	//수정
-	List<RequestOrderBean> clearOrderlist(String spcode){
-		return sql.selectList("getSupplyClearOrderList",spcode);
-	}
-
-	//수정
-	List<RequestOrderDetailBean> waitOrderlistD(String recode){
-		List<RequestOrderDetailBean> reList = null;
-
-		reList = sql.selectList("getSupplyWaitOrderListD",recode);
-		return reList;
-	}
-
-	//수정
-	List<RequestOrderDetailBean> clearOrderlistD(String recode){
-
-		return sql.selectList("getSupplyWaitOrderListD",recode);
 	}
 
 	boolean updateDL(DeliveryBean db) {

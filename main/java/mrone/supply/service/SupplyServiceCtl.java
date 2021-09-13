@@ -36,6 +36,164 @@ class SupplyServiceCtl {
 	@Autowired
 	MroServiceEntrance mse;
 	
+	   //수정1
+	   List<RequestOrderBean> waitOrderlist() {
+
+	      List<RequestOrderBean> reList = null;
+	      String spcode = null;
+	      try {
+	         if(pu.getAttribute("userSs") != null) {
+	            spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));              
+	         }
+	      } catch (Exception e) {
+
+	         e.printStackTrace();
+	      }
+
+	      reList = dao.waitOrderlist(spcode);
+
+	      for(int i =0; i<reList.size(); i++) {
+	         if(reList.get(i).getRe_state().equals("OR")) {
+	            reList.get(i).setRe_state("주문요청");
+	         }
+	      }
+	      return reList;
+	   }
+
+	   //수정1
+	   List<RequestOrderBean> clearOrderlist() {
+	      
+	      String spcode = null;
+	      try {
+	         if(pu.getAttribute("userSs") != null) {
+	            spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));              
+	         }
+	      } catch (Exception e) {
+
+	         e.printStackTrace();
+	      }
+
+	      List<RequestOrderBean> reList = null;
+	      reList = dao.clearOrderlist(spcode);
+	      
+	      for(int i =0; i<reList.size(); i++) {
+	         if(reList.get(i).getRe_state().equals("OA")) {
+	            reList.get(i).setRe_state("주문수락");
+	         }
+	      }
+	   
+	      
+	      return reList;
+	   }
+
+	   List<RequestOrderDetailBean> waitOrderlistD(String recode) {
+
+	      List<RequestOrderDetailBean> reList = null;
+	      reList = dao.waitOrderlistD(recode);
+
+	      for(int i=0; i<reList.size(); i++) {
+	         if(reList.get(i).getRd_stcode().equals("OR")) {
+	            reList.get(i).setRd_stcode("주문요청");
+	         }
+	            
+	      }
+	      return reList;
+	   }
+	   
+	   List<RequestOrderDetailBean> clearOrderlistD(String recode) {
+
+	      List<RequestOrderDetailBean> reList = null;
+	      reList = dao.clearOrderlistD(recode);
+
+	      for(int i=0; i<reList.size(); i++) {
+	         if(reList.get(i).getRd_stcode().equals("OA")) {
+	            reList.get(i).setRd_stcode("주문수락");
+	         }
+	            
+	      }
+	      return reList;
+	   }
+	   
+	   //수정1
+	   List<RequestOrderBean> getSupplyRefuseOrderList() {
+	      String spcode = null;
+	      try {
+	         if(pu.getAttribute("userSs") != null) {
+	            spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));              
+	         }
+	      } catch (Exception e) {
+
+	         e.printStackTrace();
+	      }
+
+	   List<RequestOrderBean> reList = null;
+	      reList = dao.RefuseOrderlist(spcode);
+	      
+	      for(int i =0; i<reList.size(); i++) {
+	         if(reList.get(i).getRe_state().equals("OF")) {
+	            reList.get(i).setRe_state("주문거절");
+	         }
+	      } 
+	      return reList;
+	   }
+	   
+	   //수정1
+	   List<RequestOrderDetailBean> getSupplyRefuseOrderListDetail(String recode) {
+	      List<RequestOrderDetailBean> reList = null;
+	      reList = dao.refuseOrderListD(recode);
+
+	      for(int i=0; i<reList.size(); i++) {
+	         if(reList.get(i).getRd_stcode().equals("OF")) {
+	            reList.get(i).setRd_stcode("주문거절");
+	         }
+	            
+	      }
+	      return reList;
+	   }
+	   
+	   //수정1
+	   String supplyGoDelivery(String recode) {
+	      String message;
+	      
+	      if(dao.supplyGoDelivery(recode)) {
+	         message="상품이 고객사로 출발하였습니다.";
+	      }else {
+	         message="다시 시도해주세요.";
+	      }
+	      
+	      return message;
+	   }
+	   
+	   //수정1
+	   List<DeliveryBean> getTrackDeliveryList() {
+	      String spcode = null;
+	      try {
+	         if(pu.getAttribute("userSs") != null) {
+	            spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));              
+	         }
+	      } catch (Exception e) {
+
+	         e.printStackTrace();
+	      }
+	         //re, rd, os, od도 state를 배송으로 바꿔야...  cause-주문수락상태가 아닌데, 주문수락목록에 뜬다.
+
+	      return dao.getTrackDeliveryList(spcode);
+	   }
+	   
+	   //수정1
+	   List<DeliveryBean> getTrackDL(String recode) {
+	      List<DeliveryBean> list;
+	      list = dao.getTrackDL(recode);
+	      
+	      for(int i=0; i<list.size(); i++) {
+	         if(list.get(i).getLc_x().equals("0") && list.get(i).getLc_y().equals("0")) {
+	            list.get(i).setLc_x("출고지");
+	         }
+	      }
+	      
+	      return list;
+	   }
+	
 	List<ProductBean> supplyAllProductList(){
 	      String spcode = null;
 	      try {
@@ -93,83 +251,7 @@ class SupplyServiceCtl {
 		return dao.getSupplyCateProductList(pb);
 	}
 
-	// 수정
-	List<RequestOrderBean> waitOrderlist() {
 
-		List<RequestOrderBean> reList = null;
-		String spcode = null;
-		try {
-			if(pu.getAttribute("userSs") != null) {
-				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
-			}
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		reList = dao.waitOrderlist(spcode);
-
-		for(int i =0; i<reList.size(); i++) {
-			if(reList.get(i).getRe_state().equals("OR")) {
-				reList.get(i).setRe_state("주문요청");
-			}
-		}
-		return reList;
-	}
-
-	//수정
-	List<RequestOrderBean> clearOrderlist() {
-		
-		String spcode = null;
-		try {
-			if(pu.getAttribute("userSs") != null) {
-				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));		        
-			}
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		List<RequestOrderBean> reList = null;
-		reList = dao.clearOrderlist(spcode);
-		
-		for(int i =0; i<reList.size(); i++) {
-			if(reList.get(i).getRe_state().equals("OA")) {
-				reList.get(i).setRe_state("주문수락");
-			}
-		}
-	
-		
-		return reList;
-	}
-	//수정
-	List<RequestOrderDetailBean> waitOrderlistD(String recode) {
-
-		List<RequestOrderDetailBean> reList = null;
-		reList = dao.waitOrderlistD(recode);
-
-		for(int i=0; i<reList.size(); i++) {
-			if(reList.get(i).getRd_stcode().equals("OR")) {
-				reList.get(i).setRd_stcode("주문요청");
-			}
-				
-		}
-		return reList;
-	}
-	//수정
-	List<RequestOrderDetailBean> clearOrderlistD(String recode) {
-
-		List<RequestOrderDetailBean> reList = null;
-		reList = dao.clearOrderlistD(recode);
-
-		for(int i=0; i<reList.size(); i++) {
-			if(reList.get(i).getRd_stcode().equals("OA")) {
-				reList.get(i).setRd_stcode("주문수락");
-			}
-				
-		}
-		return reList;
-	}
 
 	List<DeliveryBean> getDLlist() {
 		List<DeliveryBean> reList = null;

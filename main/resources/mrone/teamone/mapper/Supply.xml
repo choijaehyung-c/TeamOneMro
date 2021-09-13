@@ -160,64 +160,120 @@
     
     <!-- 수정 -->
     <select id="getSupplyWaitOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
-SELECT 
-	RE_CODE,
-	RE_CLCODE,
-	RE_SPCODE,
-	RE_DATE,
-	RE_STATE,
+   SELECT 
+   RE_CODE,
+   RE_CLCODE,
+   RE_SPCODE,
+   RE_DATE,
+   RE_STATE,
     CL.CL_NAME,
     CL.CL_HP
-	FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
+   FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
     WHERE RE_STATE = 'OR'AND RE_SPCODE = #{spcode}
     </select>
     
     <!-- 수정 -->
     <select id="getSupplyClearOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
-	SELECT 
-	RE_CODE,
-	RE_CLCODE,
-	RE_SPCODE,
-	RE_DATE,
-	RE_STATE,
+   SELECT 
+   RE_CODE,
+   RE_CLCODE,
+   RE_SPCODE,
+   RE_DATE,
+   RE_STATE,
     CL.CL_NAME,
     CL.CL_HP
-	FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
+   FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
     WHERE RE_STATE = 'OA'AND RE_SPCODE = #{spcode}
     </select>
     
     <!-- 수정 -->
     <select id="getSupplyWaitOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
-	SELECT 
-	RD_PRSPCODE, 
-	RD_RECODE, 
-	RD_PRCODE, 
-	RD_QUANTITY, 
-	RD_STCODE,
+   SELECT 
+   RD_PRSPCODE, 
+   RD_RECODE, 
+   RD_PRCODE, 
+   RD_QUANTITY, 
+   RD_STCODE,
     PR_IMAGE,
     PR_PRICE,
     PR_TAX,
     SUM(PR_PRICE+PR_TAX)*RD_QUANTITY AS "PR_TTPRICE",
     PR_NAME
-	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
+   FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
     GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE
-	    </select>
+       </select>
     
     <!-- 수정 -->
-    <select id="getSupplyClearOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
-	SELECT 
-	RD_PRSPCODE, 
-	RD_RECODE, 
-	RD_PRCODE, 
-	RD_QUANTITY, 
-	RD_STCODE,
+   <select id="getSupplyClearOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+   SELECT 
+   RD_PRSPCODE, 
+   RD_RECODE, 
+   RD_PRCODE, 
+   RD_QUANTITY, 
+   RD_STCODE,
     PR_IMAGE,
     PR_PRICE,
     PR_TAX,
     SUM(PR_PRICE+PR_TAX)*RD_QUANTITY AS "PR_TTPRICE",
     PR_NAME
-	FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
+   FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
     GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE
+    </select>
+    
+        <select id="getRefuseOrderList" parameterType="string" resultType="mrone.teamone.beans.RequestOrderBean">
+    SELECT 
+      RE_CODE,
+      RE_CLCODE,
+      RE_SPCODE,
+      RE_DATE,
+      RE_STATE,
+       CL.CL_NAME,
+       CL.CL_HP
+      FROM RE INNER JOIN CL ON RE_CLCODE=CL.CL_CODE 
+    WHERE RE_STATE = 'OF' AND RE_SPCODE = #{spcode}
+    </select>
+    
+        <!-- 수정 -->
+    
+    <select id="getSupplyRefuseOrderListD" parameterType="string" resultType="mrone.teamone.beans.RequestOrderDetailBean">
+    SELECT 
+   RD_PRSPCODE, 
+   RD_RECODE, 
+   RD_PRCODE, 
+   RD_QUANTITY, 
+   RD_STCODE,
+    PR_IMAGE,
+    PR_PRICE,
+    PR_TAX,
+    SUM(PR_PRICE+PR_TAX)*RD_QUANTITY AS "PR_TTPRICE",
+    PR_NAME,
+    RD_NOTE
+   FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD_RECODE = #{recode}
+    GROUP BY RD_PRSPCODE, RD_RECODE, RD_PRCODE, RD_QUANTITY, RD_STCODE, PR_TAX, PR_NAME, PR_PRICE, PR_IMAGE, RD_NOTE
+    </select>
+    
+    <!-- 추가 수정 -->  
+    <update id="supplyGoDelivery" parameterType="string">
+        UPDATE DL SET DL_DSCODE='2' WHERE DL_OSCODE=#{recode}
+    </update>
+    
+    <!-- 추가 수정  -->
+    <select id="getTrackDeliveryList" parameterType="string" resultType="mrone.teamone.beans.DeliveryBean">
+           SELECT DL.DL_CODE,
+                 DL.DL_OSCODE,
+                 DL.DL_DSCODE,
+                 DS.DS_NAME,
+                 DL.DL_DVCODE,
+                 DV.DV_NAME,
+                 DV.DV_HP
+             FROM DL INNER JOIN DV ON DL.DL_DVCODE = DV.DV_CODE
+            INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE
+          WHERE DV_SPCODE=#{spcode} AND DL_DSCODE >= 2
+    </select>
+    
+    <!-- 추가 수정 -->
+    <select id="getTrackDL" parameterType="string" resultType="mrone.teamone.beans.DeliveryBean">
+       SELECT * FROM LC WHERE DL_OSCODE=#{recode}
     </select>
     
 <!--     <select id="updateRequestOrderState" parameterType="mrone.teamone.beans.RequestOrderDetailBean" resultType="mrone.teamone.beans.RequestOrderBean">

@@ -6,11 +6,12 @@
 const main = new Vue({
   el: '#supplyVue',
   data: {
-	display:[{show:false},{show:false}],
+	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
 	modal: { show: false },
 	list:[],
 	modalList:[],
-	dupCheck:[]
+	dupCheck:[],
+	modalDetailList:[],
   },
 	methods:{
 		changePage:function(page){
@@ -84,7 +85,105 @@ const main = new Vue({
 			}else if(type=="e"){
 				postAjaxJson('vue/supplyResponseOrder','getExchangeListForm','s',JSON.stringify(cData));
 			}
-		}
+		},
+		/////////////////////////////////////////
+      orderListPage:function(){//수주대기목록
+         postAjaxJson('vue/getSupplyReceiveWaitOrderList','getReceiveList','j');         
+      },
+      orderListDetail:function(recode){//수주대기 디테일   
+      postAjaxJson('vue/getSupplyReceiveWaitOrderListD','getReceiveListD','j',recode);      
+      },
+      respondOA:function(recode){ //수주대기 -  주문수락
+         sendData={re_code:recode,re_state:"OA"};
+         let clientData = JSON.stringify(sendData);
+         postAjaxJson('vue/supplyResponseOrder','receiveOrderControll2','s',clientData);
+      },
+      respondOF:function(recode){//수주대기 - 주문거절
+         //let rd_note =prompt("거절사유를 입력해주세요.");
+         let sendData=[];
+         let rd = [];
+         let rdnote = document.getElementsByName("rd_note");
+         let prcode = document.getElementsByName("rd_prcode");
+         sendData.push({re_code:recode,re_state:"OF",rd:rd});
+         
+         for(i=0; i<rdnote.length;i++){
+            let rdd = {rd_note:rdnote[i].value,rd_prcode:prcode[i].value};
+            rd.push(rdd);
+         }
+         
+            //rd.push({ rd_note: values, rd_prcode: prcode});
+            //rd.push({rd_note:values,rd_prcode:prcode});
+            let ClientData = JSON.stringify(sendData);
+
+            postAjaxJson('vue/supplyResponseOrder', 'receiveOrderControll2', 's', ClientData);
+            alert(ClientData);
+            
+      },   
+      /////////////////////////////////////////
+      deliveryListPage:function(){//접수완료목록
+         postAjaxJson('vue/getSupplyReceiveClearOrderList','getReceiveListC','j');
+      },      
+      deliveryListDetail:function(recode){//접수완료 디테일   
+         postAjaxJson('vue/getSupplyReceiveClearOrderListD','getReceiveListD2','j',recode);               
+      },
+      changeWon:function(){//가격 콤마찍기
+            for(i=0; i<this.modalDetailList.length;i++){
+            this.modalDetailList[i].pr_price = this.modalDetailList[i].pr_price.toLocaleString();
+            this.modalDetailList[i].pr_tax = this.modalDetailList[i].pr_tax.toLocaleString();
+            this.modalDetailList[i].pr_ttprice =this.modalDetailList[i].pr_ttprice.toLocaleString();
+         }
+      },       
+
+   
+      refusePage:function(){//수주거절 목록
+         postAjaxJson('vue/getSupplyRefuseOrderList','getRefuseList','j');
+      },
+      refuseListDetail:function(recode){
+         postAjaxJson('vue/getSupplyRefuseOrderD','getReceiveListD3','j',recode);
+      },
+      trackDeliveryPage:function(){//배송 출발 목록
+         postAjaxJson('vue/getTrackDeliveryList','getTrackingDelivery','j');   
+      },
+      searchWord:function(){
+         let word = document.getElementById("INPUT");
+         alert(word.value);
+      },
+      getCheckedVal:function(){
+            const query = 'input[name="choose"]:checked';
+            const selected = document.querySelectorAll(query);            
+               let result ='';
+               selected.forEach((el)=>{
+               result+= el.value + ' ';      
+            });
+               return result;
+               
+      },
+      deliveryState:function(recode){
+         alert(recode+"의 배송상태");
+         postAjaxJson('vue/getTrackDL','getTrackingDL','j',recode);
+         
+      },
+       insReason2:function(index,prcode){
+         console.log(index+"a"+prcode);
+         if(this.dupCheck.includes(index))return;
+         let updown = 0;
+         
+         for(i=0;i<this.dupCheck.length;i++){
+            if(this.dupCheck[i] > index){
+               updown -= 1;
+            }
+         }
+         let modal = document.getElementById('datatablesSimple');
+         let newRow = modal.insertRow(this.dupCheck.length+2+index+updown);
+         newRow.id=`del${index}`;
+         let newCell1 = newRow.insertCell(0);
+         let newCell2 = newRow.insertCell(1);
+         newCell1.colSpan = "6";
+         newCell1.innerHTML = `<input type="text" name="rd_note" style="width:100%;" placeholder="거절 사유 입력"/>
+                           <input type="hidden" name="rd_prcode" value="${prcode}"/>`;
+         newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;
+         this.dupCheck.push(index);
+      },
 	}
 });
 
@@ -109,12 +208,12 @@ function getExchangeListForm(msg=""){
 }
 /****************************************************************************/
 function getRefundList(jsondata){
-	main.changePage(0);
+	main.changePage(2);
 	main.pushData(jsondata);
 }
 
 function getExchangeList(jsondata){
-	main.changePage(1);
+	main.changePage(3);
 	main.pushData(jsondata);
 }
 
@@ -125,6 +224,88 @@ function getAsDetailForm(jsondata){
 }
 
 
+/////////////////////////////////////////////////
+//수주대기목록페이지 (사이드바 클릭시)
+function orderWaitList(){
+   main.orderListPage();
+}
+
+//수주대기목록페이지 - 리턴
+function getReceiveList(data){
+   main.list = data;
+   main.changePage(2);
+}
+//수주대기 목록 디테일
+function getReceiveListD(data){
+   main.modalDetailList = data;
+   main.changeWon();
+   main.modalOpen();
+}
+
+//수주 접수 응답 - 리턴
+function receiveOrderControll2(msg){
+   if(msg!=""){
+      alert(msg);
+      main.modalClose();
+      main.orderListPage();
+   }else{
+      main.orderListPage();
+   }
+}
+
+//수주접수완료 목록(사이드바 클릭시)
+function orderReceiveList(){
+   main.deliveryListPage();
+   
+}
+
+//수주접수완료 목록 - 리턴
+function getReceiveListC(jsonData){
+   main.list= jsonData;
+   main.changePage(3);
+   
+}
+//수주접수완료 목록 - 디테일
+function getReceiveListD2(data){
+   main.modalDetailList= data;
+   main.changeWon();
+   main.modalOpen();
+}
+
+
+//수주거절 목록 페이지 
+function orderRefuseList(){
+   main.refusePage();
+}
+
+//수주거절 목록 
+function getRefuseList(jsondata){
+   main.list=jsondata;
+   main.changePage(4);
+}
+//수주거절 디테일목록
+function getReceiveListD3(data){
+   main.modalDetailList=data;
+   main.changeWon();
+   main.modalOpen();
+}
+
+//배송출발 페이지
+function trackDelivery(){
+   main.trackDeliveryPage();
+}
+
+//배송출발 목록
+function getTrackingDelivery(jsondata){
+   main.list=jsondata;
+   main.changePage(5);
+}
+
+//배송 추적
+function getTrackingDL(jsondata){
+   main.modalDetailList = jsondata;
+   main.modalOpen();
+}
 
 
 
@@ -149,230 +330,3 @@ function getAsDetailForm(jsondata){
 
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-
-
-
-const mainVue = new Vue({
-	el:"#mainVue",
-	data:{						    
-		page:[{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}],
-		modal:{show:false},
-		list:[],		
-		PClist:[],		
-		PRAFlist:[],
-		MRDRDAlist:[],
-		categoryList2:[],
-		detail:{},
-	},
-	methods:{
-		resetPage:function(){
-			for(i=0;i<this.page.length;i++){
-				this.page[i].show=false;
-			}
-		},
-		modalClose:function(modalN){
-			this.modal[modalN].show=false;
-		},
-		supplyAllProductListPush:function(jsondata){
-			this.list=jsondata;
-			this.resetPage();
-			this.page[0].show=true;
-			this.page[1].show=true;
-		},
-		categoryPoductListPage:function(cate){
-			this.categoryCode = cate;
-			this.resetPage();
-			this.page[0].show=true;
-			this.page[2].show=true;
-		},
-		productDetail:function(prcode, stcode, modalN){
-			let sendJsonData = {pr_code:prcode, pr_stcode:stcode};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/SupplyGetProductDetail','detailPush', 'j', clientData);
-			this.modal[modalN].show = true;
-		},
-		detailPush:function(jsondata){
-			this.modal.show = true;
-			this.detail = jsondata;	
-		},
-		supplyModifyStock:function(prcode, prstock){
-			let sendJsonData = {pr_code:prcode, pr_stock:prstock};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/SupplyModifyStock','msg', 's', clientData);		
-		},
-		supplyRequestModify:function(prspcode, prcode, prtax, prspbkind, prstcode, primage, prname, prprice, prstock, prorigin, prinfo, cate, catename){
-			let sendJsonData = {pr_spcode:prspcode, pr_code:prcode, pr_tax:prtax,
-						pr_spbkind:prspbkind, pr_stcode:prstcode,
-						pr_image:primage, pr_name:prname,
-						pr_price:prprice, pr_stock:prstock,
-						pr_origin:prorigin, pr_info:prinfo,
-						cate:cate, cate_name:catename};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/SupplyRequestModify','reSupplyAllProductListPage', 's', clientData);
-			this.modal[0].show = false;
-		},
-		supplyRequestDelete:function(prspcode, prcode, prtax, prspbkind, prstcode, primage, prname, prprice, prstock, prorigin, prinfo, cate, catename){
-			let sendJsonData = {pr_spcode:prspcode, pr_code:prcode, pr_tax:prtax,
-						pr_spbkind:prspbkind, pr_stcode:prstcode,
-						pr_image:primage, pr_name:prname,
-						pr_price:prprice, pr_stock:prstock,
-						pr_origin:prorigin, pr_info:prinfo,
-						cate:cate, cate_name:catename};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/SupplyRequestDelete','reSupplyAllProductListPage', 's', clientData);
-			this.modal[0].show = false;
-		},
-		getNewProductDetail:function(prcode){
-			let sendJsonData = {pr_code:prcode};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/MroGetNewProductDetail','newProductDetailPush', 'j', clientData);
-		},
-		newProductDetailPush:function(jsondata){
-			this.detail = jsondata;
-			this.modal.show=true;
-		},
-		supplyPRAFProductListPush:function(jsondata){
-			this.list = jsondata;
-			this.resetPage();
-			this.page[3].show = true;
-			this.page[6].show = true;
-			
-		},
-		supplyMRDRDAProductListPush:function(jsondata){
-			this.list = jsondata;
-			this.resetPage();
-			this.page[4].show = true;
-			this.page[8].show = true;
-		},
-		supplyRequestCancel:function(prcode, stcode){
-			let sendJsonData = {pr_code:prcode, pr_stcode:stcode};
-			let clientData = JSON.stringify(sendJsonData);
-			if(stcode == 'PR'||stcode=='AF'){			
-				postAjaxJson('vue/SupplyRequestCancel','reSupplyPRAFProductListPage', 's', clientData);
-			}else{
-				postAjaxJson('vue/SupplyRequestCancel','reSupplyMRDRDAProductListPage', 's', clientData);
-			}
-		},
-		supplyRequestNewProductModal:function(){
-			this.modal[2].show = true;
-			postAjaxJson('vue/supplyGetCategory','getCate','j');
-		},
-		supplyGetCategoryPush:function(jsondata){
-			this.categoryList2 = jsondata;
-		},
-		supplyRequestNewProduct:function(){
-			let catename = CG.options[CG.selectedIndex].text;
-			let sendJsonData = {pr_image:this.pr_image, pr_name:this.pr_name,
-						pr_price:this.pr_price, pr_stock:this.pr_stock,
-						pr_origin:this.pr_origin, pr_info:this.pr_info,
-						cate:this.cate, cate_name:catename};
-			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage', 's', clientData);
-		},
-		search1:function(word){
-			this.searchWord = word.target.value;
-			this.resetPage();
-			this.page[0].show = true;
-			this.page[5].show = true;
-		},
-		search2:function(word){
-			this.searchWord = word.target.value;
-			this.resetPage();
-			this.page[3].show = true;
-			this.page[7].show = true;
-		},
-		search3:function(word){
-			this.searchWord = word.target.value;
-			this.resetPage();
-			this.page[4].show = true;
-			this.page[9].show = true;
-		}
-		
-	}
-});
-
-
-
-
-const mainVueTwo = new Vue({
-	el:"#mainVueTwo",
-	data:{
-		page:[{show:false}],
-		categoryList:[]
-	},
-	methods:{
-		resetPage:function(){
-			for(i=0;i<this.page.length;i++){
-				this.page[i].show=false;
-			}
-		},
-		modalClose:function(num){
-			this.page[num].show=false;
-		},
-		supplyGetCategoryPage:function(){
-			postAjaxJson('vue/supplyGetCategory','getCate','j');										
-			this.page[0].show=true;
-		},
-		supplyGetCategoryPush:function(jsondata){
-			this.categoryList = jsondata;	
-		},
-		supplyAllProductListPage:function(){
-			postAjaxJson('vue/SupplyAllProductList','supplyAllProductListPush','j');	
-		},
-		callCategoryPoductList:function(cate){
-			mainVue.categoryPoductListPage(cate);		
-		},
-		supplyPRAFProductListPage:function(){
-			this.resetPage();
-			postAjaxJson('vue/SupplyPRAFProductList', 'supplyPRAFProductListPush', 'j');
-		},
-		supplyMRDRDAProductListPage:function(){
-			this.resetPage();
-			postAjaxJson('vue/SupplyMRDRDAProductList', 'supplyMRDRDAProductListPush', 'j');
-		}
-		
-	}
-});
-
-
-function getCate(jsondata){
-	mainVueTwo.supplyGetCategoryPush(jsondata);
-	mainVue.supplyGetCategoryPush(jsondata);
-}
-
-function supplyAllProductListPush(jsondata){
-	mainVue.supplyAllProductListPush(jsondata);
-}
-
-function reSupplyAllProductListPage(msg){
-	alert(msg);
-	mainVueTwo.supplyAllProductListPage();
-}
-
-function detailPush(jsondata){
-	mainVue.detailPush(jsondata);
-}
-
-function supplyPRAFProductListPush(jsondata){
-	mainVue.supplyPRAFProductListPush(jsondata);
-}
-function supplyMRDRDAProductListPush(jsondata){
-	mainVue.supplyMRDRDAProductListPush(jsondata);
-}
-
-function reSupplyPRAFProductListPage(msg){
-	alert(msg);
-	mainVueTwo.supplyPRAFProductListPage();
-}
-function reSupplyMRDRDAProductListPage(msg){
-	alert(msg);
-	mainVueTwo.supplyMRDRDAProductListPage();
-}
-
-function msg (msg){
-	alert(msg);
-}
-
-
-
-

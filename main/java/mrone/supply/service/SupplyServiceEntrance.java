@@ -52,32 +52,6 @@ public class SupplyServiceEntrance {
 		return ssc.getSupplyCateProductList(pr);
 	}
 	
-	public List<RequestOrderBean> RequestWaitOrderListCtl() {			
-		List<RequestOrderBean> reList = null;
-		reList = ssc.waitOrderlist();
-		return reList;
-	}
-	
-	
-	//수정
-	public List<RequestOrderBean> RequestClearOrderListCtl() {			
-		return ssc.clearOrderlist();
-	}
-	
-	//수정
-	public List<RequestOrderDetailBean> RequestWaitOrderListCtlD(String recode) {			
-		
-		
-		return ssc.waitOrderlistD(recode);
-	}
-	
-	//수정
-	public List<RequestOrderDetailBean> RequestClearOrderListCtlD(String recode) {			
-		
-		
-		return ssc.clearOrderlistD(recode);
-	}
-	
 	
 	public List<DeliveryBean> getDLlist() {			
 		List<DeliveryBean> reList = null;
@@ -187,4 +161,55 @@ public class SupplyServiceEntrance {
 		return ssc.supplyGetProductDetail(pb);
 	}
 	
+	
+	   //수정1
+	   public List<RequestOrderBean> RequestWaitOrderListCtl() {         
+	      List<RequestOrderBean> reList = null;
+	      reList = ssc.waitOrderlist();
+	      return reList;
+	   }
+	   
+	   
+	   
+	   public List<RequestOrderBean> RequestClearOrderListCtl() {         
+	      return ssc.clearOrderlist();
+	   }
+	   
+	   
+	   public List<RequestOrderDetailBean> RequestWaitOrderListCtlD(String recode) {                     
+	      return ssc.waitOrderlistD(recode);
+	   }
+	   
+	   
+	   public List<RequestOrderDetailBean> RequestClearOrderListCtlD(String recode) {                     
+	      return ssc.clearOrderlistD(recode);
+	   }
+	   //수정1
+	   public List<RequestOrderBean> getSupplyRefuseOrderList() {
+	      return ssc.getSupplyRefuseOrderList();
+	   }
+	   
+	   //수정1
+	   public List<RequestOrderDetailBean> getSupplyRefuseOrderListDetail(String recode) {
+
+	      return ssc.getSupplyRefuseOrderListDetail(recode);
+	   }
+	      
+	   //수정1
+	   public String supplyGoDelivery(String recode) {
+	      
+	      return ssc.supplyGoDelivery(recode);
+	   }
+	   
+	   //수정1
+	   public List<DeliveryBean> getTrackDeliveryList() {
+	      
+	      return ssc.getTrackDeliveryList();
+	   }
+	   
+	   //수정1
+	   public List<DeliveryBean> getTrackDL(String recode) {
+
+	      return ssc.getTrackDL(recode);
+	   }
 }

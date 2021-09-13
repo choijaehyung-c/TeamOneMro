@@ -36,6 +36,8 @@ public class RestApiController {
 	@Autowired
 	private MroServiceEntrance mse;
 	
+	
+	
 	   //해당 회사 상품 PC 가져오기
     @PostMapping("/SupplyAllProductList")
     public List<ProductBean> supplyAllProductList(){
@@ -85,47 +87,76 @@ public class RestApiController {
 
 	}
 	
-	@PostMapping("/getSupplyReceiveWaitOrderList")
-	public List<RequestOrderBean> supplyReceiveWaitOrderList() {
-		List<RequestOrderBean> reList = null;
-		reList = sse.RequestWaitOrderListCtl();
-		System.out.println(sse.RequestWaitOrderListCtl());
-		return reList;	
-	}
-	
-	//수정
-	@PostMapping("/getSupplyReceiveClearOrderList")
-	public List<RequestOrderBean> supplyReceiveClearOrderList() {		
-		System.out.println(sse.RequestClearOrderListCtl());
-		return sse.RequestClearOrderListCtl();
-	}
-	
-	//수정
-	@PostMapping("/getSupplyReceiveWaitOrderListD")
-	public List<RequestOrderDetailBean> supplyReceiveWaitOrderListD(@RequestBody String recode ) {
-		//System.out.println(recode);
-		System.out.println(sse.RequestWaitOrderListCtlD(recode));
-		return sse.RequestWaitOrderListCtlD(recode);
-		
-	}
-	
-	//수정
-	@PostMapping("/getSupplyReceiveClearOrderListD")
-	public List<RequestOrderDetailBean> supplyReceiveClearOrderListD(@RequestBody String recode ) {
-		System.out.println("수주접수 코드 : "+recode);
-		System.out.println(sse.RequestClearOrderListCtlD(recode));
-		return sse.RequestClearOrderListCtlD(recode);
-		
-	}
-	
-	//수정
-//	@PostMapping("/responseOrder")
-//	public String responseOrder(@RequestBody RequestOrderDetailBean rdb ) {
-//		//System.out.println("응답!!! "+list.getRd_recode());
-//		String message = sse.responseOrder(rdb);
-//		return message;
-//		
-//	}
+	 @PostMapping("/getSupplyReceiveWaitOrderList")
+	   public List<RequestOrderBean> supplyReceiveWaitOrderList() {
+	      List<RequestOrderBean> reList = null;
+	      reList = sse.RequestWaitOrderListCtl();
+	      System.out.println(sse.RequestWaitOrderListCtl());
+	      return reList;
+	   }
+
+	   @PostMapping("/getSupplyReceiveClearOrderList")
+	   public List<RequestOrderBean> supplyReceiveClearOrderList() {
+	      System.out.println(sse.RequestClearOrderListCtl());
+	      return sse.RequestClearOrderListCtl();
+	   }
+
+	   @PostMapping("/getSupplyReceiveWaitOrderListD")
+	   public List<RequestOrderDetailBean> supplyReceiveWaitOrderListD(@RequestBody String recode) {
+	      // System.out.println(recode);
+	      System.out.println(sse.RequestWaitOrderListCtlD(recode));
+	      return sse.RequestWaitOrderListCtlD(recode);
+
+	   }
+
+	   @PostMapping("/getSupplyReceiveClearOrderListD")
+	   public List<RequestOrderDetailBean> supplyReceiveClearOrderListD(@RequestBody String recode) {
+	      System.out.println("수주접수 코드 : " + recode);
+	      System.out.println(sse.RequestClearOrderListCtlD(recode));
+	      return sse.RequestClearOrderListCtlD(recode);
+
+	   }
+
+	   // 수정1
+	   @PostMapping("/getSupplyRefuseOrderList")
+	   public List<RequestOrderBean> getSupplyRefuseOrderList() {
+	      System.out.println(sse.getSupplyRefuseOrderList());
+	      return sse.getSupplyRefuseOrderList();
+
+	   }
+
+	   // 수정1
+	   @PostMapping("/getSupplyRefuseOrderD")
+	   public List<RequestOrderDetailBean> getSupplyRefuseOrderD(@RequestBody String recode) {
+	      System.out.println(sse.getSupplyRefuseOrderListDetail(recode));
+	      return sse.getSupplyRefuseOrderListDetail(recode);
+
+	   }
+
+	   // 수정1
+	   @PostMapping("/supplyGoDelivery") // 배송출고시작 => 출고버튼(배송준비중->배송중으로 upd)
+	   public String supplyGoDelivery(@RequestBody String recode) {
+	      System.out.println(sse.supplyGoDelivery(recode));
+	      return sse.supplyGoDelivery(recode);
+
+	   }
+
+	   // 수정1
+	   @PostMapping("/getTrackDeliveryList") // 배송 상태 확인 (배송중인 주문코드들 확인)
+	   public List<DeliveryBean> getTrackDeliveryList() {
+	      System.out.println(sse.getTrackDeliveryList());
+	      return sse.getTrackDeliveryList();
+
+	   }
+
+	   // 수정1
+	   @PostMapping("/getTrackDL") // 특정 주문코드 배송 위치 확인
+	   public List<DeliveryBean> getTrackDL(@RequestBody String recode) {
+	      System.out.println(recode);
+	      System.out.println("배송추적: " + sse.getTrackDL(recode));
+	      return sse.getTrackDL(recode);
+
+	   }
 	
 	
 	
