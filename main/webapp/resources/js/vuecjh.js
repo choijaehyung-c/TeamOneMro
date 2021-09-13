@@ -100,16 +100,18 @@ const main = new Vue({
       },
       respondOF:function(recode){//수주대기 - 주문거절
          //let rd_note =prompt("거절사유를 입력해주세요.");
-         let sendData=[];
+         
          let rd = [];
          let rdnote = document.getElementsByName("rd_note");
          let prcode = document.getElementsByName("rd_prcode");
-         sendData.push({re_code:recode,re_state:"OF",rd:rd});
+        
          
          for(i=0; i<rdnote.length;i++){
             let rdd = {rd_note:rdnote[i].value,rd_prcode:prcode[i].value};
             rd.push(rdd);
          }
+
+			let sendData= {re_code:recode,re_state:"OF",rd:rd};
          
             //rd.push({ rd_note: values, rd_prcode: prcode});
             //rd.push({rd_note:values,rd_prcode:prcode});
