@@ -83,7 +83,9 @@
 		SELECT OS_CODE FROM OS WHERE OS_CLCODE = #{os_clcode} and os_date = TO_DATE(#{os_date},'YYYYMMDDHH24miss')
 	</select> -->
 
-
+<select id="supplyAllProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
+      SELECT * FROM PR WHERE PR_SPCODE = #{sp_code} AND PR_STCODE = 'PC'
+   </select>
 
 
 
@@ -106,7 +108,7 @@
 	
 	<select id="getSupplyDealDetail" resultType="mrone.teamone.beans.RequestOrderDetailBean" parameterType="string">
 		SELECT RD_PRSPCODE,RD_RECODE,RD_QUANTITY,PR_CODE,PR_NAME,PR_PRICE,PR_TAX 
-		FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD.RD_RECODE = #{re_code} AND RD.RD_STCODE = 'OC';
+		FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE WHERE RD.RD_RECODE = #{re_code} AND RD.RD_STCODE = 'OC'
 	</select>
 	
 	<select id="getSearchSupplyDeal" resultType="mrone.teamone.beans.SupplySearchBean" parameterType="string">
@@ -120,7 +122,7 @@
 	</select>
 	
 	<select id="supplyGetProductDetail" resultType="mrone.teamone.beans.ProductBean" parameterType="mrone.teamone.beans.ProductBean">
-    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'PC'
+    	SELECT * FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
     </select>
     
     <update id="supplyModifyStock" parameterType="mrone.teamone.beans.ProductBean">
@@ -312,6 +314,35 @@ SELECT
     <select id="getPrnameAndCount" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="string">
     	SELECT PR_NAME FROM RD INNER JOIN PR ON PR.PR_SPCODE = RD.RD_PRSPCODE AND PR.PR_CODE = RD.RD_PRCODE WHERE RD_RECODE = #{re_code} AND RD_STCODE = #{re_state}
     </select>
+    
+    <delete id="deleteMR" parameterType="mrone.teamone.beans.ProductBean">
+		DELETE FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'MR'
+	</delete>
+	
+	<delete id="deleteDR" parameterType="mrone.teamone.beans.ProductBean">
+		DELETE FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = 'DR'
+	</delete>
+	
+	<select id="supplyPRAFProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
+		SELECT PR_CODE, PR_NAME, CATE_NAME, PR_STCODE, ST_NAME 
+     	FROM PR INNER JOIN ST ON PR.PR_STCODE = ST.ST_CODE
+     	WHERE PR_SPCODE = #{sp_code} AND PR_STCODE = 'PR' OR 
+			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'AF'
+	</select>
+	
+	<select id="supplyMRDRDAProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
+		SELECT PR_CODE, PR_NAME, CATE_NAME, PR_STCODE, ST_NAME 
+     	FROM PR INNER JOIN ST ON PR.PR_STCODE = ST.ST_CODE
+		WHERE PR_SPCODE = #{sp_code} AND PR_STCODE = 'DR' OR 
+			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'DF' OR
+			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'DA' OR
+			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'MR' OR
+			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'RF'
+	</select>
+	
+	<delete id="supplyRequestCancel" parameterType="mrone.teamone.beans.ProductBean">
+		DELETE FROM PR WHERE PR_CODE = #{pr_code} AND PR_STCODE = #{pr_stcode}
+	</delete>
     
     <!-- 반품요청->반품처리로 (수락) 업데이트 -->
     <!-- <update id="supplyResponseRefund" parameterType="mrone.teamone.beans.RequestOrderBean">

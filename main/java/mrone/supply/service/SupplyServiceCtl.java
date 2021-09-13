@@ -36,7 +36,47 @@ class SupplyServiceCtl {
 	@Autowired
 	MroServiceEntrance mse;
 	
-
+	List<ProductBean> supplyAllProductList(){
+	      String spcode = null;
+	      try {
+	         spcode = enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return dao.supplyAllProductList(spcode);
+	   }
+	
+	String supplyRequestCancel(ProductBean pb) {
+		String message = null;
+		if(dao.supplyRequestCancel(pb)) {
+			message = "success";
+		} else {
+			message = "fail";
+		}
+		return message;
+	}
+	
+	List<ProductBean> supplyPRAFProductList() {
+		String spcode = null;
+		try {
+			spcode = enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dao.supplyPRAFProductList(spcode);
+	}
+	
+	List<ProductBean> supplyMRDRDAProductList() {
+		String spcode = null;
+		try {
+			spcode = enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dao.supplyMRDRDAProductList(spcode);
+	}
+	
+	
 	List<RequestOrderBean> getSupplyDealListCtl(String re_spcode) {
 		return dao.getSupplyDealList(re_spcode);
 	}
@@ -188,7 +228,7 @@ class SupplyServiceCtl {
 		System.out.println("111111");
 		// 해당 상품코드의 PR_STCODE에 MR인 애가 있는지 확인
 		if (dao.MRCheck(pb)) {
-			System.out.println("22222222");
+				dao.deleteDR(pb);
 			if (dao.updateSupplyRequestModify(pb)) {
 				System.out.println("33333333");
 				message = "success";
@@ -198,6 +238,7 @@ class SupplyServiceCtl {
 			}
 
 		} else {
+				dao.deleteDR(pb);
 			System.out.println("5555555");
 			if (dao.supplyRequestModify(pb)) {
 				System.out.println("6666666");
@@ -211,6 +252,7 @@ class SupplyServiceCtl {
 
 		return message;
 	}
+
 
 	String supplyModifyStock(ProductBean pb) {
 		String message = "";
@@ -226,6 +268,9 @@ class SupplyServiceCtl {
 		System.out.println(pb);
 		String message = "";
 		if (dao.MRCheck(pb)) {
+			//삭제 신청시 변겨요청이 있으면 헤당 컬럼 삭제하고 삭제요청함
+				dao.deleteMR(pb);
+				System.out.println("딜리트성공");
 			// 이미 PR_STCODE에 DR이 있을경우 그냥 업데이트
 			if (dao.updateSupplyRequestModify(pb)) {
 				message = "success";
@@ -234,7 +279,7 @@ class SupplyServiceCtl {
 			}
 
 		} else {
-
+				dao.deleteMR(pb);
 			if (dao.supplyRequestDelete(pb)) {
 				message = "success";
 			} else {
@@ -242,7 +287,7 @@ class SupplyServiceCtl {
 			}
 		}
 		return message;
-	}
+	}  
 
 	List<ProductBean> getCate() {
 		return dao.getCate();

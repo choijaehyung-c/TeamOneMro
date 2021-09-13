@@ -19,6 +19,23 @@ public class SupplyServiceEntrance {
 	@Autowired
 	SupplyServiceCtl ssc;
 	
+	public List<ProductBean> supplyAllProductList(){
+	      
+	      return ssc.supplyAllProductList();
+	   }
+	
+	public List<ProductBean> supplyPRAFProductList() {
+		return ssc.supplyPRAFProductList();
+	}
+	
+	public List<ProductBean> supplyMRDRDAProductList() {
+		return ssc.supplyMRDRDAProductList();
+	}
+	
+	public String supplyRequestCancel(ProductBean pb) {
+		return ssc.supplyRequestCancel(pb);
+	}
+	
 	public List<RequestOrderBean> getSupplyDealList(String re_spcode){
 		return ssc.getSupplyDealListCtl(re_spcode);
 	}

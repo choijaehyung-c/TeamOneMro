@@ -36,6 +36,31 @@ public class RestApiController {
 	@Autowired
 	private MroServiceEntrance mse;
 	
+	   //해당 회사 상품 PC 가져오기
+    @PostMapping("/SupplyAllProductList")
+    public List<ProductBean> supplyAllProductList(){
+       return sse.supplyAllProductList();
+    }
+	
+	
+	//신청한요청들 취소하기
+	@PostMapping("/SupplyRequestCancel")
+	public String supplyRequestCancel(@RequestBody ProductBean pb){
+		return sse.supplyRequestCancel(pb);
+	}
+	
+	
+	//해당 회사 상품 PR AF 가져오기
+	@PostMapping("/SupplyPRAFProductList")
+	public List<ProductBean> supplyPRAFProductList(){
+		return sse.supplyPRAFProductList();
+	}
+	
+	//해당 회사 상품 MR DR DA 가져오기
+	@PostMapping("/SupplyMRDRDAProductList")
+	public List<ProductBean> supplyMRDRDAProductList(){
+		return sse.supplyMRDRDAProductList();
+	}
 	
 	@PostMapping("/supplyResponseOrder")//주문수락
 	public String supplyResponseOrder(@RequestBody RequestOrderBean ro) {
