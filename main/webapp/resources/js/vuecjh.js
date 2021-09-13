@@ -6,12 +6,17 @@
 const main = new Vue({
   el: '#supplyVue',
   data: {
-	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
+	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}],
 	modal: { show: false },
+	modal2:{show:false},
 	list:[],
 	modalList:[],
 	dupCheck:[],
 	modalDetailList:[],
+	  categoryList2:[],
+      detail:{},
+	  categoryCode:'',
+	  searchWord:''
   },
 	methods:{
 		changePage:function(page){
@@ -186,7 +191,136 @@ const main = new Vue({
          newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;
          this.dupCheck.push(index);
       },
+ 	  detailPush:function(jsondata){
+         this.modalOpen();
+         this.detail = jsondata;   
+      },
+      supplyAllProductListPush:function(){
+         this.changePage(6);
+         this.display[7].show=true;
+      },
+      categoryPoductListPage:function(cate){
+         this.categoryCode = cate;
+         this.changePage(6);
+         this.display[8].show=true;
+      },
+      productDetail:function(prcode, stcode){
+         let sendJsonData = {pr_code:prcode, pr_stcode:stcode};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/SupplyGetProductDetail','detailPush', 'j', clientData);
+      },
+      supplyModifyStock:function(prcode, prstock){
+         let sendJsonData = {pr_code:prcode, pr_stock:prstock};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/SupplyModifyStock','msg', 's', clientData);      
+      },
+      supplyRequestModify:function(prspcode, prcode, prtax, prspbkind, prstcode, primage, prname, prprice, prstock, prorigin, prinfo, cate, catename){
+         let sendJsonData = {pr_spcode:prspcode, pr_code:prcode, pr_tax:prtax,
+                  pr_spbkind:prspbkind, pr_stcode:prstcode,
+                  pr_image:primage, pr_name:prname,
+                  pr_price:prprice, pr_stock:prstock,
+                  pr_origin:prorigin, pr_info:prinfo,
+                  cate:cate, cate_name:catename};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/SupplyRequestModify','reSupplyAllProductListPage', 's', clientData);
+         this.modalClose();
+      },
+      supplyRequestDelete:function(prspcode, prcode, prtax, prspbkind, prstcode, primage, prname, prprice, prstock, prorigin, prinfo, cate, catename){
+         let sendJsonData = {pr_spcode:prspcode, pr_code:prcode, pr_tax:prtax,
+                  pr_spbkind:prspbkind, pr_stcode:prstcode,
+                  pr_image:primage, pr_name:prname,
+                  pr_price:prprice, pr_stock:prstock,
+                  pr_origin:prorigin, pr_info:prinfo,
+                  cate:cate, cate_name:catename};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/SupplyRequestDelete','reSupplyAllProductListPage', 's', clientData);
+         this.modalClose();
+      },
+      getNewProductDetail:function(prcode){
+         let sendJsonData = {pr_code:prcode};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/MroGetNewProductDetail','detailPush', 'j', clientData);
+      },
+      supplyPRAFProductListPush:function(){
+		 this.changePage(9);
+         this.display[12].show = true;
+      },
+      supplyMRDRDAProductListPush:function(){
+         this.changePage(10);
+         this.display[14].show = true;
+      },
+      supplyRequestCancel:function(prcode, stcode){
+         let sendJsonData = {pr_code:prcode, pr_stcode:stcode};
+         let clientData = JSON.stringify(sendJsonData);
+         if(stcode == 'PR'||stcode=='AF'){         
+            postAjaxJson('vue/SupplyRequestCancel','reSupplyPRAFProductListPage', 's', clientData);
+         }else{
+            postAjaxJson('vue/SupplyRequestCancel','reSupplyMRDRDAProductListPage', 's', clientData);
+         }
+      },
+      supplyRequestNewProductModal:function(){
+         this.modal2.show = true;
+         postAjaxJson('vue/supplyGetCategory','getCate2','j');
+      },
+      supplyGetCategoryPush:function(jsondata){
+         this.categoryList2 = jsondata;
+      },
+      supplyRequestNewProduct:function(){
+         let catename = CG.options[CG.selectedIndex].text;
+         let sendJsonData = {pr_image:this.pr_image, pr_name:this.pr_name,
+                  pr_price:this.pr_price, pr_stock:this.pr_stock,
+                  pr_origin:this.pr_origin, pr_info:this.pr_info,
+                  cate:this.cate, cate_name:catename};
+         let clientData = JSON.stringify(sendJsonData);
+         postAjaxJson('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage', 's', clientData);
+      },
+      search1:function(word){
+         this.searchWord = word.target.value;
+         this.changePage(6);
+         this.display[11].show = true;
+      },
+      search2:function(word){
+         this.searchWord = word.target.value;
+         this.resetPage(9);
+         this.display[13].show = true;
+      },
+      search3:function(word){
+         this.searchWord = word.target.value;
+         this.changePage(10);
+         this.display[15].show = true;
+      }
 	}
+});
+
+
+const mainVueTwo = new Vue({
+   el:"#mainVueTwo",
+   data:{
+      display:[{show:false}],
+      categoryList:[]
+   },
+   methods:{
+      supplyGetCategoryPage:function(){
+         postAjaxJson('vue/supplyGetCategory','getCate2','j');                              
+         this.display[0].show=true;
+      },
+      supplyGetCategoryPush:function(jsondata){
+         this.categoryList = jsondata;   
+      },
+      supplyAllProductListPage:function(){
+         postAjaxJson('vue/SupplyAllProductList','supplyAllProductListPush','j');   
+      },
+      callCategoryPoductList:function(cate){
+         main.categoryPoductListPage(cate);      
+      },
+      supplyPRAFProductListPage:function(){
+         postAjaxJson('vue/SupplyPRAFProductList', 'supplyPRAFProductListPush', 'j');
+      },
+      supplyMRDRDAProductListPage:function(){
+         postAjaxJson('vue/SupplyMRDRDAProductList', 'supplyMRDRDAProductListPush', 'j');
+      }
+      
+   }
 });
 
 function delReason(index){
@@ -311,6 +445,50 @@ function getTrackingDL(jsondata){
 
 
 
+function getCate2(jsondata){
+	console.log(jsondata);
+   mainVueTwo.supplyGetCategoryPush(jsondata);
+   main.supplyGetCategoryPush(jsondata);
+}
+
+function supplyAllProductListPush(jsondata){
+   main.pushData(jsondata);
+   main.supplyAllProductListPush();
+}
+
+function reSupplyAllProductListPage(msg){
+   alert(msg);
+   mainVueTwo.supplyAllProductListPage();
+}
+
+function detailPush(jsondata){
+   main.detailPush(jsondata);
+}
+
+function supplyPRAFProductListPush(jsondata){
+   main.pushData(jsondata);
+   main.supplyPRAFProductListPush();
+}
+function supplyMRDRDAProductListPush(jsondata){
+   main.pushData(jsondata);
+   main.supplyMRDRDAProductListPush();
+}
+
+function reSupplyPRAFProductListPage(msg){
+   alert(msg);
+   mainVueTwo.supplyPRAFProductListPage();
+}
+function reSupplyMRDRDAProductListPage(msg){
+   alert(msg);
+   mainVueTwo.supplyMRDRDAProductListPage();
+}
+
+function msg (msg){
+   alert(msg);
+}
+
+
+
 
 
 
@@ -332,3 +510,6 @@ function getTrackingDL(jsondata){
 
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+
+

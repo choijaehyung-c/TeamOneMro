@@ -268,7 +268,6 @@ public class RestApiController {
 	
 	//supply 카테고리를 불러옴
 	@PostMapping("/supplyGetCategory")
-	
 	public List<ProductBean> supplyGetCategory(){
 		
 		return sse.supplyGetCategory();
@@ -455,11 +454,10 @@ public class RestApiController {
 		}
 		
 		//새 상품 등록요청시 카테고리 가져오기
-		@PostMapping("/GetCate")
-		public List<ProductBean> getCate(){
-			return sse.getCate();
-		}
-		
+		/*
+		 * @PostMapping("/GetCate") public List<ProductBean> getCate(){ return
+		 * sse.getCate(); }
+		 */
 		//추가할 상품정보 정보 보내기
 		@PostMapping("/SupplyRequestNewProduct")
 		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb){

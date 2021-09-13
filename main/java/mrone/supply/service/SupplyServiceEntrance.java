@@ -102,7 +102,7 @@ public class SupplyServiceEntrance {
 	}
 
 	public List<ProductBean> supplyGetCategory() {
-		
+		System.out.println("tq");
 		return ssc.supplyGetCategory();
 	}
 
