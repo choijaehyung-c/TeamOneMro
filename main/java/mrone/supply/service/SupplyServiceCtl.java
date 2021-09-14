@@ -335,22 +335,38 @@ class SupplyServiceCtl {
 		return reList;
 	}
 
-	List<ClientInfoBean> choiceCLInfo(ClientInfoBean cb) {
-		List<ClientInfoBean> reList = null;
-		reList = dao.choiceCLInfo(cb);
-		return reList;
+
+	ClientInfoBean choiceCLInfo(String cl_code) {
+		return dao.choiceCLInfo(cl_code);
 	}
 
-	List<SupplyInfoBean> choiceSPInfo(SupplyInfoBean sb) {
-		List<SupplyInfoBean> reList = null;
-		reList = dao.choiceSPInfo(sb);
-		return reList;
+	SupplyInfoBean choiceSPInfo() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				System.out.println(spcode);
+			}
+		} catch (Exception e) {
+						
+			e.printStackTrace();
+		}
+		return dao.choiceSPInfo(spcode);
 	}
 
-	List<RequestOrderBean> getTaxDill() {
-		List<RequestOrderBean> reList = null;
-		reList = dao.getTaxDill();
-		return reList;
+
+	List<RequestOrderBean> getTaxdeal() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				
+			}
+		} catch (Exception e) {
+						
+			e.printStackTrace();
+		}
+		return dao.getTaxdeal(spcode);
 	}
 
 	List<RequestOrderDetailBean> choiceDillInfo(RequestOrderDetailBean rdb) {
