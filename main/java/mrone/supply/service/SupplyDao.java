@@ -23,7 +23,19 @@ import mrone.teamone.beans.TaxBean;
 public class SupplyDao {
 	@Autowired
 	SqlSessionTemplate sql;
+	/* test */
+	   public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+		      return sql.selectList("deliveryTest", db);
+		   }
 
+		   public void insertsdcode(DeliveryBean db) {
+		      sql.update("insertsdcode", db);
+		      
+		   }
+			/* test */
+	
+	
+	
 	   List<RequestOrderBean> waitOrderlist(String spcode){
 
 		      return sql.selectList("getSupplyWaitOrderList",spcode);

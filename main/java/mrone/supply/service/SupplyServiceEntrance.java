@@ -19,6 +19,17 @@ import mrone.teamone.beans.TaxBean;
 public class SupplyServiceEntrance {
 	@Autowired
 	SupplyServiceCtl ssc;
+	/* test */
+	   public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+		      
+		      return ssc.deliveryTest(db);
+		   }
+
+		   public void insertsdcode(DeliveryBean db) {
+			   ssc.insertsdcode(db);
+		   }
+	/* test */
+	
 	
 	public List<ProductBean> supplyAllProductList(){
 	      

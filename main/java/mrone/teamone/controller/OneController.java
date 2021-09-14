@@ -50,11 +50,15 @@ public class OneController {
 		return mav;
 	}
 	
-	@GetMapping("vueTesttt")
+	@GetMapping("/apiTest")
 	public String asdasdasd() {
-		return "supHome";
+		return "clientApiCJH";
 	}
 	
+	@GetMapping("/dTest")
+	public String dfgdfg() {
+		return "delivery";
+	}
 	
 	
 	/*

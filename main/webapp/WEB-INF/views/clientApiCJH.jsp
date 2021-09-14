@@ -24,32 +24,22 @@
 </head>
 <body>
 
-Client id<input type="text" value="" name="os_clcode"/><br>
+Client id<input type="text" value="INC10H" name="os_clcode"/><br>
 Client pwd<input type="text" value="" name="cl_pwd"/><br>
+<button onclick="sendApiData()">전송</button>
 
+<div id="vuezone">
 
-<button onclick="modalOn()">모달온</button>
-
-<button onclick="sendApiData()" style="width:50px; height:50px;" >submit</button>
-
-
-<div id="vuezone">{{msg}}{{modalOnOff}}
-
-
-<div class="out-bg" v-if="modalOnOff=='on'">
-	<div class="in-bg">
-		<li @click="momo()" v-for="item in 3">asdasd</li>		
-	</div>
-</div>	
-
+{{msg}}
 
 </div>
 
-
+<!-- 주문서 발송 받아서  -->
 
 
 <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/cjh.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/apiTest.js"></script>
 </body>
 </html>

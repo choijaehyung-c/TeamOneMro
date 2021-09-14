@@ -15,7 +15,7 @@
 	</insert>
 
 	<select id="getRequestOrderData" parameterType="mrone.teamone.beans.RequestOrderBean" resultType="string">
-		SELECT RE_CODE FROM RE WHERE RE_CLCODE = #{re_clcode} and RE_DATE = TO_DATE(#{re_date},'YYYYMMDDHH24miss')
+		SELECT MAX(RE_CODE) FROM RE WHERE RE_CLCODE = #{re_clcode}
 	</select>
 
 	<select id="getRequestRegisterNewProductList" resultType="mrone.teamone.beans.ProductBean">

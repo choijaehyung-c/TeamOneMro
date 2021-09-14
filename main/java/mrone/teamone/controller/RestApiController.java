@@ -37,6 +37,17 @@ public class RestApiController {
 	@Autowired
 	private MroServiceEntrance mse;
 	
+	/* test */
+	@PostMapping("/DeliveryTest")
+    public List<DeliveryBean> deliveryTest(@RequestBody DeliveryBean db){
+       return sse.deliveryTest(db);
+    }
+    @PostMapping("/Insertsdcode")
+    public void insertsdcode(@RequestBody DeliveryBean db){
+       System.out.println(db);
+       sse.insertsdcode(db);
+    }
+    /* test */
 	
 	
 	   //해당 회사 상품 PC 가져오기

@@ -54,16 +54,18 @@ class ClientServiceCtl {
 			if (dao.isClientPwd(ci)) {
 				
 				for (int i = 0; i < co.getOd().size(); i++) { 
-					sp.add(co.getOd().get(i).getOd_prspcode());}
+					sp.add(co.getOd().get(i).getOd_prspcode());
+					co.getOd().get(i).setOd_stcode(type);
+				}
 				
 				for(String sp_code : sp) {
-					if (this.clientOrderProcess(co,sp_code)!=null) {
-						oscodes.add(co.getOd().get(0).getOd_oscode());
+					if ((this.clientOrderProcess(co,sp_code))!=null) {
+						oscodes.add(co.getOs_code());
 						this.clientRequestProcess(co,sp_code);}
 				}
 			}
 		}
-		
+		System.out.println(oscodes);
 		return oscodes;
 	}
 	
@@ -74,7 +76,6 @@ class ClientServiceCtl {
 			oscode= co.getOd().get(0).getOd_oscode();
 			this.clientRequestProcess(co, co.getSp_code());
 		}
-
 		return oscode;
 	}
 	
@@ -87,25 +88,24 @@ class ClientServiceCtl {
 		
 		if(co.getOs_origin()==null)co.setOs_origin("");
 		if (dao.insClientOrder(co)) {
+			co.setOs_code(dao.getOrderData(co));
 			int tranCount = 0;
-			String pOscode = dao.getOrderData(co);
-			co.setOs_code(pOscode);
 			for (int i = 0; i < co.getOd().size(); i++) {
 				if (co.getOd().get(i).getOd_prspcode().equals(sp_code)) {
-					co.getOd().get(i).setOd_oscode(pOscode);
+					co.getOd().get(i).setOd_oscode(co.getOs_code());
 					if(co.getOd().get(i).getOd_note()==null)co.getOd().get(i).setOd_note("");
 					if (!dao.insClientOrderDetail(co.getOd().get(i))) {
 						break;
 					}
-					tranCount++;
 				}
+				tranCount++;
 			}
 			System.out.println(tranCount + ":" + co.getOd().size());
 			if (tranCount == co.getOd().size())tran = true;
-			else co.getOd().get(0).setOd_oscode(null);
+			else co.setOs_code(null);
 
 		}
-		return co.getOd().get(0).getOd_oscode();
+		return co.getOs_code();
 	}
 	
 	boolean clientRequestProcess(ClientOrderBean co,String sp_code) {
