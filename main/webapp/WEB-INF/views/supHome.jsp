@@ -1157,18 +1157,18 @@
 									<thead>
 											<tr>
 												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>발주코드</a></th>
-												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>주문코드</a></th>
-												<th data-sortable style="width: 25%%; background-color: #E0E0E0;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>고객사코드</a></th>
 												<th data-sortable style="width: 25%%; background-color: #E0E0E0;"><a>고객사명</a></th>
+												<th data-sortable style="width: 25%%; background-color: #E0E0E0;"><a>날짜</a></th>
 												
 											</tr>
 										</thead>
 										<tbody>
 											<tr v-for="dl in list" @click="inputDeal(dl.re_code)">
 												<td>{{dl.re_code}}</td>
-												<td>{{dl.re_oscode}}</td>
 												<td>{{dl.re_clcode}}</td>
 												<td>{{dl.cl_name}}</td>
+												<td>{{dl.re_date}}</td>
 												
 											</tr>							
 											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
@@ -1203,20 +1203,8 @@
       <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
       <td rowspan='2' width='70' align='center' class='border_tit'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
       <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>]</b></font></td>
-      <td align='right' width='85' class='border_tit'>책 번 호&nbsp;&nbsp;</td>
-      <td colspan='3' align='right' class='border_both'>권 &nbsp;</td>
-      <td colspan='4' align='right' class='border_tit'>호 &nbsp;</td>
      </tr>
-     <tr>
-      <td width='85' align='right' class='border_tit'>일련번호&nbsp;</td>
-      <td colspan='1' class='border_back ' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_top' width='25'>&nbsp;</td>  
-     </tr>
+
     </table>
    </td>
   </tr>
@@ -1224,29 +1212,29 @@
    <td>
     <table cellpadding='0' cellspacing='0' width='700' >
      <tr>
-      <td class='border_up' align='center' width='17' rowspan='4'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br><br><br>급<br><br><br>자</td>
       <td class='border_up' align='center' width='55' height='33'>등록번호</td>
       <td class='border_up' align='center' width='278' colspan='5' >{{spbean.sp_corpnum}}</td>
-      <td class='border_up' align='center' width='17' rowspan='4'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br>급<br>받<br>는<br>자</td>
       <td class='border_up' align='center' width='55'>등록번호</td>
       <td class='border_top' align='center' width='278' colspan='5' v-if="display[18].show" >{{clbean.cl_corpnum}}</td>
-      <td><button @click="getClientInfo()">찾기</button></td>
+      <td class='border_up' align='center' width='55'><button @click="getClientInfo()">찾기</button></td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>상 호<br>(법인명)</td>
-      <td class='border_up' align='center' width='160' colspan='3'>{{spbean.sp_name}}</td>
+      <td class='border_up' align='center' width='100' colspan='3'>{{spbean.sp_name}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
       <td class='border_up' align='right' width='94' colspan='1'>인</td>
       <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
-      <td class='border_up' align='center' width='160' colspan='3' v-if="display[18].show" >{{clbean.cl_name}}</td>
+      <td class='border_up' align='center' width='100' colspan='3' v-if="display[18].show" >{{clbean.cl_name}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
-      <td class='border_top' align='right' width='94' colspan='1'>인</td>
+      <td class='border_top' align='right' width='94' colspan='2'>인</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
       <td class='border_up' align='center' width='278' colspan='5'>{{spbean.sp_address}}</td>
       <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
-      <td class='border_top' align='center' width='278' colspan='5'v-if="display[18].show" >{{clbean.cl_address}}</td>
+      <td class='border_top' align='center' width='278' colspan='6'v-if="display[18].show" >{{clbean.cl_address}}</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>업  태</td>
@@ -1256,66 +1244,35 @@
       <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
       <td class='border_up' align='center' width='148' colspan='1' v-if="display[18].show" >{{clbean.bt_name}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_top' align='center' width='106' colspan='3' v-if="display[18].show" >{{clbean.bk_name}}</td>
+      <td class='border_up' align='center' width='106' colspan='4' v-if="display[18].show" >{{clbean.bk_name}}</td>   
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
-      <td class='border_up' align='center' width='148' colspan='1' >{{spbean.sd_email}}</td>
-       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
-       <td class='border_up' align='center' width='148' colspan='1' v-if="display[18].show" >{{clbean.cl_email}}</td>
+      <td class='border_up' align='center' width='148' colspan='5' >{{spbean.sd_email}}</td>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='6' v-if="display[18].show" >{{clbean.cl_email}}</td>
      </tr>
     </table>
    </td>
   </tr>
-  <tr>
-   <td width='100%'>
-    <table cellpadding='0' cellspacing='0' width='700'>
-  
-     <tr>
-      <td class='border_up' align='center' width='85' height='25'> &nbsp; </td>
-      <td class='border_up' align='center' width='35'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-     </tr>
-    </table>
-   </td>
-  </tr>
+ 
   <tr>
    <td width='100%'>
     <table cellpadding='0' cellspacing='0' width='700' >
       <tr>
-      <td class='border_up' align='center' width='195'>품 &nbsp; &nbsp; &nbsp; 목</td>  
-      <td class='border_up' align='center' width='65'>수 량</td>
-      <td class='border_up' align='center' width='150'>공급가액</td>
-      <td class='border_up' align='center' width='83'>세 액</td>
-      <td class='border_up' align='center' width='122' height='2'>합계금액</td>
+      <td class='border_up' align='center' width='195' height='33'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up' align='center' width='65' height='33'>수 량</td>
+      <td class='border_up' align='center' width='150' height='33'>공급가액</td>
+      <td class='border_up' align='center' width='83' height='33'>세 액</td>
+      <td class='border_up' align='center' width='122' height='33'>합계금액</td>
       </tr>
       
       <tr v-if="display[19].show" v-for="dld in modalDealList" >
-      <td class='border_up' align='center' width='195' >{{dld.pr_name}}</td>      
-      <td class='border_up' align='center' width='65' >{{dld.rd_quantity}}</td>      
-      <td class='border_up' align='center' width='150' >{{dld.pr_price}}</td>      
-      <td class='border_up' align='center' width='83' >{{dld.pr_tax}}</td>
-      <td class='border_up' align='center' width='83'>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}}</td>            
+      <td class='border_up' align='center' width='195' height='33'>{{dld.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' height='33'>{{dld.rd_quantity}}</td>      
+      <td class='border_up' align='center' width='150' height='33'>{{dld.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' height='33'>{{dld.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'height='33'>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}}</td>            
       </tr>
       <td><button @click="getTaxDeal()">거래목록</button></td> 
  
@@ -1325,24 +1282,12 @@
   <tr>
    <td width='100%'>
     <table cellpadding='0' cellspacing='0' width='700' v-if="display[19].show" v-for="dld in modalDealList">
-     <tr align='justify'>      
-      <td>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}} 이를 영수합니다.</td>
+     <tr align='justify'>   
+     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
+      <td>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}} 이를 영수합니다.<button @click="issueTax(dld.rd_quantity*(dld.pr_tax+dld.pr_price))">발행하기</button></td>
      </tr>
 
-     <tr>
-      <td class='border_up' align='center' width='122' height='25'>&nbsp;</td>
-      <td class='border_up' align='center' width='108'>&nbsp;</td>
-      <td class='border_up' align='center' width='108'>&nbsp;</td>
-      <td class='border_up' align='center' width='108'>&nbsp;</td>
-      <td class='border_up' align='center' width='108'>&nbsp;</td>
-      <td v-if="display[19].show" > 
-      <button @click="issueTax(dld.rd_quantity*(dld.pr_tax+dld.pr_price))">발행하기</button>
-      
-      
-      </td>
-         
-     </tr>
-     
+  
     </table>
    </td>
   </tr> 
@@ -1362,58 +1307,47 @@
 							<div
 								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
 								<table id="datatablesSimple" class="dataTable-table">
-								<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
+									<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
 
  <tr>
   <td width='100%'>
     <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
       <td rowspan='2' align='center' width='360' class='border_tit'><font size='6'><b>세 금 계 산 서</b></font></td>
       <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
-      <td rowspan='2' width='70' align='center' class='border_tit'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='70' align='center' class='border_tit'>공급자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
       <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>]</b></font></td>
-      <td align='right' width='85' class='border_tit'>책 번 호&nbsp;&nbsp;</td>
-      <td colspan='3' align='right' class='border_both'>권 &nbsp;</td>
-      <td colspan='4' align='right' class='border_tit'>호 &nbsp;</td>
      </tr>
-     <tr>
-      <td width='85' align='right' class='border_tit'>일련번호&nbsp;</td>
-      <td colspan='1' class='border_back ' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
-      <td colspan='1' class='border_top' width='25'>&nbsp;</td>  
-     </tr>
+
     </table>
    </td>
   </tr>
   <tr> 
    <td>
-    <table cellpadding='0' cellspacing='0' width='700'>
+    <table cellpadding='0' cellspacing='0' width='700' >
      <tr>
-      <td class='border_up' align='center' width='17' rowspan='4'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br><br><br>급<br><br><br>자</td>
       <td class='border_up' align='center' width='55' height='33'>등록번호</td>
       <td class='border_up' align='center' width='278' colspan='5' >{{tbbean.tb_spcorpnum}}</td>
-      <td class='border_up' align='center' width='17' rowspan='4'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br>급<br>받<br>는<br>자</td>
       <td class='border_up' align='center' width='55'>등록번호</td>
       <td class='border_top' align='center' width='278' colspan='5' >{{tbbean.tb_clcorpnum}}</td>
+      
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>상 호<br>(법인명)</td>
-      <td class='border_up' align='center' width='160' colspan='3'>{{tbbean.tb_spname}}</td>
+      <td class='border_up' align='center' width='100' colspan='3'>{{tbbean.tb_spname}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
       <td class='border_up' align='right' width='94' colspan='1'>인</td>
       <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
-      <td class='border_up' align='center' width='160' colspan='3'  >{{tbbean.tb_clname}}</td>
+      <td class='border_up' align='center' width='100' colspan='3'  >{{tbbean.tb_clname}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
-      <td class='border_top' align='right' width='94' colspan='1'>인</td>
+      <td class='border_top' align='right' width='94' colspan='2'>인</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
       <td class='border_up' align='center' width='278' colspan='5'>{{tbbean.tb_spaddress}}</td>
       <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
-      <td class='border_top' align='center' width='278' colspan='5' >{{tbbean.tb_claddress}}</td>
+      <td class='border_top' align='center' width='278' colspan='6' >{{tbbean.tb_claddress}}</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>업  태</td>
@@ -1421,70 +1355,112 @@
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
       <td class='border_up' align='center' width='106' colspan='3'>{{tbbean.tb_spbkind}}</td>
       <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
-      <td class='border_up' align='center' width='148' colspan='1'  >{{tbbean.tb_clbtype}}</td>
+      <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_clbtype}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_top' align='center' width='106' colspan='3'  >{{tbbean.tb_clbkind}}</td>
+      <td class='border_up' align='center' width='106' colspan='4'>{{tbbean.tb_clbkind}}</td>   
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
-      <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_spemail}}</td>
-       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
-       <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_clemail}}</td>
+      <td class='border_up' align='center' width='148' colspan='5' >{{tbbean.tb_spemail}}</td>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='6' >{{tbbean.tb_clemail}}</td>
      </tr>
     </table>
    </td>
   </tr>
+ 
+
   <tr>
    <td width='100%'>
-    <table cellpadding='0' cellspacing='0' width='700'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr align='justify'>   
+     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
+      <td height='33'>{{tbbean.tb_ttprice}} 이를 영수합니다.</td>
+     </tr>
+
   
+    </table>
+   </td>
+  </tr> 
+</table>
+
+<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all_red'>
+
+ <tr>
+  <td width='100%'>
+    <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+      <td rowspan='2' align='center' width='360' class='border_tit_red'><font size='6'><b>세 금 계 산 서</b></font></td>
+      <td rowspan='2' width='5' align='center' class='border_tit_red'><font size='4'><b>[</b></font></td>
+      <td rowspan='2' width='70' align='center' class='border_tit_red'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='5' align='center' class='border_tit_red'><font size='4'><b>]</b></font></td>
+     </tr>
+
+    </table>
+   </td>
+  </tr>
+  <tr> 
+   <td>
+    <table cellpadding='0' cellspacing='0' width='700' >
      <tr>
-      <td class='border_up' align='center' width='85' height='25'> &nbsp; </td>
-      <td class='border_up' align='center' width='35'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
-      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up_red' align='center' width='17' rowspan='5'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up_red' align='center' width='55' height='33'>등록번호</td>
+      <td class='border_up_red' align='center' width='278' colspan='5' >{{tbbean.tb_spcorpnum}}</td>
+      <td class='border_up_red' align='center' width='17' rowspan='5'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up_red' align='center' width='55'>등록번호</td>
+      <td class='border_top_red' align='center' width='278' colspan='5' >{{tbbean.tb_clcorpnum}}</td>
+      
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>상 호<br>(법인명)</td>
+      <td class='border_up_red' align='center' width='100' colspan='3'>{{tbbean.tb_spname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_up_red' align='right' width='94' colspan='1'>인</td>
+      <td class='border_up_red' align='center' width='55'>상 호<br>(법인명)</td>
+      <td class='border_up_red' align='center' width='100' colspan='3'  >{{tbbean.tb_clname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_top_red' align='right' width='94' colspan='2'>인</td>
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>사업장<br>주  소</td>
+      <td class='border_up_red' align='center' width='278' colspan='5'>{{tbbean.tb_spaddress}}</td>
+      <td class='border_up_red' align='center' width='55'>사업장<br>주  소</td>
+      <td class='border_top_red' align='center' width='278' colspan='6' >{{tbbean.tb_claddress}}</td>
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>업  태</td>
+      <td class='border_up_red' align='center' width='148' colspan='1'>{{tbbean.tb_spbtype}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up_red' align='center' width='106' colspan='3'>{{tbbean.tb_spbkind}}</td>
+      <td class='border_up_red' align='center' width='55'>업 &nbsp; 태</td>
+      <td class='border_up_red' align='center' width='148' colspan='1' >{{tbbean.tb_clbtype}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up_red' align='center' width='106' colspan='4'>{{tbbean.tb_clbkind}}</td>   
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up_red' align='center' width='148' colspan='5' >{{tbbean.tb_spemail}}</td>
+      <td class='border_up_red' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up_red' align='center' width='148' colspan='6' >{{tbbean.tb_clemail}}</td>
      </tr>
     </table>
    </td>
   </tr>
-  <tr>
-   <td width='100%'>
+ 
 
-   </td>
-  </tr>
   <tr>
    <td width='100%'>
-    <table cellpadding='0' cellspacing='0' width='700'  >
-     <tr align='justify'>      
-      <td>{{tbbean.tb_ttprice}} 이를 영수합니다.</td>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr align='justify'>   
+     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
+      <td height='33'>{{tbbean.tb_ttprice}} 이를 영수합니다.</td>
      </tr>
 
-     
-    </table>
-   </td>
-  </tr>
   
-</table>								
-											    
+    </table>
+   </td>
+  </tr> 
+</table>		
+															    
 <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						               									  				
 						</table>							
@@ -1525,6 +1501,9 @@
 							</div>
 						</div>
 					</template>
+					<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!승백끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+					
+					
            		<template v-if="display[15].show">		
            						 <!-- !!!!!!!!상품등록신청중인 상품 모달!!!!!!!!!!!! -->
               <div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
