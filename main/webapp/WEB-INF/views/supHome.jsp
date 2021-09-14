@@ -16,7 +16,7 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     </head>
     
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onLoad="mainPage()">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE_SUPPLY</a>
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -135,7 +135,7 @@
 				<template >
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+								<h6 class="m-0 font-weight-bold text-primary">우리회사 베스트 상품 TOP 5</h6>
 							</div>
 							<div class="card-body">
 								<div class="chart-bar">
@@ -152,9 +152,8 @@
 										class="chartjs-render-monitor"></canvas>
 								</div>
 								<hr>
-								Styling for the bar chart can be found in the
-								<code>/js/demo/chart-bar-demo.js</code>
-								file.
+								
+								
 							</div>
 						</div>
 					</template>

@@ -554,6 +554,7 @@ public class RestApiController {
 		
 		@PostMapping("/getChart")
 		public List<RequestOrderDetailBean> getChart() {
+			System.out.println(sse.getChart());
 			return sse.getChart();
 		}
 
