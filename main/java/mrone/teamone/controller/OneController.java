@@ -50,11 +50,15 @@ public class OneController {
 		return mav;
 	}
 	
-	@GetMapping("apiTest")
+	@GetMapping("/apiTest")
 	public String asdasdasd() {
 		return "clientApiCJH";
 	}
 	
+	@GetMapping("/dTest")
+	public String dfgdfg() {
+		return "delivery";
+	}
 	
 	
 	/*

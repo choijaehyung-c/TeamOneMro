@@ -4,6 +4,21 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="mrone.teamone.mapper.Supply">
+ <!-- test -->
+  <select id="deliveryTest" parameterType="mrone.teamone.beans.DeliveryBean" resultType="mrone.teamone.beans.DeliveryBean">
+         SELECT DL_CODE, DL_OSCODE, DL_LCCODE, DV_NAME, DV_HP, DV_SPCODE, SP_NAME, SP_TEL, SP_ADDRESS, DL_DSCODE, DS_NAME
+        FROM DV INNER JOIN DL ON DV.DV_CODE = DL.DL_DVCODE
+          INNER JOIN SP ON DV.DV_SPCODE = SP.SP_CODE
+          INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE 
+        WHERE DV_CODE = #{dl_dvcode}
+    </select>
+  
+     <update id="insertsdcode" parameterType="mrone.teamone.beans.DeliveryBean">
+        UPDATE DL SET DL_DSCODE = #{dl_dscode} WHERE DL_CODE = #{dl_code}
+     </update>
+<!-- test -->
+
+
 
 	<update id="updRequest" parameterType="mrone.teamone.beans.SupplyResponse">
 		UPDATE RE SET RE_STATE = #{after} WHERE RE_CODE = #{re_code} AND RE_STATE = #{before}

@@ -36,6 +36,18 @@ class SupplyServiceCtl {
 	ClientServiceEntrance cse;
 	@Autowired
 	MroServiceEntrance mse;
+	/* test */
+	public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+	      return dao.deliveryTest(db);
+	   }
+
+	   public void insertsdcode(DeliveryBean db) {
+	      dao.insertsdcode(db);
+	   }
+		/* test */
+	
+	
+	
 	
 	   //수정1
 	   List<RequestOrderBean> waitOrderlist() {
