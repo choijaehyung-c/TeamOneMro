@@ -36,8 +36,12 @@ const main = new Vue({
 		modalOpen: function() {
 			this.modal.show = true;
 		},
+		modalOpen2:function(){
+			this.modal2.show=true;
+		},
 		modalClose: function() {
 			this.modal.show = false;
+			this.modal2.show = false;
 		},
 		pushData:function(jsondata){
 			/*console.log(jsondata);*/
@@ -157,10 +161,6 @@ const main = new Vue({
       },
       trackDeliveryPage:function(){//배송 출발 목록
          postAjaxJson('vue/getTrackDeliveryList','getTrackingDelivery','j');   
-      },
-      searchWord:function(){
-         let word = document.getElementById("INPUT");
-         alert(word.value);
       },
       getCheckedVal:function(){
             const query = 'input[name="choose"]:checked';
@@ -295,7 +295,57 @@ const main = new Vue({
          this.searchWord = word.target.value;
          this.changePage(10);
          this.display[15].show = true;
-      }
+      },
+	  //거래내역탭
+	  supplyDealListPage:function(){			
+	  	postAjaxJson('vue/getSupplyDealList','DealListVue','j');
+	  },
+	  SupplyDealDetail:function(recode){											
+			postAjaxJson('vue/getSupplyDealDetail','DealListDetailVue','j', recode);			
+		},
+		searchDeal:function(){//공급사 검색
+        let word = document.getElementsByName("word")[0].value;
+        postAjaxJson('vue/getSearchSupplyDeal','searchVue','j', word);//돌아오는 View가 다르고 테이블이 달라서...
+     	 },
+		
+		////////////////////////////////////////
+		//세금계산서탭
+		supplyIssueTaxbillPage: function(){
+			postAjaxJson('vue/getChoiceSPInfo','InputSPVue','j');
+		},		
+		supplyIssueTaxbillPage2: function(message){
+			this.changePage(17);
+					
+		},
+		getClientInfo:function(){
+			postAjaxJson('vue/getTaxCL','ClientListlVue','j');
+		},		
+		inputClientInfo:function(cl_code){
+			this.modalClose();
+			postAjaxJson('vue/getchoiceCLInfo','InputCLVue','j',cl_code);		
+		},
+		getTaxDeal:function(){
+			postAjaxJson('vue/getTaxDeal','TaxDealListVue','j');
+		},
+		inputDeal:function(recode){
+			this.modalClose();
+			postAjaxJson('vue/getSupplyDealDetail','inputDealVue','j', recode);
+		},
+		issuedTaxbillPage:function(){
+			postAjaxJson('vue/getIssuedTax','IssuedTaxVue','j');
+		},
+		taxDetail:function(tbcode){
+			
+			postAjaxJson('vue/getIssuedTaxDetail','IssuedTaxDetailVue','j',tbcode);
+		},
+		///////////////////////////////////////////////////
+		//세금계산서 발행
+		issueTax:function(ttprice){
+			let sendJsonData = {rdb:this.modalDealList, sb:this.spbean, cb:this.clbean, tb_ttprice:ttprice};
+			let clientData = JSON.stringify(sendJsonData);		
+			
+			postAjaxJson('vue/issueTax','supplyIssueTaxbill2','s', clientData);			
+		}	
 	}
 });
 
@@ -495,28 +545,92 @@ function msg (msg){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+//노승백
+//탭눌렀을때 펑션들
+function supplyDealList(){
+	main.supplyDealListPage();
+}
 
+function supplyIssueTaxbill(){
+	main.supplyIssueTaxbillPage();
+}
+
+function supplyIssueTaxbill2(message){
+	if(message!=""){
+		main.supplyIssueTaxbillPage2(message);
+		
+	}else{
+		alert("fail");
+	}
+}
+
+function supplyIssueTaxbillListForm(){
+	main.issuedTaxbillPage();
+}	
+//////////////////////////////////////////////////////////
+
+
+//거래내역 페이지 이동해서 거래내역리스트 출력
+function DealListVue(jsondata){
+	main.list = jsondata;
+	main.changePage(16);
+}
+//거래내역 디테일 모달로 리스트 출력
+function DealListDetailVue(jsondata){
+	main.modalDealList = jsondata;
+	main.modalOpen();
+}
+
+//거래내역 검색
+function searchVue(jsondata){
+   if(jsondata!=""){
+      main.list = jsondata;
+	  main.changePage(16);
+   }else{
+      alert("검색어에 해당되는 거래내역이 없습니다.");
+   }
+}
+
+//세션으로 공급사정보 빈 기입
+function InputSPVue(jsondata){	
+	main.spbean = jsondata;
+	main.changePage(17);
+}
+
+//고객사리스트 모달로 출력
+function ClientListlVue(jsondata){	
+	main.modalCLList = jsondata;
+	main.modalOpen();
+}
+//고객사 정보 빈 기입
+function InputCLVue(jsondata){	
+	main.clbean = jsondata;
+	main.display[17].show=true;
+	main.display[18].show=true;
+}
+//거래내역 모달로 출력
+function TaxDealListVue(jsondata){
+	main.list = jsondata;
+	main.modalOpen2();
+}
+
+function inputDealVue(jsondata){
+	main.modalDealList = jsondata;
+	main.display[17].show=true;
+	main.display[18].show=true;
+	main.display[19].show=true;
+}
+
+function IssuedTaxVue(jsondata){
+	main.list = jsondata;
+	main.changePage(20);
+}
+
+function IssuedTaxDetailVue(jsondata){
+	
+	main.tbbean = jsondata;	
+	main.modalOpen();
+}
 
 
