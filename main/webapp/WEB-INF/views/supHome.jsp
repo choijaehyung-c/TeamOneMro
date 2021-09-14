@@ -131,6 +131,34 @@
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
 				<div id="supplyVue"  style="height: 100%; width: 100%;">
+				
+				<template >
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-bar">
+									<div class="chartjs-size-monitor">
+										<div class="chartjs-size-monitor-expand">
+											<div class=""></div>
+										</div>
+										<div class="chartjs-size-monitor-shrink">
+											<div class=""></div>
+										</div>
+									</div>
+									<canvas id="myBarChart" width="977" height="400"
+										style="display: block; height: 320px; width: 782px;"
+										class="chartjs-render-monitor"></canvas>
+								</div>
+								<hr>
+								Styling for the bar chart can be found in the
+								<code>/js/demo/chart-bar-demo.js</code>
+								file.
+							</div>
+						</div>
+					</template>
+				
               		<template v-if="display[0].show">
               			<div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
@@ -1758,6 +1786,13 @@
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/chart-bar-demo.js"></script>
+
+
+    <!-- Page level plugins -->
+    <script src="${pageContext.request.contextPath}/resources/js//Chart.min.js"></script>
+
+    <script src="${pageContext.request.contextPath}/resources/js/chart-bar-demo.js"></script>
 		<%-- <script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script> --%>
         
     </body>

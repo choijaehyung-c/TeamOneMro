@@ -423,5 +423,10 @@ public class SupplyDao {
 
 		return reList;
 	}
+	//수정2
+	List<RequestOrderDetailBean> getChart(String spcode) {
+		
+		return sql.selectList("getChart", spcode);
+	}
 
 }

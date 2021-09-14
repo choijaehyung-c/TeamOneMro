@@ -234,4 +234,9 @@ public class SupplyServiceEntrance {
 
 	      return ssc.getTrackDL(recode);
 	   }
+	   //수정2
+	public List<RequestOrderDetailBean> getChart() {
+		
+		return ssc.getChart();
+	}
 }
