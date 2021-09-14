@@ -108,55 +108,21 @@
                                 </nav>  
                             </div>
                             
+                             <div class="sb-sidenav-menu-heading">Taxbill</div>
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">                                
-                                발주관리
+                                세금계산서
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </div>
                             <div class="collapse" id="collapsePages3" aria-labelledby="headingfour" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">                                
-                                    <div class="nav-link" onClick="requestOrder()">발주하기</div>                
+                                    <div class="nav-link" onClick="supplyDealList()">거래내역 조회</div>                          
+                                    <div class="nav-link" onClick="supplyIssueTaxbill()">세금계산서 발행</div>
+                                    <div class="nav-link" onClick="supplyIssueTaxbillListForm()">세금계산서 내역</div>                 
                                 </nav>  
                             </div>
-                            <!--  -->
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages5" aria-expanded="false" aria-controls="collapsePages5">
-                                Pages
-                                <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
-                            </a>
-                            <div class="collapse" id="collapsePages5" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion" style="">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="false" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
+
                         <!--  -->
                        
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <div class="nav-link" onclick="change2()">
-                                Test3
-                            </div>
-                            <div class="nav-link" onclick="change3()">
-                                Test4
-                            </div>
                             
                         </div>
                     </div>
@@ -1081,6 +1047,484 @@
                    		</div>
            				</template>
 <!---------------------------------------------------------------------------------------------------->
+
+
+					<template v-if="display[7].show" style="z-index: 3;">
+						<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>공급가액</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>세액</a></th>
+												<th data-sortable style="width: 20%; background-color: #E0E0E0;"><a>수량</a></th>			
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="dld in modalDealList" >
+												<td>{{dld.rd_recode}}</td>
+												<td>{{dld.pr_name}}</td>
+												<td>{{dld.pr_price}}</td>
+												<td>{{dld.pr_tax}}</td>
+												<td>{{dld.rd_quantity}}</td>					
+											</tr>							
+											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+						                </tbody>									  				
+						</table>							
+					  </div>
+					</div>
+					</template>
+					
+<!---------------------------------------------------------------------------------------------------->										
+					<template v-if="display[7].show" style="z-index: 3;">
+					
+						<div class="container-fluid px-4">
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >거래내역 조회</h1>
+						<input type="text" class="form-control" name="word" placeholder="고객사명, 고객사코드 혹은 사업자번호로 검색해주세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchDeal()" value="">검 색</span>
+							<div class="card mb-4">
+								<div class="card-body">※거래내역 확인 [문의 : nsb214@naver.com]</div>
+							</div>
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i> 거래내역
+								</div>
+
+								<div class="card-body">
+									<table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
+												<th data-sortable style="width: 25%;"><a>날짜</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="dl in list"
+												@click="SupplyDealDetail(dl.re_code)">
+												<td>{{dl.re_code}}</td>
+												<td>{{dl.re_clcode}}</td>
+												<td>{{dl.cl_name}}</td>
+												<td>{{dl.re_date}}</td>
+											</tr>
+											</tbody>																	
+									</table>
+								</div>
+							</div>
+						</div>
+					</template>
+					
+<!---------------------------------------------------------------------------------------------------->	
+					<template v-if="display[8].show" style="z-index: 3;">
+					
+						<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>고객사명</a></th>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>주소</a></th>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>사업자번호</a></th>
+		
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="cl in modalCLList" @click="inputClientInfo(cl.cl_code)">
+												<td>{{cl.cl_code}}</td>
+												<td>{{cl.cl_name}}</td>
+												<td>{{cl.cl_address}}</td>
+												<td>{{cl.cl_corpnum}}</td>
+											
+											</tr>							
+											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+						                </tbody>									  				
+						</table>							
+					  </div>
+					</div>
+					
+					<div v-if="modal2.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>발주코드</a></th>
+												<th data-sortable style="width: 25%; background-color: #E0E0E0;"><a>주문코드</a></th>
+												<th data-sortable style="width: 25%%; background-color: #E0E0E0;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%%; background-color: #E0E0E0;"><a>고객사명</a></th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="dl in list" @click="inputDeal(dl.re_code)">
+												<td>{{dl.re_code}}</td>
+												<td>{{dl.re_oscode}}</td>
+												<td>{{dl.re_clcode}}</td>
+												<td>{{dl.cl_name}}</td>
+												
+											</tr>							
+											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+						                </tbody>									  				
+						</table>							
+					  </div>
+					</div>
+					
+					
+					
+						<div class="container-fluid px-4">
+							
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행</h1>
+						
+							<div class="card mb-4">
+								<div class="card-body">※[문의 : nsb214@naver.com]</div>
+							</div>
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i> 세금계산서
+									
+								</div>
+
+								<div>
+  
+<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
+
+ <tr>
+  <td width='100%'>
+    <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+      <td rowspan='2' align='center' width='360' class='border_tit'><font size='6'><b>세 금 계 산 서</b></font></td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
+      <td rowspan='2' width='70' align='center' class='border_tit'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>]</b></font></td>
+      <td align='right' width='85' class='border_tit'>책 번 호&nbsp;&nbsp;</td>
+      <td colspan='3' align='right' class='border_both'>권 &nbsp;</td>
+      <td colspan='4' align='right' class='border_tit'>호 &nbsp;</td>
+     </tr>
+     <tr>
+      <td width='85' align='right' class='border_tit'>일련번호&nbsp;</td>
+      <td colspan='1' class='border_back ' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_top' width='25'>&nbsp;</td>  
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr> 
+   <td>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr>
+      <td class='border_up' align='center' width='17' rowspan='4'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up' align='center' width='55' height='33'>등록번호</td>
+      <td class='border_up' align='center' width='278' colspan='5' >{{spbean.sp_corpnum}}</td>
+      <td class='border_up' align='center' width='17' rowspan='4'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up' align='center' width='55'>등록번호</td>
+      <td class='border_top' align='center' width='278' colspan='5' v-if="display[9].show" >{{clbean.cl_corpnum}}</td>
+      <td><button @click="getClientInfo()">찾기</button></td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='160' colspan='3'>{{spbean.sp_name}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_up' align='right' width='94' colspan='1'>인</td>
+      <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='160' colspan='3' v-if="display[9].show" >{{clbean.cl_name}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_top' align='right' width='94' colspan='1'>인</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
+      <td class='border_up' align='center' width='278' colspan='5'>{{spbean.sp_address}}</td>
+      <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
+      <td class='border_top' align='center' width='278' colspan='5'v-if="display[9].show" >{{clbean.cl_address}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>업  태</td>
+      <td class='border_up' align='center' width='148' colspan='1'>{{spbean.bt_name}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up' align='center' width='106' colspan='3'>{{spbean.bk_name}}</td>
+      <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
+      <td class='border_up' align='center' width='148' colspan='1' v-if="display[9].show" >{{clbean.bt_name}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_top' align='center' width='106' colspan='3' v-if="display[9].show" >{{clbean.bk_name}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='1' >{{spbean.sd_email}}</td>
+       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+       <td class='border_up' align='center' width='148' colspan='1' v-if="display[9].show" >{{clbean.cl_email}}</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700'>
+  
+     <tr>
+      <td class='border_up' align='center' width='85' height='25'> &nbsp; </td>
+      <td class='border_up' align='center' width='35'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+      <tr>
+      <td class='border_up' align='center' width='195'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up' align='center' width='65'>수 량</td>
+      <td class='border_up' align='center' width='150'>공급가액</td>
+      <td class='border_up' align='center' width='83'>세 액</td>
+      <td class='border_up' align='center' width='122' height='2'>합계금액</td>
+      </tr>
+      
+      <tr v-if="display[10].show" v-for="dld in modalDealList" >
+      <td class='border_up' align='center' width='195' >{{dld.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' >{{dld.rd_quantity}}</td>      
+      <td class='border_up' align='center' width='150' >{{dld.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' >{{dld.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}}</td>            
+      </tr>
+      <td><button @click="getTaxDeal()">거래목록</button></td> 
+ 
+    </table>
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' v-if="display[3].show" v-for="dld in modalDealList">
+     <tr align='justify'>      
+      <td>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}} 이를 영수합니다.</td>
+     </tr>
+
+     <tr>
+      <td class='border_up' align='center' width='122' height='25'>&nbsp;</td>
+      <td class='border_up' align='center' width='108'>&nbsp;</td>
+      <td class='border_up' align='center' width='108'>&nbsp;</td>
+      <td class='border_up' align='center' width='108'>&nbsp;</td>
+      <td class='border_up' align='center' width='108'>&nbsp;</td>
+      <td v-if="display[10].show" > 
+      <button @click="issueTax(dld.rd_quantity*(dld.pr_tax+dld.pr_price))">발행하기</button>
+      
+      
+      </td>
+         
+     </tr>
+     
+    </table>
+   </td>
+  </tr> 
+</table>
+								</div>
+							</div>
+						</div>
+					</template>
+					
+<!---------------------------------------------------------------------------------------------------->						
+
+					
+					<template v-if="display[11].show" style="z-index: 3;">
+
+										<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+								<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
+
+ <tr>
+  <td width='100%'>
+    <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+      <td rowspan='2' align='center' width='360' class='border_tit'><font size='6'><b>세 금 계 산 서</b></font></td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
+      <td rowspan='2' width='70' align='center' class='border_tit'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>]</b></font></td>
+      <td align='right' width='85' class='border_tit'>책 번 호&nbsp;&nbsp;</td>
+      <td colspan='3' align='right' class='border_both'>권 &nbsp;</td>
+      <td colspan='4' align='right' class='border_tit'>호 &nbsp;</td>
+     </tr>
+     <tr>
+      <td width='85' align='right' class='border_tit'>일련번호&nbsp;</td>
+      <td colspan='1' class='border_back ' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_up' width='25'>&nbsp;</td>
+      <td colspan='1' class='border_top' width='25'>&nbsp;</td>  
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr> 
+   <td>
+    <table cellpadding='0' cellspacing='0' width='700'>
+     <tr>
+      <td class='border_up' align='center' width='17' rowspan='4'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up' align='center' width='55' height='33'>등록번호</td>
+      <td class='border_up' align='center' width='278' colspan='5' >{{tbbean.tb_spcorpnum}}</td>
+      <td class='border_up' align='center' width='17' rowspan='4'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up' align='center' width='55'>등록번호</td>
+      <td class='border_top' align='center' width='278' colspan='5' >{{tbbean.tb_clcorpnum}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='160' colspan='3'>{{tbbean.tb_spname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_up' align='right' width='94' colspan='1'>인</td>
+      <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='160' colspan='3'  >{{tbbean.tb_clname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_top' align='right' width='94' colspan='1'>인</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
+      <td class='border_up' align='center' width='278' colspan='5'>{{tbbean.tb_spaddress}}</td>
+      <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
+      <td class='border_top' align='center' width='278' colspan='5' >{{tbbean.tb_claddress}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>업  태</td>
+      <td class='border_up' align='center' width='148' colspan='1'>{{tbbean.tb_spbtype}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up' align='center' width='106' colspan='3'>{{tbbean.tb_spbkind}}</td>
+      <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
+      <td class='border_up' align='center' width='148' colspan='1'  >{{tbbean.tb_clbtype}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_top' align='center' width='106' colspan='3'  >{{tbbean.tb_clbkind}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_spemail}}</td>
+       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+       <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_clemail}}</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700'>
+  
+     <tr>
+      <td class='border_up' align='center' width='85' height='25'> &nbsp; </td>
+      <td class='border_up' align='center' width='35'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+      <td class='border_up' align='center' width='20'>&nbsp;</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+
+   </td>
+  </tr>
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700'  >
+     <tr align='justify'>      
+      <td>{{tbbean.tb_ttprice}} 이를 영수합니다.</td>
+     </tr>
+
+     
+    </table>
+   </td>
+  </tr>
+  
+</table>								
+											    
+<button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+						               									  				
+						</table>							
+					  </div>
+					</div>
+						<div class="container-fluid px-4">
+							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행 내역</h1>
+						
+							<div class="card mb-4">
+								<div class="card-body">※세금계산서 발행 내역 확인 [문의 : nsb214@naver.com]</div>
+							</div>
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i> 세금계산서 발행 내역
+								</div>
+
+								<div class="card-body">
+									<table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 25%;"><a>세금계산서코드</a></th>
+												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="tl in list"
+												@click="taxDetail(tl.tb_code)">
+												<td>{{tl.tb_code}}</td>
+												<td>{{tl.tb_oscode}}</td>
+												<td>{{tl.tb_clcode}}</td>
+												<td>{{tl.tb_clname}}</td>
+											</tr>
+											</tbody>																	
+									</table>
+								</div>
+							</div>
+						</div>
+					</template>
            		<template v-if="display[15].show">		
            						 <!-- !!!!!!!!상품등록신청중인 상품 모달!!!!!!!!!!!! -->
               <div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">

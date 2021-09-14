@@ -17,6 +17,7 @@ import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
+import mrone.teamone.beans.TaxBean;
 
 @Repository
 public class SupplyDao {
@@ -169,17 +170,30 @@ public class SupplyDao {
 		return sql.selectOne("getRecentlyLC", os_code);
 	}
 
-	List<RequestOrderBean> getSupplyDealList(String re_spcode) {
-		return sql.selectList("getSupplyDealList", re_spcode);
+	List<RequestOrderBean> getSupplyDealList(String spcode) {
+		return sql.selectList("getSupplyDealList", spcode);
 	}
 
-	RequestOrderBean getSupplyDealDetail(String re_code) {
-		return sql.selectOne("getSupplyDealDetail", re_code);
+	List<RequestOrderDetailBean> getSupplyDealDetail(String re_code) {
+		return sql.selectList("getSupplyDealDetail", re_code);
 	}
 
 	List<SupplySearchBean> getSearchSupplyDeal(String word) {
 		return sql.selectList("getSearchSupplyDeal", word);
 	}
+	
+	boolean issueTax(TaxBean tb) {		
+		return convertToBoolean(sql.insert("issueTax", tb));	
+	}
+	
+	List<TaxBean> getIssuedTax(String spcode) {		
+		return sql.selectList("getIssuedTax", spcode);
+	}
+	
+	TaxBean getIssuedTaxDetail(String tbcode) {		
+		return sql.selectOne("getIssuedTaxDetail", tbcode);
+	}
+	
 
 	List<ProductBean> getSupplyCateProductList(ProductBean pb) {
 		return sql.selectList("getSupplyCateProductList", pb);

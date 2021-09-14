@@ -19,6 +19,7 @@ import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
+import mrone.teamone.beans.TaxBean;
 import mrone.teamone.utill.Encryption;
 import mrone.teamone.utill.ProjectUtils;
 
@@ -235,11 +236,23 @@ class SupplyServiceCtl {
 	}
 	
 	
-	List<RequestOrderBean> getSupplyDealListCtl(String re_spcode) {
-		return dao.getSupplyDealList(re_spcode);
+	List<RequestOrderBean> getSupplyDealListCtl() {
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				System.out.println(spcode);
+			}
+		} catch (Exception e) {
+						
+			e.printStackTrace();
+		}
+		
+		return dao.getSupplyDealList(spcode);
+		
 	}
 
-	RequestOrderBean getSupplyDealDetailCtl(String re_code) {
+	List<RequestOrderDetailBean> getSupplyDealDetailCtl(String re_code) {
 		return dao.getSupplyDealDetail(re_code);
 	}
 
@@ -247,6 +260,52 @@ class SupplyServiceCtl {
 		return dao.getSearchSupplyDeal(word);
 	}
 
+	String issueTaxCtl(TaxBean tb) {	 
+		String message = null;		
+		tb.setTb_price(Integer.toString(tb.getRdb().get(0).getPr_price()));
+		tb.setTb_tax(Integer.toString(tb.getRdb().get(0).getPr_tax()));		
+		tb.setTb_oscode(tb.getRdb().get(0).getRd_recode());
+		tb.setTb_spcode(tb.getSb().getSp_code()); 
+		tb.setTb_spname(tb.getSb().getSp_name());
+		tb.setTb_spaddress(tb.getSb().getSp_address()); 
+		tb.setTb_spbtype(tb.getSb().getSp_btype());
+		tb.setTb_spcorpnum(tb.getSb().getSp_corpnum()); 
+		tb.setTb_spbkind(tb.getSb().getSp_bkind()); 		
+		tb.setTb_clcode(tb.getCb().getCl_code());
+		tb.setTb_clcorpnum(tb.getCb().getCl_corpnum());
+		tb.setTb_clname(tb.getCb().getCl_name());
+		tb.setTb_claddress(tb.getCb().getCl_address());
+		tb.setTb_clbtype(tb.getCb().getCl_btype());
+		tb.setTb_clbkind(tb.getCb().getCl_bkind());
+		tb.setTb_ttprice(tb.getTb_ttprice());
+		tb.setTb_spemail(tb.getSb().getSd_email()); 
+		tb.setTb_clemail(tb.getCb().getCl_email()); 
+		if(dao.issueTax(tb)) {
+			message ="insert";
+		}else {
+			
+		}
+		return message;
+	}
+	
+	List<TaxBean> getIssuedTaxCtl() {	
+		String spcode = null;
+		try {
+			if(pu.getAttribute("userSs") != null) {
+				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+				
+			}
+		} catch (Exception e) {
+						
+			e.printStackTrace();
+		}
+		return dao.getIssuedTax(spcode);
+	}
+	
+	TaxBean getIssuedTaxDetailCtl(String tbcode) {	
+		return dao.getIssuedTaxDetail(tbcode);
+	}
+	
 	List<ProductBean> getSupplyCateProductList(ProductBean pb) {
 		return dao.getSupplyCateProductList(pb);
 	}

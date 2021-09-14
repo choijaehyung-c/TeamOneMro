@@ -24,6 +24,7 @@ import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
+import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.beans.TaxBean;
 
 @RestController
@@ -175,7 +176,7 @@ public class RestApiController {
 		return message;
 		
 	}
-	
+	//수정1
 	@PostMapping("/getTaxCL")
 	public List<ClientInfoBean> getTaxCL() {
 		List<ClientInfoBean> reList = null;
@@ -184,24 +185,22 @@ public class RestApiController {
 		return reList;			
 	}
 	
+	//세금계산서 고객사 정보기입 수정
 	@PostMapping("/getchoiceCLInfo")
-	public List<ClientInfoBean> getchoiceCLInfo(@RequestBody List<ClientInfoBean> list ) {
-		System.out.println(sse.choiceCLInfoCtl(list.get(0)));
-		return sse.choiceCLInfoCtl(list.get(0));	
+	public ClientInfoBean getchoiceCLInfo(@RequestBody String cl_code) {
+		return sse.choiceCLInfoCtl(cl_code);	
 	}
 	
+	//세금계산서 세션으로 공급사 정보 자동기입
 	@PostMapping("/getChoiceSPInfo")
-	public List<SupplyInfoBean> getchoiceSPInfo(@RequestBody List<SupplyInfoBean> list ) {
-		System.out.println(sse.choiceSPInfoCtl(list.get(0)));
-		return sse.choiceSPInfoCtl(list.get(0));	
+	public SupplyInfoBean getchoiceSPInfo() {	
+		return sse.choiceSPInfoCtl();	
 	}
 	
-	@PostMapping("/getTaxDill")
-	public List<RequestOrderBean> getTaxDill() {
-		List<RequestOrderBean> reList = null;
-		reList = sse.getTaxDill();
-		System.out.println(sse.getTaxDill());
-		return reList;			
+	//세금계산서 거래목록
+	@PostMapping("/getTaxDeal")
+	public List<RequestOrderBean> getTaxdeal() {
+		return  sse.getTaxdeal();			
 	}
 	
 	@PostMapping("/getchoiceDillInfo")
@@ -501,4 +500,45 @@ public class RestApiController {
 
 			return mse.mroDelSupply(code);
 		}
+
+
+		/////0914
+		//거래내역가져오기
+		@PostMapping("/getSupplyDealList")
+		public List<RequestOrderBean> getSupplyDealList() {
+			return sse.getSupplyDealList();			
+		}
+
+		//거래내역디테일
+		@PostMapping("/getSupplyDealDetail")
+		public List<RequestOrderDetailBean> getSupplyDealDetail(@RequestBody String re_code) {
+			return sse.getSupplyDealDetail(re_code);			
+		}
+		
+		//검색 수정
+		@PostMapping("/getSearchSupplyDeal")
+			public List<SupplySearchBean> getSearchSupplyDeal(@RequestBody String word) {
+				return sse.getSearchSupplyDeal(word);			
+			}
+		
+		//세금계산서인서트
+		@PostMapping("/issueTax")
+		public String issueTax(@RequestBody TaxBean tb) {
+			
+			return sse.issueTax(tb);			
+		}
+		
+		//발행된 세금계산서 가져오기
+		@PostMapping("/getIssuedTax")
+		public List<TaxBean> getIssuedTax() {
+			
+			return sse.getIssuedTax();			
+		}
+		
+		//세금계산서 디테일
+		@PostMapping("/getIssuedTaxDetail")
+		public TaxBean getIssuedTaxDetail(@RequestBody String tbcode) {		
+			return sse.getIssuedTaxDetail(tbcode);			
+		}
+
 }

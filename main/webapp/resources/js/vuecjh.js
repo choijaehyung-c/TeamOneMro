@@ -6,7 +6,9 @@
 const main = new Vue({
   el: '#supplyVue',
   data: {
-	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}],
+	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false},{show:false/*거래내역리스트*/},{show:false/*세금계산서페이지*/}
+		,{show:false/*고객사정보기입*/}
+		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/}],
 	modal: { show: false },
 	modal2:{show:false},
 	list:[],
@@ -16,7 +18,12 @@ const main = new Vue({
 	  categoryList2:[],
       detail:{},
 	  categoryCode:'',
-	  searchWord:''
+	  searchWord:'',
+	  clbean:{},
+	  spbean:{},
+	  modalDealList:[],
+	  modalCLList:[],
+	  tbbean:{}
   },
 	methods:{
 		changePage:function(page){

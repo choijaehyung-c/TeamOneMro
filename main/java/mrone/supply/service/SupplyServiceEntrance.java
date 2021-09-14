@@ -13,6 +13,7 @@ import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplyResponse;
 import mrone.teamone.beans.SupplySearchBean;
+import mrone.teamone.beans.TaxBean;
 
 @Service
 public class SupplyServiceEntrance {
@@ -36,16 +37,28 @@ public class SupplyServiceEntrance {
 		return ssc.supplyRequestCancel(pb);
 	}
 	
-	public List<RequestOrderBean> getSupplyDealList(String re_spcode){
-		return ssc.getSupplyDealListCtl(re_spcode);
+	public List<RequestOrderBean> getSupplyDealList(){
+		return ssc.getSupplyDealListCtl();
 	}
 	
-	public RequestOrderBean getSupplyDealDetail(String re_code) {
+	public List<RequestOrderDetailBean> getSupplyDealDetail(String re_code) {
 		return ssc.getSupplyDealDetailCtl(re_code);
 	}
 	
 	public List<SupplySearchBean> getSearchSupplyDeal(String word){
 		return ssc.getSearchSupplyDealCtl(word);
+	}
+	
+	public String issueTax(TaxBean tb) {
+		return ssc.issueTaxCtl(tb);
+	}
+	
+	public List<TaxBean> getIssuedTax() {
+		return ssc.getIssuedTaxCtl();
+	}
+	
+	public TaxBean getIssuedTaxDetail(String tbcode) {
+		return ssc.getIssuedTaxDetailCtl(tbcode);
 	}
 	
 	public List<ProductBean> getSupplyCateProductList(ProductBean pr){
