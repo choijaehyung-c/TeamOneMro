@@ -50,6 +50,6 @@ Client pwd<input type="text" value="" name="cl_pwd"/><br>
 
 <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/cjh.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/apiTest.js"></script>
 </body>
 </html>

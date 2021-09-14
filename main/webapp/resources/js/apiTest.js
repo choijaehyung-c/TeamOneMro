@@ -32,11 +32,18 @@ function ajaxToServerResponse(data){
 function sendApiData(){
 	let id = document.getElementsByName("os_clcode")[0].value;
 	let pwd = document.getElementsByName("cl_pwd")[0].value;
+	let tData1 = ['1039672976','1039672975','1039171655','1039171799','1037946894','1037947505']KR001G
+	let tData2 = ['1038908322'
+1038768782
+1038641866
+1037532711
+1039694563] 
 	let OD = [];
 	for(i=0;i<3;i++){
 		OD.push({od_prspcode:"KR001D",od_prcode:"123123123"+i,od_quantity:i+1});
 	}
-	
+
+
 	let clientData ={os_clcode:id,cl_pwd:pwd,od:OD};
 	console.log(clientData.od[0].od_quantity);
 	postAjaxJson('clientOrder','ajaxToServerResponse','s',JSON.stringify(clientData));
