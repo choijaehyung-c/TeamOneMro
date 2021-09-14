@@ -1,10 +1,13 @@
 package mrone.teamone.beans;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class TaxBean {
 	private String tb_code;
+	private String tb_oscode;
 	private String tb_spcode;
 	private String tb_spname;
 	private String tb_spaddress; 
@@ -24,4 +27,8 @@ public class TaxBean {
 	private String tb_spemail;
 	private String tb_clemail;
 	private String tb_stcode; 
+	private SupplyInfoBean sb;
+	private ClientInfoBean cb;
+	private List<RequestOrderDetailBean> rdb;
 }
+

@@ -11,4 +11,5 @@ public class SupplySearchBean {
 	private String cl_hp;
 	private String re_code;
 	private String re_date;
+	private String re_clcode;
 }
