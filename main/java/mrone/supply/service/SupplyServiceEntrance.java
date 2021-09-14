@@ -84,20 +84,18 @@ public class SupplyServiceEntrance {
 		return reList;
 	}
 
-	public List<ClientInfoBean> choiceCLInfoCtl(ClientInfoBean cb) {
-
-		return ssc.choiceCLInfo(cb);
+	public ClientInfoBean choiceCLInfoCtl(String cl_code) {
+		return ssc.choiceCLInfo(cl_code);
 	}
 
-	public List<SupplyInfoBean> choiceSPInfoCtl(SupplyInfoBean sb) {
 
-		return ssc.choiceSPInfo(sb);
+	public SupplyInfoBean choiceSPInfoCtl() {
+		return ssc.choiceSPInfo();
 	}
 
-	public List<RequestOrderBean> getTaxDill() {
-		List<RequestOrderBean> reList = null;
-		reList = ssc.getTaxDill();
-		return reList;
+
+	public List<RequestOrderBean> getTaxdeal() {
+		return ssc.getTaxdeal();
 	}
 
 	public List<RequestOrderDetailBean> choiceDillInfoCtl(RequestOrderDetailBean rdb) {

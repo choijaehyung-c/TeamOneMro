@@ -390,29 +390,16 @@ public class SupplyDao {
 		return reList;
 	}
 
-	List<ClientInfoBean> choiceCLInfo(ClientInfoBean cb) {
-
-		List<ClientInfoBean> reList = null;
-		cb.setCl_code(cb.getCl_code());
-		reList = sql.selectList("choiceCLInfo", cb);
-
-		return reList;
+	ClientInfoBean choiceCLInfo(String cl_code) {		
+		return sql.selectOne("choiceCLInfo", cl_code);
 	}
 
-	List<SupplyInfoBean> choiceSPInfo(SupplyInfoBean sb) {
-
-		List<SupplyInfoBean> reList = null;
-		sb.setSp_code(sb.getSp_code());
-		System.out.println(sb.getSp_code());
-		reList = sql.selectList("choiceSPInfo", sb);
-
-		return reList;
+	SupplyInfoBean choiceSPInfo(String spcode) {
+		return sql.selectOne("choiceSPInfo", spcode);
 	}
 
-	List<RequestOrderBean> getTaxDill() {
-		List<RequestOrderBean> reList = null;
-		reList = sql.selectList("getTaxDill");
-		return reList;
+	List<RequestOrderBean> getTaxdeal(String spcode) {		
+		return sql.selectList("getTaxdeal", spcode);
 	}
 
 	List<RequestOrderDetailBean> choiceDillInfo(RequestOrderDetailBean rdb) {
