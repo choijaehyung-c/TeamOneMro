@@ -30,7 +30,7 @@ Client pwd<input type="text" value="" name="cl_pwd"/><br>
 
 <div id="vuezone">
 
-
+{{msg}}
 
 </div>
 

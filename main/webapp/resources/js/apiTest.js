@@ -4,7 +4,7 @@
 const appvue = new Vue({
 	el:"#vuezone",
 	data:{
-		msg:[]
+		msg:[none]
 	},
 	methods:{
 		serverResponse:function(ddata){
@@ -34,6 +34,6 @@ function sendApiData(){
 
 	let clientData ={os_clcode:id,cl_pwd:pwd,od:OD};
 	console.log(clientData.od[0].od_quantity);
-	postAjaxJson('clientOrder','ajaxToServerResponse','s',JSON.stringify(clientData));
+	postAjaxJson('vue/clientOrder','ajaxToServerResponse','s',JSON.stringify(clientData));
 }
 
