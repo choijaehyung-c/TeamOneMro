@@ -1049,7 +1049,7 @@
 <!---------------------------------------------------------------------------------------------------->
 
 
-					<template v-if="display[7].show" style="z-index: 3;">
+					<template v-if="display[16].show" style="z-index: 3;">
 						<div v-if="modal.show"
 							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
 							<div
@@ -1072,7 +1072,7 @@
 												<td>{{dld.pr_tax}}</td>
 												<td>{{dld.rd_quantity}}</td>					
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1080,7 +1080,7 @@
 					</template>
 					
 <!---------------------------------------------------------------------------------------------------->										
-					<template v-if="display[7].show" style="z-index: 3;">
+					<template v-if="display[16].show" style="z-index: 3;">
 					
 						<div class="container-fluid px-4">
 							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >거래내역 조회</h1>
@@ -1119,7 +1119,7 @@
 					</template>
 					
 <!---------------------------------------------------------------------------------------------------->	
-					<template v-if="display[8].show" style="z-index: 3;">
+					<template v-if="display[17].show" style="z-index: 3;">
 					
 						<div v-if="modal.show"
 							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -1143,7 +1143,7 @@
 												<td>{{cl.cl_corpnum}}</td>
 											
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1171,7 +1171,7 @@
 												<td>{{dl.cl_name}}</td>
 												
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1229,7 +1229,7 @@
       <td class='border_up' align='center' width='278' colspan='5' >{{spbean.sp_corpnum}}</td>
       <td class='border_up' align='center' width='17' rowspan='4'>공<br>급<br>받<br>는<br>자</td>
       <td class='border_up' align='center' width='55'>등록번호</td>
-      <td class='border_top' align='center' width='278' colspan='5' v-if="display[9].show" >{{clbean.cl_corpnum}}</td>
+      <td class='border_top' align='center' width='278' colspan='5' v-if="display[18].show" >{{clbean.cl_corpnum}}</td>
       <td><button @click="getClientInfo()">찾기</button></td>
      </tr>
      <tr>
@@ -1238,7 +1238,7 @@
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
       <td class='border_up' align='right' width='94' colspan='1'>인</td>
       <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
-      <td class='border_up' align='center' width='160' colspan='3' v-if="display[9].show" >{{clbean.cl_name}}</td>
+      <td class='border_up' align='center' width='160' colspan='3' v-if="display[18].show" >{{clbean.cl_name}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
       <td class='border_top' align='right' width='94' colspan='1'>인</td>
      </tr>
@@ -1246,7 +1246,7 @@
       <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
       <td class='border_up' align='center' width='278' colspan='5'>{{spbean.sp_address}}</td>
       <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
-      <td class='border_top' align='center' width='278' colspan='5'v-if="display[9].show" >{{clbean.cl_address}}</td>
+      <td class='border_top' align='center' width='278' colspan='5'v-if="display[18].show" >{{clbean.cl_address}}</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>업  태</td>
@@ -1254,15 +1254,15 @@
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
       <td class='border_up' align='center' width='106' colspan='3'>{{spbean.bk_name}}</td>
       <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
-      <td class='border_up' align='center' width='148' colspan='1' v-if="display[9].show" >{{clbean.bt_name}}</td>
+      <td class='border_up' align='center' width='148' colspan='1' v-if="display[18].show" >{{clbean.bt_name}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_top' align='center' width='106' colspan='3' v-if="display[9].show" >{{clbean.bk_name}}</td>
+      <td class='border_top' align='center' width='106' colspan='3' v-if="display[18].show" >{{clbean.bk_name}}</td>
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
       <td class='border_up' align='center' width='148' colspan='1' >{{spbean.sd_email}}</td>
        <td class='border_up' align='center' width='55' height='33' >E-mail</td>
-       <td class='border_up' align='center' width='148' colspan='1' v-if="display[9].show" >{{clbean.cl_email}}</td>
+       <td class='border_up' align='center' width='148' colspan='1' v-if="display[18].show" >{{clbean.cl_email}}</td>
      </tr>
     </table>
    </td>
@@ -1310,7 +1310,7 @@
       <td class='border_up' align='center' width='122' height='2'>합계금액</td>
       </tr>
       
-      <tr v-if="display[10].show" v-for="dld in modalDealList" >
+      <tr v-if="display[19].show" v-for="dld in modalDealList" >
       <td class='border_up' align='center' width='195' >{{dld.pr_name}}</td>      
       <td class='border_up' align='center' width='65' >{{dld.rd_quantity}}</td>      
       <td class='border_up' align='center' width='150' >{{dld.pr_price}}</td>      
@@ -1324,7 +1324,7 @@
   </tr>
   <tr>
    <td width='100%'>
-    <table cellpadding='0' cellspacing='0' width='700' v-if="display[3].show" v-for="dld in modalDealList">
+    <table cellpadding='0' cellspacing='0' width='700' v-if="display[19].show" v-for="dld in modalDealList">
      <tr align='justify'>      
       <td>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}} 이를 영수합니다.</td>
      </tr>
@@ -1335,7 +1335,7 @@
       <td class='border_up' align='center' width='108'>&nbsp;</td>
       <td class='border_up' align='center' width='108'>&nbsp;</td>
       <td class='border_up' align='center' width='108'>&nbsp;</td>
-      <td v-if="display[10].show" > 
+      <td v-if="display[19].show" > 
       <button @click="issueTax(dld.rd_quantity*(dld.pr_tax+dld.pr_price))">발행하기</button>
       
       
@@ -1355,7 +1355,7 @@
 <!---------------------------------------------------------------------------------------------------->						
 
 					
-					<template v-if="display[11].show" style="z-index: 3;">
+					<template v-if="display[20].show" style="z-index: 3;">
 
 										<div v-if="modal.show"
 							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
@@ -1485,7 +1485,7 @@
   
 </table>								
 											    
-<button class="btn-datatable"  v-on:click="modalClose()"><img src="../../resources/img/close.png"></button>										  											   																																							
+<button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						               									  				
 						</table>							
 					  </div>
