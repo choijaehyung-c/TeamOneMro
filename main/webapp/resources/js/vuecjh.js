@@ -8,7 +8,7 @@ const main = new Vue({
   data: {
 	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false},{show:false/*거래내역리스트*/},{show:false/*세금계산서페이지*/}
 		,{show:false/*고객사정보기입*/}
-		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/}],
+		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/},{show:false}],
 	modal: { show: false },
 	modal2:{show:false},
 	list:[],
@@ -398,6 +398,7 @@ function mainPage(){
 
 let pr_name;
 function gettingChart(jsonData){
+	main.changePage(21);
 	//alert(JSON.stringify(jsonData));
 	pr_name = JSON.stringify(jsonData);
 	alert(pr_name);

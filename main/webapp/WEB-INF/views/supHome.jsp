@@ -132,7 +132,7 @@
             <main style="height: 100%; width: 100%;">
 				<div id="supplyVue"  style="height: 100%; width: 100%;">
 				
-				<template >
+				<template v-if="display[21].show">
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
 								<h6 class="m-0 font-weight-bold text-primary">우리회사 베스트 상품 TOP 5</h6>
