@@ -66,7 +66,7 @@ const mainVue = new Vue({
 			postAjaxJson('vue/MroGetModifyProductDetail', 'mroGetModifyProductDetailVue', 'j', clientData);
 		},
 		mroGetModifyRequestDetailPush: function(jsondata) {
-			this.mroGetModifyRequestDetail = jsondata;
+			this.modalDetail = jsondata;
 		},
 		////////////////////////////////////////////////////////////
 		mroResponseModifyProduct: function(prcode, code, num) {
