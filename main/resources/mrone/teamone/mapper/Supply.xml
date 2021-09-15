@@ -149,11 +149,53 @@
     </select>
     
     <select id="getIssuedTaxDetail"  parameterType="string" resultType="mrone.teamone.beans.TaxBean">
-	SELECT 
-	*
-	FROM TB
-	WHERE TB_CODE = #{tbcode}
+		SELECT 
+	TB_CODE,
+    TB_OSCODE,
+    TB_SPCODE,
+    TB_SPNAME,
+    TB_SPADDRESS,
+    TB_SPBTYPE,
+    TB_SPCORPNUM,
+    TB_SPBKIND,
+    TB_CLCODE,
+    TB_CLCORPNUM,
+    TB_CLNAME,
+    TB_CLADDRESS,
+    TB_CLBTYPE,
+    TB_CLBKIND,
+    TB_DATE,
+    TB_PRICE,
+    TB_TAX,
+    TB_TTPRICE,
+    TB_SPEMAIL,
+    TB_CLEMAIL,
+    TB_STCODE,
+    BT_NAME AS SPBTNAME,
+    BK_NAME AS SPBKNAME,
+    CLBT_NAME AS CLBTNAME,
+    CLBK_NAME AS CLBKNAME
+	FROM TB INNER JOIN BT ON TB.TB_SPBTYPE = BT.BT_CODE
+            INNER JOIN BK ON TB.TB_SPBKIND = BK.BK_CODE
+            INNER JOIN CLBTYPE ON TB.TB_CLBTYPE = CLBTYPE.CLBT_CODE
+            INNER JOIN CLBKIND ON TB.TB_CLBKIND = CLBKIND.CLBK_CODE
+	WHERE  TB_CODE = #{tbcode}
     </select>
+    
+    <select id="getTaxProduct"  parameterType="string" resultType="mrone.teamone.beans.OrderDetailBean">
+	SELECT
+	OD_PRSPCODE,
+	OD_OSCODE,
+	OD_STCODE,
+	OD_PRCODE,
+	OD_QUANTITY,
+	PR_NAME,
+	PR_PRICE,
+	PR_TAX
+	FROM OD INNER JOIN PR ON OD.OD_PRCODE = PR.PR_CODE
+	WHERE OD_OSCODE = #{oscode}
+    </select>
+    
 	
 	<select id="getSupplyCateProductList" parameterType="mrone.teamone.beans.ProductBean" resultType="mrone.teamone.beans.ProductBean">
 		SELECT PR_NAME,PR_CODE,PR_PRICE,PR_STOCK FROM PR WHERE PR_SPCODE = #{pr_spcode} AND CATE = #{cate} AND PR_STCODE = 'PC'

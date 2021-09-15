@@ -10,4 +10,7 @@ public class OrderDetailBean {
 	private String od_prcode;
 	private String od_note;
 	private int od_quantity;
+	private String pr_name;
+	private int pr_price;
+	private int pr_tax;
 }
