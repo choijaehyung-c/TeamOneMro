@@ -23,7 +23,8 @@ const main = new Vue({
 	  spbean:{},
 	  modalDealList:[],
 	  modalCLList:[],
-	  tbbean:{}
+	  tbbean:{},
+	  od:[]
   },
 	methods:{
 		changePage:function(page){
@@ -334,8 +335,7 @@ const main = new Vue({
 		issuedTaxbillPage:function(){
 			postAjaxJson('vue/getIssuedTax','IssuedTaxVue','j');
 		},
-		taxDetail:function(tbcode){
-			
+		taxDetail:function(tbcode){		
 			postAjaxJson('vue/getIssuedTaxDetail','IssuedTaxDetailVue','j',tbcode);
 		},
 		///////////////////////////////////////////////////
@@ -629,7 +629,8 @@ function IssuedTaxVue(jsondata){
 
 function IssuedTaxDetailVue(jsondata){
 	
-	main.tbbean = jsondata;	
+	main.tbbean = jsondata;
+	main.od = jsondata.od;	
 	main.modalOpen();
 }
 

@@ -30,5 +30,12 @@ public class TaxBean {
 	private SupplyInfoBean sb;
 	private ClientInfoBean cb;
 	private List<RequestOrderDetailBean> rdb;
+	private List<OrderDetailBean> od;
+	private String spbtname; 
+	private String spbkname; 
+	private String clbtname; 
+	private String clbkname; 
+
+	
 }
 

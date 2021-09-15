@@ -1072,7 +1072,7 @@
 												<td>{{dld.pr_tax}}</td>
 												<td>{{dld.rd_quantity}}</td>					
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1143,7 +1143,7 @@
 												<td>{{cl.cl_corpnum}}</td>
 											
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1171,7 +1171,7 @@
 												<td>{{dl.re_date}}</td>
 												
 											</tr>							
-											    <button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						                </tbody>									  				
 						</table>							
 					  </div>
@@ -1351,13 +1351,13 @@
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33'>업  태</td>
-      <td class='border_up' align='center' width='148' colspan='1'>{{tbbean.tb_spbtype}}</td>
+      <td class='border_up' align='center' width='148' colspan='1'>{{tbbean.spbtname}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_up' align='center' width='106' colspan='3'>{{tbbean.tb_spbkind}}</td>
+      <td class='border_up' align='center' width='106' colspan='3'>{{tbbean.spbkname}}</td>
       <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
-      <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.tb_clbtype}}</td>
+      <td class='border_up' align='center' width='148' colspan='1' >{{tbbean.clbtname}}</td>
       <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_up' align='center' width='106' colspan='4'>{{tbbean.tb_clbkind}}</td>   
+      <td class='border_up' align='center' width='106' colspan='4'>{{tbbean.clbkname}}</td>   
      </tr>
      <tr>
       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
@@ -1365,6 +1365,29 @@
       <td class='border_up' align='center' width='55' height='33' >E-mail</td>
       <td class='border_up' align='center' width='148' colspan='6' >{{tbbean.tb_clemail}}</td>
      </tr>
+    </table>
+   </td>
+  </tr>
+  
+   <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+      <tr>
+      <td class='border_up' align='center' width='195' height='33'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up' align='center' width='65' height='33'>수 량</td>
+      <td class='border_up' align='center' width='150' height='33'>공급가액</td>
+      <td class='border_up' align='center' width='83' height='33'>세 액</td>
+      <td class='border_up' align='center' width='122' height='33'>합계금액</td>
+      </tr>
+      
+      <tr>
+      <td class='border_up' align='center' width='195' height='33'  v-for="od in od">{{od.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' height='33'  v-for="od in od">{{od.od_quantity}}</td>      
+      <td class='border_up' align='center' width='150' height='33'  v-for="od in od">{{od.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' height='33'  v-for="od in od">{{od.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'height='33'  v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      </tr>
+ 
     </table>
    </td>
   </tr>
@@ -1420,6 +1443,10 @@
       <td class='border_up_red' align='center' width='12' colspan='1'>성<br>명</td>
       <td class='border_top_red' align='right' width='94' colspan='2'>인</td>
      </tr>
+     
+     
+     
+     
      <tr>
       <td class='border_up_red' align='center' width='55' height='33'>사업장<br>주  소</td>
       <td class='border_up_red' align='center' width='278' colspan='5'>{{tbbean.tb_spaddress}}</td>
@@ -1428,13 +1455,13 @@
      </tr>
      <tr>
       <td class='border_up_red' align='center' width='55' height='33'>업  태</td>
-      <td class='border_up_red' align='center' width='148' colspan='1'>{{tbbean.tb_spbtype}}</td>
+      <td class='border_up_red' align='center' width='148' colspan='1'>{{tbbean.spbtname}}</td>
       <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_up_red' align='center' width='106' colspan='3'>{{tbbean.tb_spbkind}}</td>
+      <td class='border_up_red' align='center' width='106' colspan='3'>{{tbbean.spbkname}}</td>
       <td class='border_up_red' align='center' width='55'>업 &nbsp; 태</td>
-      <td class='border_up_red' align='center' width='148' colspan='1' >{{tbbean.tb_clbtype}}</td>
+      <td class='border_up_red' align='center' width='148' colspan='1' >{{tbbean.clbtname}}</td>
       <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
-      <td class='border_up_red' align='center' width='106' colspan='4'>{{tbbean.tb_clbkind}}</td>   
+      <td class='border_up_red' align='center' width='106' colspan='4'>{{tbbean.clbkname}}</td>   
      </tr>
      <tr>
       <td class='border_up_red' align='center' width='55' height='33' >E-mail</td>
@@ -1445,7 +1472,29 @@
     </table>
    </td>
   </tr>
+  
+   <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+      <tr>
+      <td class='border_up_red' align='center' width='195' height='33'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up_red' align='center' width='65' height='33'>수 량</td>
+      <td class='border_up_red' align='center' width='150' height='33'>공급가액</td>
+      <td class='border_up_red' align='center' width='83' height='33'>세 액</td>
+      <td class='border_up_red' align='center' width='122' height='33'>합계금액</td>
+      </tr>
+      
+      <tr>
+      <td class='border_up_red' align='center' width='195' height='33' v-for="od in od">{{od.pr_name}}</td>      
+      <td class='border_up_red' align='center' width='65' height='33' v-for="od in od">{{od.od_quantity}}</td>      
+      <td class='border_up_red' align='center' width='150' height='33' v-for="od in od">{{od.pr_price}}</td>      
+      <td class='border_up_red' align='center' width='83' height='33' v-for="od in od">{{od.pr_tax}}</td>
+      <td class='border_up_red' align='center' width='83'height='33' v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      </tr>
  
+    </table>
+   </td>
+  </tr>
 
   <tr>
    <td width='100%'>
@@ -1461,7 +1510,7 @@
   </tr> 
 </table>		
 															    
-<button class="btn-datatable"  v-on:click="modalClose()">닫기</button>										  											   																																							
+<button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
 						               									  				
 						</table>							
 					  </div>

@@ -206,6 +206,10 @@ public class SupplyDao {
 		return sql.selectOne("getIssuedTaxDetail", tbcode);
 	}
 	
+	List<OrderDetailBean> getTaxProduct(String oscode) {
+		return sql.selectList("getTaxProduct", oscode);
+	}
+	
 
 	List<ProductBean> getSupplyCateProductList(ProductBean pb) {
 		return sql.selectList("getSupplyCateProductList", pb);

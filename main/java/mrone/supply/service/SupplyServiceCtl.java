@@ -314,8 +314,11 @@ class SupplyServiceCtl {
 		return dao.getIssuedTax(spcode);
 	}
 	
-	TaxBean getIssuedTaxDetailCtl(String tbcode) {	
-		return dao.getIssuedTaxDetail(tbcode);
+	TaxBean getIssuedTaxDetailCtl(String tbcode) {
+		TaxBean tb = dao.getIssuedTaxDetail(tbcode);
+		tb.setOd(dao.getTaxProduct(tb.getTb_oscode()));
+		System.out.println(tb);
+		return tb;
 	}
 	
 	List<ProductBean> getSupplyCateProductList(ProductBean pb) {
