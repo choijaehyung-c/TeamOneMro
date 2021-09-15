@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
@@ -209,6 +210,22 @@ class MroServiceCtl {
 			}
 		}
 		return list;
+	}
+
+	
+	
+	
+	
+	
+	
+	public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+	
+		return dao.deliveryTest(db);
+	}
+
+	public void insertsdcode(DeliveryBean db) {
+		dao.insertsdcode(db);
+		
 	}
 
 }

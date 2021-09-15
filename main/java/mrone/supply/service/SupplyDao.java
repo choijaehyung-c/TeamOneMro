@@ -300,9 +300,39 @@ public class SupplyDao {
 	}
 	
 	
+	
+	
+	
 	List<ProductBean> supplyAllProductList(String sp_code){
 		
 		return sql.selectList("supplyAllProductList", sp_code);
+	}
+
+	
+	
+	
+	public void deleteMR(ProductBean pb) {
+	
+		sql.delete("deleteMR", pb);
+	}
+
+	public void deleteDR(ProductBean pb) {
+		
+		sql.delete("deleteDR", pb);
+	}
+
+	public List<ProductBean> supplyPRAFProductList(String sp_code) {
+		
+		return sql.selectList("supplyPRAFProductList", sp_code);
+	}
+
+	public List<ProductBean> supplyMRDRDAProductList(String sp_code) {
+		
+		return sql.selectList("supplyMRDRDAProductList", sp_code);
+	}
+
+	public Boolean supplyRequestCancel(ProductBean pb) {
+		return convertToBoolean(sql.delete("supplyRequestCancel", pb));
 	}
 	
 }

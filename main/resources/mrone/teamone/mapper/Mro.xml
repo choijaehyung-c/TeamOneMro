@@ -107,6 +107,22 @@
     <select id="getRefundDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
+  
+    
+    
+    <select id="deliveryTest" parameterType="mrone.teamone.beans.DeliveryBean" resultType="mrone.teamone.beans.DeliveryBean">
+    	  SELECT DL_CODE, DL_OSCODE, DL_LCCODE, DV_NAME, DV_HP, DV_SPCODE, SP_NAME, SP_TEL, SP_ADDRESS, DL_DSCODE, DS_NAME
+		  FROM DV INNER JOIN DL ON DV.DV_CODE = DL.DL_DVCODE
+          INNER JOIN SP ON DV.DV_SPCODE = SP.SP_CODE
+          INNER JOIN DS ON DL.DL_DSCODE = DS.DS_CODE 
+		  WHERE DV_CODE = #{dl_dvcode}
+    </select>
+  
+  	<update id="insertsdcode" parameterType="mrone.teamone.beans.DeliveryBean">
+  		UPDATE DL SET DL_DSCODE = #{dl_dscode} WHERE DL_CODE = #{dl_code}
+  	</update>
+    
+    
  
 
 </mapper>

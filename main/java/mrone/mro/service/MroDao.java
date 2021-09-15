@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mrone.teamone.beans.ClientInfoBean;
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
@@ -120,6 +121,21 @@ public class MroDao {
 	boolean convertToBoolean(int data) {
 		return data > 0 ? true : false;
 	}
+
 	
+	
+	
+	
+	
+	
+	public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+		return sql.selectList("deliveryTest", db);
+	}
+
+	public void insertsdcode(DeliveryBean db) {
+		sql.update("insertsdcode", db);
+		
+	}
+
 	
 }

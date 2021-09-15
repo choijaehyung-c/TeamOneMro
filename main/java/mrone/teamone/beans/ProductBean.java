@@ -24,5 +24,6 @@ public class ProductBean {
 	private String sp_name;
 	private String sp_tel;
 	private String sp_address;
+	private String st_name;	
 	private MultipartFile file;
 }

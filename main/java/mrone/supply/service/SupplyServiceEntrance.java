@@ -174,6 +174,20 @@ public class SupplyServiceEntrance {
 		
 		return ssc.supplyAllProductList();
 	}
+
+	public List<ProductBean> supplyPRAFProductList() {
+		
+		return ssc.supplyPRAFProductList();
+	}
+
+	public List<ProductBean> supplyMRDRDAProductList() {
+		
+		return ssc.supplyMRDRDAProductList();
+	}
+
+	public String supplyRequestCancel(ProductBean pb) {
+		return ssc.supplyRequestCancel(pb);
+	}
 	
 	
 }

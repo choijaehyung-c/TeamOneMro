@@ -95,8 +95,8 @@
                         
                             
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <div class="nav-link" >
-                                Test3
+                            <div class="nav-link" onClick="callDeliveryList()">
+                                배송관리
                             </div>
                             <div class="nav-link" >
                                 Test4
@@ -335,6 +335,31 @@
                    	
 
                    	</div>
+                   	
+                   	
+                   	
+                   	
+                   	
+                   	 <div id="deliveryVue" style="height: 100%; width: 100%;">
+                   	 	<template v-if="deliveryPage[0].show">
+                   	 	<div v-for="dl in deliveryList" >
+                   	 	 <h6>&nbsp </h6>
+                   	 		<div>
+                   	 			<div>배송원:{{dl.dv_name}}</div><div>주문자:{{dl.sp_name}}</div><div>배송지:{{dl.sp_address}}</div><div>전화번호:{{dl.sp_tel}}</div><div>{{dl.ds_name}}</div>
+                   	 				
+                   	 				<button v-if="dl.dl_dscode==1"  @click="insertsdcode(dl.dl_code, 2)"  type="button" class="btn btn-dark">배송시작</button>
+                   	 				
+                   	 				<button v-if="dl.dl_dscode==2" @click="insertsdcode(dl.dl_code, 3)"  type="button" class="btn btn-dark">배송완료</button>
+                   	 			
+                   	 		</div>
+                   		</div>
+                   		</template>
+                   	</div>
+                   	
+                   	
+                   	
+                   	
+                   	
                    	
                 
                 </main>

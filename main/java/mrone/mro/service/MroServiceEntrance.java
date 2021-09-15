@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.ClientInfoBean;
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
@@ -84,6 +85,21 @@ public class MroServiceEntrance {
 
 	public ProductBean mroGetNewProductDetail(ProductBean pb) {
 		return msc.mroGetNewProductDetail(pb);
+	}
+
+	
+	
+	
+	
+	
+	
+	public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+		
+		return msc.deliveryTest(db);
+	}
+
+	public void insertsdcode(DeliveryBean db) {
+		msc.insertsdcode(db);
 	}
 
 }

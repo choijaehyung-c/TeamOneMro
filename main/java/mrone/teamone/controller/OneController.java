@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.auth.Authentication;
 import mrone.teamone.beans.AccessHistoryBean;
+import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.utill.Encryption;
 
 
@@ -54,6 +56,11 @@ public class OneController {
 	public String asdasdasd() {
 		return "supHome";
 	}
+	
+	
+
+	
+	
 	
 	
 	

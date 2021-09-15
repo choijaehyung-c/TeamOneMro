@@ -85,17 +85,17 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <div  v-if="page[0].show">
+                                            <div  v-if="display[0].show">
                                     			<div v-for="cl in categoryList">
                                     				<a class="nav-link" @click="callCategoryPoductList(cl.cate)">{{cl.cate_name}}</a>
                                     			</div>
                                            </div>
                                         </nav>
                                     </div>
-                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a @click="supplyPRAFProductListPage()" class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                         새상품 등록 요청건
                                     </a>
-                                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a @click="supplyMRDRDAProductListPage()" class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                         상품수정 요청건
                                     </a>
                                 </nav>
@@ -140,14 +140,60 @@
             <div id="layoutSidenav_content" style="height: 100%; width: 100%; table-layout: fixed;">
                 <main style="height: 100%; width: 100%; margin-top:0px;">
             		<div id="mainVue" style="height: 100%; width: 100%;">
-           				<template v-if="page[0].show">
+           			
+           			<template v-if="display[0].show">	
+           				 <!-- !!!!!!!!상품등록신청중인 상품정보 모달!!!!!!!!!!!! -->
+              <div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                   				<img :src="detail.pr_image">
+                   			<tbody>
+                                <tr>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" v-model="detail.pr_name"></td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" v-model="detail.pr_price"></td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td><input readonly style="width: 300px;" type="text" v-model="detail.pr_stock"></td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" v-model="detail.pr_origin"></td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" v-model="detail.pr_info"></td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div  style="text-align: center">
+                   		<button @click="supplyRequestModify(detail.pr_spcode, detail.pr_code, detail.pr_tax,
+                   											detail.pr_spbkind, 'MR', detail.pr_image,
+                   											detail.pr_name, detail.pr_price, detail.pr_stock,
+                   											detail.pr_origin, detail.pr_info, detail.cate,
+                   											detail.cate_name)"  type="button" class="btn btn-dark">수정요청</button>
+                   		<button @click="supplyRequestDelete(detail.pr_spcode, detail.pr_code, detail.pr_tax,
+                   											detail.pr_spbkind, 'DR', detail.pr_image,
+                   											detail.pr_name, detail.pr_price, detail.pr_stock,
+                   											detail.pr_origin, detail.pr_info, detail.cate,
+                   											detail.cate_name)"  type="button" class="btn btn-dark">삭제요청</button>
+                   		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+           				
+           				
+           				
+           				
            					<div class="container-fluid px-4">
                         <h6>&nbsp </h6>
                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div  class="dataTable-top">
                      	<div class="dataTable-search">
-                     		<input @v-model @v-if="searchProduct()" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
-                     		<div>{{word}}</div>
+                     		<input  @change="search1()" v-on:input="search1" v-bind:value="searchWord"  class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
+                     	
                      	</div>
                      </div>  
                         <div class="card mb-4">
@@ -163,42 +209,320 @@
                                         </tr>
                                     </thead>
        
-                                    <tbody>
-                                        <tr v-if="page[1].show" v-for="sap in supplyAllProductList">
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">{{sap.cate_name}}</td>
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">{{sap.pr_name}}</td>
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">
+                                    <tbody v-if="display[1].show">
+                                        <tr  v-for="sap in list">
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.cate_name}}</td>
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.pr_name}}</td>
+                                            <td>
                                             		<input type="text" v-model="sap.pr_stock">
-                                            		<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">수량변경</button>
+                                            		<button @click="supplyModifyStock(sap.pr_code, sap.pr_stock)"  type="button" class="btn btn-dark">수량변경</button>
                                             </td>
                                             <td style="text-align: center">
-                                            	<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">수정</button>
-                   								<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">삭제</button>
+                                       
+                   								<button @click="supplyRequestDelete(sap.pr_spcode, sap.pr_code, sap.pr_tax,
+                   											sap.pr_spbkind, 'DR', sap.pr_image,
+                   											sap.pr_name, sap.pr_price, sap.pr_stock,
+                   											sap.pr_origin, sap.pr_info, sap.cate,
+                   											sap.cate_name)"  type="button" class="btn btn-dark">삭제요청</button>
                    							</td>
                                         </tr>
-                                    
+                                        </tbody>
                                     <!-- 카테고리별 리스트 -->
-                                    <div v-if="page[2].show">
-                                        <tr  v-for="sap in supplyAllProductList" v-if="sap.cate == categoryCode">
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">{{sap.cate_name}}</td>
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">{{sap.pr_name}}</td>
-                                            <td @click="mroGetNewProductDetailPage(sap.pr_code)">
+                                    <tbody  v-if="display[2].show">
+                                    <div>
+                                        <tr v-for="sap in list " v-if="sap.cate == categoryCode">
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.cate_name}}</td>
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.pr_name}}</td>
+                                            <td>
                                             		<input type="text" v-model="sap.pr_stock">
-                                            		<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">수량변경</button>
+                                            		<button @click="supplyModifyStock(sap.pr_code, sap.pr_stock)"  type="button" class="btn btn-dark">수량변경</button>
                                             </td>
                                             <td style="text-align: center">
-                                            	<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">수정</button>
-                   								<button @click="mroResponseNewProduct(sap.pr_code, '')"  type="button" class="btn btn-dark">삭제</button>
+                                            	<button @click="supplyRequestDelete(sap.pr_spcode, sap.pr_code, sap.pr_tax,
+                   											sap.pr_spbkind, 'DR', sap.pr_image,
+                   											sap.pr_name, sap.pr_price, sap.pr_stock,
+                   											sap.pr_origin, sap.pr_info, sap.cate,
+                   											sap.cate_name)"  type="button" class="btn btn-dark">삭제요청</button>
                    							</td>
                                         </tr>
-                                       </div> 
+                                       </div>
+                                   </tbody>
+                                   
+                                   <tbody v-if="display[5].show">
+                                    <div>
+                                        <tr v-for="sap in list " v-if="sap.pr_name.includes(searchWord)">
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.cate_name}}</td>
+                                            <td @click="productDetail(sap.pr_code, 'PC')">{{sap.pr_name}}</td>
+                                            <td>
+                                            		<input type="text" v-model="sap.pr_stock">
+                                            		<button @click="supplyModifyStock(sap.pr_code, sap.pr_stock)"  type="button" class="btn btn-dark">수량변경</button>
+                                            </td>
+                                            <td style="text-align: center">
+                                            	<button @click="supplyRequestDelete(sap.pr_spcode, sap.pr_code, sap.pr_tax,
+                   											sap.pr_spbkind, 'DR', sap.pr_image,
+                   											sap.pr_name, sap.pr_price, sap.pr_stock,
+                   											sap.pr_origin, sap.pr_info, sap.cate,
+                   											sap.cate_name)"  type="button" class="btn btn-dark">삭제요청</button>
+                   							</td>
+                                        </tr>
+                                       </div>
+ 
                                     </tbody>
                                 </table>
                             </div>
+                                       
                         </div>
                     </div>
                    		</div>
            				</template>
+           				
+           				
+           				
+           				
+           		<template v-if="display[3].show">		
+           						 <!-- !!!!!!!!상품등록신청중인 상품 모달!!!!!!!!!!!! -->
+              <div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                   				<img :src="detail.pr_image">
+                   			<tbody>
+                                <tr>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" v-model="detail.pr_name"></td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" v-model="detail.pr_price"></td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td><input readonly style="width: 300px;" type="text" v-model="detail.pr_stock"></td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" v-model="detail.pr_origin"></td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" v-model="detail.pr_info"></td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div  style="text-align: center">
+                   		<div style="text-align: center">
+                   			<button @click="supplyRequestCancel(detail.pr_code, detail.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   			<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+           				
+           				
+           				
+           							<!-- 상품신청 입력받는 모달 -->
+           				<div v-if="modal2.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                
+                   			<tbody>
+                                <tr>
+                               		<td>사진</td><td><input  style="width: 300px;" type="text" v-model="pr_image"></td>
+                                </tr>
+                                <tr>
+                               		<td>카테고리</td><td><select v-model="cate" style="width: 300px;" id="CG">
+                               								<option v-for="selectCate in categoryList2"  :value="selectCate.cate" >{{selectCate.cate_name}}</option>
+                               						   </select>
+                               					  </td>	
+                               							
+                                </tr>
+                                <tr>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" v-model="pr_name"></td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" v-model="pr_price"></td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td><input style="width: 300px;" type="text" v-model="pr_stock"></td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" v-model="pr_origin"></td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" v-model="pr_info"></td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div  style="text-align: center">
+                   		<div style="text-align: center">
+                   			<button @click="supplyRequestNewProduct()" type="button" class="btn btn-dark">등록요청</button>
+                   			<button @click="modal2.show = false" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+           				
+           				
+           				
+           				
+           				<!-- 상품 등록신청 리스트 -->
+           				
+           					<div class="container-fluid px-4">
+                        <h6>&nbsp </h6>
+                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div  class="dataTable-top">
+                     	<button @click="supplyRequestNewProductModal()" type="button" class="btn btn-dark">물픔등록신청</button>
+                     	<div class="dataTable-search">
+                     		<input @change="search2()" v-on:input="search2" v-bind:value="searchWord" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
+                     	
+                     	</div>
+                     </div>  
+                        <div class="card mb-4">
+                        	<div class="card-header">등록요청중인 상품</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead v-if="display[6].show">
+                                        <tr>
+                                            <th style="width: 10%;"><a>카테고리</a></th>
+                                            <th style="width: 60%;"><a>상품명</a></th>
+                                            <th style="width: 20%;"><a>상태</a></th>
+                                            <th style="width: 10%;" ><a></a></th>                                          
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody v-if="display[7].show">
+                                        <tr v-for="PRAF in list">
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.cate_name}}</td>
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.pr_name}}</td>
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.st_name}}</td>
+                                            
+                                            <td style="text-align: center">
+                   								<button @click="supplyRequestCancel(PRAF.pr_code, PRAF.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                    <tbody>
+                                        <tr v-for="PRAF in list" v-if="PRAF.pr_name.includes(searchWord)" >
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.cate_name}}</td>
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.pr_name}}</td>
+                                            <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.st_name}}</td>
+                                            
+                                            <td style="text-align: center">
+                   								<button @click="supplyRequestCancel(PRAF.pr_code, PRAF.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                               
+                                </table>
+                            </div>
+                                
+                        </div>
+                    </div>
+                   		</div>
+           				</template>
+           				
+           				
+           				
+           				
+           				<template v-if="display[4].show" style="z-index: 3;">  
+           				
+           				<!--  수정,삭제요청상품 모달 -->
+           				<div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table class="dataTable-table">
+                  
+                   				<img :src="detail.pr_image">
+                   			<tbody>
+                                <tr>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" v-model="detail.pr_name"></td>
+                                </tr>
+                                <tr>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" v-model="detail.pr_price"></td>
+                                </tr>
+                                <tr>
+                               		<td>수량</td><td><input readonly style="width: 300px;" type="text" v-model="detail.pr_stock"></td>
+                                </tr>
+                                <tr>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" v-model="detail.pr_origin"></td>
+                                </tr>
+                                <tr>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" v-model="detail.pr_info"></td>
+                                </tr>
+                             
+                            </tbody>	
+                   		</table>
+                   		<div  style="text-align: center">
+                   		<div style="text-align: center">
+                   			<button @click="supplyRequestCancel(detail.pr_code, detail.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   			<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+           				
+           				
+           				
+           				             		
+                    <div class="container-fluid px-4">
+
+                        <h6>&nbsp </h6>
+
+                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                     	<div class="dataTable-search">
+                     		<input @change="search3()" v-on:input="search3" v-bind:value="searchWord" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                     	</div>
+                     </div>  
+                        
+
+                        
+                        <div class="card mb-4">
+                        	<div class="card-header">수정, 삭제요청중인 상품</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;"><a>카테고리</a></th>
+                                            <th style="width: 60%;"><a>상품명</a></th>
+                                            <th style="width: 20%;"><a>상태</a></th>
+                                            <th style="width: 10%;" ><a></a></th>                                         
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody v-if="display[8].show">
+                                        <tr v-for="MRDRDA in list">
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.st_name}}</td>
+                                            <td style="text-align: center">
+                                            	<button @click="supplyRequestCancel(MRDRDA.pr_code, MRDRDA.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                    <tbody v-if="display[9].show">
+                                        <tr v-for="MRDRDA in list" v-if="MRDRDA.pr_name.includes(searchWord)">
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
+                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.st_name}}</td>
+                                            <td style="text-align: center">
+                                            	<button @click="supplyRequestCancel(MRDRDA.pr_code, MRDRDA.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
+                   							</td>
+                                        </tr>
+                                    </tbody>
+                                     
+                                </table>
+                            </div>
+                        </div>
+   
+                    </div>
+                   		</div>
+                   	</template>
+           				
+
+           	
            	
            			</div>
            		</main>
@@ -216,3 +540,6 @@
         <script src="${pageContext.request.contextPath}/resources/js/HSMsup.js"></script>
     </body>
 </html>
+
+
+

@@ -406,10 +406,56 @@ public class RestApiController {
 			return null/* sse.supplyRequestNewProduct(pb) */;
 		}
 		
-		//해당 회사가 판매하는 모든 상품 가져오기
+		//해당 회사 상품 PC 가져오기
 		@PostMapping("/SupplyAllProductList")
 		public List<ProductBean> supplyAllProductList(){
-			return sse.supplyAllProductList() ;
+			return sse.supplyAllProductList();
 		}
-	
+		
+		//해당 회사 상품 PR AF 가져오기
+		@PostMapping("/SupplyPRAFProductList")
+		public List<ProductBean> supplyPRAFProductList(){
+			return sse.supplyPRAFProductList();
+		}
+		//해당 회사 상품 MR DR DA 가져오기
+		@PostMapping("/SupplyMRDRDAProductList")
+		public List<ProductBean> supplyMRDRDAProductList(){
+			return sse.supplyMRDRDAProductList();
+		}
+		
+		
+		//신청한요청들 취소하기
+		@PostMapping("/SupplyRequestCancel")
+		public String supplyRequestCancel(@RequestBody ProductBean pb){
+			return sse.supplyRequestCancel(pb);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+///////////////////////////////////딜리버리
+		
+		
+		@PostMapping("/DeliveryTest")
+		public List<DeliveryBean> deliveryTest(@RequestBody DeliveryBean db){
+			return mse.deliveryTest(db);
+		}
+		@PostMapping("/Insertsdcode")
+		public void insertsdcode(@RequestBody DeliveryBean db){
+			System.out.println(db);
+			mse.insertsdcode(db);
+		}
+		
+		
 }

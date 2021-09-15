@@ -7,10 +7,12 @@ const mainVue = new Vue({
       modal:{show:false},
 	  modal2:{show:false},
       list:[],      
+      PClist:[],      
+      PRAFlist:[],
+      MRDRDAlist:[],
       categoryList2:[],
       detail:{},
-	  categoryCode:'',
-	  searchWord:''
+	  categoryCode:''
    },
    methods:{
       changePage:function(page){
@@ -28,6 +30,9 @@ const mainVue = new Vue({
       },
       pushData:function(jsondata){
          this.list=jsondata;
+      },
+      modalClose:function(modalN){
+         this.modal[modalN].show=false;
       },
  	  detailPush:function(jsondata){
          this.modalOpen();
@@ -141,6 +146,11 @@ const mainVueTwo = new Vue({
       categoryList:[]
    },
    methods:{
+      resetPage:function(){
+         for(i=0;i<this.page.length;i++){
+            this.page[i].show=false;
+         }
+      },
       supplyGetCategoryPage:function(){
          postAjaxJson('vue/supplyGetCategory','getCate','j');                              
          this.display[0].show=true;
@@ -155,9 +165,11 @@ const mainVueTwo = new Vue({
          mainVue.categoryPoductListPage(cate);      
       },
       supplyPRAFProductListPage:function(){
+         this.resetPage();
          postAjaxJson('vue/SupplyPRAFProductList', 'supplyPRAFProductListPush', 'j');
       },
       supplyMRDRDAProductListPage:function(){
+         this.resetPage();
          postAjaxJson('vue/SupplyMRDRDAProductList', 'supplyMRDRDAProductListPush', 'j');
       }
       
