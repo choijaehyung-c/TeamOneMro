@@ -14,9 +14,13 @@
         <link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     </head>
     
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" >
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE_SUPPLY</a>
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -40,7 +44,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <div class="nav-link" onclick="change1()">
+                            <div class="nav-link" onclick="mainPage()">
                                 
                                 Dashboard
                             </div>
@@ -130,8 +134,43 @@
             </div>
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
+            							<div class="col-lg-6">
+							<div class="card mb-4">
+								<div class="card-header">
+									<svg class="svg-inline--fa fa-chart-bar fa-w-16 me-1"
+										aria-hidden="true" focusable="false" data-prefix="fas"
+										data-icon="chart-bar" role="img"
+										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+										data-fa-i2svg="">
+										<path fill="currentColor"
+											d="M332.8 320h38.4c6.4 0 12.8-6.4 12.8-12.8V172.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V76.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-288 0h38.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zM496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"></path></svg>
+									<!-- <i class="fas fa-chart-bar me-1"></i> Font Awesome fontawesome.com -->
+									베스트 상품 5
+								</div>
+								<div class="card-body">
+									<div class="chartjs-size-monitor">
+										<div class="chartjs-size-monitor-expand">
+											<div class=""></div>
+										</div>
+										<div class="chartjs-size-monitor-shrink">
+											<div class=""></div>
+										</div>
+									</div>
+									<canvas id="myBarChart" width="722" height="361"
+										style="display: block; height: 289px; width: 578px;"
+										class="chartjs-render-monitor"></canvas>
+								</div>
+								<div class="card-footer small text-muted">Updated
+									yesterday at 11:59 PM</div>
+							</div>
+						</div>
 				<div id="supplyVue"  style="height: 100%; width: 100%;">
-              		<template v-if="display[0].show">
+				
+					<template v-if="display[21].show">
+
+					</template>
+
+					<template v-if="display[0].show">
               			<div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
@@ -1794,7 +1833,7 @@
 <!---------------------------------------------------------------------------------------------------->              	
               	
               	
-              	
+              	</div>
               	</div>
              </main>
       
@@ -1806,8 +1845,57 @@
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/vuecjh.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/hsm.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 		<%-- <script src="${pageContext.request.contextPath}/resources/js/supplyIYJ.js"></script> --%>
+	   <!--   <script src="${pageContext.request.contextPath}/resources/js/chart-bar-demo.js"></script>-->
+    	<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
+    	<script src="${pageContext.request.contextPath}/resources/js/Chart.js"></script>
+		<script>
+		
+		var ctx = document.getElementById('myBarChart');
+		var myChart = new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+		    labels: ['${prname}','red','blue'],
+		    datasets: [{
+		      label: "Revenue",
+		      backgroundColor: "rgba(2,117,216,1)",
+		      borderColor: "rgba(2,117,216,1)",
+		      data: [${prCount},200,100],
+		    }],
+		  },
+		  options: {
+		    scales: {
+		      xAxes: [{
+		        time: {
+		          unit: 'month'
+		        },
+		        gridLines: {
+		          display: false
+		        },
+		        ticks: {
+		          maxTicksLimit: 6
+		        }
+		      }],
+		      yAxes: [{
+		        ticks: {
+		          min: 0,
+		          max: 1000,
+		          maxTicksLimit: 5
+		        },
+		        gridLines: {
+		          display: true
+		        }
+		      }],
+		    },
+		    legend: {
+		      display: false
+		    }
+		  }
+		});
+		
+
+		</script>
         
     </body>
 </html>

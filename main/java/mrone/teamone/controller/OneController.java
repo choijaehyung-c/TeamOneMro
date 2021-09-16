@@ -1,8 +1,9 @@
 package mrone.teamone.controller;
 
 
-import javax.servlet.http.Cookie;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import mrone.supply.service.SupplyServiceEntrance;
 import mrone.teamone.auth.Authentication;
 import mrone.teamone.beans.AccessHistoryBean;
+import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.utill.Encryption;
 
 
@@ -27,6 +31,9 @@ public class OneController {
 	Authentication auth;
 	@Autowired
 	Encryption enc;
+	
+	@Autowired
+	private SupplyServiceEntrance sse;
 	
 	@RequestMapping(value = "/", method = {RequestMethod.POST,RequestMethod.GET} )
 	public ModelAndView home(@CookieValue(value = "keykey", required = false)Cookie ck,HttpServletResponse res) {
@@ -65,5 +72,10 @@ public class OneController {
 	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();
 	 * mav.addObject("testdata",td.test2()); mav.setViewName("/test"); return mav; }
 	 */
-	
+	@PostMapping("/getChart")
+	public ModelAndView getChart() {
+			System.out.println(sse.getChart());
+		return sse.getChart();
+	}
+
 }

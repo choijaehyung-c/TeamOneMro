@@ -8,7 +8,7 @@ const main = new Vue({
   data: {
 	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false},{show:false/*거래내역리스트*/},{show:false/*세금계산서페이지*/}
 		,{show:false/*고객사정보기입*/}
-		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/}],
+		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/},{show:false}],
 	modal: { show: false },
 	modal2:{show:false},
 	list:[],
@@ -345,7 +345,10 @@ const main = new Vue({
 			let clientData = JSON.stringify(sendJsonData);		
 			
 			postAjaxJson('vue/issueTax','supplyIssueTaxbill2','s', clientData);			
-		}	
+		},
+		mainPage:function(){
+			postAjaxJson('vue/getChart','gettingChart','j');
+		}
 	}
 });
 
@@ -418,6 +421,20 @@ function getAsDetailForm(jsondata){
 
 
 /////////////////////////////////////////////////
+function mainPage(){//onLoad
+	//main.changePage(21);
+	let f = makeForm("/getChart","post");
+	
+	document.body.append(f);
+	f.submit();
+
+}
+
+
+
+
+
+
 //수주대기목록페이지 (사이드바 클릭시)
 function orderWaitList(){
    main.orderListPage();
@@ -634,4 +651,10 @@ function IssuedTaxDetailVue(jsondata){
 	main.modalOpen();
 }
 
-
+function makeForm(action,method,name = null){//name = null => name값이 없다면 null
+	let form = document.createElement("form");
+	if(name!=null){form.setAttribute("name",name);}
+	form.setAttribute("action",action);
+	form.setAttribute("method",method);
+	return form;
+}

@@ -726,4 +726,14 @@ class SupplyServiceCtl {
 		return dao.supplySearchProduct(pd);
 	}
 	
+	//수정2
+	List<RequestOrderDetailBean> getChart() {
+		String spcode = null;
+		try {
+			spcode = enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}return dao.getChart(spcode);
+	}
+	
 }

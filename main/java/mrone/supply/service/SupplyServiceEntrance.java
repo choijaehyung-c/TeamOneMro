@@ -1,9 +1,11 @@
 package mrone.supply.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
@@ -19,6 +21,7 @@ import mrone.teamone.beans.TaxBean;
 public class SupplyServiceEntrance {
 	@Autowired
 	SupplyServiceCtl ssc;
+	ModelAndView mav;
 	/* test */
 	   public List<DeliveryBean> deliveryTest(DeliveryBean db) {
 		      
@@ -234,4 +237,17 @@ public class SupplyServiceEntrance {
 
 	      return ssc.getTrackDL(recode);
 	   }
+	   
+
+	  public ModelAndView getChart() {
+		  mav = new ModelAndView();
+			List<RequestOrderDetailBean> list = ssc.getChart();
+		  for(int i=0; i<list.size(); i++) {
+			  mav.addObject("prname", list.get(i).getPr_name());
+			  mav.addObject("prCount", list.get(i).getRd_quantity());
+		  }
+		  
+		  mav.setViewName("supHome");
+		  return mav;
+		}
 }
