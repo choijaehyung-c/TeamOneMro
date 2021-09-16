@@ -422,12 +422,8 @@ function getAsDetailForm(jsondata){
 
 /////////////////////////////////////////////////
 function mainPage(){//onLoad
-	//main.changePage(21);
-	let f = makeForm("/getChart","post");
-	
-	document.body.append(f);
-	f.submit();
-
+	main.mainPage();
+	main.changePage(21);
 }
 
 

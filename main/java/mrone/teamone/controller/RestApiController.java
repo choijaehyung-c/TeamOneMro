@@ -552,10 +552,10 @@ public class RestApiController {
 			return sse.getIssuedTaxDetail(tbcode);			
 		}
 		
-//		@PostMapping("/getChart")
-//		public List<RequestOrderDetailBean> getChart() {
-//				System.out.println(sse.getChart());
-//			return sse.getChart();
-//		}
+		@PostMapping("/getChart")
+		public List<RequestOrderDetailBean> getChart() {
+				System.out.println("rest :"+sse.getChart());
+			return sse.getChart();
+		}
 
 }

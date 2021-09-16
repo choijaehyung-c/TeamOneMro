@@ -134,7 +134,11 @@
             </div>
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
-            							<div class="col-lg-6">
+
+				<div id="supplyVue"  style="height: 100%; width: 100%;">
+				
+					<template v-if="display[21].show">
+						            							<div class="col-lg-6">
 							<div class="card mb-4">
 								<div class="card-header">
 									<svg class="svg-inline--fa fa-chart-bar fa-w-16 me-1"
@@ -156,18 +160,14 @@
 											<div class=""></div>
 										</div>
 									</div>
-									<canvas id="myBarChart" width="722" height="361"
-										style="display: block; height: 289px; width: 578px;"
+									<canvas id="myBarChart" width="1000;" height="361"
+										style="display: block; height: 289px; width: 900px;"
 										class="chartjs-render-monitor"></canvas>
 								</div>
 								<div class="card-footer small text-muted">Updated
 									yesterday at 11:59 PM</div>
 							</div>
 						</div>
-				<div id="supplyVue"  style="height: 100%; width: 100%;">
-				
-					<template v-if="display[21].show">
-
 					</template>
 
 					<template v-if="display[0].show">
@@ -1836,6 +1836,61 @@
               	</div>
               	</div>
              </main>
+             
+             		<script>
+		
+		
+		function gettingChart(data){
+			let data1 = data;
+			
+			
+		var ctx = document.getElementById('myBarChart');
+		var myChart = new Chart(ctx, {
+			  type: 'bar',
+			  data: {
+				  
+			    labels: [data1[0].pr_name.substring(2,14), data[1].pr_name.substring(5,12), data[2].pr_name.substring(6,16),data[3].pr_name.substring(4,16), data[4].pr_name.substring(0,8)],
+			    datasets: [{
+			      label: "Revenue",
+			      backgroundColor: ["rgb(2,117,216)","rgb(255,99,132)","rgb(54,162,235)","rgb(255,205,86)","rgb(255,100,95)"],
+			      borderColor: "rgba(2,117,216,1)",
+			      data: [data1[0].rd_quantity,data1[1].rd_quantity,data1[2].rd_quantity,data1[3].rd_quantity,data1[4].rd_quantity],
+			    }],
+			  },
+			  options: {
+			    scales: {
+			      xAxes: [{
+			        time: {
+			          unit: 'month'
+			        },
+			        gridLines: {
+			          display: false
+			        },
+			        ticks: {
+			          maxTicksLimit: 6
+			        }
+			      }],
+			      yAxes: [{
+			        ticks: {
+			          min: 0,
+			          max: 1000,
+			          maxTicksLimit: 6
+			        },
+			        gridLines: {
+			          display: true
+			        }
+			      }],
+			    },
+			    legend: {
+			      display: false
+			    }
+			  }
+			});
+			
+		}
+
+
+		</script>
       
         </div>
         <!-- <component v-bind:is="currentView" v-bind:aaqqd="mssg"></component> -->
@@ -1850,52 +1905,7 @@
 	   <!--   <script src="${pageContext.request.contextPath}/resources/js/chart-bar-demo.js"></script>-->
     	<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
     	<script src="${pageContext.request.contextPath}/resources/js/Chart.js"></script>
-		<script>
-		
-		var ctx = document.getElementById('myBarChart');
-		var myChart = new Chart(ctx, {
-		  type: 'bar',
-		  data: {
-		    labels: ['${prname}','red','blue'],
-		    datasets: [{
-		      label: "Revenue",
-		      backgroundColor: "rgba(2,117,216,1)",
-		      borderColor: "rgba(2,117,216,1)",
-		      data: [${prCount},200,100],
-		    }],
-		  },
-		  options: {
-		    scales: {
-		      xAxes: [{
-		        time: {
-		          unit: 'month'
-		        },
-		        gridLines: {
-		          display: false
-		        },
-		        ticks: {
-		          maxTicksLimit: 6
-		        }
-		      }],
-		      yAxes: [{
-		        ticks: {
-		          min: 0,
-		          max: 1000,
-		          maxTicksLimit: 5
-		        },
-		        gridLines: {
-		          display: true
-		        }
-		      }],
-		    },
-		    legend: {
-		      display: false
-		    }
-		  }
-		});
-		
 
-		</script>
         
     </body>
 </html>

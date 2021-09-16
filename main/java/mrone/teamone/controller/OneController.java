@@ -72,10 +72,10 @@ public class OneController {
 	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();
 	 * mav.addObject("testdata",td.test2()); mav.setViewName("/test"); return mav; }
 	 */
-	@PostMapping("/getChart")
-	public ModelAndView getChart() {
-			System.out.println(sse.getChart());
-		return sse.getChart();
-	}
+//	@PostMapping("/getChart")
+//	public ModelAndView getChart() {
+//			System.out.println(sse.getChart());
+//		return sse.getChart();
+//	}
 
 }
