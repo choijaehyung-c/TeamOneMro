@@ -8,7 +8,7 @@ const main = new Vue({
   data: {
 	display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false}, {show:false},{show:false/*거래내역리스트*/},{show:false/*세금계산서페이지*/}
 		,{show:false/*고객사정보기입*/}
-		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/}],
+		,{show:false/*세금계산서 거래내역기입*/},{show:false/*세금계산서 발행내역*/},{show:false}],
 	modal: { show: false },
 	modal2:{show:false},
 	list:[],
@@ -345,7 +345,11 @@ const main = new Vue({
 			let clientData = JSON.stringify(sendJsonData);		
 			
 			postAjaxJson('vue/issueTax','supplyIssueTaxbill2','s', clientData);			
-		}	
+		},
+		mainPage:function(){
+			postAjaxJson('vue/getChart','gettingChart','j');
+		}
+	
 	}
 });
 
@@ -400,6 +404,13 @@ function getExchangeListForm(msg=""){
 	postAjaxJson("vue/supplyReceiveExchangeListForm","getExchangeList", "j");
 }
 /****************************************************************************/
+function mainPage(){//onLoad
+	main.mainPage();
+	main.changePage(21);
+}
+
+
+
 function getRefundList(jsondata){
 	main.changePage(0);
 	main.pushData(jsondata);

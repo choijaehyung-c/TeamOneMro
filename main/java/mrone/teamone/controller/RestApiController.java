@@ -551,5 +551,11 @@ public class RestApiController {
 		public TaxBean getIssuedTaxDetail(@RequestBody String tbcode) {		
 			return sse.getIssuedTaxDetail(tbcode);			
 		}
+		
+		@PostMapping("/getChart")
+		public List<RequestOrderDetailBean> getChart() {
+				System.out.println("rest :"+sse.getChart());
+			return sse.getChart();
+		}
 
 }

@@ -234,4 +234,14 @@ public class SupplyServiceEntrance {
 
 	      return ssc.getTrackDL(recode);
 	   }
+	   
+	   public List<RequestOrderDetailBean> getChart() {
+		   List<RequestOrderDetailBean> list = ssc.getChart();
+		   for(int i=0; i<list.size(); i++) {
+			   list.get(i).setPr_name(list.get(i).getPr_name());
+			   list.get(i).setRd_quantity(list.get(i).getRd_quantity());
+
+		   }		  		 
+		   return list;
+	   }
 }
