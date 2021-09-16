@@ -289,7 +289,7 @@ const main = new Vue({
       },
       search2:function(word){
          this.searchWord = word.target.value;
-         this.resetPage(9);
+         this.changePage(9);
          this.display[13].show = true;
       },
       search3:function(word){

@@ -1553,7 +1553,7 @@
 					<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!승백끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 					
 					
-           		<template v-if="display[15].show">		
+           		<template v-if="display[9].show">		
            						 <!-- !!!!!!!!상품등록신청중인 상품 모달!!!!!!!!!!!! -->
               <div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
            	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
@@ -1655,7 +1655,7 @@
                         	<div class="card-header">등록요청중인 상품</div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="dataTable-table">
-                                    <thead v-if="display[12].show">
+                                    <thead>
                                         <tr>
                                             <th style="width: 10%;"><a>카테고리</a></th>
                                             <th style="width: 60%;"><a>상품명</a></th>
@@ -1664,7 +1664,7 @@
                                         </tr>
                                     </thead>
        
-                                    <tbody v-if="display[13].show">
+                                    <tbody v-if="display[12].show">
                                         <tr v-for="PRAF in list">
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.cate_name}}</td>
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.pr_name}}</td>
@@ -1676,7 +1676,7 @@
                                         </tr>
                                     </tbody>
                                     
-                                    <tbody>
+                                    <tbody v-if="display[13].show">
                                         <tr v-for="PRAF in list" v-if="PRAF.pr_name.includes(searchWord)" >
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.cate_name}}</td>
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.pr_name}}</td>
@@ -1762,7 +1762,7 @@
                                         </tr>
                                     </thead>
        
-                                    <tbody v-if="display[8].show">
+                                    <tbody v-if="display[14].show">
                                         <tr v-for="MRDRDA in list">
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
@@ -1773,7 +1773,7 @@
                                         </tr>
                                     </tbody>
                                     
-                                    <tbody v-if="display[9].show">
+                                    <tbody v-if="display[15].show">
                                         <tr v-for="MRDRDA in list" v-if="MRDRDA.pr_name.includes(searchWord)">
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
