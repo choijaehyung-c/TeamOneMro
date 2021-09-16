@@ -145,10 +145,10 @@
 								</table>
 								<div style="text-align: center">
 									<button
-										@click="mroResponseNewProduct(mroGetNewProductDetail.pr_code, 'PC')"
+										@click="mroResponseNewProduct(modalDetail.pr_code, 'PC')"
 										type="button" class="btn btn-dark">등록</button>
 									<button
-										@click="mroResponseNewProduct(mroGetNewProductDetail.pr_code, 'AF')"
+										@click="mroResponseNewProduct(modalDetail.pr_code, 'AF')"
 										type="button" class="btn btn-dark">거절</button>
 									<button @click="modalClose()" type="button"
 										class="btn btn-dark">닫기</button>
@@ -246,10 +246,10 @@
 								</table>
 								<div style="text-align: center">
 									<button
-										@click="mroResponseModifyProduct(mroGetModifyRequestDetail.pr_code, mroGetModifyRequestDetail.pr_stcode, '1')"
+										@click="mroResponseModifyProduct(modalDetail.pr_code, modalDetail.pr_stcode, '1')"
 										type="button" class="btn btn-dark">승인</button>
 									<button
-										@click="mroResponseModifyProduct(mroGetModifyRequestDetail.pr_code, mroGetModifyRequestDetail.pr_stcode, '2')"
+										@click="mroResponseModifyProduct(modalDetail.pr_code, modalDetail.pr_stcode, '2')"
 										type="button" class="btn btn-dark">거절</button>
 									<button @click="modalClose()" type="button"
 										class="btn btn-dark">닫기</button>
