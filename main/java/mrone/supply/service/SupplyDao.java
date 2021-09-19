@@ -160,6 +160,10 @@ public class SupplyDao {
 	List<OrderDetailBean> getNewODForRefund(String os_code){
 		return sql.selectList("getNewODForRefund", os_code);
 	}
+	
+	String getRegion(String os_code) {
+		return sql.selectOne("getRegion",os_code);
+	}
 
 	String getCLForRefund(String re_code) {
 		return sql.selectOne("getCLForRefund",re_code);

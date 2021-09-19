@@ -555,12 +555,12 @@ class SupplyServiceCtl {
 				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
-				RequestOrderBean newRo = new RequestOrderBean();
 				ClientOrderBean newCo = new ClientOrderBean();
 				String clcode = dao.getCLForRefund(sr.getRe_code());
 				newCo.setOs_clcode(clcode);
 				newCo.setOs_origin(sr.getOs_code());
 				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
+				newCo.setOs_region(dao.getRegion(sr.getOs_code()));
 				String spcode = null;
 				try {
 					if(pu.getAttribute("userSs") != null) {
