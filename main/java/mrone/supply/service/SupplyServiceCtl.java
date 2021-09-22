@@ -492,7 +492,7 @@ class SupplyServiceCtl {
 		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
 		for(int i=0;i<roList.size();i++) {
 			List<String> rd = dao.getPrnameAndCount(roList.get(i));
-			if(rd != null) {
+			if(!rd.isEmpty()) {
 				if(rd.size()>1) {
 					roList.get(i).setWord(rd.get(0)+" 외 "+(rd.size()-1)+"건");
 				}else {
