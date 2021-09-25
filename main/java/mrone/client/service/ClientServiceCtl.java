@@ -40,8 +40,9 @@ class ClientServiceCtl {
 		
 		String os_code = cd.getOs_code();
 		
-		try {//cd.setClpwd(enc.aesEncode(cd.getClpwd(),cd.getClcode()));
-			cd.setClpwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+		try {
+			cd.setClcode(enc.aesDecode(cd.getClcode(),"mrone"));
+			cd.setClpwd(enc.aesEncode(enc.aesDecode(cd.getClpwd(),"mrone"),cd.getClcode()));
 		} catch (Exception e) {System.out.println("error csc");}
 		
 		if (dao.isClient(cd.getClcode())) {
@@ -67,9 +68,9 @@ class ClientServiceCtl {
 	List<String> clientRequestCtl(ClientOrderBean co,String type){
 		Set<String> sp = new HashSet<>();
 		co.setOs_state(type);
-		//받아온 비밀번호 복호화해서 셋
-		try {//co.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
-			co.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+
+		try {co.setOs_clcode( enc.aesDecode(co.getOs_clcode(),"mrone"));
+			co.setCl_pwd(enc.aesEncode( enc.aesDecode(co.getCl_pwd(),"mrone"),co.getOs_clcode()));
 		} catch (Exception e) {System.out.println("error csc");}
 		
 		List<String> oscodes = new ArrayList<String>();
