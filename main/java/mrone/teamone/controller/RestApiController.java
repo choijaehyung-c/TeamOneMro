@@ -3,6 +3,7 @@ package mrone.teamone.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -307,17 +308,20 @@ public class RestApiController {
 
 		return mse.ClientListCtl();
 	}
-	//---
+	
+	@CrossOrigin
 	@PostMapping("/clientOrder")
 	public List<String> clientOrderApi(@RequestBody ClientOrderBean co){
 		return cse.clientRequestOrder(co);
 	}
 	
+	@CrossOrigin
 	@PostMapping("/clientRefund")
 	public List<String> clientRefundApi(@RequestBody ClientOrderBean co){	
 		return cse.clientRequestRefund(co);
 	}
 	
+	@CrossOrigin
 	@PostMapping("/clientExchange")
 	public List<String> clientExchangeApi(@RequestBody ClientOrderBean co){
 		return cse.clientRequestExchange(co);
