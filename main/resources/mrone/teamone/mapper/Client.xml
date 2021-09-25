@@ -49,8 +49,8 @@
 		UPDATE RD SET RD_STCODE = 'OC' WHERE RD_RECODE = #{re_code} AND RD_STCODE = 'OA'
 	</update>
 	
-	<select id="getOscodeRe" parameterType="string" resultType="string">
-		SELECT OS_CODE FROM RE WHERE RE_CODE = #{re_code}
+	<select id="getRecodeOs" parameterType="string" resultType="string">
+		SELECT RE_CODE FROM RE WHERE RE_OSCODE = #{os_code}
 	</select>
 	
 

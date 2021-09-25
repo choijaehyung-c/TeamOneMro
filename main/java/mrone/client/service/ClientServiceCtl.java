@@ -46,7 +46,7 @@ class ClientServiceCtl {
 		
 		if (dao.isClient(cd.getClcode())) {
 			if (dao.isClientPwd(cd.getClpwd())) {
-				String re_code = dao.getOscodeRe(os_code);
+				String re_code = dao.getRecodeOs(os_code);
 				if (dao.updOrderDecide(os_code)) {
 					if (dao.updOrderDetailDecide(os_code)) {
 						if (dao.updRequestDecide(os_code)) {

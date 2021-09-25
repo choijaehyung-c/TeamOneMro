@@ -66,7 +66,7 @@ class ClientDaoCJH {
 		return this.convertToBoolean(sql.update("updRequestDetailDecide",re_code));
 	}
 	
-	String getOscodeRe(String os_code) {
-		return sql.selectOne("getOscodeRe",os_code);
+	String getRecodeOs(String os_code) {
+		return sql.selectOne("getRecodeOs",os_code);
 	}
 }

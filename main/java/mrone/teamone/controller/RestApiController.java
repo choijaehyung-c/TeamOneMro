@@ -52,6 +52,7 @@ public class RestApiController {
     @CrossOrigin
     @PostMapping("/clientOrderDecide")
     public String updOrderDecide(@RequestBody ClientOrderDecide cd) {
+    	System.out.println("in");
     	return cse.updOrderDecide(cd);
     } 
 	
