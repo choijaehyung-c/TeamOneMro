@@ -79,7 +79,7 @@ class ClientServiceCtl {
 				
 				for (int i = 0; i < co.getOd().size(); i++) { 
 					sp.add(co.getOd().get(i).getOd_prspcode());
-					co.getOd().get(i).setOd_stcode(type);
+					if(co.getOd().get(i).getOd_stcode()==null)co.getOd().get(i).setOd_stcode(type);
 				}
 				
 				for(String sp_code : sp) {

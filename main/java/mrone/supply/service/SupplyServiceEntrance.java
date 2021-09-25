@@ -150,7 +150,6 @@ public class SupplyServiceEntrance {
 	}
 	
 	public String supplyResponseOrder(RequestOrderBean ro) {
-		System.out.println("test1");
 		return ssc.supplyResponseCtl(ro);
 	}
 

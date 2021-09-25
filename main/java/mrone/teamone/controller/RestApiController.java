@@ -45,14 +45,14 @@ public class RestApiController {
     }
     @PostMapping("/Insertsdcode")
     public void insertsdcode(@RequestBody DeliveryBean db){
-       System.out.println(db);
+       //System.out.println(db);
        sse.insertsdcode(db);
     }
     
     @CrossOrigin
     @PostMapping("/clientOrderDecide")
     public String updOrderDecide(@RequestBody ClientOrderDecide cd) {
-    	System.out.println("in");
+    	//System.out.println("in");
     	return cse.updOrderDecide(cd);
     } 
 	
@@ -84,7 +84,6 @@ public class RestApiController {
 	
 	@PostMapping("/supplyResponseOrder")//주문수락
 	public String supplyResponseOrder(@RequestBody RequestOrderBean ro) {
-		System.out.println("test2");
 		return sse.supplyResponseOrder(ro);
 	}
 	
@@ -109,28 +108,28 @@ public class RestApiController {
 	   public List<RequestOrderBean> supplyReceiveWaitOrderList() {
 	      List<RequestOrderBean> reList = null;
 	      reList = sse.RequestWaitOrderListCtl();
-	      System.out.println(sse.RequestWaitOrderListCtl());
+	      //System.out.println(sse.RequestWaitOrderListCtl());
 	      return reList;
 	   }
 
 	   @PostMapping("/getSupplyReceiveClearOrderList")
 	   public List<RequestOrderBean> supplyReceiveClearOrderList() {
-	      System.out.println(sse.RequestClearOrderListCtl());
+	      //System.out.println(sse.RequestClearOrderListCtl());
 	      return sse.RequestClearOrderListCtl();
 	   }
 
 	   @PostMapping("/getSupplyReceiveWaitOrderListD")
 	   public List<RequestOrderDetailBean> supplyReceiveWaitOrderListD(@RequestBody String recode) {
-	      // System.out.println(recode);
-	      System.out.println(sse.RequestWaitOrderListCtlD(recode));
+	      // //System.out.println(recode);
+	      //System.out.println(sse.RequestWaitOrderListCtlD(recode));
 	      return sse.RequestWaitOrderListCtlD(recode);
 
 	   }
 
 	   @PostMapping("/getSupplyReceiveClearOrderListD")
 	   public List<RequestOrderDetailBean> supplyReceiveClearOrderListD(@RequestBody String recode) {
-	      System.out.println("수주접수 코드 : " + recode);
-	      System.out.println(sse.RequestClearOrderListCtlD(recode));
+	      //System.out.println("수주접수 코드 : " + recode);
+	      //System.out.println(sse.RequestClearOrderListCtlD(recode));
 	      return sse.RequestClearOrderListCtlD(recode);
 
 	   }
@@ -138,7 +137,7 @@ public class RestApiController {
 	   // 수정1
 	   @PostMapping("/getSupplyRefuseOrderList")
 	   public List<RequestOrderBean> getSupplyRefuseOrderList() {
-	      System.out.println(sse.getSupplyRefuseOrderList());
+	      //System.out.println(sse.getSupplyRefuseOrderList());
 	      return sse.getSupplyRefuseOrderList();
 
 	   }
@@ -146,7 +145,7 @@ public class RestApiController {
 	   // 수정1
 	   @PostMapping("/getSupplyRefuseOrderD")
 	   public List<RequestOrderDetailBean> getSupplyRefuseOrderD(@RequestBody String recode) {
-	      System.out.println(sse.getSupplyRefuseOrderListDetail(recode));
+	      //System.out.println(sse.getSupplyRefuseOrderListDetail(recode));
 	      return sse.getSupplyRefuseOrderListDetail(recode);
 
 	   }
@@ -154,7 +153,7 @@ public class RestApiController {
 	   // 수정1
 	   @PostMapping("/supplyGoDelivery") // 배송출고시작 => 출고버튼(배송준비중->배송중으로 upd)
 	   public String supplyGoDelivery(@RequestBody String recode) {
-	      System.out.println(sse.supplyGoDelivery(recode));
+	      //System.out.println(sse.supplyGoDelivery(recode));
 	      return sse.supplyGoDelivery(recode);
 
 	   }
@@ -162,7 +161,7 @@ public class RestApiController {
 	   // 수정1
 	   @PostMapping("/getTrackDeliveryList") // 배송 상태 확인 (배송중인 주문코드들 확인)
 	   public List<DeliveryBean> getTrackDeliveryList() {
-	      System.out.println(sse.getTrackDeliveryList());
+	      //System.out.println(sse.getTrackDeliveryList());
 	      return sse.getTrackDeliveryList();
 
 	   }
@@ -170,8 +169,8 @@ public class RestApiController {
 	   // 수정1
 	   @PostMapping("/getTrackDL") // 특정 주문코드 배송 위치 확인
 	   public List<DeliveryBean> getTrackDL(@RequestBody String recode) {
-	      System.out.println(recode);
-	      System.out.println("배송추적: " + sse.getTrackDL(recode));
+	      //System.out.println(recode);
+	      //System.out.println("배송추적: " + sse.getTrackDL(recode));
 	      return sse.getTrackDL(recode);
 
 	   }
@@ -182,7 +181,7 @@ public class RestApiController {
 	public List<DeliveryBean> getDLList() {
 		List<DeliveryBean> reList = null;
 		reList = sse.getDLlist();
-		System.out.println(sse.getDLlist());
+		//System.out.println(sse.getDLlist());
 		return reList;	
 	}
 	
@@ -222,7 +221,7 @@ public class RestApiController {
 	
 	@PostMapping("/getchoiceDillInfo")
 	public List<RequestOrderDetailBean> getchoiceDillInfo(@RequestBody List<RequestOrderDetailBean> list ) {
-		System.out.println(sse.choiceDillInfoCtl(list.get(0)));
+		//System.out.println(sse.choiceDillInfoCtl(list.get(0)));
 		return sse.choiceDillInfoCtl(list.get(0));	
 	}
 	
@@ -254,8 +253,8 @@ public class RestApiController {
 	//supply 반품 응답
 	@PostMapping("/supplyResponseRefund")
 	public String supplyResponseRefund(@RequestBody RequestOrderBean ro){
-		System.out.println("test3");
-		//System.out.println(mo);
+		//System.out.println("test3");
+		////System.out.println(mo);
 		return sse.supplyResponseRefund(ro);
 	}
 	
@@ -264,7 +263,7 @@ public class RestApiController {
 	 * @PostMapping("/supplyResponseExchange")
 	 * 
 	 * public String supplyResponseExchange(@RequestBody RequestOrderBean ro){
-	 * //System.out.println(mo); return null; }
+	 * ////System.out.println(mo); return null; }
 	 */
 	
 	//supply 검색결과
@@ -293,14 +292,14 @@ public class RestApiController {
 	@PostMapping("/supplyProductList")
 	
 	public List<ProductBean> supplyProductList(@RequestBody ProductBean pd){
-		//System.out.println(pd + "ddd");
+		////System.out.println(pd + "ddd");
 		return sse.supplyProductList(pd);
 	}
 	
 	//supply 검색어로 물품가져옴
 	@PostMapping("/supplySearchProduct")
 	public List<ProductBean> supplySearchProduct(@RequestBody ProductBean pd){
-		System.out.println(pd.getWord());
+		//System.out.println(pd.getWord());
 		return sse.supplySearchProduct(pd);
 	}
 	
@@ -352,7 +351,7 @@ public class RestApiController {
 	//주문대기 리스트 받아오기
 		@PostMapping("/mroOrderListForm")
 		public List<MroOrderBean> mroOrderListForm(){
-			//System.out.println("Restcontroller진입");
+			////System.out.println("Restcontroller진입");
 			
 			return mse.getWaitOrderListCtl();
 			
@@ -361,7 +360,7 @@ public class RestApiController {
 		//주문대기 상세보기
 		@PostMapping("/mroGetOrderDetail")
 		public List<MroOrderDetailBean> mroGetOrderDetail(@RequestBody String osCode){
-			System.out.println(osCode);
+			//System.out.println(osCode);
 			
 			return mse.getOrderDetail(osCode);
 			
@@ -370,7 +369,7 @@ public class RestApiController {
 		//반품요청 리스트 받아오기
 		@PostMapping("/mroRefundListForm")
 		public List<MroOrderBean> mroRefundListForm(){
-			//System.out.println("반품요청");
+			////System.out.println("반품요청");
 			
 			return mse.getRefundListCtl();
 			
@@ -388,7 +387,7 @@ public class RestApiController {
 		//교환요청 리스트 받아오기
 		@PostMapping("/mroExchangeListForm")
 		public List<MroOrderBean> mroExchangeListForm(){
-			//System.out.println("교환요청");
+			////System.out.println("교환요청");
 			
 			return mse.getExchangeListCtl();
 		}
@@ -396,7 +395,7 @@ public class RestApiController {
 		//교환 요청 상세보기
 		@PostMapping("/mroGetExchangeDetail")
 		public List<MroOrderDetailBean> mroGetExchangeDetail(@RequestBody String osCode){
-		System.out.println("교환요청 디테일");
+		//System.out.println("교환요청 디테일");
 			return mse.getOrderDetail(osCode);		
 		}
 	//--
@@ -411,17 +410,17 @@ public class RestApiController {
 		// 새 물건 등록상품 디테일 가져오기
 		@PostMapping("/MroGetNewProductDetail")
 		public ProductBean mroGetNewProductDetail(@RequestBody ProductBean pb){
-			System.out.println("MroGetNewProductDetail        진입");
-			System.out.println(pb.getPr_code()+ "RAI");
+			//System.out.println("MroGetNewProductDetail        진입");
+			//System.out.println(pb.getPr_code()+ "RAI");
 			return mse.mroGetNewProductDetail(pb);
 		}
 		
 		//상품등록 수락 거절 응답 업데이트
 		@PostMapping("/MroResponseNewProduct")
 		public String mroResponseNewProduct(@RequestBody ProductBean pb){
-			System.out.println(pb.getPr_code());
-			System.out.println(pb.getPr_stcode());
-			System.out.println("mroResponseNewProduct 진입");
+			//System.out.println(pb.getPr_code());
+			//System.out.println(pb.getPr_stcode());
+			//System.out.println("mroResponseNewProduct 진입");
 			return mse.mroResponseNewProduct(pb);
 		}
 		
@@ -441,7 +440,7 @@ public class RestApiController {
 		// 상품수정 수락 거절 응답 업데이트
 		@PostMapping("/MroResponseModifyProduct")
 		public String mroResponseModifyProduct(@RequestBody ProductBean pb){
-			System.out.println("mroResponseNewProduct 진입");
+			//System.out.println("mroResponseNewProduct 진입");
 			return mse.mroResponseModifyProduct(pb);
 		}
 
@@ -481,8 +480,8 @@ public class RestApiController {
 		@PostMapping("/SupplyRequestNewProduct")
 		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb){
 			/*
-			 * System.out.println(pb.getFile().getOriginalFilename());
-			 * System.out.println(pu.setFile(pb.getFile()));
+			 * //System.out.println(pb.getFile().getOriginalFilename());
+			 * //System.out.println(pu.setFile(pb.getFile()));
 			 */
 			return null/* sse.supplyRequestNewProduct(pb) */;
 		}
@@ -492,23 +491,23 @@ public class RestApiController {
 		// new
 		@PostMapping("/searchSupply")
 		public List<SupplyInfoBean> mroSearchSupplyList(@RequestBody String word) {
-			System.out.println("supply : " + word);
-			System.out.println(mse.mroSearchSupplyList(word));
+			//System.out.println("supply : " + word);
+			//System.out.println(mse.mroSearchSupplyList(word));
 			return mse.mroSearchSupplyList(word);
 		}
 
 		// new
 		@PostMapping("/searchClient")
 		public List<ClientInfoBean> mroSearchClientList(@RequestBody String word) {
-			System.out.println("고객사 : " + word);
-			System.out.println(mse.mroSearchSupplyList(word));
+			//System.out.println("고객사 : " + word);
+			//System.out.println(mse.mroSearchSupplyList(word));
 			return mse.mroSearchClientList(word);
 		}
 
 		// new
 		@PostMapping("/delClient")
 		public String mroDelClient(@RequestBody String code) {
-			System.out.println("고객사 : " + code);
+			//System.out.println("고객사 : " + code);
 
 			return mse.mroDelClient(code);
 		}
@@ -516,7 +515,7 @@ public class RestApiController {
 		// new
 		@PostMapping("/delSupply")
 		public String mroDelSupply(@RequestBody String code) {
-			System.out.println("공급사 : " + code);
+			//System.out.println("공급사 : " + code);
 
 			return mse.mroDelSupply(code);
 		}
@@ -563,7 +562,7 @@ public class RestApiController {
 		
 		@PostMapping("/getChart")
 		public List<RequestOrderDetailBean> getChart() {
-				System.out.println("rest :"+sse.getChart());
+				//System.out.println("rest :"+sse.getChart());
 			return sse.getChart();
 		}
 

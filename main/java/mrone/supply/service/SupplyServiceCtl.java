@@ -253,7 +253,6 @@ class SupplyServiceCtl {
 		try {
 			if(pu.getAttribute("userSs") != null) {
 				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-				System.out.println(spcode);
 			}
 		} catch (Exception e) {
 						
@@ -317,7 +316,6 @@ class SupplyServiceCtl {
 	TaxBean getIssuedTaxDetailCtl(String tbcode) {
 		TaxBean tb = dao.getIssuedTaxDetail(tbcode);
 		tb.setOd(dao.getTaxProduct(tb.getTb_oscode()));
-		System.out.println(tb);
 		return tb;
 	}
 	
@@ -360,7 +358,6 @@ class SupplyServiceCtl {
 		try {
 			if(pu.getAttribute("userSs") != null) {
 				spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-				System.out.println(spcode);
 			}
 		} catch (Exception e) {
 						
@@ -395,28 +392,21 @@ class SupplyServiceCtl {
 	}
 
 	String supplyRequestModify(ProductBean pb) {
-		System.out.println(pb);
 		String message = "";
-		System.out.println("111111");
 		// 해당 상품코드의 PR_STCODE에 MR인 애가 있는지 확인
 		if (dao.MRCheck(pb)) {
 				dao.deleteDR(pb);
 			if (dao.updateSupplyRequestModify(pb)) {
-				System.out.println("33333333");
 				message = "success";
 			} else {
-				System.out.println("44444444");
 				message = "fail";
 			}
 
 		} else {
 				dao.deleteDR(pb);
-			System.out.println("5555555");
 			if (dao.supplyRequestModify(pb)) {
-				System.out.println("6666666");
 				message = "success";
 			} else {
-				System.out.println("777777");
 				message = "fail";
 			}
 
@@ -437,12 +427,10 @@ class SupplyServiceCtl {
 	}
 
 	String supplyRequestDelete(ProductBean pb) {
-		System.out.println(pb);
 		String message = "";
 		if (dao.MRCheck(pb)) {
 			//삭제 신청시 변겨요청이 있으면 헤당 컬럼 삭제하고 삭제요청함
 				dao.deleteMR(pb);
-				System.out.println("딜리트성공");
 			// 이미 PR_STCODE에 DR이 있을경우 그냥 업데이트
 			if (dao.updateSupplyRequestModify(pb)) {
 				message = "success";
@@ -472,7 +460,6 @@ class SupplyServiceCtl {
 		pb.setPr_tax(String.valueOf(Integer.parseInt(pb.getPr_price()) / 10));
 		pb.setPr_spbkind("KL");
 		pb.setPr_stcode("PR");
-		System.out.println(pb);
 		if (dao.supplyRequestNewProduct(pb)) {
 			message = "success";
 		} else {
@@ -545,9 +532,8 @@ class SupplyServiceCtl {
 		SupplyResponse sr = new SupplyResponse();
 		sr.setAfter(ro.getRe_state());
 		sr.setBefore("RR");
-		sr.setRe_code(ro.getRe_code());
-		sr.setOs_code(dao.getInvolvedOscode(sr));
-		System.out.println(sr.getOs_code());
+		sr.setRe_code(ro.getRe_code());//반품요청으로 발행된 새주문서코드
+		sr.setOs_code(dao.getInvolvedOscode(sr));//반품요청으로 발행된 새주문서코드
 		
 		//수락,거절 공통 업데이트
 		if(this.updateResponseProcess(sr)) {
@@ -575,21 +561,21 @@ class SupplyServiceCtl {
 				if (newOscode!=null) {
 						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
 						sr.setRe_code(dao.getREOriginCode(ro.getRe_code()));
-						System.out.println(sr.getRe_code());
+						//System.out.println(sr.getRe_code());
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
-						System.out.println(sr.getOs_code());
+						//System.out.println(sr.getOs_code());
 						sr.setAfter("PD");
 						sr.setBefore("OA");
 						if(this.updateResponseProcess(sr)) {
 							tran = true;
 							issueDelivery(newOscode);
-							System.out.println(tran+"ttttt");
+							//System.out.println(tran+"ttttt");
 						}
 				}
 				
 			}
 		}
-		System.out.println(tran);
+		//System.out.println(tran);
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
@@ -597,13 +583,13 @@ class SupplyServiceCtl {
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
 		if (dao.updRequest(sr)) {
-			System.out.println("gg0");
+			//System.out.println("gg0");
 			if (dao.updRequestDetail(sr)) {
-				System.out.println("gg1");
+				//System.out.println("gg1");
 				if (dao.updOrder(sr)) {
-					System.out.println("gg2");
+					//System.out.println("gg2");
 					if (dao.updOrderDetail(sr)) {
-						System.out.println("gg4");
+						//System.out.println("gg4");
 						tran = true;
 					}
 				}
@@ -618,9 +604,9 @@ class SupplyServiceCtl {
 			ro.getRd().get(i).setRd_stcode(sr.getAfter());
 			ro.getRd().get(i).setRd_recode(sr.getRe_code());
 			if (ro.getRd().get(i).getRd_note() != null) {
-				System.out.println(ro.getRd().get(i).getRd_note());
+				//System.out.println(ro.getRd().get(i).getRd_note());
 				if (dao.updReasonRD(ro.getRd().get(i))) {
-					System.out.print(sr.getOs_code()+ro.getRd().get(i).getRd_note());
+					//System.out.print(sr.getOs_code()+ro.getRd().get(i).getRd_note());
 					ro.getRd().get(i).setRd_recode(sr.getOs_code());
 					if (dao.updReasonOD(ro.getRd().get(i))) {
 						count++;
@@ -628,7 +614,7 @@ class SupplyServiceCtl {
 				}
 			}
 		}
-		System.out.println((ro.getRd().size()+":::"+count));
+		//System.out.println((ro.getRd().size()+":::"+count));
 		return (ro.getRd().size()==count)?true:false;
 	}
 
@@ -638,7 +624,7 @@ class SupplyServiceCtl {
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		//decision == OA EA OF EF 요청 응답 st 코드
 		String decision = ro.getRe_state();
-		System.out.println(decision+"asd");
+		//System.out.println(decision+"asd");
 		SupplyResponse sr = new SupplyResponse();
 		if(decision.equals("OA") || decision.equals("OF")) {
 			sr.setAfter(decision);
@@ -653,26 +639,19 @@ class SupplyServiceCtl {
 				}
 			}
 			//수락일경우 -> 운송장 거절일경우 -> 거절 사유업데이트
-		}else if(decision.equals("EA") || decision.equals("EF")){
+		}else if(decision.equals("EC") || decision.equals("EF")){
 			sr.setAfter(decision);
 			sr.setBefore("ER");
 			sr.setRe_code(ro.getRe_code());
 			sr.setOs_code(dao.getInvolvedOscode(sr));
-			System.out.println(sr.getOs_code());
-			System.out.println("tt0");
 			if(this.updateResponseProcess(sr)) {
-				System.out.println("tt1");
 				if(decision.equals("EF")) {
 					tran = this.updateReasonProcess(ro,sr);
-					System.out.println("tt2");
 				}else {
 					tran = this.issueDelivery(sr.getOs_code());
-					System.out.println("tt3");
 				}
 			}
 		}
-		
-		System.out.println(tran);
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
