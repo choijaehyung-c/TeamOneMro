@@ -1,19 +1,11 @@
 package mrone.client.service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +14,7 @@ import org.springframework.transaction.TransactionDefinition;
 import mrone.mro.service.MroServiceEntrance;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.ClientOrderDecide;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.TaxBean;
@@ -40,38 +33,48 @@ class ClientServiceCtl {
 	MroServiceEntrance msec;
 	
 	
-	String updOrderDecide(String os_code) {
+	String updOrderDecide(ClientOrderDecide cd) {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-		String re_code = dao.getOscodeRe(os_code);
-		if (dao.updOrderDecide(os_code)) {
-			if (dao.updOrderDetailDecide(os_code)) {
-				if (dao.updRequestDecide(os_code)) {
-					if (dao.updRequestDetailDecide(re_code)) {
-						tran = true;
+		
+		String os_code = cd.getOs_code();
+		
+		try {//cd.setClpwd(enc.aesEncode(cd.getClpwd(),cd.getClcode()));
+			cd.setClpwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+		} catch (Exception e) {System.out.println("error csc");}
+		
+		if (dao.isClient(cd.getClcode())) {
+			if (dao.isClientPwd(cd.getClpwd())) {
+				String re_code = dao.getOscodeRe(os_code);
+				if (dao.updOrderDecide(os_code)) {
+					if (dao.updOrderDetailDecide(os_code)) {
+						if (dao.updRequestDecide(os_code)) {
+							if (dao.updRequestDetailDecide(re_code)) {
+								tran = true;
+							}
+						}
 					}
-				}
+				}		
 			}
-		}		
+		}
+		
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
 	
 	
 	List<String> clientRequestCtl(ClientOrderBean co,String type){
-		ClientInfoBean ci = new ClientInfoBean();
-		ci.setCl_code(co.getOs_clcode());
 		Set<String> sp = new HashSet<>();
 		co.setOs_state(type);
 		//받아온 비밀번호 복호화해서 셋
-		try {//ci.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
-			ci.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
+		try {//co.setCl_pwd(enc.aesEncode(co.getCl_pwd(),co.getOs_clcode()));
+			co.setCl_pwd("KwpMuMx0nO6jCjpD//ucgA==");//일단 강제 입력 수정해야함
 		} catch (Exception e) {System.out.println("error csc");}
 		
 		List<String> oscodes = new ArrayList<String>();
-		if (dao.isClient(ci)) {
-			if (dao.isClientPwd(ci)) {
+		if (dao.isClient(co.getOs_clcode())) {
+			if (dao.isClientPwd(co.getCl_pwd())) {
 				
 				for (int i = 0; i < co.getOd().size(); i++) { 
 					sp.add(co.getOd().get(i).getOd_prspcode());
@@ -167,8 +170,8 @@ class ClientServiceCtl {
 
 	public List<TaxBean> clientGetTaxbillListCtl(ClientInfoBean ci) throws Exception {
 		List<TaxBean> list = null;
-		if(dao.isClient(ci)) {
-			if(dao.isClientPwd(ci)) {
+		if(dao.isClient(ci.getCl_code())) {
+			if(dao.isClientPwd(ci.getCl_pwd())) {
 				list = dao.getTaxBillList(ci);
 				
 				for(int i = 0 ; i < list.size(); i++) {
@@ -183,8 +186,8 @@ class ClientServiceCtl {
 	
 	public TaxBean clientGetTaxbillDetailCtl(ClientInfoBean ci) throws Exception {
 		TaxBean data = null;
-		if(dao.isClient(ci)) {
-			if(dao.isClientPwd(ci)) {
+		if(dao.isClient(ci.getCl_code())) {
+			if(dao.isClientPwd(ci.getCl_pwd())) {
 				data = dao.getTaxBillDetail(ci);
 				data.setTb_ttprice(enc.aesDecode(data.getTb_ttprice(), ci.getCl_code()) );
 				data.setTb_price(enc.aesDecode(data.getTb_price(), ci.getCl_code()) );

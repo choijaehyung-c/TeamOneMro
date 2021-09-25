@@ -18,12 +18,12 @@ class ClientDaoCJH {
 	SqlSessionTemplate sql;
 	
 	
-	boolean isClient(ClientInfoBean ci) {
-		return convertToBoolean(sql.selectOne("isClient", ci));
+	boolean isClient(String cl_code) {
+		return convertToBoolean(sql.selectOne("isClient", cl_code));
 	}
 	
-	boolean isClientPwd(ClientInfoBean ci) {
-		return convertToBoolean(sql.selectOne("isClientPwd", ci));
+	boolean isClientPwd(String cl_pwd) {
+		return convertToBoolean(sql.selectOne("isClientPwd", cl_pwd));
 	}
 	
 	String getOrderData(ClientOrderBean co){

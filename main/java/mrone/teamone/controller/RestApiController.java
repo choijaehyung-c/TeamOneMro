@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +17,7 @@ import mrone.mro.service.MroServiceEntrance;
 import mrone.supply.service.SupplyServiceEntrance;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.ClientOrderDecide;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
@@ -51,8 +51,8 @@ public class RestApiController {
     
     @CrossOrigin
     @PostMapping("/clientOrderDecide")
-    public String updOrderDecide(@ModelAttribute String os_code) {
-    	return cse.updOrderDecide(os_code);
+    public String updOrderDecide(@RequestBody ClientOrderDecide cd) {
+    	return cse.updOrderDecide(cd);
     } 
 	
 	   //해당 회사 상품 PC 가져오기

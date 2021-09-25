@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
+import mrone.teamone.beans.ClientOrderDecide;
 import mrone.teamone.beans.TaxBean;
 
 @Service
@@ -42,7 +43,7 @@ public class ClientServiceEntrance {
 		return csc.clientOrderProcess(co, sp_code);
 	}
 
-	public String updOrderDecide(String os_code) {
-		return csc.updOrderDecide(os_code);
+	public String updOrderDecide(ClientOrderDecide cd) {
+		return csc.updOrderDecide(cd);
 	}
 }

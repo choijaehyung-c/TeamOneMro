@@ -5,11 +5,11 @@
     
 <mapper namespace="mrone.teamone.mapper.Client">
 
-	<select id="isClient" parameterType="mrone.teamone.beans.ClientInfoBean" resultType="int">
+	<select id="isClient" parameterType="string" resultType="int">
 		SELECT COUNT(*) FROM CL WHERE CL_CODE = #{cl_code}
 	</select>
 	
-	<select id="isClientPwd" parameterType="mrone.teamone.beans.ClientInfoBean" resultType="int">
+	<select id="isClientPwd" parameterType="string" resultType="int">
 		SELECT COUNT(*) FROM CL WHERE CL_PWD = #{cl_pwd}
 	</select>
 	
