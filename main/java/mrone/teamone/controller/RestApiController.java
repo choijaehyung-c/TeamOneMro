@@ -47,8 +47,7 @@ public class RestApiController {
        System.out.println(db);
        sse.insertsdcode(db);
     }
-    /* test */
-	
+   
 	
 	   //해당 회사 상품 PC 가져오기
     @PostMapping("/SupplyAllProductList")
