@@ -48,7 +48,12 @@ public class RestApiController {
        System.out.println(db);
        sse.insertsdcode(db);
     }
-   
+    
+    @CrossOrigin
+    @PostMapping("/clientOrderDecide")
+    public String updOrderDecide(@ModelAttribute String os_code) {
+    	return cse.updOrderDecide(os_code);
+    } 
 	
 	   //해당 회사 상품 PC 가져오기
     @PostMapping("/SupplyAllProductList")
