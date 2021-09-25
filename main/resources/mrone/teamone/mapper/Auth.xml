@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="getLastAccessInfo" parameterType="mrone.teamone.beans.AccessHistoryBean" resultType="string">
-		SELECT ${ah_table}_BROWSER||${ah_table}_PUBLICIP||${ah_table}_PRIVATEIP FROM(SELECT * FROM ${ah_table} WHERE ${ah_table}_CODE =#{ah_code} ORDER BY ${ah_table}_DATE DESC) WHERE ROWNUM = 1
+		SELECT ${ah_table}_BROWSER||${ah_table}_PUBLICIP||${ah_table}_PRIVATEIP FROM(SELECT * FROM ${ah_table} WHERE ${ah_table}_CODE =#{ah_code} AND ${ah_table}_METHOD = '1' ORDER BY ${ah_table}_DATE DESC) WHERE ROWNUM = 1
 	</select>
 	
 	<insert id="forceLogoutMro" parameterType="mrone.teamone.beans.AccessHistoryBean">

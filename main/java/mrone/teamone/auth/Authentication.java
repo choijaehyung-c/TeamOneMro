@@ -71,6 +71,7 @@ public class Authentication {
 			ab.setTable("SD");
 		}
 		
+		
 		try {	
 			if(pu.getAttribute("userSs")==null){
 				boolean tf = false;
@@ -92,6 +93,7 @@ public class Authentication {
 							}
 							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
 							pu.setAttribute("userSs",enc.aesEncode(ah.getAh_code(),"session"));
+							pu.setAttribute("browser",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
 						}
 					}
 				}
@@ -114,6 +116,7 @@ public class Authentication {
 				if(ah.getAh_table().equals("AHS")) ah.setAh_sdspcode(enc.aesDecode((String)pu.getAttribute("type"),ah.getAh_code()));
 				if(dao.getLogOutAccessHistorySum(ah)) dao.insAccessHistory(ah);
 				pu.removeAttribute("userSs");				
+				pu.removeAttribute("browser");				
 				pu.removeAttribute("type");
 				mav.setViewName("redirect:/");
 				mav.addObject("message","alert('로그아웃 되었습니다.');");
@@ -138,17 +141,18 @@ public class Authentication {
 		AccessHistoryBean ah = new AccessHistoryBean();
 		// userSs 유저 세션
 		if(ck != null) {
-			ah.setAh_table(ck.getValue().substring(0,3).equals("mro")?"AHM":"AHS"); 
+			ah.setAh_table(ck.getValue().substring(0,3).equals("mro")?"AHM":"AHS");
 		try {
 			//브라우저에 일단 세션이 남아 있는 경우
 			if(pu.getAttribute("userSs")!=null){
 				ah.setAh_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 				//남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
-				if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
+				if(dao.getAccessHistorySum(ah) && dao.getLastAccessInfo(ah).equals(enc.aesDecode((String)pu.getAttribute("browser"),"session"))) {
 					mav.setViewName(ah.getAh_table().equals("AHM")?"home":"supHome");
 				//남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
 				}else{
 					pu.removeAttribute("userSs");
+					pu.removeAttribute("browser");
 					pu.removeAttribute("type");
 					mav.setViewName("accessForm");
 					ck.setMaxAge(0);//쿠키소멸

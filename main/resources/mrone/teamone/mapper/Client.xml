@@ -33,23 +33,23 @@
 		SELECT * FROM TB WHERE TB_CODE = #{tb_code}
 	</select>
 	
-	<update id="updOrderDecide" parameterType="">
+	<update id="updOrderDecide" parameterType="string">
 		UPDATE OS SET OS_STATE = 'OC' WHERE OS_CODE = #{os_code} AND OS_STATE = 'OA'
 	</update>
 	
-	<update id="updOrderDetailDecide">
+	<update id="updOrderDetailDecide" parameterType="string">
 		UPDATE OD SET OD_STCODE = 'OC' WHERE OD_OSCODE = #{os_code} AND OD_STCODE = 'OA'
 	</update>
 	
-	<update id="updRequestDecide">
+	<update id="updRequestDecide" parameterType="string">
 		UPDATE RE SET RE_STATE = 'OC' WHERE RE_OSCODE = #{os_code} AND RE_STATE = 'OA'
 	</update>
 	
-	<update id="updRequestDetailDecide">
+	<update id="updRequestDetailDecide" parameterType="string">
 		UPDATE RD SET RD_STCODE = 'OC' WHERE RD_RECODE = #{re_code} AND RD_STCODE = 'OA'
 	</update>
 	
-	<select id="getOscodeRe">
+	<select id="getOscodeRe" parameterType="string" resultType="string">
 		SELECT OS_CODE FROM RE WHERE RE_CODE = #{re_code}
 	</select>
 	
