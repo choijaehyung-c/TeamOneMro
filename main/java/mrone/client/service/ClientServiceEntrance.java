@@ -42,4 +42,7 @@ public class ClientServiceEntrance {
 		return csc.clientOrderProcess(co, sp_code);
 	}
 
+	public String updOrderDecide(String os_code) {
+		return csc.updOrderDecide(os_code);
+	}
 }

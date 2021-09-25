@@ -50,6 +50,23 @@ class ClientDaoCJH {
 		return data>0? true : false;
 	}
 	
+	boolean updOrderDecide(String os_code) {
+		return this.convertToBoolean(sql.update("updOrderDecide",os_code));
+	}
 	
+	boolean updOrderDetailDecide(String os_code) {
+		return this.convertToBoolean(sql.update("updOrderDetailDecide",os_code));
+	}
 	
+	boolean updRequestDecide(String os_code) {
+		return this.convertToBoolean(sql.update("updRequestDecide",os_code));
+	}
+	
+	boolean updRequestDetailDecide(String re_code) {
+		return this.convertToBoolean(sql.update("updRequestDetailDecide",re_code));
+	}
+	
+	String getOscodeRe(String os_code) {
+		return sql.selectOne("getOscodeRe",os_code);
+	}
 }

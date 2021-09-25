@@ -33,4 +33,28 @@
 		SELECT * FROM TB WHERE TB_CODE = #{tb_code}
 	</select>
 	
+	<update id="updOrderDecide" parameterType="">
+		UPDATE OS SET OS_STATE = 'OC' WHERE OS_CODE = #{os_code} AND OS_STATE = 'OA'
+	</update>
+	
+	<update id="updOrderDetailDecide">
+		UPDATE OD SET OD_STCODE = 'OC' WHERE OD_OSCODE = #{os_code} AND OD_STCODE = 'OA'
+	</update>
+	
+	<update id="updRequestDecide">
+		UPDATE RE SET RE_STATE = 'OC' WHERE RE_OSCODE = #{os_code} AND RE_STATE = 'OA'
+	</update>
+	
+	<update id="updRequestDetailDecide">
+		UPDATE RD SET RD_STCODE = 'OC' WHERE RD_RECODE = #{re_code} AND RD_STCODE = 'OA'
+	</update>
+	
+	<select id="getOscodeRe">
+		SELECT OS_CODE FROM RE WHERE RE_CODE = #{re_code}
+	</select>
+	
+
+	
+	
+	
 </mapper>

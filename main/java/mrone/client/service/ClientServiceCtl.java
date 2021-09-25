@@ -39,6 +39,26 @@ class ClientServiceCtl {
 	@Autowired
 	MroServiceEntrance msec;
 	
+	
+	String updOrderDecide(String os_code) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		String re_code = dao.getOscodeRe(os_code);
+		if (dao.updOrderDecide(os_code)) {
+			if (dao.updOrderDetailDecide(os_code)) {
+				if (dao.updRequestDecide(os_code)) {
+					if (dao.updRequestDetailDecide(re_code)) {
+						tran = true;
+					}
+				}
+			}
+		}		
+		pu.setTransactionResult(tran);
+		return tran?"success":"failed";
+	}
+	
+	
 	List<String> clientRequestCtl(ClientOrderBean co,String type){
 		ClientInfoBean ci = new ClientInfoBean();
 		ci.setCl_code(co.getOs_clcode());
