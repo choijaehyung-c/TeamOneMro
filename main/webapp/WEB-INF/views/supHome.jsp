@@ -269,7 +269,7 @@
 									</tbody>
 								</table>
 								<div style="text-align: center">
-									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'EC','e')">수락</button>
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'EA','e')">수락</button>
 									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'EF','e')">거절</button>
 
 								</div>

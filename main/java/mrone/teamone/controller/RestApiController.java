@@ -82,7 +82,7 @@ public class RestApiController {
 		return sse.supplyMRDRDAProductList();
 	}
 	
-	@PostMapping("/supplyResponseOrder")//주문수락
+	@PostMapping("/supplyResponseOrder")
 	public String supplyResponseOrder(@RequestBody RequestOrderBean ro) {
 		return sse.supplyResponseOrder(ro);
 	}

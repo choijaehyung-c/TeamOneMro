@@ -522,7 +522,7 @@ class SupplyServiceCtl {
 		return list;
 	}
 
-	//공급사 - 반품에 대한 응답(거절(FF)or수락(RC))
+	//공급사 - 반품에 대한 응답(거절(FF)or수락(RA))
 	String supplyResponseRefund(RequestOrderBean ro) {
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
@@ -639,7 +639,7 @@ class SupplyServiceCtl {
 				}
 			}
 			//수락일경우 -> 운송장 거절일경우 -> 거절 사유업데이트
-		}else if(decision.equals("EC") || decision.equals("EF")){
+		}else if(decision.equals("EA") || decision.equals("EF")){
 			sr.setAfter(decision);
 			sr.setBefore("ER");
 			sr.setRe_code(ro.getRe_code());
