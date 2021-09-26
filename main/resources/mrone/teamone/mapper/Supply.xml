@@ -60,7 +60,7 @@
 		SELECT OD_PRSPCODE,OD_STCODE,OD_PRCODE,OD_QUANTITY FROM OD WHERE OD_OSCODE = #{re_code} AND OD_STCODE = 'OA'
 	</select>
 	
-	<select id="getRegion">
+	<select id="getRegion" parameterType="string" resultType="string">
 		SELECT NVL(OS_REGION,'NONE') FROM OS WHERE OS_CODE = #{OS_CODE}
 	</select>
 	

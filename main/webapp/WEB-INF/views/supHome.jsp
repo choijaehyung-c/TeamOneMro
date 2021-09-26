@@ -225,13 +225,13 @@
                                     </thead>
        
                                     <tbody>
-                                        <tr v-for="item in list" @click="getAsDetail(item.re_code,'r')">
-                                            <td >{{item.cl_name}}</td>
-                                            <td >{{item.word}}</td>
-                                            <td >{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                        <tr v-for="item in list">
+                                            <td @click="getAsDetail(item.re_code,'r')">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code,'r')">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code,'r')">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
-                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">수락</button>
-                                           <button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                                               <button @click="sendAsResponse(item.re_code,'RA','r')" type="button" class="btn btn-dark">수락</button>
+                                           <button @click="sendAsResponse(item.re_code,'FF','r')"  type="button" class="btn btn-dark">거절</button>
                                         </td>
                                         </tr>
                                     </tbody>
@@ -296,13 +296,13 @@
                                     </thead>
        
                                     <tbody>
-                                        <tr v-for="item in list" @click="getAsDetail(item.re_code,'e')">
-                                            <td >{{item.cl_name}}</td>
-                                            <td >{{item.word}}</td>
-                                            <td >{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                        <tr v-for="item in list">
+                                            <td @click="getAsDetail(item.re_code,'e')">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code,'e')">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code,'e')">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
-                                               <button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"  type="button" class="btn btn-dark">수락</button>
-                                           <button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"  type="button" class="btn btn-dark">거절</button>
+                                           <button @click="sendAsResponse(item.re_code,'EA','e')" type="button" class="btn btn-dark">수락</button>
+                                           <button @click="sendAsResponse(item.re_code,'EF','e')"  type="button" class="btn btn-dark">거절</button>
                                         </td>
                                         </tr>
                                     </tbody>
