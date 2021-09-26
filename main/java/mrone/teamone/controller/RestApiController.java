@@ -332,11 +332,13 @@ public class RestApiController {
 		return cse.clientRequestExchange(co);
 	}
 	
+	@CrossOrigin
 	@PostMapping("/clientGetTaxbill")
 	public List<TaxBean> clientGetTaxbillApi(@ModelAttribute ClientInfoBean ci) throws Exception {
 		return cse.clientGetTaxbill(ci);
 	}
 	
+	@CrossOrigin
 	@PostMapping("/clientGetTaxbillDetail")
 	public TaxBean clientGetTaxbillDetailApi(@ModelAttribute ClientInfoBean ci) throws Exception {
 		return cse.clientGetTaxbillDetail(ci);
