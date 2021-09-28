@@ -67,20 +67,7 @@ public class ProjectUtils {
     
     public String setFile(MultipartFile file,HttpServletRequest req){
     	String fileInfo =null;
-		   String uploadLocation = req.getSession().getServletContext().getRealPath("/") + "resources/img/";  
-			/*
-			 * String uploadLocation = "C:"+File.separator+"Users"+File.separator+
-			 * "chl"+File.separator+"Desktop"+File.separator+
-			 * "springworkspace"+File.separator+"Mro_Platform"
-			 * +File.separator+"src"+File.separator+"main"+File.separator+
-			 * "webapp"+File.separator+"resources"+File.separator+"file" +File.separator
-			 */
-				/*
-								 * File.separator+".."+File.separator+".."+File.separator+".."+File.separator+
-								 * ".."+File.separator+
-								 */
-				/*+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"file"+File.separator*/
-    	//System.out.println(ProjectUtils.class.getResource("").getPath());
+		String uploadLocation = req.getSession().getServletContext().getRealPath("/") + "resources/img/";
     	System.out.println(uploadLocation);
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");

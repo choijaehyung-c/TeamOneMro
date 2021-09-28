@@ -17,10 +17,9 @@ const deliveryVue = new Vue({
          let sendJsonData = {dl_code:dlcode, dl_dscode:dscode};
          let clientData = JSON.stringify(sendJsonData);
          postAjaxJson('vue/Insertsdcode','callDeliveryList', 's', clientData);
-      }
-      
+      }     
    }
-   });
+});
 
 
 function callDeliveryList(){
