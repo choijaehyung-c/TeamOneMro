@@ -1637,7 +1637,7 @@
                 
                    			<tbody>
                                 <tr>
-                               		<td>사진</td><td><input  style="width: 300px;" type="text" v-model="pr_image"></td>
+                               		<td>사진</td><td><input  style="width: 300px;" type="file" name="file"></td>
                                 </tr>
                                 <tr>
                                		<td>카테고리</td><td><select v-model="cate" style="width: 300px;" id="CG">
@@ -1647,19 +1647,19 @@
                                							
                                 </tr>
                                 <tr>
-                               		<td>상품명</td><td><input style="width: 300px;" type="text" v-model="pr_name"></td>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" name="pr_name"></td>
                                 </tr>
                                 <tr>
-                               		<td>가격</td><td><input style="width: 300px;" type="text" v-model="pr_price"></td>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" name="pr_price"></td>
                                 </tr>
                                 <tr>
-                               		<td>수량</td><td><input style="width: 300px;" type="text" v-model="pr_stock"></td>
+                               		<td>수량</td><td><input style="width: 300px;" type="text" name="pr_stock"></td>
                                 </tr>
                                 <tr>
-                               		<td>원산지</td><td><input style="width: 300px;" type="text" v-model="pr_origin"></td>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" name="pr_origin"></td>
                                 </tr>
                                 <tr>
-                               		<td>정보</td><td><input style="width: 300px;" type="text" v-model="pr_info"></td>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" name="pr_info"></td>
                                 </tr>
                              
                             </tbody>	

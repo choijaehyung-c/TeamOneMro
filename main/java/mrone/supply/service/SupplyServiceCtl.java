@@ -531,25 +531,20 @@ class SupplyServiceCtl {
 		//프론트에서 반품,교환 동시 진행 X (오리진코드로 이미 진행중인 반품,교환이 있으면 중복 접수X)
 		SupplyResponse sr = new SupplyResponse();
 		sr.setAfter(ro.getRe_state());
-		System.out.println(sr.getAfter());
 		sr.setBefore("RR");
 		sr.setRe_code(ro.getRe_code());
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		//수락,거절 공통 업데이트
-		System.out.println("inin?");
 		if(this.updateResponseProcess(sr)) {
 			if (sr.getAfter().equals("FF")) {// 거절
-				System.out.println("inin?");
 				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
-				System.out.println("inin?");
 				ClientOrderBean newCo = new ClientOrderBean();
 				String clcode = dao.getCLForRefund(sr.getRe_code());
 				newCo.setOs_clcode(clcode);
 				newCo.setOs_origin(sr.getOs_code());
 				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
-				System.out.println(sr.getOs_code());
 				newCo.setOs_region(dao.getRegion(sr.getOs_code()));
 				String spcode = null;
 				try {
@@ -563,7 +558,6 @@ class SupplyServiceCtl {
 				newCo.setSp_code(spcode);
 				String newOscode = cse.supplyRequestOrder(newCo);
 				if (newOscode!=null) {
-					System.out.println("inin?");
 						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
 						sr.setRe_code(dao.getREOriginCode(ro.getRe_code()));
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
@@ -577,22 +571,21 @@ class SupplyServiceCtl {
 				
 			}
 		}
-		System.out.println(tran);
 		pu.setTransactionResult(tran);
 		return tran?"success":"failed";
 	}
 	
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
-		System.out.println("gg00");
+		
 		if (dao.updRequest(sr)) {
-			System.out.println("gg0");
+			
 			if (dao.updRequestDetail(sr)) {
-				System.out.println("gg1");
+				
 				if (dao.updOrder(sr)) {
-					System.out.println("gg2");
+					
 					if (dao.updOrderDetail(sr)) {
-						System.out.println("gg4");
+						
 						tran = true;
 					}
 				}
@@ -607,9 +600,9 @@ class SupplyServiceCtl {
 			ro.getRd().get(i).setRd_stcode(sr.getAfter());
 			ro.getRd().get(i).setRd_recode(sr.getRe_code());
 			if (ro.getRd().get(i).getRd_note() != null) {
-				System.out.println(ro.getRd().get(i).getRd_note());
+				
 				if (dao.updReasonRD(ro.getRd().get(i))) {
-					System.out.print(sr.getOs_code()+ro.getRd().get(i).getRd_note());
+					
 					ro.getRd().get(i).setRd_recode(sr.getOs_code());
 					if (dao.updReasonOD(ro.getRd().get(i))) {
 						count++;

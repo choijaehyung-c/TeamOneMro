@@ -274,13 +274,8 @@ const main = new Vue({
          this.categoryList2 = jsondata;
       },
       supplyRequestNewProduct:function(){
-         let catename = CG.options[CG.selectedIndex].text;
-         let sendJsonData = {pr_image:this.pr_image, pr_name:this.pr_name,
-                  pr_price:this.pr_price, pr_stock:this.pr_stock,
-                  pr_origin:this.pr_origin, pr_info:this.pr_info,
-                  cate:this.cate, cate_name:catename};
-         let clientData = JSON.stringify(sendJsonData);
-         postAjaxJson('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage', 's', clientData);
+		 postAjaxMultiUpload('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage');
+        
       },
       search1:function(word){
          this.searchWord = word.target.value;

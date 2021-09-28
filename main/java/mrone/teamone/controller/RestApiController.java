@@ -2,6 +2,8 @@ package mrone.teamone.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.beans.TaxBean;
+import mrone.teamone.utill.ProjectUtils;
 
 @RestController
 @RequestMapping("/vue")
@@ -37,6 +40,8 @@ public class RestApiController {
 	private ClientServiceEntrance cse;
 	@Autowired
 	private MroServiceEntrance mse;
+	@Autowired
+	private ProjectUtils pu;
 	
 	/* test */
 	@PostMapping("/DeliveryTest")
@@ -480,12 +485,13 @@ public class RestApiController {
 		 */
 		//추가할 상품정보 정보 보내기
 		@PostMapping("/SupplyRequestNewProduct")
-		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb){
-			/*
-			 * //System.out.println(pb.getFile().getOriginalFilename());
-			 * //System.out.println(pu.setFile(pb.getFile()));
-			 */
-			return null/* sse.supplyRequestNewProduct(pb) */;
+		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb,HttpServletRequest req){
+			System.out.println(pb.getFile().getOriginalFilename());
+			System.out.println(pu.setFile(pb.getFile(),req));
+			//sse.supplyRequestNewProduct(pb);
+			//here
+			System.out.println(pb);
+			return "good";
 		}
 	
 		
