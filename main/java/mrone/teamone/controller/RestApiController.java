@@ -14,10 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -504,17 +504,23 @@ public class RestApiController {
 	
 		
 		@GetMapping(
-				  value = "/getImage",
+				  value = {"/getImage/{imgName}.{extension}","/getImage"},
 				  produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_GIF_VALUE}
 				)
-		public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest req,@RequestParam("file") String file) throws IOException {
-			String lc = req.getSession().getServletContext().getRealPath("/")+".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
-		    System.out.println(lc);
-		    System.out.println(file);
-			InputStream in = new FileInputStream(lc+file);
+		public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest req,
+				@PathVariable(name = "imgName" , required = false) String imgName,
+				@PathVariable(name = "extension" , required = false) String extension)throws IOException {
+			String lc = req.getSession().getServletContext().getRealPath("/")+
+					".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
+			InputStream in;
+			try {
+				in = new FileInputStream(lc+imgName+"."+extension);
+			}catch(Exception e) {
+				in = new FileInputStream(lc+"none.gif");
+			}
 			byte[] img = IOUtils.toByteArray(in);
 			in.close();
-		    return img;
+			return img;
 		}
 		
 
