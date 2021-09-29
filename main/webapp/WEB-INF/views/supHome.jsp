@@ -1655,19 +1655,19 @@
                                							
                                 </tr>
                                 <tr>
-                               		<td>상품명</td><td><input style="width: 300px;" type="text" name="pr_name"></td>
+                               		<td>상품명</td><td><input style="width: 300px;" type="text" id = "nameBox"name="pr_name"></td>
                                 </tr>
                                 <tr>
-                               		<td>가격</td><td><input style="width: 300px;" type="text" name="pr_price"></td>
+                               		<td>가격</td><td><input style="width: 300px;" type="text" name="pr_price" ></td>
                                 </tr>
                                 <tr>
-                               		<td>수량</td><td><input style="width: 300px;" type="text" name="pr_stock"></td>
+                               		<td>수량</td><td><input style="width: 300px;" type="text" name="pr_stock" ></td>
                                 </tr>
                                 <tr>
-                               		<td>원산지</td><td><input style="width: 300px;" type="text" name="pr_origin"></td>
+                               		<td>원산지</td><td><input style="width: 300px;" type="text" name="pr_origin" ></td>
                                 </tr>
                                 <tr>
-                               		<td>정보</td><td><input style="width: 300px;" type="text" name="pr_info"></td>
+                               		<td>정보</td><td><input style="width: 300px;" type="text" name="pr_info" ></td>
                                 </tr>
                              
                             </tbody>	
@@ -1691,7 +1691,7 @@
                         <h6>&nbsp </h6>
                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div  class="dataTable-top">
-                     	<button @click="supplyRequestNewProductModal()" type="button" class="btn btn-dark">물픔등록신청</button>
+                     	<button @click="supplyRequestNewProductModal()" type="button" class="btn btn-dark">물품등록신청</button>
                      	<div class="dataTable-search">
                      		<input @change="search2()" v-on:input="search2" v-bind:value="searchWord" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
                      	

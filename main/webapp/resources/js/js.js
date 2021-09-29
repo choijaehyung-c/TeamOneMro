@@ -64,6 +64,7 @@ function postAjaxMultiUpload(jobCode,fn){
 			window[fn](ajax.responseText);
 		}
 	}
+	
 	ajax.open("POST",jobCode);
 	let formData = new FormData();
 	let CG = document.getElementById("CG");

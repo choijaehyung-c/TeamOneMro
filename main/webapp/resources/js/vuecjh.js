@@ -275,6 +275,31 @@ const main = new Vue({
          this.categoryList2 = jsondata;
       },
       supplyRequestNewProduct:function(){
+		let name = document.getElementsByName("pr_name")[0];
+		let price = document.getElementsByName("pr_price")[0];	
+		let stock = document.getElementsByName("pr_stock")[0];
+		
+			if(name.value==""){
+				alert("상품명은 1~200자 이내로 입력해주세요.");	
+				name.value="";
+				name.focus();
+				return;		
+			}
+			if(price.value.length > 7){
+				alert("가격은 7자리 단위까지 가능합니다.");
+				price.value="";
+				price.focus();
+				return;			
+			}
+			
+			if(stock.value.length>5){					
+				alert("수량은 5자리까지 등록가능합니다.");
+				stock.value="";
+				stock.focus();
+				return;
+				
+			}
+	
 		 postAjaxMultiUpload('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage');
         
       },
@@ -646,5 +671,20 @@ function IssuedTaxDetailVue(jsondata){
 	main.od = jsondata.od;	
 	main.modalOpen();
 }
+
+
+
+//유효성 검사
+function charCount(value, min, max){
+	return value.length >= min && value.length<=max;
+	
+}
+
+function isValidateCheck(word){
+	const pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	
+	pattern.test(word);	
+}
+
 
 
