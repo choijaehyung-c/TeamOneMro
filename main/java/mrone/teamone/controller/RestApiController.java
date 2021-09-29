@@ -301,6 +301,11 @@ public class RestApiController {
 		return sse.supplyGetCategory();
 	}
 	
+	@PostMapping("/supplyGetBK")
+	public List<ProductBean> supplyGetBK(){
+		return sse.supplyGetBK();
+	}
+	
 	//supply 카테고리 물품 받아옴
 	@PostMapping("/supplyProductList")
 	
@@ -494,12 +499,10 @@ public class RestApiController {
 		//추가할 상품정보 정보 보내기
 		@PostMapping("/SupplyRequestNewProduct")
 		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb,HttpServletRequest req){
-			System.out.println(pb.getFile().getOriginalFilename());
 			
-			//sse.supplyRequestNewProduct(pb);
 			//here
 			System.out.println(pb);
-			return pu.setFile(pb.getFile(),req);
+			return sse.supplyRequestNewProduct(pb,req);
 		}
 	
 		
@@ -512,14 +515,14 @@ public class RestApiController {
 				@PathVariable(name = "extension" , required = false) String extension)throws IOException {
 			String lc = req.getSession().getServletContext().getRealPath("/")+
 					".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
-			InputStream in;
+			InputStream ist;
 			try {
-				in = new FileInputStream(lc+imgName+"."+extension);
+				ist = new FileInputStream(lc+imgName+"."+extension);
 			}catch(Exception e) {
-				in = new FileInputStream(lc+"none.gif");
+				ist = new FileInputStream(lc+"none.gif");
 			}
-			byte[] img = IOUtils.toByteArray(in);
-			in.close();
+			byte[] img = IOUtils.toByteArray(ist);
+			ist.close();
 			return img;
 		}
 		

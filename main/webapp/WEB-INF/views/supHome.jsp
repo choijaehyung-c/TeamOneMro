@@ -1639,8 +1639,16 @@
                                 <tr>
                                		<td>사진</td><td><input  style="width: 300px;" type="file" name="file"></td>
                                 </tr>
+                                
                                 <tr>
-                               		<td>카테고리</td><td><select v-model="cate" style="width: 300px;" id="CG">
+                               		<td>대분류</td><td><select style="width: 300px;" id="BK">
+                               								<option v-for="selectCate in categoryList3"  :value="selectCate.bk_code" >{{selectCate.bk_name}}</option>
+                               						   </select>
+                               					  </td>	
+                               							
+                                </tr>
+                                <tr>
+                               		<td>소분류</td><td><select style="width: 300px;" id="CG">
                                								<option v-for="selectCate in categoryList2"  :value="selectCate.cate" >{{selectCate.cate_name}}</option>
                                						   </select>
                                					  </td>	

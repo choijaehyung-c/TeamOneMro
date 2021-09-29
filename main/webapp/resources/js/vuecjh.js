@@ -16,6 +16,7 @@ const main = new Vue({
 	dupCheck:[],
 	modalDetailList:[],
 	  categoryList2:[],
+	  categoryList3:[],
       detail:{},
 	  categoryCode:'',
 	  searchWord:'',
@@ -268,7 +269,7 @@ const main = new Vue({
       },
       supplyRequestNewProductModal:function(){
          this.modal2.show = true;
-         postAjaxJson('vue/supplyGetCategory','getCate2','j');
+		 postAjaxJson('vue/supplyGetBK','getBK','j');
       },
       supplyGetCategoryPush:function(jsondata){
          this.categoryList2 = jsondata;
@@ -398,6 +399,13 @@ function getExchangeListForm(msg=""){
 	if(msg!="")alert(msg);
 	postAjaxJson("vue/supplyReceiveExchangeListForm","getExchangeList", "j");
 }
+
+function getBK(jsondata){
+	main.categoryList3 = jsondata;
+	postAjaxJson('vue/supplyGetCategory','getCate2','j');
+}
+
+
 /****************************************************************************/
 function mainPage(){//onLoad
 	main.mainPage();
@@ -509,7 +517,6 @@ function getTrackingDL(jsondata){
 
 
 function getCate2(jsondata){
-	console.log(jsondata);
    mainVueTwo.supplyGetCategoryPush(jsondata);
    main.supplyGetCategoryPush(jsondata);
 }

@@ -382,6 +382,10 @@ public class SupplyDao {
 	public List<ProductBean> supplyGetCategory() {
 		return sql.selectList("supplyGetCategory");
 	}
+	
+	public List<ProductBean> supplyGetBK() {
+		return sql.selectList("supplyGetBK");
+	}
 
 	public List<ProductBean> supplyProductList(ProductBean pd) {
 

@@ -3,6 +3,8 @@ package mrone.supply.service;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
@@ -453,20 +455,29 @@ class SupplyServiceCtl {
 		return dao.getCate();
 	}
 
-	String supplyRequestNewProduct(ProductBean pb) {
-		String message = "";
-		pb.setPr_spcode("KR001G");
-		pb.setPr_code("2002002002");
-		pb.setPr_tax(String.valueOf(Integer.parseInt(pb.getPr_price()) / 10));
-		pb.setPr_spbkind("KL");
+	String supplyRequestNewProduct(ProductBean pb,HttpServletRequest req) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		pb.setPr_image("http://cleverc.online/vue/getImage/"+pu.setFile(pb.getFile(),req));
+		try {
+		pb.setPr_spcode(
+			enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"))
+			);
+
+		} catch (Exception e) {
+			pb.setPr_spcode("");
+		}
+		pb.setPr_tax(String.valueOf(Math.round(Integer.parseInt(pb.getPr_price()) / 10)));
+		pb.setPr_spbkind(pb.getBk_code());
 		pb.setPr_stcode("PR");
 		if (dao.supplyRequestNewProduct(pb)) {
-			message = "success";
+			tran = true;
 		} else {
-			message = "fail";
+			tran = false;
 		}
-
-		return message;
+		pu.setTransactionResult(tran);
+		return tran?"seccess":"failed";
 	}
 //------------------------------------------------------------
 	//수정완료 re에 st가 RR인 주문서 리턴 
@@ -690,14 +701,29 @@ class SupplyServiceCtl {
 	List<ProductBean> supplyGetCategory() {
 		return dao.supplyGetCategory();
 	}
+	
+	List<ProductBean> supplyGetBK() {
+		return dao.supplyGetBK();
+	}
 
 	List<ProductBean> supplyProductList(ProductBean pd) {
-		pd.setPr_spcode("KR001D");
+		try {
+			pd.setPr_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			pd.setPr_spcode("");
+		}
 		return dao.supplyProductList(pd);
 	}
 
 	List<ProductBean> supplySearchProduct(ProductBean pd) {
-		pd.setPr_spcode("KR001D");
+		try {
+			pd.setPr_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			pd.setPr_spcode("");
+			e.printStackTrace();
+		}
 		return dao.supplySearchProduct(pd);
 	}
 	//수정2

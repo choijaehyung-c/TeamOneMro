@@ -67,9 +67,12 @@ function postAjaxMultiUpload(jobCode,fn){
 	ajax.open("POST",jobCode);
 	let formData = new FormData();
 	let CG = document.getElementById("CG");
+	let BK = document.getElementById("BK");
 	let file = document.getElementsByName("file")[0];
 	formData.append('cate',CG.options[CG.selectedIndex].value);
-	formData.append('catename',CG.options[CG.selectedIndex].text);
+	formData.append('cate_name',CG.options[CG.selectedIndex].text);
+	formData.append('bk_code',BK.options[BK.selectedIndex].value);
+	formData.append('bk_name',BK.options[BK.selectedIndex].text);
 	formData.append('file',file.files[0],file.files[0].name);
 	formData.append('pr_name',document.getElementsByName("pr_name")[0].value);
 	formData.append('pr_price',document.getElementsByName("pr_price")[0].value);

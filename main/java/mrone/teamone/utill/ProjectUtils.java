@@ -68,23 +68,29 @@ public class ProjectUtils {
     }
     
     public String setFile(MultipartFile file,HttpServletRequest req){
-    	String fileInfo =null;
+    	String saveFileName =null;
     	 
 		String uploadLocation =req.getSession().getServletContext().getRealPath("/")+".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
-    	System.out.println(uploadLocation);
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 				Calendar cal = Calendar.getInstance();
 				UUID uuid = UUID.randomUUID();
-				String saveFileName = uuid+"_"+sdf.format(cal.getTime())+"_"+file.getOriginalFilename();
-				File sfile = new File(uploadLocation,saveFileName);
-				file.transferTo(sfile);
-				fileInfo = uploadLocation+saveFileName;
+				String fileName = file.getOriginalFilename();
+				int dot = fileName.lastIndexOf(".");
+				String ext = fileName.substring(dot+1); 
+				saveFileName = uuid+"_"+sdf.format(cal.getTime())+"."+ext;
 				
 				/*
-				 * byte[] data = file.getBytes(); FileOutputStream fos = new
-				 * FileOutputStream(uploadLocation+saveFileName); fos.write(data); fos.close();
+				 * File sfile = new File(uploadLocation,saveFileName); file.transferTo(sfile);
+				 * fileInfo = uploadLocation+saveFileName;
 				 */
+				
+				
+				 byte[] data = file.getBytes();
+				 FileOutputStream fos = new FileOutputStream(uploadLocation+saveFileName);
+				 fos.write(data);
+				 fos.close();
+				 
 				System.out.println("업로드성공");
 				LOGGER.debug("upup 업로드 성공");
 			}
@@ -94,7 +100,7 @@ public class ProjectUtils {
 				System.out.println("errrrror");
 			}
 			
-			return fileInfo;
+			return saveFileName;
     }
     
     public String[] setFile(MultipartFile[] file) {

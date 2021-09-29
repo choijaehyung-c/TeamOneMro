@@ -130,6 +130,10 @@ public class SupplyServiceEntrance {
 		return ssc.supplyGetCategory();
 	}
 
+	public List<ProductBean> supplyGetBK() {
+		return ssc.supplyGetBK();
+	}
+	
 	public List<RequestOrderBean> supplySearchAs(RequestOrderBean re) {
 		return ssc.supplySearchAs(re);
 	}
@@ -245,8 +249,8 @@ public class SupplyServiceEntrance {
 		   return list;
 	   }
 	   
-	   public String supplyRequestNewProduct(ProductBean pb,HttpServletRequest request) {
-		   	return ssc.supplyRequestNewProduct(pb);
+	   public String supplyRequestNewProduct(ProductBean pb,HttpServletRequest req) {
+		   	return ssc.supplyRequestNewProduct(pb,req);
 	   }
 	   
 }
