@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mobile.device.DeviceUtils;
@@ -27,7 +29,7 @@ public class ProjectUtils {
 	DataSourceTransactionManager tx;
 	private DefaultTransactionDefinition def;
 	private TransactionStatus status;
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectUtils.class);
 	/* RequestContetHolder Class --> Spring 3.0 이상
 	 *  : ThreadLocal를 사용해서 현재 쓰레드에 RequestAttributes 인스턴스를 바인딩 해두었다가 요청을 하면 이 인스턴스를 돌려주는 역할을 합니다.
 	 *  : ThreadLocal을 사용하는 경우 ThreadLocal 변수에 보관된 데이터의 사용이 끝나면 반드시 삭제 해야 재사용되는 쓰레드의 잘못된 참조를 방지
@@ -67,7 +69,8 @@ public class ProjectUtils {
     
     public String setFile(MultipartFile file,HttpServletRequest req){
     	String fileInfo =null;
-		String uploadLocation = req.getSession().getServletContext().getRealPath("/") + "resources/img/";
+    	 
+		String uploadLocation =req.getSession().getServletContext().getRealPath("/")+".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
     	System.out.println(uploadLocation);
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -83,9 +86,11 @@ public class ProjectUtils {
 				 * FileOutputStream(uploadLocation+saveFileName); fos.write(data); fos.close();
 				 */
 				System.out.println("업로드성공");
+				LOGGER.debug("upup 업로드 성공");
 			}
 			
 			catch (Exception e) {
+				LOGGER.debug("upup xx 업로드 실패");
 				System.out.println("errrrror");
 			}
 			

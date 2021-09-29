@@ -1,16 +1,24 @@
 package mrone.teamone.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -487,13 +495,27 @@ public class RestApiController {
 		@PostMapping("/SupplyRequestNewProduct")
 		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb,HttpServletRequest req){
 			System.out.println(pb.getFile().getOriginalFilename());
-			System.out.println(pu.setFile(pb.getFile(),req));
+			
 			//sse.supplyRequestNewProduct(pb);
 			//here
 			System.out.println(pb);
-			return "good";
+			return pu.setFile(pb.getFile(),req);
 		}
 	
+		
+		@GetMapping(
+				  value = "/getImage",
+				  produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_GIF_VALUE}
+				)
+		public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest req,@RequestParam("file") String file) throws IOException {
+			String lc = req.getSession().getServletContext().getRealPath("/")+".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
+		    System.out.println(lc);
+		    System.out.println(file);
+			InputStream in = new FileInputStream(lc+file);
+			byte[] img = IOUtils.toByteArray(in);
+			in.close();
+		    return img;
+		}
 		
 
 		// new
