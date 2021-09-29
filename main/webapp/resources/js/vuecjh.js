@@ -285,15 +285,15 @@ const main = new Vue({
 				name.focus();
 				return;		
 			}
-			if(price.value.length > 7){
-				alert("가격은 7자리 단위까지 가능합니다.");
+			if(!isValidateCheck(1,price.value)){
+				alert("가격은 필수입력사항입니다.(숫자만 가능하며, 7자리까지 가능합니다.)");
 				price.value="";
 				price.focus();
 				return;			
 			}
 			
-			if(stock.value.length>5){					
-				alert("수량은 5자리까지 등록가능합니다.");
+			if(!isValidateCheck(2,stock.value)){					
+				alert("수량은 필수입력사항입니다.(숫자만 가능하며, 5자리까지 등록가능합니다.)");
 				stock.value="";
 				stock.focus();
 				return;
@@ -680,10 +680,21 @@ function charCount(value, min, max){
 	
 }
 
-function isValidateCheck(word){
-	const pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+function isValidateCheck(type,word){
+	//const pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	const priceNum =  /^[0-9]{1,7}$/;
+	const stockNum = /^[0-9]{1,5}$/;
+	let result;
 	
-	pattern.test(word);	
+	if(type == 1){
+		result = priceNum.test(word);
+		console.log(word);
+		console.log(result);
+	}else if(type == 2){
+		result = stockNum.test(word);
+	}
+	
+	return result;
 }
 
 
