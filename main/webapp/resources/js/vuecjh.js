@@ -280,17 +280,23 @@ const main = new Vue({
 		let stock = document.getElementsByName("pr_stock")[0];
 		
 			if(name.value==""){
-				alert("상품명은 1~200자 이내로 입력해주세요.");	
+				alert("상품명 필수입력사항입니다.");				
+				name.focus();
+				return;
+			}else if(name.value.length>5){
+				alert("상품명은 1~200자 이내로 입력해주세요.");
 				name.value="";
 				name.focus();
-				return;		
+				return;
 			}
+			
 			if(!isValidateCheck(1,price.value)){
 				alert("가격은 필수입력사항입니다.(숫자만 가능하며, 7자리까지 가능합니다.)");
 				price.value="";
 				price.focus();
 				return;			
 			}
+
 			
 			if(!isValidateCheck(2,stock.value)){					
 				alert("수량은 필수입력사항입니다.(숫자만 가능하며, 5자리까지 등록가능합니다.)");
