@@ -283,7 +283,7 @@ const main = new Vue({
 				alert("상품명 필수입력사항입니다.");				
 				name.focus();
 				return;
-			}else if(name.value.length>5){
+			}else if(name.value.length>200){
 				alert("상품명은 1~200자 이내로 입력해주세요.");
 				name.value="";
 				name.focus();
