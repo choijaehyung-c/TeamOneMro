@@ -499,9 +499,6 @@ public class RestApiController {
 		//추가할 상품정보 정보 보내기
 		@PostMapping("/SupplyRequestNewProduct")
 		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb,HttpServletRequest req){
-			
-			//here
-			System.out.println(pb);
 			return sse.supplyRequestNewProduct(pb,req);
 		}
 	
