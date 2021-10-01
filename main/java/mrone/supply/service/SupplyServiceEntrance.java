@@ -250,17 +250,15 @@ public class SupplyServiceEntrance {
 		   }		  		 
 		   return list;
 	   }
-<<<<<<< HEAD
 
 	public String insertGPS(DriverLocationBean dlb) {
 	
 		return ssc.insertGPS(dlb);
 	}
-=======
-	   
+
 	   public String supplyRequestNewProduct(ProductBean pb,HttpServletRequest req) {
 		   	return ssc.supplyRequestNewProduct(pb,req);
 	   }
 	   
->>>>>>> c91b05ebc12ec224ed57135c0ebbe491ce94a467
+	   
 }
