@@ -1,5 +1,13 @@
 package mrone.teamone.auth;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,6 +178,45 @@ public class Authentication {
 	}else {
 		mav.setViewName("accessForm");
 	}
+		return mav;
+	}
+
+	
+	
+	public ModelAndView accessDelivery(AccessHistoryBean ah) {
+		mav = new ModelAndView();
+		String ENCPWD = null;
+		if(dao.checkID(ah.getAh_code())) {
+			try {
+				ENCPWD = enc.aesDecode(dao.getDVpwd(ah.getAh_code()), ah.getAh_code());
+				if(ah.getAh_pwd().equals(ENCPWD)) {
+					mav.setViewName("delivery");
+					pu.setAttribute("dvcode", ah.getAh_code());
+					System.out.println("성공!!");
+				}else {
+					mav.setViewName("deliveryAccess");
+					System.out.println(("아이디나 비밀번호를 확인해주세요3213123"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			mav.setViewName("deliveryAccess");
+			System.out.println(("아이디나 비밀번호를 확인해주세요"));
+		}
+		
+		return mav;
+	}
+
+	public ModelAndView deliveryLogOut() {
+		mav = new ModelAndView();
+		try {
+			pu.removeAttribute("dvcode");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.setViewName("deliveryAccess");
 		return mav;
 	}
 }

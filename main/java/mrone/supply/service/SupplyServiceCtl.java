@@ -13,6 +13,7 @@ import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.DeliveryInsert;
+import mrone.teamone.beans.DriverLocationBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -37,7 +38,13 @@ class SupplyServiceCtl {
 	@Autowired
 	MroServiceEntrance mse;
 	/* test */
-	public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+	public List<DeliveryBean> deliveryTest() {
+		DeliveryBean db = new DeliveryBean();
+		try {
+			db.setDl_dvcode((String)pu.getAttribute("dvcode"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	      return dao.deliveryTest(db);
 	   }
 
@@ -193,19 +200,19 @@ class SupplyServiceCtl {
 	      return dao.getTrackDeliveryList(spcode);
 	   }
 	   
-	   //수정1
-	   List<DeliveryBean> getTrackDL(String recode) {
-	      List<DeliveryBean> list;
-	      list = dao.getTrackDL(recode);
-	      
-	      for(int i=0; i<list.size(); i++) {
-	         if(list.get(i).getLc_x().equals("0") && list.get(i).getLc_y().equals("0")) {
-	            list.get(i).setLc_x("출고지");
-	         }
-	      }
-	      
-	      return list;
-	   }
+//	   //수정1
+//	   List<DeliveryBean> getTrackDL(String recode) {
+//	      List<DeliveryBean> list;
+//	      list = dao.getTrackDL(recode);
+//	      
+//	      for(int i=0; i<list.size(); i++) {
+//	         if(list.get(i).getLc_x().equals("0") && list.get(i).getLc_y().equals("0")) {
+//	            list.get(i).setLc_x("출고지");
+//	         }
+//	      }
+//	      
+//	      return list;
+//	   }
 	
 	List<ProductBean> supplyAllProductList(){
 	      String spcode = null;
@@ -715,6 +722,38 @@ class SupplyServiceCtl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}return dao.getChart(spcode);
+	}
+
+	public String insertGPS(DriverLocationBean dlb) {
+		String msg = null;
+		String dvcode = null;
+		try {
+			dvcode = (String)pu.getAttribute("dvcode");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<DeliveryBean> sb = dao.seleteDL(dvcode);
+		int sbsize = sb.size();
+		int count = 0;
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+		for(int i=0; i<sbsize; i++) {
+			sb.get(i).setLc_x(dlb.getLc_x());
+			sb.get(i).setLc_y(dlb.getLc_y());
+			if(dao.insertXY(sb.get(i))) {
+				count++;
+			}
+		}
+		if(count == sbsize) {
+			tran = true;
+			msg="현재위치 갱신성공";
+		}else {
+			tran= false;
+			msg="현재위치 갱신실패";
+		}
+		pu.setTransactionResult(tran);
+		return msg;
 	}
 	
 }

@@ -53,6 +53,16 @@ public class AuthDao {
 		return data>0? true : false;
 	}
 
+	public boolean checkID(String ah_code) {
+		
+		return convertToBoolean(sql.selectOne("checkID", ah_code));
+	}
+
+	public String getDVpwd(String ah_code) {
+
+		return sql.selectOne("getDVpwd", ah_code);
+	}
+
 	
 	
 	

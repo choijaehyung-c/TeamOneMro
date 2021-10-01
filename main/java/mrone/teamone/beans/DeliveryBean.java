@@ -12,8 +12,8 @@ public class DeliveryBean {
 	private String dv_name;
 	private String dv_hp;
 	private String dl_lccode;
-	private String lc_x;
-	private String lc_y;
+	private double lc_x;
+	private double lc_y;
 	private String lc_date;
 	private String dv_spcode;
 	private String sp_address;

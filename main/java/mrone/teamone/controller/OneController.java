@@ -55,8 +55,22 @@ public class OneController {
 		return "clientApiCJH";
 	}
 	
-	@GetMapping("/dTest")
-	public String dfgdfg() {
+	@GetMapping("/DeliveryAccessForm")
+	public String dleiveryAccessForm() {
+		return "deliveryAccess";
+	}
+	@PostMapping("/DeliveryAccess")
+	public ModelAndView dleiveryAccess(@ModelAttribute AccessHistoryBean ah) {
+		return mav = auth.accessDelivery(ah);
+	}
+	
+	@PostMapping("/DeliveryLogOut")
+	public ModelAndView deliveryLogOut() {
+		return mav = auth.deliveryLogOut();
+	}
+
+	@PostMapping("/Delivery")
+	public String delivery() {
 		return "delivery";
 	}
 	

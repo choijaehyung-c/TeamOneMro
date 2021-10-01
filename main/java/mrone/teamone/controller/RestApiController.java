@@ -19,6 +19,7 @@ import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.ClientOrderDecide;
 import mrone.teamone.beans.DeliveryBean;
+import mrone.teamone.beans.DriverLocationBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
 import mrone.teamone.beans.ProductBean;
@@ -40,8 +41,8 @@ public class RestApiController {
 	
 	/* test */
 	@PostMapping("/DeliveryTest")
-    public List<DeliveryBean> deliveryTest(@RequestBody DeliveryBean db){
-       return sse.deliveryTest(db);
+    public List<DeliveryBean> deliveryTest(){
+       return sse.deliveryTest();
     }
     @PostMapping("/Insertsdcode")
     public void insertsdcode(@RequestBody DeliveryBean db){
@@ -166,14 +167,14 @@ public class RestApiController {
 
 	   }
 
-	   // 수정1
-	   @PostMapping("/getTrackDL") // 특정 주문코드 배송 위치 확인
-	   public List<DeliveryBean> getTrackDL(@RequestBody String recode) {
-	      //System.out.println(recode);
-	      //System.out.println("배송추적: " + sse.getTrackDL(recode));
-	      return sse.getTrackDL(recode);
-
-	   }
+//	   // 수정1
+//	   @PostMapping("/getTrackDL") // 특정 주문코드 배송 위치 확인
+//	   public List<DeliveryBean> getTrackDL(@RequestBody String recode) {
+//	      //System.out.println(recode);
+//	      //System.out.println("배송추적: " + sse.getTrackDL(recode));
+//	      return sse.getTrackDL(recode);
+//
+//	   }
 	
 	
 	
@@ -567,5 +568,14 @@ public class RestApiController {
 				//System.out.println("rest :"+sse.getChart());
 			return sse.getChart();
 		}
+
+		
+		@PostMapping("/InsertGPS")
+		public String insertGPS(@RequestBody DriverLocationBean dlb) {
+		
+			return sse.insertGPS(dlb);
+		}
+		
+		
 
 }

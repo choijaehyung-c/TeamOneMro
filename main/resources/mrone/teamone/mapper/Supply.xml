@@ -614,4 +614,14 @@
 	WHERE RD_PRSPCODE=#{spcode} AND RD_STCODE='OA' AND ROWNUM <![CDATA[ <= 6]]>  GROUP BY RD_PRCODE, PR_NAME
 	</select>
 	
+	
+	<select id="seleteDL" parameterType="string" resultType="mrone.teamone.beans.DeliveryBean">
+		SELECT DL_OSCODE, DL_LCCODE FROM DL WHERE DL_DVCODE = #{dvcode} AND DL_DSCODE='2'
+	</select>
+	
+	<insert id="insertXY" parameterType="mrone.teamone.beans.DeliveryBean">
+		INSERT INTO LC(LC_CODE, DL_OSCODE, LC_DATE, LC_X, LC_Y)
+		VALUES(#{dl_lccode}, #{dl_oscode}, SYSDATE, #{lc_x}, #{lc_y})
+	</insert>
+	
 </mapper>

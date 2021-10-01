@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
+import mrone.teamone.beans.DriverLocationBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -20,9 +22,9 @@ public class SupplyServiceEntrance {
 	@Autowired
 	SupplyServiceCtl ssc;
 	/* test */
-	   public List<DeliveryBean> deliveryTest(DeliveryBean db) {
+	   public List<DeliveryBean> deliveryTest() {
 		      
-		      return ssc.deliveryTest(db);
+		      return ssc.deliveryTest();
 		   }
 
 		   public void insertsdcode(DeliveryBean db) {
@@ -229,10 +231,10 @@ public class SupplyServiceEntrance {
 	   }
 	   
 	   //수정1
-	   public List<DeliveryBean> getTrackDL(String recode) {
-
-	      return ssc.getTrackDL(recode);
-	   }
+//	   public List<DeliveryBean> getTrackDL(String recode) {
+//
+//	      return ssc.getTrackDL(recode);
+//	   }
 	   
 	   public List<RequestOrderDetailBean> getChart() {
 		   List<RequestOrderDetailBean> list = ssc.getChart();
@@ -243,4 +245,9 @@ public class SupplyServiceEntrance {
 		   }		  		 
 		   return list;
 	   }
+
+	public String insertGPS(DriverLocationBean dlb) {
+	
+		return ssc.insertGPS(dlb);
+	}
 }

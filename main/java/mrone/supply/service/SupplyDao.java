@@ -438,5 +438,15 @@ public class SupplyDao {
 		return sql.selectList("getChart", spcode);
 	}
 
+	public List<DeliveryBean> seleteDL(String dvcode) {
+		
+		return sql.selectList("seleteDL", dvcode);
+	}
+
+	public boolean insertXY(DeliveryBean deliveryBean) {
+		
+		return convertToBoolean(sql.insert("insertXY", deliveryBean));
+	}
+
 
 }

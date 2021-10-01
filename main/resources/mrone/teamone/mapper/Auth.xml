@@ -44,4 +44,13 @@
 		INSERT INTO AHS VALUES(#{ah_sdspcode},#{ah_code},#{ah_publicip},#{ah_privateip},#{ah_browser},#{ah_method},sysdate)
 	</insert>
 	
+	
+	<select id="checkID" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM DV WHERE DV_CODE=#{ah_code}
+	</select>
+
+	<select id="getDVpwd" parameterType="string" resultType="string">
+		SELECT DV_PWD FROM DV WHERE DV_CODE=#{ah_code}
+	</select>
+	
 </mapper>
