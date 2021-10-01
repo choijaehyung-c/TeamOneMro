@@ -547,10 +547,13 @@ class SupplyServiceCtl {
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		//수락,거절 공통 업데이트
 		if(this.updateResponseProcess(sr)) {
+			System.out.println("in1");
 			if (sr.getAfter().equals("FF")) {// 거절
+				System.out.println("in2");
 				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
+				System.out.println("in3");
 				ClientOrderBean newCo = new ClientOrderBean();
 				String clcode = dao.getCLForRefund(sr.getRe_code());
 				newCo.setOs_clcode(clcode);
@@ -567,14 +570,17 @@ class SupplyServiceCtl {
 					e.printStackTrace();
 				}
 				newCo.setSp_code(spcode);
+				System.out.println("in4");
 				String newOscode = cse.supplyRequestOrder(newCo);
 				if (newOscode!=null) {
+					System.out.println("in8");
 						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
 						sr.setRe_code(dao.getREOriginCode(ro.getRe_code()));
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
 						sr.setAfter("PD");
 						sr.setBefore("OA");
 						if(this.updateResponseProcess(sr)) {
+							System.out.println("in9");
 							tran = true;
 							issueDelivery(newOscode);
 						}
@@ -588,15 +594,16 @@ class SupplyServiceCtl {
 	
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
-		
+		System.out.println("inin1");
+		System.out.println(sr);
 		if (dao.updRequest(sr)) {
-			
+			System.out.println("inin2");	
 			if (dao.updRequestDetail(sr)) {
-				
+				System.out.println("inin3");
 				if (dao.updOrder(sr)) {
-					
+					System.out.println("inin4");
 					if (dao.updOrderDetail(sr)) {
-						
+						System.out.println("inin5");
 						tran = true;
 					}
 				}
