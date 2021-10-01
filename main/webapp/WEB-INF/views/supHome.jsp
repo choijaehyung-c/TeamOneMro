@@ -13,7 +13,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>        
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>        
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
