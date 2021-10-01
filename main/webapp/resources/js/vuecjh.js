@@ -16,6 +16,7 @@ const main = new Vue({
 	dupCheck:[],
 	modalDetailList:[],
 	  categoryList2:[],
+	  categoryList3:[],
       detail:{},
 	  categoryCode:'',
 	  searchWord:'',
@@ -268,19 +269,45 @@ const main = new Vue({
       },
       supplyRequestNewProductModal:function(){
          this.modal2.show = true;
-         postAjaxJson('vue/supplyGetCategory','getCate2','j');
+		 postAjaxJson('vue/supplyGetBK','getBK','j');
       },
       supplyGetCategoryPush:function(jsondata){
          this.categoryList2 = jsondata;
       },
       supplyRequestNewProduct:function(){
-         let catename = CG.options[CG.selectedIndex].text;
-         let sendJsonData = {pr_image:this.pr_image, pr_name:this.pr_name,
-                  pr_price:this.pr_price, pr_stock:this.pr_stock,
-                  pr_origin:this.pr_origin, pr_info:this.pr_info,
-                  cate:this.cate, cate_name:catename};
-         let clientData = JSON.stringify(sendJsonData);
-         postAjaxJson('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage', 's', clientData);
+		let name = document.getElementsByName("pr_name")[0];
+		let price = document.getElementsByName("pr_price")[0];	
+		let stock = document.getElementsByName("pr_stock")[0];
+		
+			if(name.value==""){
+				alert("상품명 필수입력사항입니다.");				
+				name.focus();
+				return;
+			}else if(name.value.length>200){
+				alert("상품명은 1~200자 이내로 입력해주세요.");
+				name.value="";
+				name.focus();
+				return;
+			}
+			
+			if(!isValidateCheck(1,price.value)){
+				alert("가격은 필수입력사항입니다.(숫자만 가능하며, 7자리까지 가능합니다.)");
+				price.value="";
+				price.focus();
+				return;			
+			}
+
+			
+			if(!isValidateCheck(2,stock.value)){					
+				alert("수량은 필수입력사항입니다.(숫자만 가능하며, 5자리까지 등록가능합니다.)");
+				stock.value="";
+				stock.focus();
+				return;
+				
+			}
+	
+		 postAjaxMultiUpload('vue/SupplyRequestNewProduct','reSupplyPRAFProductListPage');
+        
       },
       search1:function(word){
          this.searchWord = word.target.value;
@@ -403,6 +430,13 @@ function getExchangeListForm(msg=""){
 	if(msg!="")alert(msg);
 	postAjaxJson("vue/supplyReceiveExchangeListForm","getExchangeList", "j");
 }
+
+function getBK(jsondata){
+	main.categoryList3 = jsondata;
+	postAjaxJson('vue/supplyGetCategory','getCate2','j');
+}
+
+
 /****************************************************************************/
 function mainPage(){//onLoad
 	main.mainPage();
@@ -514,7 +548,6 @@ function getTrackingDL(jsondata){
 
 
 function getCate2(jsondata){
-	console.log(jsondata);
    mainVueTwo.supplyGetCategoryPush(jsondata);
    main.supplyGetCategoryPush(jsondata);
 }
@@ -644,5 +677,31 @@ function IssuedTaxDetailVue(jsondata){
 	main.od = jsondata.od;	
 	main.modalOpen();
 }
+
+
+
+//유효성 검사
+function charCount(value, min, max){
+	return value.length >= min && value.length<=max;
+	
+}
+
+function isValidateCheck(type,word){
+	//const pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	const priceNum =  /^[0-9]{1,7}$/;
+	const stockNum = /^[0-9]{1,5}$/;
+	let result;
+	
+	if(type == 1){
+		result = priceNum.test(word);
+		console.log(word);
+		console.log(result);
+	}else if(type == 2){
+		result = stockNum.test(word);
+	}
+	
+	return result;
+}
+
 
 

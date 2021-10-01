@@ -14,6 +14,29 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+<!-- 	<security-constraint>
+    	<web-resource-collection>
+	        <web-resource-name>SSL Forward</web-resource-name>
+	        <url-pattern>/*</url-pattern>
+    	</web-resource-collection>
+    	<user-data-constraint>
+    	    <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	    </user-data-constraint>
+	</security-constraint>
+
+
+	<security-constraint>
+	    <web-resource-collection>
+	        <web-resource-name>HTTPS or HTTP</web-resource-name>
+	        <url-pattern>/vue/getImage/*</url-pattern>
+	    </web-resource-collection>
+	    <user-data-constraint>
+	        <transport-guarantee>NONE</transport-guarantee>
+	    </user-data-constraint>
+	</security-constraint> -->
+
+
+
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>

@@ -20,6 +20,8 @@ public class ProductBean {
 	private String pr_stcode;
 	private String cate;
 	private String cate_name;
+	private String bk_code;
+	private String bk_name;
 	private String word; //검색어
 	private MultipartFile file;
 	private String sp_name;

@@ -94,6 +94,7 @@ class ClientServiceCtl {
 	}
 	
 	String supplyRequestCtl(ClientOrderBean co, String type) {
+		System.out.println("in5");
 		co.setOs_state(type);
 		String oscode = null;
 		if (this.clientOrderProcess(co, co.getSp_code()) != null) {
@@ -104,6 +105,7 @@ class ClientServiceCtl {
 	}
 	
 	String clientOrderProcess(ClientOrderBean co, String sp_code) {
+		System.out.println("in6");
 		boolean tran = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();

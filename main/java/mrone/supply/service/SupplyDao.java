@@ -380,8 +380,11 @@ public class SupplyDao {
 
 	// 공급사 카테고리 받아오는 메서드
 	public List<ProductBean> supplyGetCategory() {
-
 		return sql.selectList("supplyGetCategory");
+	}
+	
+	public List<ProductBean> supplyGetBK() {
+		return sql.selectList("supplyGetBK");
 	}
 
 	public List<ProductBean> supplyProductList(ProductBean pd) {

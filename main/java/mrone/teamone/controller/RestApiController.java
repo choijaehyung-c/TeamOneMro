@@ -1,14 +1,24 @@
 package mrone.teamone.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +38,7 @@ import mrone.teamone.beans.RequestOrderDetailBean;
 import mrone.teamone.beans.SupplyInfoBean;
 import mrone.teamone.beans.SupplySearchBean;
 import mrone.teamone.beans.TaxBean;
+import mrone.teamone.utill.ProjectUtils;
 
 @RestController
 @RequestMapping("/vue")
@@ -38,6 +49,8 @@ public class RestApiController {
 	private ClientServiceEntrance cse;
 	@Autowired
 	private MroServiceEntrance mse;
+	@Autowired
+	private ProjectUtils pu;
 	
 	/* test */
 	@PostMapping("/DeliveryTest")
@@ -289,6 +302,11 @@ public class RestApiController {
 		return sse.supplyGetCategory();
 	}
 	
+	@PostMapping("/supplyGetBK")
+	public List<ProductBean> supplyGetBK(){
+		return sse.supplyGetBK();
+	}
+	
 	//supply 카테고리 물품 받아옴
 	@PostMapping("/supplyProductList")
 	
@@ -481,14 +499,30 @@ public class RestApiController {
 		 */
 		//추가할 상품정보 정보 보내기
 		@PostMapping("/SupplyRequestNewProduct")
-		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb){
-			/*
-			 * //System.out.println(pb.getFile().getOriginalFilename());
-			 * //System.out.println(pu.setFile(pb.getFile()));
-			 */
-			return null/* sse.supplyRequestNewProduct(pb) */;
+		public String supplyRequestNewProduct(@ModelAttribute ProductBean pb,HttpServletRequest req){
+			return sse.supplyRequestNewProduct(pb,req);
 		}
 	
+		
+		@GetMapping(
+				  value = {"/getImage/{imgName}.{extension}","/getImage"},
+				  produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_GIF_VALUE}
+				)
+		public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest req,
+				@PathVariable(name = "imgName" , required = false) String imgName,
+				@PathVariable(name = "extension" , required = false) String extension)throws IOException {
+			String lc = req.getSession().getServletContext().getRealPath("/")+
+					".."+File.separator+".."+File.separator+".."+File.separator+"img"+File.separator;
+			InputStream ist;
+			try {
+				ist = new FileInputStream(lc+imgName+"."+extension);
+			}catch(Exception e) {
+				ist = new FileInputStream(lc+"none.gif");
+			}
+			byte[] img = IOUtils.toByteArray(ist);
+			ist.close();
+			return img;
+		}
 		
 
 		// new

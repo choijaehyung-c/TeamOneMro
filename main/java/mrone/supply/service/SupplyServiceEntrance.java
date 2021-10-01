@@ -2,7 +2,10 @@ package mrone.supply.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -126,12 +129,14 @@ public class SupplyServiceEntrance {
 	}
 
 	public List<ProductBean> supplyGetCategory() {
-		System.out.println("tq");
 		return ssc.supplyGetCategory();
 	}
 
+	public List<ProductBean> supplyGetBK() {
+		return ssc.supplyGetBK();
+	}
+	
 	public List<RequestOrderBean> supplySearchAs(RequestOrderBean re) {
-
 		return ssc.supplySearchAs(re);
 	}
 
@@ -245,9 +250,17 @@ public class SupplyServiceEntrance {
 		   }		  		 
 		   return list;
 	   }
+<<<<<<< HEAD
 
 	public String insertGPS(DriverLocationBean dlb) {
 	
 		return ssc.insertGPS(dlb);
 	}
+=======
+	   
+	   public String supplyRequestNewProduct(ProductBean pb,HttpServletRequest req) {
+		   	return ssc.supplyRequestNewProduct(pb,req);
+	   }
+	   
+>>>>>>> c91b05ebc12ec224ed57135c0ebbe491ce94a467
 }
