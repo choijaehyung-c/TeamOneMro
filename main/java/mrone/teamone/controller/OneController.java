@@ -74,10 +74,4 @@ public class OneController {
 		return "delivery";
 	}
 	
-	
-	/*
-	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();
-	 * mav.addObject("testdata",td.test2()); mav.setViewName("/test"); return mav; }
-	 */
-	
 }

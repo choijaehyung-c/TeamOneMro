@@ -89,12 +89,10 @@ class ClientServiceCtl {
 				}
 			}
 		}
-		System.out.println(oscodes);
 		return oscodes;
 	}
 	
 	String supplyRequestCtl(ClientOrderBean co, String type) {
-		System.out.println("in5");
 		co.setOs_state(type);
 		String oscode = null;
 		if (this.clientOrderProcess(co, co.getSp_code()) != null) {
@@ -105,13 +103,10 @@ class ClientServiceCtl {
 	}
 	
 	String clientOrderProcess(ClientOrderBean co, String sp_code) {
-		System.out.println("in6");
 		boolean tran = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
 		co.setOs_date(sdf.format(cal.getTime()));
-		System.out.println(co.getOs_date());
-		
 		if(co.getOs_origin()==null)co.setOs_origin("");
 		if (dao.insClientOrder(co)) {
 			co.setOs_code(dao.getOrderData(co));
@@ -126,7 +121,7 @@ class ClientServiceCtl {
 				}
 				tranCount++;
 			}
-			System.out.println(tranCount + ":" + co.getOd().size());
+			System.out.println("csc_clientOrderProcess"+tranCount + ":" + co.getOd().size());
 			if (tranCount == co.getOd().size())tran = true;
 			else co.setOs_code(null);
 
@@ -139,7 +134,6 @@ class ClientServiceCtl {
 		RequestOrderBean ro = new RequestOrderBean();
 		List<RequestOrderDetailBean> list = new ArrayList<RequestOrderDetailBean>();
 		ro.setRe_clcode(co.getOs_clcode());
-		System.out.println(co.getOs_code());
 		ro.setRe_oscode(co.getOs_code());
 		ro.setRe_state(co.getOs_state());
 		ro.setRe_spcode(sp_code);

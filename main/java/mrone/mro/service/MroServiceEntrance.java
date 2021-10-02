@@ -94,27 +94,19 @@ public class MroServiceEntrance {
 		return msc.mroRequestProcess(ro);
 	}
 	
-	//new
 	public List<SupplyInfoBean> mroSearchSupplyList(String word) {
-		
 		return msc.mroSearchSupplyList(word);
 	}
 
-	//new
 	public List<ClientInfoBean> mroSearchClientList(String word) {
-		
 		return msc.mroSearchClientList(word);
 	}
 	
-	//new
 	public String mroDelClient(String code) {
-			System.out.println(msc.mroDelClient(code));
 		return msc.mroDelClient(code);
 	}
 
-	//new
 	public String mroDelSupply(String code) {
-		// TODO Auto-generated method stub
 		return msc.mroDelSupply(code);
 	}
 

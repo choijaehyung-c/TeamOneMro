@@ -30,19 +30,12 @@ class MroServiceCtl {
 	}
 
 	boolean mroRequestProcess(RequestOrderBean ro) {
-		
-
 		boolean tran = false;
-
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
 		ro.setRe_date(sdf.format(cal.getTime()));
-		
-		System.out.println(ro.getRe_date() + "asdasd" + ro );
 		if(ro.getRe_origin()==null)ro.setRe_origin("");
 		if (dao.insMroRequestOrder(ro)) {
-			System.out.println("in1");
 			int tranCount = 0;
 			for (int i = 0; i < ro.getRd().size(); i++) {
 				ro.getRd().get(i).setRd_recode(dao.getRequestOrderData(ro));
@@ -51,15 +44,13 @@ class MroServiceCtl {
 				}
 				tranCount++;
 			}
-			System.out.println(tranCount + ":" + ro.getRd().size());
+			System.out.println("msc_mroRequestProcess"+tranCount + ":" + ro.getRd().size());
 			if (tranCount == ro.getRd().size()) {
 				tran = true;
 				 // dao.getOrderData(co);
 			}
 
 		}
-
-		System.out.println("TEST"+tran);
 		return tran;
 	}
 
@@ -68,9 +59,6 @@ class MroServiceCtl {
 	}
 
 	ProductBean mroGetNewProductDetail(ProductBean pb) {
-		System.out.println(pb.getPr_code() + "mro");
-		System.out.println(pb.getPr_stcode() + "mro");
-
 		return dao.mroGetNewProductDetail(pb);
 	}
 

@@ -40,7 +40,7 @@ class SupplyServiceCtl {
 	@Autowired
 	MroServiceEntrance mse;
 	/* test */
-	public List<DeliveryBean> deliveryTest() {
+		List<DeliveryBean> deliveryTest() {
 		DeliveryBean db = new DeliveryBean();
 		try {
 			db.setDl_dvcode((String)pu.getAttribute("dvcode"));
@@ -533,7 +533,6 @@ class SupplyServiceCtl {
 	//수정완료 반품 또는 교환 디테일
 	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code,String type){
 		RequestOrderBean ro = new RequestOrderBean();
-		System.out.println(re_code);
 		ro.setRe_state(type);
 		ro.setRe_code(re_code);
 		List<RequestOrderDetailBean> list = dao.supplyReceiveAsDetail(ro);
@@ -552,18 +551,14 @@ class SupplyServiceCtl {
 		sr.setAfter(ro.getRe_state());
 		sr.setBefore("RR");
 		sr.setRe_code(ro.getRe_code());
-		System.out.println(sr.getRe_code()+"asdasd");
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		//수락,거절 공통 업데이트
 		if(this.updateResponseProcess(sr)) {
-			System.out.println("in1");
 			if (sr.getAfter().equals("FF")) {// 거절
-				System.out.println("in2");
 				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
 				String newOscode;
-				System.out.println("in3");
 				ClientOrderBean newCo = new ClientOrderBean();
 				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
 				if(!newCo.getOd().isEmpty()) {
@@ -581,20 +576,17 @@ class SupplyServiceCtl {
 					e.printStackTrace();
 				}
 				newCo.setSp_code(spcode);
-				System.out.println("in4");
 				newOscode = cse.supplyRequestOrder(newCo);
 				}else {
 				newOscode= "good";	
 				}
 				if (newOscode!=null) {
-					System.out.println("in8");
 						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
 						sr.setRe_code(dao.getREOriginCode(ro.getRe_code()));
 						sr.setOs_code(dao.getOSOriginCode(sr.getOs_code()));
 						sr.setAfter("PD");
 						sr.setBefore("OA");
 						if(this.updateResponseProcess(sr)) {
-							System.out.println("in9");
 							tran = true;
 						}
 				}
@@ -607,16 +599,10 @@ class SupplyServiceCtl {
 	
 	boolean updateResponseProcess(SupplyResponse sr) {
 		boolean tran = false;
-		System.out.println("inin1");
-		System.out.println(sr);
 		if (dao.updRequest(sr)) {
-			System.out.println("inin2");	
 			if (dao.updRequestDetail(sr)) {
-				System.out.println("inin3");
 				if (dao.updOrder(sr)) {
-					System.out.println("inin4");
 					if (dao.updOrderDetail(sr)) {
-						System.out.println("inin5");
 						tran = true;
 					}
 				}
@@ -641,7 +627,6 @@ class SupplyServiceCtl {
 				}
 			}
 		}
-		//System.out.println((ro.getRd().size()+":::"+count));
 		return (ro.getRd().size()==count)?true:false;
 	}
 
@@ -651,7 +636,6 @@ class SupplyServiceCtl {
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		//decision == OA EA OF EF 요청 응답 st 코드
 		String decision = ro.getRe_state();
-		//System.out.println(decision+"asd");
 		SupplyResponse sr = new SupplyResponse();
 		if(decision.equals("OA") || decision.equals("OF")) {
 			sr.setAfter(decision);
