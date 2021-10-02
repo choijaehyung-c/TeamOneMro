@@ -39,8 +39,8 @@ class MroServiceCtl {
 		Calendar cal = Calendar.getInstance();
 		ro.setRe_date(sdf.format(cal.getTime()));
 		
-		System.out.println(ro.getRe_date());
-		
+		System.out.println(ro.getRe_date() + "asdasd" + ro );
+		if(ro.getRe_origin()==null)ro.setRe_origin("");
 		if (dao.insMroRequestOrder(ro)) {
 			System.out.println("in1");
 			int tranCount = 0;

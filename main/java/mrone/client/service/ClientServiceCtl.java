@@ -143,8 +143,8 @@ class ClientServiceCtl {
 		ro.setRe_oscode(co.getOs_code());
 		ro.setRe_state(co.getOs_state());
 		ro.setRe_spcode(sp_code);
-		if (co.getOs_origin() != null) {
-			ro.setRe_origin(co.getOs_origin());
+		if (co.getOs_origin().length()>1) {
+			ro.setRe_origin(dao.getRecodeOs(co.getOs_origin()));
 		}
 		for (int i = 0; i < co.getOd().size(); i++) {
 			if(co.getOd().get(i).getOd_prspcode().equals(sp_code)){

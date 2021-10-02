@@ -533,6 +533,7 @@ class SupplyServiceCtl {
 	//수정완료 반품 또는 교환 디테일
 	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code,String type){
 		RequestOrderBean ro = new RequestOrderBean();
+		System.out.println(re_code);
 		ro.setRe_state(type);
 		ro.setRe_code(re_code);
 		List<RequestOrderDetailBean> list = dao.supplyReceiveAsDetail(ro);
@@ -551,6 +552,7 @@ class SupplyServiceCtl {
 		sr.setAfter(ro.getRe_state());
 		sr.setBefore("RR");
 		sr.setRe_code(ro.getRe_code());
+		System.out.println(sr.getRe_code()+"asdasd");
 		sr.setOs_code(dao.getInvolvedOscode(sr));
 		//수락,거절 공통 업데이트
 		if(this.updateResponseProcess(sr)) {
