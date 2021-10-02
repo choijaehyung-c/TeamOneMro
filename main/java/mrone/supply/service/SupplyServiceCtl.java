@@ -562,12 +562,14 @@ class SupplyServiceCtl {
 				tran = updateReasonProcess(ro,sr);
 			} else if (sr.getAfter().equals("RA")) {// 수락
 				// 반품안한거 새주문
+				String newOscode;
 				System.out.println("in3");
 				ClientOrderBean newCo = new ClientOrderBean();
+				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
+				if(!newCo.getOd().isEmpty()) {
 				String clcode = dao.getCLForRefund(sr.getRe_code());
 				newCo.setOs_clcode(clcode);
 				newCo.setOs_origin(sr.getOs_code());
-				newCo.setOd(dao.getNewODForRefund(sr.getOs_code()));
 				newCo.setOs_region(dao.getRegion(sr.getOs_code()));
 				String spcode = null;
 				try {
@@ -580,7 +582,10 @@ class SupplyServiceCtl {
 				}
 				newCo.setSp_code(spcode);
 				System.out.println("in4");
-				String newOscode = cse.supplyRequestOrder(newCo);
+				newOscode = cse.supplyRequestOrder(newCo);
+				}else {
+				newOscode= "good";	
+				}
 				if (newOscode!=null) {
 					System.out.println("in8");
 						// 오리진 주문,발주서 폐기처리//오리진코드 받아와
