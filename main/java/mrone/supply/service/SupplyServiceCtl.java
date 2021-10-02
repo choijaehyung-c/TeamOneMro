@@ -591,7 +591,6 @@ class SupplyServiceCtl {
 						if(this.updateResponseProcess(sr)) {
 							System.out.println("in9");
 							tran = true;
-							issueDelivery(newOscode);
 						}
 				}
 				
