@@ -480,18 +480,20 @@
 	<select id="supplyPRAFProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
 		SELECT PR_CODE, PR_NAME, CATE_NAME, PR_STCODE, ST_NAME 
      	FROM PR INNER JOIN ST ON PR.PR_STCODE = ST.ST_CODE
-     	WHERE PR_SPCODE = #{sp_code} AND PR_STCODE = 'PR' OR 
-			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'AF'
+     	WHERE  PR_SPCODE = #{sp_code} AND 
+     		   PR_STCODE = 'PR' OR  
+			   PR_STCODE = 'AF'
 	</select>
 	
 	<select id="supplyMRDRDAProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
 		SELECT PR_CODE, PR_NAME, CATE_NAME, PR_STCODE, ST_NAME 
      	FROM PR INNER JOIN ST ON PR.PR_STCODE = ST.ST_CODE
-		WHERE PR_SPCODE = #{sp_code} AND PR_STCODE = 'DR' OR 
-			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'DF' OR
-			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'DA' OR
-			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'MR' OR
-			  PR_SPCODE = #{sp_code} AND PR_STCODE = 'RF'
+		WHERE PR_SPCODE = #{sp_code} AND 
+			  PR_STCODE = 'DR' OR  
+			  PR_STCODE = 'DF' OR 
+			  PR_STCODE = 'DA' OR 
+			  PR_STCODE = 'MR' OR 
+			  PR_STCODE = 'RF'
 	</select>
 	
 	<delete id="supplyRequestCancel" parameterType="mrone.teamone.beans.ProductBean">
