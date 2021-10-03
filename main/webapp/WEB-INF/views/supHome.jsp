@@ -18,6 +18,7 @@
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+		 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     
     <body class="sb-nav-fixed" onLoad="mainPage()">
@@ -1854,47 +1855,29 @@
 			
 			
 		var ctx = document.getElementById('myBarChart');
-		var myChart = new Chart(ctx, {
-			  type: 'bar',
-			  data: {
-				  
-			    labels: [data1[0].pr_name.substring(2,14), data[1].pr_name.substring(5,12), data[2].pr_name.substring(6,16),data[3].pr_name.substring(4,16), data[4].pr_name.substring(0,8)],
-			    datasets: [{
-			      label: "Revenue",
-			      backgroundColor: ["rgb(2,117,216)","rgb(255,99,132)","rgb(54,162,235)","rgb(255,205,86)","rgb(255,100,95)"],
-			      borderColor: "rgba(2,117,216,1)",
-			      data: [data1[0].rd_quantity,data1[1].rd_quantity,data1[2].rd_quantity,data1[3].rd_quantity,data1[4].rd_quantity],
-			    }],
-			  },
-			  options: {
-			    scales: {
-			      xAxes: [{
-			        time: {
-			          unit: 'month'
-			        },
-			        gridLines: {
-			          display: false
-			        },
-			        ticks: {
-			          maxTicksLimit: 6
-			        }
-			      }],
-			      yAxes: [{
-			        ticks: {
-			          min: 0,
-			          max: 1000,
-			          maxTicksLimit: 6
-			        },
-			        gridLines: {
-			          display: true
-			        }
-			      }],
-			    },
-			    legend: {
-			      display: false
-			    }
-			  }
-			});
+	  	let doughnut = new Chart(ctx,{
+	  		type:'doughnut',
+	  		data : {
+	  			labels:[data[0].pr_name, data[1].pr_name, data[2].pr_name, data[3].pr_name,data[4].pr_name],
+	  			datasets :[{
+	  				label:'베스트상품 5',
+	  				data : [
+	  					data[0].rd_quantity,data[1].rd_quantity,data[2].rd_quantity,data[3].rd_quantity,data[4].rd_quantity
+	  				],
+	  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)','rgb(255,150,86)'],
+	  				hoverBorderWidth : 5
+	  			}]
+	  		},
+	  		option : {
+	  			title :{
+	  				display:true,
+	  				text:'베스트상품 5',
+	  				fontSize:20,
+	  				fontColor:'red'
+	  			}
+	  		}
+	  	
+	  	});
 			
 		}
 

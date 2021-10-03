@@ -24,6 +24,7 @@ import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.DeliveryInsert;
 import mrone.teamone.beans.DriverLocationBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -756,7 +757,21 @@ class SupplyServiceCtl {
 			spcode = enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}return dao.getChart(spcode);
+		}
+			
+			List<RequestOrderDetailBean> list = dao.getChart(spcode);
+			int lcount = list.size();
+			if(lcount < 5) {
+				for(int i=0 ; i < 5-lcount ; i++) {
+					RequestOrderDetailBean ob = new RequestOrderDetailBean();
+					ob.setPr_name("구매내역없음");
+					ob.setRd_quantity(0);
+					list.add(ob);
+				}
+			}
+			
+			
+		return list;
 	}
 
 	public String insertGPS(DriverLocationBean dlb) {

@@ -858,7 +858,7 @@
 			</main>
 		</div>
 	</div>
-			  <script >
+<script >
   function gettingRanking(data){
 	  console.log(data);
 	  	let myChartOne = document.getElementById('myChartOne').getContext('2d');

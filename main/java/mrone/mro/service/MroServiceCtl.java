@@ -308,7 +308,7 @@ class MroServiceCtl {
 			if(lcount < 5) {
 				for(int i=0 ; i < 5-lcount ; i++) {
 					OrderDetailBean ob = new OrderDetailBean();
-					ob.setPr_name("구매내역없음");
+					ob.setPr_name("-");
 					ob.setOd_quantity(0);
 					list.add(ob);
 				}
