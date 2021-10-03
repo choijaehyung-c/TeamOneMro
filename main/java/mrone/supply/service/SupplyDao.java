@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mrone.teamone.beans.CGBean;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.DeliveryInsert;
@@ -449,6 +450,11 @@ public class SupplyDao {
 	public boolean insertXY(DeliveryBean deliveryBean) {
 		
 		return convertToBoolean(sql.insert("insertXY", deliveryBean));
+	}
+
+	public List<CGBean> supplyGetSellProductCate(String spcode) {
+		
+		return sql.selectList("supplyGetSellProductCate", spcode);
 	}
 
 

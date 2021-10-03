@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import mrone.client.service.ClientServiceEntrance;
 import mrone.mro.service.MroServiceEntrance;
 import mrone.supply.service.SupplyServiceEntrance;
+import mrone.teamone.beans.CGBean;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.ClientOrderDecide;
@@ -521,6 +522,11 @@ public class RestApiController {
 			return sse.insertGPS(dlb);
 		}
 		
-		
+		//판매하는 카테고리 가져오기
+		@PostMapping("/SupplyGetSellProductCate")
+		public List<CGBean> supplyGetSellProductCate() {
+					
+		return sse.supplyGetSellProductCate();			
+		}
 
 }

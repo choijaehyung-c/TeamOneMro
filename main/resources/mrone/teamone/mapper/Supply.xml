@@ -630,4 +630,11 @@
 		VALUES(#{dl_lccode}, #{dl_oscode}, SYSDATE, #{lc_x}, #{lc_y})
 	</insert>
 	
+	<select id="supplyGetSellProductCate" parameterType="string" resultType="mrone.teamone.beans.CGBean">
+		SELECT CATE, CATE_NAME
+		FROM PR  
+		WHERE PR_SPCODE = #{spcode}
+		GROUP BY CATE, CATE_NAME
+	</select>
+	
 </mapper>

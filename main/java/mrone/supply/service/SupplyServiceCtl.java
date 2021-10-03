@@ -1,8 +1,15 @@
 package mrone.supply.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +18,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import mrone.client.service.ClientServiceEntrance;
 import mrone.mro.service.MroServiceEntrance;
+import mrone.teamone.beans.CGBean;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.DeliveryBean;
@@ -781,6 +789,16 @@ class SupplyServiceCtl {
 		}
 		pu.setTransactionResult(tran);
 		return msg;
+	}
+
+	public List<CGBean> supplyGetSellProductCate() {
+		String spcode =null;
+		try {
+			spcode=enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dao.supplyGetSellProductCate(spcode);
 	}
 	
 }

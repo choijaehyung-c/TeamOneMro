@@ -9,6 +9,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import mrone.teamone.beans.CGBean;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.DriverLocationBean;
@@ -259,6 +260,11 @@ public class SupplyServiceEntrance {
 	   public String supplyRequestNewProduct(ProductBean pb,HttpServletRequest req) {
 		   	return ssc.supplyRequestNewProduct(pb,req);
 	   }
+
+	public List<CGBean> supplyGetSellProductCate() {
+		
+		return ssc.supplyGetSellProductCate();
+	}
 	   
 	   
 }

@@ -389,7 +389,7 @@ const mainVueTwo = new Vue({
    },
    methods:{
       supplyGetCategoryPage:function(){
-         postAjaxJson('vue/supplyGetCategory','getCate2','j');                              
+         postAjaxJson('vue/SupplyGetSellProductCate','supplyGetSellProductCatePush','j');                              
          this.display[0].show=true;
       },
       supplyGetCategoryPush:function(jsondata){
@@ -548,7 +548,6 @@ function getTrackingDL(jsondata){
 
 
 function getCate2(jsondata){
-   mainVueTwo.supplyGetCategoryPush(jsondata);
    main.supplyGetCategoryPush(jsondata);
 }
 
@@ -705,4 +704,9 @@ function isValidateCheck(type,word){
 }
 
 
+
+
+function supplyGetSellProductCatePush(jsondata){
+	mainVueTwo.supplyGetCategoryPush(jsondata);
+}
 
