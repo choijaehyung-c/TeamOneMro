@@ -177,6 +177,20 @@ class MroServiceCtl {
 				od.get(i).setOd_stcode("주문대기");
 			}else if (od.get(i).getOd_stcode().equals("OA")) {
 				od.get(i).setOd_stcode("주문수락");
+			}else if (od.get(i).getOd_stcode().equals("RA")) {
+				od.get(i).setOd_stcode("반품수락");
+			}else if (od.get(i).getOd_stcode().equals("EA")) {
+				od.get(i).setOd_stcode("교환수락");
+			}else if (od.get(i).getOd_stcode().equals("OF")) {
+				od.get(i).setOd_stcode("주문거절");
+			}else if (od.get(i).getOd_stcode().equals("RF")) {
+				od.get(i).setOd_stcode("반품거절");
+			}else if (od.get(i).getOd_stcode().equals("EF")) {
+				od.get(i).setOd_stcode("교환거절");
+			}else if (od.get(i).getOd_stcode().equals("RC")) {
+				od.get(i).setOd_stcode("반품처리");
+			}else if (od.get(i).getOd_stcode().equals("EC")) {
+				od.get(i).setOd_stcode("교환처리");
 			}
 		}
 

@@ -630,7 +630,7 @@
 							</h1>
 							
 							<div class="w3-bar w3-black">
-  								<button class="w3-bar-item w3-button" onclick="openCate('ing')" @click="mroRefundList()">진행중목록</button>
+  								<button class="w3-bar-item w3-button" onclick="openCate('ing')" @click="mroRefundListPage()">진행중목록</button>
   								<button class="w3-bar-item w3-button" onclick="openCate('complete')" @click="mroCompleteRefuntList()">완료목록</button>
 							</div>
 
