@@ -661,6 +661,7 @@ function TaxDealListVue(jsondata){
 
 function inputDealVue(jsondata){
 	main.modalDealList = jsondata;
+	console.log(jsondata);
 	main.display[17].show=true;
 	main.display[18].show=true;
 	main.display[19].show=true;

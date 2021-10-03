@@ -1319,10 +1319,12 @@
   </tr>
   <tr>
    <td width='100%'>
-    <table cellpadding='0' cellspacing='0' width='700' v-if="display[19].show" v-for="dld in modalDealList">
+   
+   
+    <table cellpadding='0' cellspacing='0' width='700' v-if="display[19].show" >
      <tr align='justify'>   
      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
-      <td>{{dld.rd_quantity*(dld.pr_tax+dld.pr_price)}} 이를 영수합니다.<button @click="issueTax(dld.rd_quantity*(dld.pr_tax+dld.pr_price))">발행하기</button></td>
+      <td>{{modalDealList[modalDealList.length-1].pr_ttprice}} 이를 영수합니다.<button @click="issueTax(modalDealList[modalDealList.length-1].pr_ttprice)">발행하기</button></td>
      </tr>
 
   

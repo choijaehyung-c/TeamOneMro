@@ -273,18 +273,28 @@ class SupplyServiceCtl {
 	}
 
 	List<RequestOrderDetailBean> getSupplyDealDetailCtl(String re_code) {
-		return dao.getSupplyDealDetail(re_code);
+		int sum=0;
+		List<RequestOrderDetailBean> list = null;		
+		list = dao.getSupplyDealDetail(re_code);
+		for(int i=0; i<list.size(); i++) {
+			sum += list.get(i).getRd_quantity()*(list.get(i).getPr_price()+list.get(i).getPr_tax());
+		}		
+		list.get(list.size()-1).setPr_ttprice(sum);
+		
+		return list;
 	}
 
 	List<SupplySearchBean> getSearchSupplyDealCtl(String word) {
 		return dao.getSearchSupplyDeal(word);
 	}
 
-	String issueTaxCtl(TaxBean tb) {	 
+	String issueTaxCtl(TaxBean tb) {	
 		String message = null;		
-		tb.setTb_price(Integer.toString(tb.getRdb().get(0).getPr_price()));
-		tb.setTb_tax(Integer.toString(tb.getRdb().get(0).getPr_tax()));		
-		tb.setTb_oscode(tb.getRdb().get(0).getRd_recode());
+		for(int i=0; i<tb.getRdb().size(); i++) {
+		tb.setTb_price(Integer.toString(tb.getRdb().get(i).getPr_price()));
+		tb.setTb_tax(Integer.toString(tb.getRdb().get(i).getPr_tax()));		
+		tb.setTb_oscode(tb.getRdb().get(i).getRd_recode());
+		}
 		tb.setTb_spcode(tb.getSb().getSp_code()); 
 		tb.setTb_spname(tb.getSb().getSp_name());
 		tb.setTb_spaddress(tb.getSb().getSp_address()); 
@@ -300,6 +310,7 @@ class SupplyServiceCtl {
 		tb.setTb_ttprice(tb.getTb_ttprice());
 		tb.setTb_spemail(tb.getSb().getSd_email()); 
 		tb.setTb_clemail(tb.getCb().getCl_email()); 
+		System.out.println(tb);
 		if(dao.issueTax(tb)) {
 			message ="insert";
 		}else {
