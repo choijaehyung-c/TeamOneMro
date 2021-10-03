@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
 import mrone.teamone.beans.ClientInfoBean;
-import mrone.teamone.beans.ClientOrderBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.SupplyInfoBean;
@@ -257,5 +257,10 @@ class MroServiceCtl {
 		}
 		return message;
 	}
+	 
+		List<OrderDetailBean> getRanking() {
+
+			return dao.getRanking();
+		}
 
 }

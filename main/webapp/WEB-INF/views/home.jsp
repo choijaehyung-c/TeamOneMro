@@ -13,9 +13,18 @@
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+         
+         
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+	<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("MM월");
+%>
     </head>
     
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onLoad="mainPage()">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com -->
             </button></a>
@@ -41,7 +50,7 @@
                         <div class="nav">
                         	<br>
                             <div class="nav-link" onClick="tttset()">
-                                Dashboard
+                              Dashboard
                             </div>
                             <div class="sb-sidenav-menu-heading">Cooperation</div>
                         
@@ -792,16 +801,80 @@
 						</div>
 					</template>
 <!------------------------------------------------------------------------------------------------------------------------>
+
+				<template v-if="display[8].show">
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                   
+                     <div class="col-lg-5" style="max-width:35%; float:left;" >
+						<div class="mb-4 card" >
+							<div class="card-header">
+								<h6 class="card-heading"><span style="font-weight:bold; text-decoration:underline;">[<%= sf.format(nowTime) %>]</span> 베스트 상품 </h6></div>
+					
+						<div class="container card-body" >
+							<div class="row">
+								<div class="col-md-16">
+									<canvas id="myChartOne" style="display: block; height: 253px; width: 358px;"></canvas>
+								</div>
+							</div>
+						</div>
+						
+				</div>
+			</div >
+
+			
+				<input id="detectRandering" type="hidden" value="ccc"/>
+				</template>
+
+<!------------------------------------------------------------------------------------------------------------------------>
 				</div>
 			</main>
 		</div>
 	</div>
+			  <script >
+  function gettingRanking(data){
+	  console.log(data);
+	  	let myChartOne = document.getElementById('myChartOne').getContext('2d');
+	  	let doughnut = new Chart(myChartOne,{
+	  		type:'pie',
+	  		data : {
+	  			labels:[data[0].pr_name, data[1].pr_name, data[2].pr_name, data[3].pr_name,data[4].pr_name],
+	  			datasets :[{
+	  				label:'베스트상품 5',
+	  				data : [
+	  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity,data[4].od_quantity
+	  				],
+	  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)','rgb(255,150,86)'],
+	  				hoverBorderWidth : 5
+	  			}]
+	  		},
+	  		option : {
+	  			title :{
+	  				display:true,
+	  				text:'베스트상품 5',
+	  				fontSize:20,
+	  				fontColor:'red'
+	  			}
+	  		}
+	  	
+	  	});
+	  	
+	  }
+  
+
+
+  </script>
+		
+	
         <script src="resources/js/scripts.js"></script>  
         <script src="resources/js/datatables-simple-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/mro.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
 
         
     </body>

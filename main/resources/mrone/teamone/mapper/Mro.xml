@@ -157,5 +157,15 @@
 		UPDATE SP SET "STATE"='NONMEMBER' WHERE SP_CODE=#{code}
 	</update>
 	
+		<select id="getRanking" resultType="mrone.teamone.beans.OrderDetailBean">			
+		SELECT SUM(OD_QUANTITY) AS OD_QUANTITY, OD.OD_PRCODE,PR_NAME
+		FROM OS INNER JOIN OD ON OS.OS_CODE = OD.OD_OSCODE
+                INNER JOIN PR ON OD.OD_PRCODE = PR.PR_CODE
+			WHERE OS_DATE >TRUNC(SYSDATE,'MM') AND OS_DATE <![CDATA[<]]> LAST_DAY(SYSDATE) 
+			GROUP BY OD.OD_PRCODE, OD_QUANTITY,PR_NAME
+			ORDER BY OD_QUANTITY DESC
+	</select>
+	
+	
 
 </mapper>

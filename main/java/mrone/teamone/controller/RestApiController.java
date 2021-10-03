@@ -33,6 +33,7 @@ import mrone.teamone.beans.DeliveryBean;
 import mrone.teamone.beans.DriverLocationBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -533,5 +534,13 @@ public class RestApiController {
 					
 		return sse.supplyGetSellProductCate();			
 		}
+		
+		//mro운영사 차트
+		@PostMapping("/mainPage")
+		public List<OrderDetailBean> getRanking() {
+			
+			return mse.getRanking();			
+		}
+
 
 }

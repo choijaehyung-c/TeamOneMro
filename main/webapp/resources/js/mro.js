@@ -2,7 +2,7 @@ const mainVue = new Vue({
 	el: "#mainVue",
 	data: {
 		display: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false/*주문리스트*/ }, { show: false/*환불리스트*/ }
-			, { show: false/*교환리스트*/ },{show:false}],
+			, { show: false/*교환리스트*/ },{show:false},{show:false}],
 		modal: { show: false },
 		modalDetailList: [],
 		modalDetail: {},
@@ -332,7 +332,15 @@ function ListDetailVue(jsondata) {
 	mainVue.modalOpen();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function mainPage(){
+	chartMain();
+	mainVue.changePage(8);
+		
+}
 
+function chartMain(){
+	postAjaxJson('vue/mainPage', 'gettingRanking', 'j');	
+}
 
 
 

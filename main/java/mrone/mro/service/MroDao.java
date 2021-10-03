@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import mrone.teamone.beans.ClientInfoBean;
 import mrone.teamone.beans.MroOrderBean;
 import mrone.teamone.beans.MroOrderDetailBean;
+import mrone.teamone.beans.OrderDetailBean;
 import mrone.teamone.beans.ProductBean;
 import mrone.teamone.beans.RequestOrderBean;
 import mrone.teamone.beans.RequestOrderDetailBean;
@@ -144,6 +145,11 @@ public class MroDao {
 	 boolean mroDelSupply(String code) {
 		// TODO Auto-generated method stub
 		return this.convertToBoolean(sql.delete("mroDelSupply",code));
+	}
+	 
+	List<OrderDetailBean> getRanking() {
+			
+		return sql.selectList("getRanking");
 	}
 	
 	boolean convertToBoolean(int data) {
