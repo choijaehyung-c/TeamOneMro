@@ -139,7 +139,7 @@
 	</select>
 	
 	<insert id="issueTax" parameterType="mrone.teamone.beans.TaxBean">
-    INSERT INTO TB VALUES('a4', #{tb_oscode}, #{tb_spcode},#{tb_spname},#{tb_spaddress},#{tb_spbtype}, #{tb_spcorpnum}, #{tb_spbkind}, #{tb_clcode}, #{tb_clcorpnum}, #{tb_clname}, #{tb_claddress}, #{tb_clbtype}, #{tb_clbkind}, TO_CHAR(SYSDATE,'YYMMDD'), #{tb_price}, #{tb_tax}, #{tb_ttprice}, #{tb_spemail}, #{tb_clemail}, 'OC')
+    INSERT INTO TB VALUES('TB'||#{tb_spcode}||TO_CHAR(SYSDATE,'YYMMDD')||SEQ_TAXBILL_NUM.NEXTVAL, #{tb_oscode}, #{tb_spcode},#{tb_spname},#{tb_spaddress},#{tb_spbtype}, #{tb_spcorpnum}, #{tb_spbkind}, #{tb_clcode}, #{tb_clcorpnum}, #{tb_clname}, #{tb_claddress}, #{tb_clbtype}, #{tb_clbkind}, TO_CHAR(SYSDATE,'YYMMDD'), #{tb_price}, #{tb_tax}, #{tb_ttprice}, #{tb_spemail}, #{tb_clemail}, 'OC')
     </insert>
     
     <select id="getIssuedTax"  parameterType="string" resultType="mrone.teamone.beans.TaxBean">
