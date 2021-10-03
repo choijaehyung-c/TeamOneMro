@@ -318,10 +318,15 @@ public class RestApiController {
 	//--
 	
 	//주문대기 리스트 받아오기
-		@PostMapping("/mroOrderListForm")
-		public List<MroOrderBean> mroOrderListForm(){
-			return mse.getWaitOrderListCtl();	
-		}
+	@PostMapping("/mroOrderListForm")
+	public List<MroOrderBean> mroOrderListForm(){
+		return mse.getWaitOrderListCtl();	
+	}
+	
+	@PostMapping("/mroOrderCompleteForm")
+	public List<MroOrderBean> mroOrderCompleteForm(){
+		return mse.getComplteOrderListCtl();	
+	}
 		
 		//주문대기 상세보기
 		@PostMapping("/mroGetOrderDetail")

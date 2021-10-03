@@ -151,13 +151,16 @@ class MroServiceCtl {
 
 		for (int i = 0; i < waitOrderList.size(); i++) {
 			if (waitOrderList.get(i).getOs_state().equals("OR")) {
-				waitOrderList.get(i).setOs_state("대기");
+				waitOrderList.get(i).setOs_state("주문대기");
+			}else if(waitOrderList.get(i).getOs_state().equals("OA")) {
+				waitOrderList.get(i).setOs_state("주문수락");
 			}
 		}
 
 		// System.out.println(waitOrderList);
 		return waitOrderList;
 	}
+	
 
 	List<MroOrderDetailBean> getOrderDetail(String osCode) {
 		List<MroOrderDetailBean> od;
@@ -170,11 +173,31 @@ class MroServiceCtl {
 				od.get(i).setOd_stcode("반품요청");
 			} else if (od.get(i).getOd_stcode().equals("ER")) {
 				od.get(i).setOd_stcode("교환요청");
+			} else if (od.get(i).getOd_stcode().equals("OR")) {
+				od.get(i).setOd_stcode("주문대기");
+			}else if (od.get(i).getOd_stcode().equals("OA")) {
+				od.get(i).setOd_stcode("주문수락");
 			}
 		}
 
 		return od;
 	}
+	
+	//완료리스트
+	List<MroOrderBean> getCompleteOrderList(){
+		List<MroOrderBean> cList = dao.getCompleteOrderList();
+		
+		for (int i = 0; i < cList.size(); i++) {
+			if (cList.get(i).getOs_state().equals("OF")) {
+				cList.get(i).setOs_state("주문거절");
+			}else if(cList.get(i).getOs_state().equals("OC")) {
+				cList.get(i).setOs_state("구매확정");
+			}
+		}
+		
+		return cList;
+	}
+
 
 	List<MroOrderBean> getRefundList() {
 		List<MroOrderBean> list = dao.getRefundList();

@@ -2,7 +2,7 @@ const mainVue = new Vue({
 	el: "#mainVue",
 	data: {
 		display: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false/*주문리스트*/ }, { show: false/*환불리스트*/ }
-			, { show: false/*교환리스트*/ }],
+			, { show: false/*교환리스트*/ },{show:false}],
 		modal: { show: false },
 		modalDetailList: [],
 		modalDetail: {},
@@ -157,8 +157,13 @@ const mainVue = new Vue({
 			}
 		},
 		/////////////////////////////////////////
-		mroOrderListPage: function() {
+				mroOrderListPage: function() {
 			postAjaxJson('vue/mroOrderListForm', 'ListVue', 'j');
+		},
+		///////////////////////////////////////////
+		mroOrderCompleteForm:function(){
+		postAjaxJson('vue/mroOrderCompleteForm', 'mroOrderCompleteList', 'j');
+	
 		},
 
 		/////////////////////////////////////////
@@ -222,6 +227,10 @@ function clientList() {
 
 function mroOrderList() {
 	mainVue.mroOrderListPage();
+}
+
+function orderCompleteList(){
+	mainVue.mroOrderCompleteForm();
 }
 
 function mroRefundList() {
@@ -299,6 +308,11 @@ function clientListVue2(msg) {
 function ListVue(jsondata) {
 	mainVue.list = jsondata;
 	mainVue.changePage(4);
+}
+
+function mroOrderCompleteList(jsonData){
+	mainVue.list = jsonData;
+	mainVue.changePage(7);
 }
 
 

@@ -105,6 +105,11 @@ public class MroDao {
 
 		return sql.selectList("getOrderDetail", osCode);
 	}
+	
+	List<MroOrderBean> getCompleteOrderList(){
+		return sql.selectList("getCompleteOrderList");
+	
+}
 
 	// 반품요청 리스트
 	List<MroOrderBean> getRefundList() {

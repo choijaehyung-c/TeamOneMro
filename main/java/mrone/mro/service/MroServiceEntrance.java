@@ -34,6 +34,13 @@ public class MroServiceEntrance {
 		
 		return msc.getWaitOrderList();
 	}
+	
+	// mro 주문완료리스트
+	public List<MroOrderBean> getComplteOrderListCtl() {
+		
+		return msc.getCompleteOrderList();
+	}
+
 
 	// 주문대기,반품요청, 교환요청 상세보기
 	public List<MroOrderDetailBean> getOrderDetail(String osCode) {

@@ -89,7 +89,19 @@
     </select>
     
     <select id = "getWaitOrderList" resultType="mrone.teamone.beans.MroOrderBean">   
-		SELECT * FROM ORDERSVIEW WHERE OS_STATE='OR'	    
+		    SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='OR' OR OS_STATE='OA'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME    
+    </select>
+    
+    <select id="getCompleteOrderList" resultType="mrone.teamone.beans.MroOrderBean">
+    		SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='OC' OR OS_STATE='OF'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME
     </select>
     
     <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >

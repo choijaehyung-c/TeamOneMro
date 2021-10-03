@@ -1,9 +1,6 @@
 package mrone.teamone.beans;
 import lombok.Data;
 
-
-
-//MRO에서 주문대기 내역 상세조회할때 쓰는 빈
 @Data
 public class MroOrderDetailBean {
 
@@ -16,6 +13,6 @@ public class MroOrderDetailBean {
 	private String os_state;//상태
 	private String od_stcode;//od테이블의 상태
 	private String os_clcode;
+	private String pr_image;
 
 }
-

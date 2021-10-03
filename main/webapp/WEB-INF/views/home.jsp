@@ -456,9 +456,9 @@
 									<thead>
 										<tr>
 											<th data-sortable
-												style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사코드</a></th>
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>이미지</a></th>
 											<th data-sortable
-												style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사명</a></th>
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사코드</a></th>									
 											<th data-sortable
 												style="width: 13.3333%; background-color: #E0E0E0;"><a>주문코드</a></th>
 											<th data-sortable
@@ -473,31 +473,38 @@
 									</thead>
 									<tbody>
 										<tr v-for="old in modalDetailList">
+										<td><img :src="old.pr_image" width="70%" height="70%"></td>
 											<td>{{old.od_prspcode}}</td>
-											<td>{{old.sp_name}}</td>
 											<td>{{old.od_oscode}}</td>
 											<td>{{old.od_prcode}}</td>
 											<td>{{old.pr_name}}</td>
 											<td>{{old.od_quantity}}</td>
 											<td>{{old.od_stcode}}</td>
 										</tr>
-										<button class="btn-datatable" v-on:click="modalClose()">
-											<img src="../../resources/img/close.png">
-										</button>
 									</tbody>
 								</table>
+								<button @click="modalClose()" type="button" style="margin-left:45%; position:relative;"class="btn btn-dark">닫기</button>
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> >주문목록
-							</h1>
+							<h1 style="padding: 20px; font-size: 30px; color: #808080;  margin-left: -30px;">
+								주문 목록 </h1>
+				 <ol class="breadcrumb mb-4">
+                     <ul class="mb-5 nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                           <button type="button" role="tab"
+                              data-rb-event-key="allProducts" aria-selected="true"
+                              class="nav-link active" onclick="mroOrderList()">진행중목록</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                           <button type="button" role="tab" data-rb-event-key="archived"
+                              aria-selected="false" class="nav-link"
+                              onclick="orderCompleteList()">완료목록</button>
+                        </li>
+                     </ul>
+                  </ol>
 
-							<div class="card mb-4">
-								<div class="card-body">※주문목록 확인 후 처리해주세요 [문의 :
-									nsb214@naver.com]</div>
-							</div>
+
 							<div class="card mb-4">
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i> 주문 접수 목록
@@ -509,8 +516,11 @@
 											<tr>
 												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
 												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
 												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>접수상태</a></th>
+												
+												
 											</tr>
 										</thead>
 										<tbody>
@@ -518,6 +528,7 @@
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
+												<td>{{ol.sp_name}}</td>
 												<td>{{ol.os_date}}</td>
 												<td>{{ol.os_state}}</td>
 											</tr>
@@ -527,6 +538,100 @@
 							</div>
 						</div>
 					</template>
+					
+					<!-- ------------------------------------------------------주문완료목록------------------------------------------------------ -->
+					<template v-if="display[7].show" style="z-index: 3;">
+						<div v-if="modal.show"
+							style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+										<tr>
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>이미지</a></th>
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>공급사코드</a></th>									
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>주문코드</a></th>
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>상품코드</a></th>
+											<th data-sortable
+												style="width: 20%; background-color: #E0E0E0;"><a>상품명</a></th>
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>상품수량</a></th>
+											<th data-sortable
+												style="width: 13.3333%; background-color: #E0E0E0;"><a>상태코드</a></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="old in modalDetailList">
+										<td><img :src="old.pr_image" width="70%" height="70%"></td>
+											<td>{{old.od_prspcode}}</td>
+											<td>{{old.od_oscode}}</td>
+											<td>{{old.od_prcode}}</td>
+											<td>{{old.pr_name}}</td>
+											<td>{{old.od_quantity}}</td>
+											<td>{{old.od_stcode}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<button @click="modalClose()" type="button" style="margin-left:45%; position:relative;"class="btn btn-dark">닫기</button>
+							</div>
+						</div>
+						<div class="container-fluid px-4">
+						<h1 style="padding: 20px; font-size: 30px; color: #808080;  margin-left: -30px;">
+								주문 목록 </h1>
+				 <ol class="breadcrumb mb-4">
+                     <ul class="mb-5 nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                           <button type="button" role="tab"
+                              data-rb-event-key="allProducts" aria-selected="false"
+                              class="nav-link" onclick="mroOrderList()">진행중목록</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                           <button type="button" role="tab" data-rb-event-key="archived"
+                              aria-selected="true" class="nav-link active"
+                              onclick="orderCompleteList()">완료목록</button>
+                        </li>
+                     </ul>
+                  </ol>
+
+
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fas fa-table me-1"></i> 주문 완료 목록
+								</div>
+
+								<div class="card-body">
+									<table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
+												<th data-sortable style="width: 19.5444%;"><a>접수상태</a></th>
+												
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="ol in list"
+												@click="mroOrderListDetail(ol.os_code)">
+												<td>{{ol.os_code}}</td>
+												<td>{{ol.cl_name}}</td>
+												<td>{{ol.sp_name}}</td>
+												<td>{{ol.os_date}}</td>
+												<td>{{ol.os_state}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</template>					
+		
 <!------------------------------------------------------------------------------------------------------------------------>
 					<template v-if="display[5].show" style="z-index: 3;">
 						<div v-if="modal.show"
