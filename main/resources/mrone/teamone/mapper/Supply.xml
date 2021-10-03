@@ -481,8 +481,8 @@
 		SELECT PR_CODE, PR_NAME, CATE_NAME, PR_STCODE, ST_NAME 
      	FROM PR INNER JOIN ST ON PR.PR_STCODE = ST.ST_CODE
      	WHERE  PR_SPCODE = #{sp_code} AND 
-     		   PR_STCODE = 'PR' OR  
-			   PR_STCODE = 'AF'
+     		   (PR_STCODE = 'PR' OR  
+			   PR_STCODE = 'AF')
 	</select>
 	
 	<select id="supplyMRDRDAProductList" parameterType="string" resultType="mrone.teamone.beans.ProductBean">
