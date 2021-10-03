@@ -117,10 +117,20 @@ public class MroDao {
 
 		return sql.selectList("getRefundList");
 	}
+	// 반품완료 리스트
+	List<MroOrderBean> getCompleteRefundList() {
+		
+		return sql.selectList("getCompleteRefundList");
+	}
 
 	// 교환요청 리스트
 	List<MroOrderBean> getExchangeList() {
 		return sql.selectList("getExchangeList");
+	}
+	
+	// 교환완료 리스트
+	List<MroOrderBean> getCompleteExchangeList() {
+		return sql.selectList("getCompleteExchangeList");
 	}
 
 
@@ -155,6 +165,7 @@ public class MroDao {
 	boolean convertToBoolean(int data) {
 		return data > 0 ? true : false;
 	}
+
 	
 	
 }

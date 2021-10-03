@@ -341,11 +341,17 @@ public class RestApiController {
 			return mse.getRefundListCtl();
 		}
 		
-		//반품요청 상세보기
-		@PostMapping("/mroGetRefundDetail")
-		public List<MroOrderDetailBean> mroGetRefundDetail(@RequestBody String osCode){
-			return mse.getOrderDetail(osCode);
+		//반품요청완료 리스트 받아오기
+		@PostMapping("/mroCompleteRefundListForm")
+		public List<MroOrderBean> mroCompleteRefundListForm(){
+			return mse.getCompleteRefundListCtl();
 		}
+		
+		//반품요청 상세보기
+//		@PostMapping("/mroGetRefundDetail")
+//		public List<MroOrderDetailBean> mroGetRefundDetail(@RequestBody String osCode){
+//			return mse.getOrderDetail(osCode);
+//		}
 		
 		
 		//교환요청 리스트 받아오기
@@ -354,11 +360,17 @@ public class RestApiController {
 			return mse.getExchangeListCtl();
 		}
 		
-		//교환 요청 상세보기
-		@PostMapping("/mroGetExchangeDetail")
-		public List<MroOrderDetailBean> mroGetExchangeDetail(@RequestBody String osCode){
-			return mse.getOrderDetail(osCode);		
+		//교환요청 리스트 받아오기
+		@PostMapping("/mroCompleteExchangeListForm")
+		public List<MroOrderBean> mroCompleteExchangeListForm(){
+			return mse.getCompleteExchangeListCtl();
 		}
+		
+		//교환 요청 상세보기
+//		@PostMapping("/mroGetExchangeDetail")
+//		public List<MroOrderDetailBean> mroGetExchangeDetail(@RequestBody String osCode){
+//			return mse.getOrderDetail(osCode);		
+//		}
 	//--
 		
 		//새 상품 등록 요청리스트 가져오기
@@ -541,6 +553,7 @@ public class RestApiController {
 			
 			return mse.getRanking();			
 		}
+		
 
 
 }

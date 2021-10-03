@@ -205,22 +205,52 @@ class MroServiceCtl {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getOs_state().equals("RR")) {
 				list.get(i).setOs_state("반품요청");
-			}
-		}
-		return list;
-	}
-
-	List<MroOrderBean> getExchangeList() {
-		List<MroOrderBean> list = dao.getExchangeList();
-
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getOs_state().equals("ER")) {
-				list.get(i).setOs_state("교환요청");
+			}else if(list.get(i).getOs_state().equals("RA")) {
+				list.get(i).setOs_state("반품수락");
 			}
 		}
 		return list;
 	}
 	
+	List<MroOrderBean> getCompleteRefundList() {
+		List<MroOrderBean> list = dao.getCompleteRefundList();
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getOs_state().equals("RC")) {
+				list.get(i).setOs_state("반품처리");
+			}else if(list.get(i).getOs_state().equals("FF")) {
+				list.get(i).setOs_state("반품거절");
+			}
+		}
+		return list;
+	}
+
+	
+	List<MroOrderBean> getExchangeList() {
+		List<MroOrderBean> list = dao.getExchangeList();
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getOs_state().equals("ER")) {
+				list.get(i).setOs_state("교환요청");
+			}else if(list.get(i).getOs_state().equals("EA")) {
+				list.get(i).setOs_state("교환수락");
+			}
+		}
+		return list;
+	}
+	
+	List<MroOrderBean> getCompleteExchangeList() {
+		List<MroOrderBean> list = dao.getCompleteExchangeList();
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getOs_state().equals("EC")) {
+				list.get(i).setOs_state("교환처리");
+			}else if(list.get(i).getOs_state().equals("EF")) {
+				list.get(i).setOs_state("교환거절");
+			}
+		}
+		return list;
+	}
 	
 	//new
 	 List<SupplyInfoBean> mroSearchSupplyList(String word) {

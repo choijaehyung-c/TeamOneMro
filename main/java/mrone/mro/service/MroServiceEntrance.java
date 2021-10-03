@@ -51,10 +51,20 @@ public class MroServiceEntrance {
 	public List<MroOrderBean> getRefundListCtl() {
 		return msc.getRefundList();
 	}
+	
+	// 반품완료 리스트
+	public List<MroOrderBean> getCompleteRefundListCtl() {
+		return msc.getCompleteRefundList();
+	}
 
 	// 교환요청 리스트
 	public List<MroOrderBean> getExchangeListCtl() {
 		return msc.getExchangeList();
+	}
+	
+	// 교환완료 리스트
+	public List<MroOrderBean> getCompleteExchangeListCtl() {
+		return msc.getCompleteExchangeList();
 	}
 	
 	public boolean mroRequestOrder(RequestOrderBean ro) {
@@ -122,5 +132,6 @@ public class MroServiceEntrance {
 		
 		return msc.getRanking();
 	}
+
 
 }

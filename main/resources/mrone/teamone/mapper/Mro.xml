@@ -107,14 +107,39 @@
     <select id="getOrderDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
     	SELECT * FROM ORDERDETAILVIEW WHERE OD_OSCODE= #{osCode}
     </select>
+    
     <!-- Mro 반품리스트 받아오는 쿼리 -->
     <select id="getRefundList" resultType="mrone.teamone.beans.MroOrderBean" >
-    	SELECT * FROM ORDERSVIEW WHERE OS_STATE='RR'
+    		SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='RR' OR OS_STATE='RA'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME 
+    </select>
+    
+    <select id="getCompleteRefundList" resultType="mrone.teamone.beans.MroOrderBean" >
+    		SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='RC' OR OS_STATE='FF'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME 
     </select>
     
     <!-- Mro 교환리스트 받아오는 쿼리 -->
     <select id="getExchangeList" resultType="mrone.teamone.beans.MroOrderBean" >
-    	SELECT * FROM ORDERSVIEW WHERE OS_STATE='ER'
+    		SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='ER' OR OS_STATE='EA'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME 
+    </select>
+    
+    <select id="getCompleteExchangeList" resultType="mrone.teamone.beans.MroOrderBean" >
+    		SELECT OS.OS_CODE, OS.OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD.OD_PRSPCODE, SP.SP_NAME
+            FROM ORDERSVIEW OS INNER JOIN OD ON OS.OS_CODE= OD.OD_OSCODE
+                               INNER JOIN SP ON OD.OD_PRSPCODE = SP.SP_CODE
+            WHERE OS_STATE='EC' OR OS_STATE='EF'
+            GROUP BY OS_CODE, OS_CLCODE, CL_NAME, OS_DATE, OS_STATE, OD_PRSPCODE,SP_NAME 
     </select>
     
     <select id="getRefundDetail" parameterType="string" resultType="mrone.teamone.beans.MroOrderDetailBean" >
@@ -157,7 +182,7 @@
 		UPDATE SP SET "STATE"='NONMEMBER' WHERE SP_CODE=#{code}
 	</update>
 	
-		<select id="getRanking" resultType="mrone.teamone.beans.OrderDetailBean">			
+	<select id="getRanking" resultType="mrone.teamone.beans.OrderDetailBean">			
 		SELECT SUM(OD_QUANTITY) AS OD_QUANTITY, OD.OD_PRCODE,PR_NAME
 		FROM OS INNER JOIN OD ON OS.OS_CODE = OD.OD_OSCODE
                 INNER JOIN PR ON OD.OD_PRCODE = PR.PR_CODE
@@ -166,6 +191,4 @@
 			ORDER BY OD_QUANTITY DESC
 	</select>
 	
-	
-
 </mapper>

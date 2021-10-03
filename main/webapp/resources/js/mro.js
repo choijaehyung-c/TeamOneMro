@@ -2,11 +2,12 @@ const mainVue = new Vue({
 	el: "#mainVue",
 	data: {
 		display: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false/*주문리스트*/ }, { show: false/*환불리스트*/ }
-			, { show: false/*교환리스트*/ },{show:false},{show:false}],
+			, { show: false/*교환리스트*/ },{show:false}],
 		modal: { show: false },
 		modalDetailList: [],
 		modalDetail: {},
-		list: []
+		list: [],
+		list1:[]
 	},
 	methods: {
 		changePage: function(page) {
@@ -160,6 +161,7 @@ const mainVue = new Vue({
 				mroOrderListPage: function() {
 			postAjaxJson('vue/mroOrderListForm', 'ListVue', 'j');
 		},
+		
 		///////////////////////////////////////////
 		mroOrderCompleteForm:function(){
 		postAjaxJson('vue/mroOrderCompleteForm', 'mroOrderCompleteList', 'j');
@@ -168,6 +170,7 @@ const mainVue = new Vue({
 
 		/////////////////////////////////////////
 		mroOrderListDetail: function(oscode) {
+			
 			postAjaxJson('vue/mroGetOrderDetail', 'ListDetailVue', 'j', oscode);
 
 		},
@@ -188,6 +191,12 @@ const mainVue = new Vue({
 		/////////////////////////////////////////
 		mroExchangeListDetail: function(oscode) {
 			postAjaxJson('vue/mroGetExchangeDetail', 'ListDetailVue', 'j', oscode);
+		},
+		mroCompleteRefuntList:function(){
+			postAjaxJson('vue/mroCompleteRefundListForm','mroCompleteRefundList','j');
+		},
+		mroCompleteExchageList:function(){
+			postAjaxJson('vue/mroCompleteExchangeListForm','mroCompleteExchangeList','j');
 		}
 	}
 });
@@ -229,9 +238,6 @@ function mroOrderList() {
 	mainVue.mroOrderListPage();
 }
 
-function orderCompleteList(){
-	mainVue.mroOrderCompleteForm();
-}
 
 function mroRefundList() {
 	mainVue.mroRefundListPage();
@@ -310,10 +316,6 @@ function ListVue(jsondata) {
 	mainVue.changePage(4);
 }
 
-function mroOrderCompleteList(jsonData){
-	mainVue.list = jsonData;
-	mainVue.changePage(7);
-}
 
 
 function ListVue2(jsondata) {
@@ -334,7 +336,7 @@ function ListDetailVue(jsondata) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function mainPage(){
 	chartMain();
-	mainVue.changePage(8);
+	mainVue.changePage(7);
 		
 }
 
@@ -343,11 +345,26 @@ function chartMain(){
 }
 
 
+function openCate(cate) {
+  var i;
+  var x = document.getElementsByClassName("cate");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(cate).style.display = "block";  
+}
 
+function mroOrderCompleteList(jsondata){
+	mainVue.list1=jsondata;
+}
 
+function mroCompleteRefundList(jsondata){
+	mainVue.list1= jsondata;
+}
 
-
-
-
+function mroCompleteExchangeList(jsondata){
+	mainVue.list1 =jsondata;
+	
+}
 
 
