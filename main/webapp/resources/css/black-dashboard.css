@@ -113,7 +113,11 @@ h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
+}
+
+.pa {
+	margin-bottom: 0 0 -30rem;
 }
 
 abbr[title],
@@ -184,7 +188,7 @@ sup {
 }
 
 a {
-  color: #e14eca;
+  /*color: #e14eca;*/
   text-decoration: none;
   background-color: transparent;
 }
@@ -195,7 +199,7 @@ a:hover {
 }
 
 a:not([href]):not([tabindex]) {
-  color: inherit;
+  /*color: inherit;*/
   text-decoration: none;
 }
 
@@ -4727,7 +4731,7 @@ input[type="button"].butn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-links{
   color: #525f7f;
-  background-color: #1e1e2f;
+  /*background-color: #1e1e2f;*/
   border-color: #e3e3e3 #e3e3e3 #1e1e2f;
 }
 
@@ -4744,7 +4748,7 @@ input[type="button"].butn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-links{
   color: #ffffff;
-  background-color: #e14eca;
+  /*background-color: #e14eca;*/
 }
 
 .nav-fill .nav-item {
@@ -5407,7 +5411,7 @@ input[type="button"].butn-block {
   margin-bottom: -0.0625rem;
 }
 
-.breadcrumb {
+.breadcrumba {
   display: flex;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
@@ -5533,7 +5537,7 @@ input[type="button"].butn-block {
 .badge {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  font-size: 0.62475rem;
+  font-size: 1.0rem;
   font-weight: 700;
   line-height: 1;
   text-align: center;
@@ -16497,7 +16501,7 @@ h6 {
 }
 
 a {
-  color: #ba54f5;
+  /*color: #ba54f5;*/
   font-weight: 300;
 }
 
@@ -16591,7 +16595,7 @@ p.description {
 
 .category,
 .card-category {
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
   font-weight: 400;
   color: #000000;
   font-size: 0.75rem;
@@ -20195,7 +20199,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-body {
-  padding: 1.25rem;
+  padding: 0 0 1rem;
 }
 
 @media (max-width: 767.98px) {

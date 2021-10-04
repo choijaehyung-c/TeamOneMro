@@ -242,7 +242,7 @@ a:hover {
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
-  color: inherit;
+  /*color: inherit;*/
   text-decoration: none;
 }
 
@@ -4008,8 +4008,8 @@ textarea.form-control-lg {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #0d6efd;
+  /*color: #fff;*/
+  background-color: #000000;
 }
 
 .nav-fill > .nav-link,
@@ -4789,6 +4789,7 @@ textarea.form-control-lg {
   padding: 0 0;
   margin-bottom: 1rem;
   list-style: none;
+  background-color: #e9ecef;
 }
 
 .breadcrumb-item + .breadcrumb-item {
@@ -11538,7 +11539,7 @@ body {
 }
 
 .dataTable-top {
-  padding: 0 0 1rem;
+  padding: 20px 24px;
 }
 
 .dataTable-bottom {
