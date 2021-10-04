@@ -312,6 +312,7 @@ function clientListVue2(msg) {
 
 //////////////////////////////////////////////////////////
 function ListVue(jsondata) {
+	mainVue.list=[];
 	mainVue.list = jsondata;
 	mainVue.changePage(4);
 }
@@ -319,11 +320,13 @@ function ListVue(jsondata) {
 
 
 function ListVue2(jsondata) {
+	mainVue.list=[];
 	mainVue.list = jsondata;
 	mainVue.changePage(5);
 }
 
 function ListVue3(jsondata) {
+	mainVue.list=[];
 	mainVue.list = jsondata;
 	mainVue.changePage(6);
 }
@@ -355,14 +358,17 @@ function openCate(cate) {
 }
 
 function mroOrderCompleteList(jsondata){
+	mainVue.list1=[];
 	mainVue.list1=jsondata;
 }
 
 function mroCompleteRefundList(jsondata){
+	mainVue.list1=[];
 	mainVue.list1= jsondata;
 }
 
 function mroCompleteExchangeList(jsondata){
+	mainVue.list1=[];
 	mainVue.list1 =jsondata;
 	
 }
