@@ -60,34 +60,23 @@ const main = new Vue({
 			this.modal2.show = false;
 		},
 		pushData:function(jsondata){
-			/*console.log(jsondata);*/
 			this.list=jsondata;
 		},
 		pushDataModalList:function(jsondata){
-			console.log(jsondata);
 			this.modalList=jsondata;
 		},
 		sortAndPushData:function(data,sort){
-			if(sort){
+			if(sort == 'R'){
 				this.list.push(data);
 			}else{
 				this.list2.push(data);
 			}
 		},
-		getAsDetail:function(data,type){
+		getAsDetail:function(data){
 			let cData = `re_code=${data}`;
-			if(type=="r"){
-				postAjaxForm("vue/supplyReceiveAsDetailR","getAsDetailForm", "j",cData);}
-			else if(type=="e"){
-				postAjaxForm("vue/supplyReceiveAsDetailE","getAsDetailForm", "j",cData);	
-			}else if(type=="rc"){
-				postAjaxForm("vue/supplyReceiveAsDetailRC","getAsDetailForm", "j",cData);	
-			}else if(type=="ec"){
-				postAjaxForm("vue/supplyReceiveAsDetailEC","getAsDetailForm", "j",cData);				
-			}
+			postAjaxForm("vue/supplyReceiveAsDetail","getAsDetailForm", "j",cData);
 		},
 		insReason:function(index,code){
-			console.log(index+"a"+code);
 			if(this.dupCheck.includes(index))return;
 			let updown = 0;
 			
@@ -122,7 +111,6 @@ const main = new Vue({
 			}else{
 				cData = {re_code:re,re_state:yn};
 			}
-			console.log(cData);
 			if(type=="r"){
 				postAjaxJson('vue/supplyResponseRefund','getRefundListForm','s',JSON.stringify(cData));
 			}else if(type=="e"){
@@ -476,12 +464,12 @@ function getRefundList(jsondata){
 	main.list2 =[];
 	let jCount = jsondata.length;
 	for(i=0;i<jCount;i++){
-		if(jsondata.re_state == 'RR'){
-			main.sortAndPushData(jsondata[i],true);
+		if(jsondata[i].re_state == 'RR'){
+			main.sortAndPushData(jsondata[i],'R');
 		}else{
-			main.sortAndPushData(jsondata[i],false);
+			main.sortAndPushData(jsondata[i],'C');
 		}
-	}
+	}	
 }
 
 function getExchangeList(jsondata){
@@ -490,10 +478,10 @@ function getExchangeList(jsondata){
 	main.list2 =[];
 	let jCount = jsondata.length;
 	for(i=0;i<jCount;i++){
-		if(jsondata.re_state == 'ER'){
-			main.sortAndPushData(jsondata[i],true);
+		if(jsondata[i].re_state == 'ER'){
+			main.sortAndPushData(jsondata[i],'R');
 		}else{
-			main.sortAndPushData(jsondata[i],false);
+			main.sortAndPushData(jsondata[i],'C');
 		}
 	}
 }

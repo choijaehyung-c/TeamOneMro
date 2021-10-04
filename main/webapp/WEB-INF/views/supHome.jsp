@@ -237,9 +237,9 @@
        
                                     <tbody>
                                         <tr v-for="item in list">
-                                            <td @click="getAsDetail(item.re_code,'r')">{{item.cl_name}}</td>
-                                            <td @click="getAsDetail(item.re_code,'r')">{{item.word}}</td>
-                                            <td @click="getAsDetail(item.re_code,'r')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
                                                <button @click="sendAsResponse(item.re_code,'RA','r')" type="button" class="btn btn-dark">수락</button>
                                            <button @click="sendAsResponse(item.re_code,'FF','r')"  type="button" class="btn btn-dark">거절</button>
@@ -273,9 +273,9 @@
        
                                     <tbody>
                                         <tr v-for="item in list2">
-                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.cl_name}}</td>
-                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.word}}</td>
-                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center" v-if="item.re_state === 'RA'">반품 수락</td>
                                             <td style="text-align: center" v-else>반품 거절</td>
                                         </tr>
@@ -352,9 +352,9 @@
        
                                     <tbody>
                                         <tr v-for="item in list">
-                                            <td @click="getAsDetail(item.re_code,'e')">{{item.cl_name}}</td>
-                                            <td @click="getAsDetail(item.re_code,'e')">{{item.word}}</td>
-                                            <td @click="getAsDetail(item.re_code,'e')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
                                            <button @click="sendAsResponse(item.re_code,'EA','e')" type="button" class="btn btn-dark">수락</button>
                                            <button @click="sendAsResponse(item.re_code,'EF','e')"  type="button" class="btn btn-dark">거절</button>
@@ -388,9 +388,9 @@
        
                                     <tbody>
                                         <tr v-for="item in list2">
-                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.cl_name}}</td>
-                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.word}}</td>
-                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center" v-if="item.re_state === 'EA'">교환 수락</td>
                                             <td style="text-align: center" v-else>교환 거절</td>
                                         </tr>

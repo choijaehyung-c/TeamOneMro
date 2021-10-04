@@ -145,20 +145,8 @@ public class SupplyServiceEntrance {
 		return ssc.supplyResponseRefund(ro);
 	}
 
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailRR(String re_code) {
-		return ssc.supplyReceiveAsDetail(re_code,"RR");
-	}
-	
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailER(String re_code) {
-		return ssc.supplyReceiveAsDetail(re_code,"ER");
-	}
-
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailRC(String re_code) {
-		return ssc.supplyReceiveAsDetail(re_code," 'RA' OR RD.RD_STCODE = 'FF' ");
-	}
-	
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailEC(String re_code) {
-		return ssc.supplyReceiveAsDetail(re_code," 'EA' OR RD.RD_STCODE = 'EF' ");
+	public List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code) {
+		return ssc.supplyReceiveAsDetail(re_code);
 	}
 	
 	public List<RequestOrderBean> supplyReceiveExchangeListForm() {

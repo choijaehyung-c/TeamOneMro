@@ -222,25 +222,10 @@ public class RestApiController {
 		return sse.supplyReceiveExchangeListForm();
 	}
 	
-	//supply 반품디테일
-	@PostMapping("/supplyReceiveAsDetailR")
+	//supply 디테일
+	@PostMapping("/supplyReceiveAsDetail")
 	public List<RequestOrderDetailBean> supplyReceiveAsDetailR(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
-		return sse.supplyReceiveAsDetailRR(re_code);
-	}
-	//교환 디테일
-	@PostMapping("/supplyReceiveAsDetailE")
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailE(@ModelAttribute("re_code") String re_code){//re_code=""형태로 프론트에서전달
-		return sse.supplyReceiveAsDetailER(re_code);
-	}
-	
-	@PostMapping("/supplyReceiveAsDetailRC")
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailRC(@ModelAttribute("re_code") String re_code){
-		return sse.supplyReceiveAsDetailRC(re_code);
-	}
-	
-	@PostMapping("/supplyReceiveAsDetailEC")
-	public List<RequestOrderDetailBean> supplyReceiveAsDetailEC(@ModelAttribute("re_code") String re_code){
-		return sse.supplyReceiveAsDetailEC(re_code);
+		return sse.supplyReceiveAsDetail(re_code);
 	}
 	
 	//supply 반품 응답
@@ -456,7 +441,7 @@ public class RestApiController {
 	
 		
 		@GetMapping(
-				  value = {"/getImage/{imgName}.{extension}","/getImage/{imgName}"},
+				  value = {"/getImage/{imgName}.{extension}","/getImage/"},
 				  produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_GIF_VALUE}
 				)
 		public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest req,

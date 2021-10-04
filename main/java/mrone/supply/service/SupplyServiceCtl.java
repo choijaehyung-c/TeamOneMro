@@ -532,12 +532,12 @@ class SupplyServiceCtl {
 		RequestOrderBean ro= new RequestOrderBean();
 		try {
 			ro.setRe_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
-			ro.setRe_state(" 'RR' OR RE.RE_STATE = 'EA' OR RE.RE_STATE = 'EF'");
+			ro.setRe_state(" 'ER' OR RE.RE_STATE = 'EA' OR RE.RE_STATE = 'EF'");
 		} catch (Exception e) {e.printStackTrace();}
 		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
 		for(int i=0;i<roList.size();i++) {
 			List<String> rd = dao.getPrnameAndCount(roList.get(i));
-			if(rd != null) {
+			if(!rd.isEmpty()) {
 				if(rd.size()>1) {
 					roList.get(i).setWord(rd.get(0)+" 외 "+(rd.size()-1)+"건");
 				}else {
@@ -545,15 +545,12 @@ class SupplyServiceCtl {
 				}
 			}
 		}
-		
-		
 		return roList;
 	}
 
 	//수정완료 반품 또는 교환 디테일
-	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code,String type){
+	List<RequestOrderDetailBean> supplyReceiveAsDetail(String re_code){
 		RequestOrderBean ro = new RequestOrderBean();
-		ro.setRe_state(type);
 		ro.setRe_code(re_code);
 		List<RequestOrderDetailBean> list = dao.supplyReceiveAsDetail(ro);
 		for(int i=0;i<list.size();i++) {list.get(i).setPr_ttprice(list.get(i).getPr_price()+list.get(i).getPr_tax());}
