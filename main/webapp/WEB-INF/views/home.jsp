@@ -11,10 +11,13 @@
         <title>MRONE</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/css/styles.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/ssNewFile.css" rel="stylesheet" />
+        <link href="resources/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+         <link href="resources/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+         <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
          
          
 <%@ page import="java.util.Date" %>
@@ -25,7 +28,7 @@
 %>
     </head>
     
-    <body class="sb-nav-fixed" onLoad="mainPage()">
+    <body class="sb-nav-fixed white-content" onLoad="mainPage()">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com -->
             </button></a>
@@ -157,28 +160,27 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-						<h6>&nbsp</h6>
-							<div
-								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">새 상품 등록 요청</h1>
+							<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
-									<div class="dataTable-search">
-										<input class="dataTable-input" type="text"
-											placeholder="상품명을 입력해주세요">
+									<div class="form-group ml-auto">
+										<input class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요">
 									</div>
 								</div>
-								<div class="card mb-4">
-									<div class="card-header">등록신청</div>
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">등록 신청 요청</h3>
+									</div>
 									<div class="card-body">
-										<table id="datatablesSimple" class="dataTable-table">
-											<thead>
-												<tr>
-													<th style="width: 15%;"><a>회사명</a></th>
-													<th style="width: 15%;"><a>카테고리</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a></a></th>
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead class="text-primary">
+												<tr class="font-weight-bold">
+													<th>회사명</th>
+													<th>카테고리</th>
+													<th class="text-center">상품명</th>
+													<th></th>
 												</tr>
 											</thead>
-
 											<tbody>
 												<tr v-for="rnp in list">
 													<td @click="mroGetNewProductDetailPage(rnp.pr_code)">{{rnp.sp_name}}</td>
@@ -186,9 +188,9 @@
 													<td @click="mroGetNewProductDetailPage(rnp.pr_code)">{{rnp.pr_name}}</td>
 													<td style="text-align: center">
 														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
+															type="button" class="bttn bttn-defaul">등록</button>
 														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
+															type="button" class="bttn bttn-defaul">거절</button>
 													</td>
 												</tr>
 											</tbody>
@@ -258,30 +260,28 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-
-							<h1 style="padding: 20px">상품 수정신청 리스트</h1>
-
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">상품 수정 신청 목록</h1>
 							<div
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
 									<div class="dataTable-search">
-										<input class="dataTable-input" type="text"
-											placeholder="상품명을 입력해주세요">
+										<input class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요">
 									</div>
 								</div>
-								<div class="card mb-4">
-									<div class="card-header">수정요청</div>
+								<div class="card">
+									<div class="card-header">
+									<h3 class="card-title">수정 요청</h3>
+									</div>
 									<div class="card-body">
-										<table id="datatablesSimple" class="dataTable-table">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 											<thead>
 												<tr>
-													<th style="width: 15%;"><a>회사명</a></th>
-													<th style="width: 15%;"><a>카테고리</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a></a></th>
+													<th>회사명</th>
+													<th>카테고리</th>
+													<th class="text-center">상품명</th>
+													<th class="text-center"></th>
 												</tr>
 											</thead>
-
 											<tbody>
 												<tr v-for="rmp in list"
 													v-if="rmp.pr_stcode =='MR'">
@@ -304,19 +304,20 @@
 										</table>
 									</div>
 								</div>
-								<div class="card mb-4">
-									<div class="card-header">삭제요청</div>
+								<div class="card">
+									<div class="card-header">
+									<h3 class="card-title">삭제 요청</h3>
+									</div>
 									<div class="card-body">
-										<table id="datatablesSimple" class="dataTable-table">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 											<thead>
 												<tr>
-													<th style="width: 15%;"><a>회사명</a></th>
-													<th style="width: 15%;"><a>카테고리</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a></a></th>
+													<th>회사명</th>
+													<th>카테고리</th>
+													<th class="text-center">상품명</th>
+													<th class="text-center"></th>
 												</tr>
 											</thead>
-
 											<tbody>
 												<tr v-for="rmp in list"
 													v-if="rmp.pr_stcode =='DR'">
@@ -345,13 +346,17 @@
 <!------------------------------------------------------------------------------------------------------------------------>
                 	<template v-if="display[2].show">
                 		<div class="container-fluid px-4">
-							<h1 class="mt-4">공급사 목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">공급사 목록</li>
-							</ol>
-								<input type="text" class="form-control" name="word" placeholder="공급사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="search()" value="">검 색</span>
-								<div class="btn btn-secondary me-2 my-1" type="button" id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 공급사 등록</div>
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">공급사 목록</h1>
+								<form class="form-inline col-md-12">
+								<div class="bttn bttn-defaul bttn-round" type="button"
+									id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 공급사 등록</div>
+								<div class="form-group ml-auto">
+									<input type="text" class="form-control mr-3" name="word"
+										placeholder="공급사 이름을 검색하세요." /> 
+									<span class="bttn bttn-defau bttn-round" type="button"
+										@click="search()" value="">검 색</span>
+								</div>
+							</form>
 								                		<div class="modal fade" id="ModalLg" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
@@ -360,16 +365,15 @@
                                                                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onClick="close()"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                 	<table><tr class='title'><th scope='row'><span class='title_d'>업체명</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_name" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>업체코드</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_code" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>임시비밀번호</span></th><td colspan='2'><input type="password" class="text" id='subject' name="sp_pwd" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>지부장</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_ceo" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>주소</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_address" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>연락처</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_tel" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>사업자번호</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_corpnum" value=""></tr>
-                                           
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>업태</span></th><td colspan='2'><select name="sp_btype"><option value='C'>제조업</option><option value='D'>유통업</option><option value='G'>도매업</option></select>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>업종</span></th><td colspan='2'><select name="sp_bkind"><option value='KS'>사무용품</option><option value='KB'>식음료</option><option value='KL'>생활용품</option><option value='KC'>청소용품</option></select>                                                                
+                                                                 	<table><tr ><th scope='row'><span class='title_d'>업체명</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_name" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>업체코드</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_code" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>임시비밀번호</span></th><td colspan='2'><input type="password" class="text" id='subject' name="sp_pwd" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>지부장</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_ceo" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>주소</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_address" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>연락처</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_tel" value=""></tr>
+                                                                 			<tr ><th scope='row'><span class='title_d'>사업자번호</span></th><td colspan='2'><input type="text" class="text" id='subject' name="sp_corpnum" value=""></tr>    
+                                                                 			<tr ><th scope='row'><span class='title_d'>업태</span></th><td colspan='2'><select name="sp_btype"><option value='C'>제조업</option><option value='D'>유통업</option><option value='G'>도매업</option></select>
+                                                                 			<tr ><th scope='row'><span class='title_d'>업종</span></th><td colspan='2'><select name="sp_bkind"><option value='KS'>사무용품</option><option value='KB'>식음료</option><option value='KL'>생활용품</option><option value='KC'>청소용품</option></select>                                                                
                                                                  	</table>                        
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -379,31 +383,41 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card mb-4">
+                                            <div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 공급사 목록
-								</div>  
-								<div class="card-body">            		               		
-                		<table id="datatablesSimple"class="dataTable-table"><tr><thead><th>이름</th><th>위치</th><th >업종</th><th>요청</th></tr></thead>
+									<h3 class="card-title">공급사 목록</h3>
+								</div>
+								<div class="card-body">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+										<thead>
+											<tr>
+												<th>이름</th>
+												<th>위치</th>
+												<th class="text-center">업종</th>
+												<th class="text-center">요청</th>
+											</tr>
+										</thead>
                 		<tbody>
                 	
-                		<tr v-for="ii in list" ><td  @click="datata(ii.sp_code)">{{ii.sp_name}}</td><td>{{ii.sp_address}}</td><td>{{ii.bk_name}}</td><td ><button  class="btn btn-secondary me-2 my-1"  @click="deleteS(ii.sp_code)">삭 제</button></td></tr>
+                		<tr v-for="ii in list" ><td  @click="datata(ii.sp_code)">{{ii.sp_name}}</td><td>{{ii.sp_address}}</td><td class="text-center">{{ii.bk_name}}</td><td class="text-center"><button  class="bttn bttn-defau"  @click="deleteS(ii.sp_code)">삭 제</button></td></tr>
                 		</tbody>
-                		
-              
                 		</table>    
-   	
-                		</template>               
+   	            		</template>               
 <!------------------------------------------------------------------------------------------------------------------------>		
                 	<template v-if="display[3].show">
                 		<div class="container-fluid px-4">
-							<h1 class="mt-4">고객사 목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">고객사 목록</li>
-							</ol>
-								<input type="text" class="form-control" name="wordC" placeholder="고객사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchClient()" value="">검 색</span>
-								<div class="btn btn-secondary me-2 my-1" type="button" id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 고객사 등록</div>
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">고객사
+								목록</h1>
+							<form class="form-inline col-md-12">
+								<div class="bttn bttn-defaul bttn-round" type="button"	id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새
+									고객사 등록</div>
+								<div class="form-group ml-auto">
+									<input type="text" class="form-control mr-3" name="wordC"
+										placeholder="고객사 이름을 검색하세요." /> <span
+										class="bttn bttn-defau bttn-round" type="button"
+										@click="searchClient()" value="">검 색</span>
+								</div>
+							</form>
 								                		<div class="modal fade" id="ModalLg" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
@@ -412,13 +426,13 @@
                                                                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onClick="close()"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                 	<table><tr class='title'><th scope='row'><span class='title_d'>업체명</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_name" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>업체코드</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_code" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>임시비밀번호</span></th><td colspan='2'><input type="password" class="text" id='subject' name="cl_pwd" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>지부장</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_ceo" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>주소</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_address" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>연락처</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_hp" value=""></tr>
-                                                                 			<tr class='title'><th scope='row'><span class='title_d'>사업자번호</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_corpnum" value=""></tr>
+                                                                 	<table><tr ><th scope='row'><span class='title_d'>업체명</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_name" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>업체코드</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_code" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>임시비밀번호</span></th><td colspan='2'><input type="password" class="text" id='subject' name="cl_pwd" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>지부장</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_ceo" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>주소</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_address" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>연락처</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_hp" value=""></tr>
+                                                                 			<tr><th scope='row'><span class='title_d'>사업자번호</span></th><td colspan='2'><input type="text" class="text" id='subject' name="cl_corpnum" value=""></tr>
                                            
                                                                  			<tr class='title'><th scope='row'><span class='title_d'>업태</span></th><td colspan='2'><select name="cl_btype"><option value='C'>제조업</option><option value='D'>유통업</option><option value='G'>도매업</option></select>
                                                                  			<tr class='title'><th scope='row'><span class='title_d'>업종</span></th><td colspan='2'><select name="cl_bkind"><option value='KS'>사무용품</option><option value='KB'>식음료</option><option value='KL'>생활용품</option><option value='KC'>청소용품</option></select>                                                                
@@ -431,20 +445,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card mb-4">
-								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 고객사 목록
-								</div>  
-								<div class="card-body">            		               		
-                		<table id="datatablesSimple"class="dataTable-table"><tr><thead><th>이름</th><th>위치</th><th >업종</th><th>요청</th></tr></thead>
+                                                    <div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">고객사 목록</h3>
+									</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter"
+											style="font-size: 16px">
+											<tr>
+											<thead class="text-primary">
+												<th>이름</th>
+												<th>위치</th>
+												<th class="text-center">업종</th>
+												<th class="text-center">요청</th>
+												</tr>
+											</thead>
                 		<tbody>
                 	
-                		<tr v-for="ii in list" ><td>{{ii.cl_name}}</td><td>{{ii.cl_address}}</td><td>{{ii.bk_name}}</td><td><button  class="btn btn-secondary me-2 my-1" @click="deleteC(ii.cl_code)">삭 제</button></td></tr>
+                		<tr v-for="ii in list" ><td>{{ii.cl_name}}</td><td>{{ii.cl_address}}</td><td class="text-center">{{ii.bk_name}}</td><td class="text-center"><button  class="bttn bttn-defau" @click="deleteC(ii.cl_code)">삭 제</button></td></tr>
                 		</tbody>
-                		
-         
                 		</table>    
-   	
                 		</template>     
 <!------------------------------------------------------------------------------------------------------------------------>
 					<template v-if="display[4].show" style="z-index: 3;">
@@ -487,34 +508,29 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> >주문 목록
-							</h1>
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">주문 목록</h1>
 							
 							<div class="w3-bar w3-black">
   								<button class="w3-bar-item w3-button" onclick="openCate('ing')" @click="mroOrderListPage()">진행중목록</button>
   								<button class="w3-bar-item w3-button" onclick="openCate('complete')" @click="mroOrderCompleteForm()">완료목록</button>
 							</div>
-				
-				
-		<div id="ing" class="w3-container w3-display-container cate">
+							
+							<div id="ing" class="w3-container w3-display-container cate">
 							
 								<br><br>
-							<div class="card mb-4">
+							<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 주문 신청 목록
+									<h3 class="card-title">주문 신청 목록 </h3>
 								</div>
-
-								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+								<div class="card-body">    
+									<table  id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -522,9 +538,9 @@
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -536,20 +552,19 @@
 								style="display: none">
 
 								<br><br>
-							<div class="card mb-4">
+							<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 주문 완료 목록
+									<h3 class="card-title">주문 완료 목록 </h3>
 								</div>
-
-								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+								<div class="card-body">    
+									<table  id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -557,9 +572,9 @@
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -614,11 +629,8 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> 반품 목록
-							</h1>
-							
+							<div class="container-fluid px-4">
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">반품 목록</h1>						
 							<div class="w3-bar w3-black">
   								<button class="w3-bar-item w3-button" onclick="openCate('ing')" @click="mroRefundListPage()">진행중목록</button>
   								<button class="w3-bar-item w3-button" onclick="openCate('complete')" @click="mroCompleteRefuntList()">완료목록</button>
@@ -627,30 +639,30 @@
 						<div id="ing" class="w3-container w3-display-container cate">
 							
 								<br><br>
-							<div class="card mb-4">
+						<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 반품 신청 목록
+									<h3 class="card-title">반품 신청 목록</h3>
 								</div>
-
 								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
+										<tbody>
 										<tbody>
 											<tr v-for="ol in list"
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -661,31 +673,31 @@
 					<div id="complete" class="w3-container w3-display-container cate"
 								style="display: none">
 
-								<br><br>
-							<div class="card mb-4">
+								<br><br>			
+							<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 반품 완료 목록
+									<h3 class="card-title">반품 완료 목록</h3>
 								</div>
-
 								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
+										<tbody>
 										<tbody>
 											<tr v-for="ol in list1"
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -736,10 +748,7 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
-							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> >교환 목록
-							</h1>
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">교환 목록</h1>
 							
 							<div class="w3-bar w3-black">
   								<button class="w3-bar-item w3-button" onclick="openCate('ing')" @click="mroExchangeListPage()">진행중목록</button>
@@ -747,23 +756,22 @@
 							</div>
 				
 				
-		<div id="ing" class="w3-container w3-display-container cate">
+						<div id="ing" class="w3-container w3-display-container cate">
 							
 								<br><br>
-							<div class="card mb-4">
+							<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 교환 신청 목록
+									<h3 class="card-title">교환 신청 목록</h3>
 								</div>
-
 								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -771,9 +779,9 @@
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -785,20 +793,19 @@
 								style="display: none">
 
 								<br><br>
-							<div class="card mb-4">
+										<div class="card">
 								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 교환 완료 목록
+									<h3 class="card-title">교환 완료 목록</h3>
 								</div>
-
 								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
 											<tr>
-												<th data-sortable style="width: 19.5444%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>공급사명</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수날짜</a></th>
-												<th data-sortable style="width: 19.5444%;"><a>접수내용</a></th>
+												<th>주문코드</th>
+												<th>고객사명</th>
+												<th class="text-center">공급사명</th>
+												<th class="text-center">접수날짜</th>
+												<th class="text-center">접수내용</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -806,9 +813,9 @@
 												@click="mroOrderListDetail(ol.os_code)">
 												<td>{{ol.os_code}}</td>
 												<td>{{ol.cl_name}}</td>
-												<td>{{ol.sp_name}}</td>
-												<td>{{ol.os_date}}</td>
-												<td>{{ol.os_state}}</td>
+												<td class="text-center">{{ol.sp_name}}</td>
+												<td class="text-center">{{ol.os_date}}</td>
+												<td class="text-center">{{ol.os_state}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -823,10 +830,10 @@
 
                     <!-- Page Heading -->
                    
-                     <div class="col-lg-5" style="max-width:35%; float:left;" >
+                     <div class="col-lg-5" style="max-width:50%; float:left;" >
 						<div class="mb-4 card" >
 							<div class="card-header">
-								<h6 class="card-heading"><span style="font-weight:bold; text-decoration:underline;">[<%= sf.format(nowTime) %>]</span> 베스트 상품 </h6></div>
+								<h3 class="card-title"><span style="font-weight:bold; text-decoration:underline;">[<%= sf.format(nowTime) %>]</span> 베스트 상품 </h3></div>
 					
 						<div class="container card-body" >
 							<div class="row">

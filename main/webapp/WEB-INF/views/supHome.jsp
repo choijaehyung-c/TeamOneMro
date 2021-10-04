@@ -13,16 +13,18 @@
         <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/ssNewFile.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}resources/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}resources/css/material-kit.css?v=2.0.7" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>        
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-		 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		 <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     </head>
     
-    <body class="sb-nav-fixed" onLoad="mainPage()">
+    <body class="sb-nav-fixed white-content" onLoad="mainPage()">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand ps-3" href="/">MRONE_SUPPLY</a>
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -97,12 +99,8 @@
                         id="sidenavAccordionPages">
                         <div class="nav-link" onClick="orderWaitList()">수주목록</div>
                         <div class="nav-link" onClick="trackDelivery()">출고목록</div>
-
                      </nav>
                   </div>
-                   
-                            
-                            
                             <div class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages55" aria-expanded="false" aria-controls="collapsePages55">                                
                                 교환 / 반품 관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -126,10 +124,6 @@
                                     <div class="nav-link" onClick="supplyIssueTaxbillListForm()">세금계산서 내역</div>                 
                                 </nav>  
                             </div>
-
-                        <!--  -->
-                       
-                            
                         </div>
                     </div>
                 </nav>
@@ -137,9 +131,9 @@
             <div id="layoutSidenav_content">
             <main style="height: 100%; width: 100%;">
 				<div id="supplyVue"  style="height: 100%; width: 100%;">
-
+<!--------------------------------------------------------------------------------------------------------------------------------->
 					<template v-if="display[21].show">
-						    <div class="col-lg-6">
+						    <div class="container-fluid px-4">
 							<div class="card mb-4">
 								<div class="card-header">
 									<svg class="svg-inline--fa fa-chart-bar fa-w-16 me-1"
@@ -204,35 +198,36 @@
 								</div>
 							</div>
 						</div>
-              		
-              		
-              			 <div class="container-fluid px-4" style="z-index: 3;">
+              		<div class="container-fluid px-4">
+						<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">반품 요청 목록</h1>
 					<div class="tabs">
 					<br>
-					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  <ul class="nav nav-tabs">
+						<li class="active" data-toggle="tab" @click="changeTab(0)">요청 리스트</li>
+						<li data-toggle="tab" @click="changeTab(1)">완료 리스트</li>
 					  </ul>
 					</div>
-              			 <br>
               		<div v-if="display2[0].show">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
-                           <input class="dataTable-input" type="text" placeholder="Search">
+                           <input class="form-control mr-3" type="text" placeholder="Search">
                         </div>
                      </div>  
-                        <div class="card mb-4">
-                           <div class="card-header">반품 요청 리스트</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20%;"><a>고객사</a></th>
-                                            <th style="width: 40%;"><a>내용</a></th>
-                                            <th style="width: 20%;"><a>정보</a></th>
-                                            <th style="width: 20%;" ><a></a></th>                                          
-                                        </tr>
+                        <div class="card">
+								<div class="card-header">
+									<h3 class="card-title">반품 요청 목록</h3>
+								</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>고객사</th>
+													<th>내용</th>
+													<th>정보</th>
+													<th class="text-center">상태</th>
+												</tr>
+											</thead>
                                     </thead>
        
                                     <tbody>
@@ -241,8 +236,8 @@
                                             <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
                                             <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
-                                               <button @click="sendAsResponse(item.re_code,'RA','r')" type="button" class="btn btn-dark">수락</button>
-                                           <button @click="sendAsResponse(item.re_code,'FF','r')"  type="button" class="btn btn-dark">거절</button>
+                                               <button @click="sendAsResponse(item.re_code,'RA','r')" type="button" class="bttn bttn-defaul">수락</button>
+                                           <button @click="sendAsResponse(item.re_code,'FF','r')"  type="button" class="bttn bttn-defaul">거절</button>
                                         </td>
                                         </tr>
                                     </tbody>
@@ -251,26 +246,30 @@
                         </div>
                     </div>
                     </div>
+                    </div>
 					<div v-if="display2[1].show">
+					<div class="container-fluid px-4">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
-                           <input class="dataTable-input" type="text" placeholder="Search">
+                           <input class="form-control mr-3" type="text" placeholder="Search">
                         </div>
                      </div>  
-                        <div class="card mb-4">
-                           <div class="card-header">응답 완료 리스트</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20%;"><a>고객사</a></th>
-                                            <th style="width: 40%;"><a>내용</a></th>
-                                            <th style="width: 20%;"><a>정보</a></th>
-                                            <th style="width: 20%;" ><a>상태</a></th>                                          
-                                        </tr>
+                        <div class="card">
+                                    <div class="card-header">
+									<h3 class="card-title">응답 완료 리스트</h3>
+								</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>고객사</th>
+													<th>내용</th>
+													<th>정보</th>
+													<th class="text-center">상태</th>
+												</tr>
+											</thead>
                                     </thead>
-       
                                     <tbody>
                                         <tr v-for="item in list2">
                                             <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
@@ -283,6 +282,7 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
                     </div>
                     </div>
                          </div>
@@ -321,12 +321,13 @@
 								</div>
 							</div>
 						</div>
-              			 			 <div class="container-fluid px-4">
+              		<div class="container-fluid px-4">
+              		<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">교환 요청 목록</h1>
 					<div class="tabs">
 					<br>
-					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  <ul class="nav nav-tabs">
+						<li class="active" data-toggle="tab" @click="changeTab(0)">요청 리스트</li>
+						<li data-toggle="tab" @click="changeTab(1)">완료 리스트</li>
 					  </ul>
 					</div>
 					<br>
@@ -334,30 +335,33 @@
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
-                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                           <input class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요">
                         </div>
                      </div>  
-                        <div class="card mb-4">
-                           <div class="card-header">교환 요청 리스트</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20%;"><a>고객사</a></th>
-                                            <th style="width: 40%;"><a>내용</a></th>
-                                            <th style="width: 20%;"><a>정보</a></th>
-                                            <th style="width: 20%;" ><a></a></th>                                               
-                                        </tr>
-                                    </thead>
+                        <div class="card">
+									<div class="card-header">
+										<h3 class="card-title">교환 요청 목록</h3>
+									</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>고객사</th>
+													<th>내용</th>
+													<th>정보</th>
+													<th class="text-center">상태</th>
+												</tr>
+											</thead>
+
        
                                     <tbody>
                                         <tr v-for="item in list">
                                             <td @click="getAsDetail(item.re_code)">{{item.cl_name}}</td>
                                             <td @click="getAsDetail(item.re_code)">{{item.word}}</td>
-                                            <td @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td style="text-align: center" @click="getAsDetail(item.re_code)">{{item.re_date}}<br>{{item.cl_hp}}</td>
                                             <td style="text-align: center">
-                                           <button @click="sendAsResponse(item.re_code,'EA','e')" type="button" class="btn btn-dark">수락</button>
-                                           <button @click="sendAsResponse(item.re_code,'EF','e')"  type="button" class="btn btn-dark">거절</button>
+                                           <button @click="sendAsResponse(item.re_code,'EA','e')" type="button" class="bttn bttn-defaul">수락</button>
+                                           <button @click="sendAsResponse(item.re_code,'EF','e')"  type="button" class="bttn bttn-defaul">거절</button>
                                         </td>
                                         </tr>
                                     </tbody>
@@ -370,20 +374,23 @@
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
-                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                           <input class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요">
                         </div>
                      </div>  
-                        <div class="card mb-4">
-                           <div class="card-header">응답 완료 리스트</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20%;"><a>고객사</a></th>
-                                            <th style="width: 40%;"><a>내용</a></th>
-                                            <th style="width: 20%;"><a>정보</a></th>
-                                            <th style="width: 20%;" ><a>상태</a></th>                                               
-                                        </tr>
+                       <div class="card">
+								<div class="card-header">
+									<h3 class="card-title">응답 완료 리스트</h3>
+								</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>고객사</th>
+													<th>내용</th>
+													<th>정보</th>
+													<th class="text-center">상태</th>
+												</tr>
+											</thead>
                                     </thead>
        
                                     <tbody>
@@ -466,13 +473,8 @@
                            style="position: relative; top: 50%; left: 80%;">Close</div>
                      </div>
                   </div>
-                  <h1>수주 목록</h1>
+                  <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">수주 목록</h1>
                   <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">수주대기 목록</li>
-                  </ol>
-                  <ol class="breadcrumb mb-4">
-   
                    <ul class="mb-5 nav nav-tabs" role="tablist">
                         <li class="nav-item" role="presentation">
                         <button type="button" role="tab" data-rb-event-key="allProducts"
@@ -510,13 +512,13 @@
                            </label>
                         </div>
                         <div class="dataTable-search">
-                           <input class="dataTable-input form-control form-control-sm"
+                           <input class="form-control mr-3 form-control form-control-sm"
                               placeholder="Search..." type="text">
                         </div>
                      </div>
 
-                     <div class="dataTable-container border-0">
-                        <table class="mb-0 table table-hover dataTable-table">
+                     <div class="card-body px-4">
+						<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
                            <thead>
                               <tr class="title">
                                  <th data-sortable="false" style="width: 14.7704%;">ORDER
@@ -559,10 +561,10 @@
                      </div>
 
                      <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
                            <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
+                              <li class=""><a href="#" data-page="1">1</a></li>
                               <li class=""><a href="#" data-page="2">2</a></li>
                               <li class=""><a href="#" data-page="3">3</a></li>
                               <li class=""><a href="#" data-page="4">4</a></li>
@@ -579,7 +581,6 @@
                </template>
 <!---------------------------------------------------------------------------------------------------->
                <template v-if="display[3].show">
-                  <h1>수주 목록</h1>
                   <div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
 							<div style="width:84%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
@@ -630,10 +631,7 @@
                            style="position: relative; top: 50%; left: 43%;">Close</div>
                      </div>
                   </div>
-                  <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">수주접수완료 목록</li>
-                  </ol>
+                  <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">수주 목록</h1>
                   <ol class="breadcrumb mb-4">
                      <ul class="mb-5 nav nav-tabs" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -676,13 +674,13 @@
                            </label>
                         </div>
                         <div class="dataTable-search">
-                           <input id="INPUT" v-on:keyup.13='searchWord()' class="dataTable-input form-control form-control-sm"
+                           <input id="INPUT" v-on:keyup.13='searchWord()' class="form-control mr-3 form-control form-control-sm"
                               placeholder="Search..." type="text"/>
                         </div>
                      </div>
 
-                     <div class="dataTable-container border-0">
-                        <table class="mb-0 table table-hover dataTable-table">
+                     <div class="card-body px-4">
+						<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
                            <thead>
                               <tr class="title">
                                  <th data-sortable="false" style="width: 14.7704%;">ORDER
@@ -725,10 +723,10 @@
                      </div>
 
                      <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
                            <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
+                              <li class=""><a href="#" data-page="1">1</a></li>
                               <li class=""><a href="#" data-page="2">2</a></li>
                               <li class=""><a href="#" data-page="3">3</a></li>
                               <li class=""><a href="#" data-page="4">4</a></li>
@@ -745,8 +743,6 @@
                </template>
 <!---------------------------------------------------------------------------------------------------->
                <template v-if="display[4].show">
-                  <h1>수주 목록</h1>
-
                   <div v-if="modal.show" style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
 							<div style="width:84%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
@@ -799,12 +795,8 @@
                            style="position: relative; top: 50%; left: 45%;">Close</div>
                      </div>
                   </div>
+                  <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">수주 목록</h1>
                   <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">수주거절 목록</li>
-                  </ol>
-                  <ol class="breadcrumb mb-4">
-
                     <ul class="mb-5 nav nav-tabs" role="tablist">
                      <li class="nav-item" role="presentation">
                         <button type="button" role="tab" data-rb-event-key="allProducts"
@@ -846,13 +838,13 @@
                            </label>
                         </div>
                         <div class="dataTable-search">
-                           <input class="dataTable-input form-control form-control-sm"
+                           <input class="form-control mr-3 form-control form-control-sm"
                               placeholder="Search..." type="text">
                         </div>
                      </div>
 
-                     <div class="dataTable-container border-0">
-                        <table class="mb-0 table table-hover dataTable-table">
+                     <div class="card-body px-4">
+						<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
                            <thead>
                               <tr class="title">
                                  <th data-sortable="false" style="width: 14.7704%;">ORDER
@@ -895,10 +887,10 @@
                      </div>
 
                      <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
                            <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
+                              <li class=""><a href="#" data-page="1">1</a></li>
                               <li class=""><a href="#" data-page="2">2</a></li>
                               <li class=""><a href="#" data-page="3">3</a></li>
                               <li class=""><a href="#" data-page="4">4</a></li>
@@ -915,7 +907,7 @@
                </template>
 <!-- ------------------------------------배송출발목록---------------------------------------------------->
                <template v-if="display[5].show">
-                  <h1>배송 목록</h1> <!-- 기사님이 물건을 가져갈때 버튼 누르면, 2로 업데이트 -->
+                 <!-- 기사님이 물건을 가져갈때 버튼 누르면, 2로 업데이트 -->
                   <div v-if="modal.show"
                      style="height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
                      <div
@@ -947,10 +939,7 @@
                            style="position: relative; top: 50%; left: 80%;">Close</div>
                      </div>
                   </div>
-                  <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">배송중 목록</li>
-                  </ol>
+                  <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">배송 목록</h1>
                   <div
                      class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
@@ -974,13 +963,13 @@
                            </label>
                         </div>
                         <div class="dataTable-search">
-                           <input class="dataTable-input form-control form-control-sm"
+                           <input class="form-control mr-3 form-control form-control-sm"
                               placeholder="Search..." type="text">
                         </div>
                      </div>
 
-                     <div class="dataTable-container border-0">
-                        <table class="mb-0 table table-hover dataTable-table">
+                     <div class="card-body px-4">
+						<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
                            <thead>
                               <tr class="title">
                                  <th data-sortable="false" style="width: 14.7704%;">ORDER
@@ -1021,10 +1010,10 @@
                      </div>
 
                      <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
+                        <div class="dataTable-info"></div>
                         <nav class="dataTable-pagination">
                            <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
+                              <li class=""><a href="#" data-page="1">1</a></li>
                               <li class=""><a href="#" data-page="2">2</a></li>
                               <li class=""><a href="#" data-page="3">3</a></li>
                               <li class=""><a href="#" data-page="4">4</a></li>
@@ -1091,20 +1080,22 @@
                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div  class="dataTable-top">
                      	<div class="dataTable-search">
-                     		<input  @change="search1()" v-on:input="search1" v-bind:value="searchWord"  class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
+                     		<input  @change="search1()" v-on:input="search1" v-bind:value="searchWord"  class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요" >
                      	
                      	</div>
                      </div>  
-                        <div class="card mb-4">
-                        	<div class="card-header">판매중인 상품</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
+                        	<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">판매 중인 상품</h3>
+									</div>
+                            <div class="card-body px-4">
+						<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10%;"><a>카테고리</a></th>
-                                            <th style="width: 60%;"><a>상품명</a></th>
-                                            <th style="width: 20%;"><a>수량</a></th>
-                                            <th style="width: 10%;" ><a></a></th>                                          
+                                            <th style="width: 10%;">카테고리</th>
+                                            <th style="width: 60%;">상품명</th>
+                                            <th style="width: 20%;">수량</th>
+                                            <th style="width: 10%;"></th>                                          
                                         </tr>
                                     </thead>
        
@@ -1211,33 +1202,37 @@
 					<template v-if="display[16].show" style="z-index: 3;">
 					
 						<div class="container-fluid px-4">
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >거래내역 조회</h1>
-						<input type="text" class="form-control" name="word" placeholder="고객사명, 고객사코드 혹은 사업자번호로 검색해주세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchDeal()" value="">검 색</span>
-							<div class="card mb-4">
-								<div class="card-body">※거래내역 확인 [문의 : nsb214@naver.com]</div>
-							</div>
-							<div class="card mb-4">
-								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 거래내역
+						<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">거래 내역 조회</h1>
+						<form class="form-inline col-md-12">
+								<div class="form-group ml-auto">
+									<input type="text" class="form-control " name="word"
+										placeholder="고객사명, 고객사코드 혹은 사업자번호로 검색해주세요." /> 
+									<span class="bttn bttn-defau bttn-round" type="button"
+										@click="searchDeal()" value="">검 색</span>
 								</div>
-
-								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
-										<thead>
-											<tr>
-												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
-												<th data-sortable style="width: 25%;"><a>날짜</a></th>
-											</tr>
-										</thead>
+							</form>
+										<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">거래 내역</h3>
+									</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter"
+											style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>주문코드</th>
+													<th>고객사코드</th>
+													<th>고객사명</th>
+													<th class="text-center">날짜</th>
+												</tr>
+											</thead>
 										<tbody>
 											<tr v-for="dl in list"
 												@click="SupplyDealDetail(dl.re_code)">
 												<td>{{dl.re_code}}</td>
 												<td>{{dl.re_clcode}}</td>
 												<td>{{dl.cl_name}}</td>
-												<td>{{dl.re_date}}</td>
+												<td class="text-center">{{dl.re_date}}</td>
 											</tr>
 											</tbody>																	
 									</table>
@@ -1308,18 +1303,12 @@
 					
 					
 						<div class="container-fluid px-4">
-							
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행</h1>
-						
-							<div class="card mb-4">
-								<div class="card-body">※[문의 : nsb214@naver.com]</div>
-							</div>
-							<div class="card mb-4">
-								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 세금계산서
-									
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">세금 계산서 발행</h1>
 								</div>
-
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">세금 계산서</h3>
+									</div>
 								<div>
   
 <table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
@@ -1646,24 +1635,19 @@
 					  </div>
 					</div>
 						<div class="container-fluid px-4">
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행 내역</h1>
-						
-							<div class="card mb-4">
-								<div class="card-body">※세금계산서 발행 내역 확인 [문의 : nsb214@naver.com]</div>
-							</div>
-							<div class="card mb-4">
-								<div class="card-header">
-									<i class="fas fa-table me-1"></i> 세금계산서 발행 내역
-								</div>
-
+							<h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">세금 계산서 발행 내역</h1>
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">세금 계산서 발행 내역</h3>
+									</div>
 								<div class="card-body">
-									<table id="datatablesSimple" class="dataTable-table">
+									<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
 										<thead>
-											<tr>
-												<th data-sortable style="width: 25%;"><a>세금계산서코드</a></th>
-												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
+											<tr >
+													<th>세금계산서코드</th>
+													<th >주문코드</th>
+													<th class="text-center">고객사코드</th>
+													<th class="text-center">고객사명</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -1671,8 +1655,8 @@
 												@click="taxDetail(tl.tb_code)">
 												<td>{{tl.tb_code}}</td>
 												<td>{{tl.tb_oscode}}</td>
-												<td>{{tl.tb_clcode}}</td>
-												<td>{{tl.tb_clname}}</td>
+												<td class="text-center">{{tl.tb_clcode}}</td>
+												<td class="text-center">{{tl.tb_clname}}</td>
 											</tr>
 											</tbody>																	
 									</table>
@@ -1780,28 +1764,29 @@
            				<!-- 상품 등록신청 리스트 -->
            				
            					<div class="container-fluid px-4">
-                        <h6>&nbsp </h6>
+                        <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">새 상품 요청 목록</h1>
                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div  class="dataTable-top">
                      	<button @click="supplyRequestNewProductModal()" type="button" class="btn btn-dark">물품등록신청</button>
                      	<div class="dataTable-search">
-                     		<input @change="search2()" v-on:input="search2" v-bind:value="searchWord" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요" >
+                     		<input @change="search2()" v-on:input="search2" v-bind:value="searchWord" class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요" >
                      	
                      	</div>
                      </div>  
-                        <div class="card mb-4">
-                        	<div class="card-header">등록요청중인 상품</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;"><a>카테고리</a></th>
-                                            <th style="width: 60%;"><a>상품명</a></th>
-                                            <th style="width: 20%;"><a>상태</a></th>
-                                            <th style="width: 10%;" ><a></a></th>                                          
-                                        </tr>
-                                    </thead>
-       
+                                    <div class="card">
+									<div class="card-header">
+										<h3 class="card-title">등록 요청중인 상품</h3>
+									</div>
+									<div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>카테고리</th>
+													<th>상품명</th>
+													<th>상태</th>
+													<th class="text-center"></th>
+												</tr>
+											</thead>
                                     <tbody v-if="display[12].show">
                                         <tr v-for="PRAF in list">
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.cate_name}}</td>
@@ -1820,7 +1805,7 @@
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.pr_name}}</td>
                                             <td @click="productDetail(PRAF.pr_code, PRAF.pr_stcode)">{{PRAF.st_name}}</td>
                                             
-                                            <td style="text-align: center">
+                                            <td class="text-center">
                    								<button @click="supplyRequestCancel(PRAF.pr_code, PRAF.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
                    							</td>
                                         </tr>
@@ -1876,36 +1861,35 @@
            				             		
                     <div class="container-fluid px-4">
 
-                        <h6>&nbsp </h6>
+                       <h1 style="padding: 20px; font-size: 35px; color: #000000; font-weight: bold; margin-left: -5px;">상품 수정 요천 목록</h1>
 
                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                      	<div class="dataTable-search">
-                     		<input @change="search3()" v-on:input="search3" v-bind:value="searchWord" class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                     		<input @change="search3()" v-on:input="search3" v-bind:value="searchWord" class="form-control mr-3" type="text" placeholder="상품명을 입력해주세요">
                      	</div>
                      </div>  
-                        
-
-                        
-                        <div class="card mb-4">
-                        	<div class="card-header">수정, 삭제요청중인 상품</div>
-                            <div class="card-body">
-                                <table id="datatablesSimple" class="dataTable-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;"><a>카테고리</a></th>
-                                            <th style="width: 60%;"><a>상품명</a></th>
-                                            <th style="width: 20%;"><a>상태</a></th>
-                                            <th style="width: 10%;" ><a></a></th>                                         
-                                        </tr>
-                                    </thead>
+                                    <div class="card">
+									<div class="card-header">
+										<h3 class="card-title">수정, 삭제 요청 중인 상품</h3>
+									</div>
+                                    <div class="card-body">
+										<table id="table-responsive ps" class="table tablesorter" style="font-size: 16px">
+											<thead>
+												<tr>
+													<th>카테고리</th>
+													<th class="text-center">상품명</th>
+													<th class="text-center">상태</th>
+													<th class="text-center"></th>
+												</tr>
+											</thead>
        
                                     <tbody v-if="display[14].show">
                                         <tr v-for="MRDRDA in list">
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
-                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
-                                            <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.st_name}}</td>
-                                            <td style="text-align: center">
+                                            <td class="text-center" @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
+                                            <td class="text-center" @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.st_name}}</td>
+                                            <td class="text-center">
                                             	<button @click="supplyRequestCancel(MRDRDA.pr_code, MRDRDA.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
                    							</td>
                                         </tr>
@@ -1916,7 +1900,7 @@
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.cate_name}}</td>
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.pr_name}}</td>
                                             <td @click="productDetail(MRDRDA.pr_code, MRDRDA.pr_stcode)">{{MRDRDA.st_name}}</td>
-                                            <td style="text-align: center">
+                                            <td class="text-center">
                                             	<button @click="supplyRequestCancel(MRDRDA.pr_code, MRDRDA.pr_stcode)" type="button" class="btn btn-dark">요청삭제</button>
                    							</td>
                                         </tr>

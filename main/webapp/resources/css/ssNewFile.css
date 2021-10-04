@@ -12,7 +12,7 @@
 	margin:0;
 	list-style:none;
 	padding: 0 6%;
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid #000000;
 	zoom: 1;
 }
 
@@ -22,12 +22,12 @@
 	margin: 0;
 }
 .tabs ul li{
-	background: #f6f6f6;
+	background: #ffffff;
 	font-weight: bold;
 	text-align: center;
 	display: block;
-	border: 1px solid #e0e0e0;
-	color: #909090;
+	border: 0.3px solid #000000;
+	color: #000000;
 	text-shadow: 0 1px 0 rgba(255,255,255, 0.75);
 	padding: 6px 18px; margin: 0 5px -1px 0;
 	/* Border Radius */
