@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/supplyIYJ.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/ssNewFile.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>        
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
@@ -49,7 +50,7 @@
                                 
                                 Dashboard
                             </div>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">Products</div>
          							<div id="mainVueTwo">	
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages5" aria-expanded="false" aria-controls="collapsePages5">
                                 상품관리
@@ -80,7 +81,7 @@
                             </div>
 
  						  </div>
-                            
+                            <div class="sb-sidenav-menu-heading">Orders</div>
                   <div class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                      data-bs-target="#collapsePages" aria-expanded="false"
                      aria-controls="collapsePages">
@@ -206,10 +207,19 @@
               		
               		
               			 <div class="container-fluid px-4" style="z-index: 3;">
+					<div class="tabs">
+					<br>
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  </ul>
+					</div>
+              			 <br>
+              		<div v-if="display2[0].show">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
-                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                           <input class="dataTable-input" type="text" placeholder="Search">
                         </div>
                      </div>  
                         <div class="card mb-4">
@@ -239,6 +249,41 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    </div>
+					<div v-if="display2[1].show">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                        <div class="dataTable-search">
+                           <input class="dataTable-input" type="text" placeholder="Search">
+                        </div>
+                     </div>  
+                        <div class="card mb-4">
+                           <div class="card-header">응답 완료 리스트</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%;"><a>고객사</a></th>
+                                            <th style="width: 40%;"><a>내용</a></th>
+                                            <th style="width: 20%;"><a>정보</a></th>
+                                            <th style="width: 20%;" ><a>상태</a></th>                                          
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="item in list2">
+                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code,'rc')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td style="text-align: center" v-if="item.re_state === 'RA'">반품 수락</td>
+                                            <td style="text-align: center" v-else>반품 거절</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                          </div>
               			
@@ -277,6 +322,15 @@
 							</div>
 						</div>
               			 			 <div class="container-fluid px-4">
+					<div class="tabs">
+					<br>
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  </ul>
+					</div>
+					<br>
+					<div v-if="display2[0].show">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                      <div class="dataTable-top">
                         <div class="dataTable-search">
@@ -310,6 +364,41 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    </div>
+                    <div v-if="display2[1].show">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                     <div class="dataTable-top">
+                        <div class="dataTable-search">
+                           <input class="dataTable-input" type="text" placeholder="상품명을 입력해주세요">
+                        </div>
+                     </div>  
+                        <div class="card mb-4">
+                           <div class="card-header">응답 완료 리스트</div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" class="dataTable-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%;"><a>고객사</a></th>
+                                            <th style="width: 40%;"><a>내용</a></th>
+                                            <th style="width: 20%;"><a>정보</a></th>
+                                            <th style="width: 20%;" ><a>상태</a></th>                                               
+                                        </tr>
+                                    </thead>
+       
+                                    <tbody>
+                                        <tr v-for="item in list2">
+                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.cl_name}}</td>
+                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.word}}</td>
+                                            <td @click="getAsDetail(item.re_code,'ec')">{{item.re_date}}<br>{{item.cl_hp}}</td>
+                                            <td style="text-align: center" v-if="item.re_state === 'EA'">교환 수락</td>
+                                            <td style="text-align: center" v-else>교환 거절</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                          </div>
               		</template>

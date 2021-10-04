@@ -233,6 +233,16 @@ public class RestApiController {
 		return sse.supplyReceiveAsDetailER(re_code);
 	}
 	
+	@PostMapping("/supplyReceiveAsDetailRC")
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailRC(@ModelAttribute("re_code") String re_code){
+		return sse.supplyReceiveAsDetailRC(re_code);
+	}
+	
+	@PostMapping("/supplyReceiveAsDetailEC")
+	public List<RequestOrderDetailBean> supplyReceiveAsDetailEC(@ModelAttribute("re_code") String re_code){
+		return sse.supplyReceiveAsDetailEC(re_code);
+	}
+	
 	//supply 반품 응답
 	@PostMapping("/supplyResponseRefund")
 	public String supplyResponseRefund(@RequestBody RequestOrderBean ro){

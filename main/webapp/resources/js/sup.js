@@ -12,6 +12,7 @@ const main = new Vue({
 	modal: { show: false },
 	modal2:{show:false},
 	list:[],
+	list2:[],
 	modalList:[],
 	dupCheck:[],
 	modalDetailList:[],
@@ -25,7 +26,8 @@ const main = new Vue({
 	  modalDealList:[],
 	  modalCLList:[],
 	  tbbean:{},
-	  od:[]
+	  od:[],
+	display2:[{show:true},{show:false}],
   },
 	methods:{
 		changePage:function(page){
@@ -34,6 +36,18 @@ const main = new Vue({
 			}
 			this.modalClose();
 			this.display[page].show = true;
+		},
+		tabSet:function(tabNum){
+			let count = this.display2.length;
+			for(i=0; i<count; i++){
+				this.display2[i].show=false;
+			}
+			this.display2[tabNum].show = true;
+		},
+		changeTab:function(tabNum){
+			this.tabSet(tabNum);
+			$('.litab').attr('class','litab');
+			document.getElementsByClassName("litab")[tabNum].className = "litab activeT";
 		},
 		modalOpen: function() {
 			this.modal.show = true;
@@ -53,12 +67,23 @@ const main = new Vue({
 			console.log(jsondata);
 			this.modalList=jsondata;
 		},
+		sortAndPushData:function(data,sort){
+			if(sort){
+				this.list.push(data);
+			}else{
+				this.list2.push(data);
+			}
+		},
 		getAsDetail:function(data,type){
 			let cData = `re_code=${data}`;
 			if(type=="r"){
-			postAjaxForm("vue/supplyReceiveAsDetailR","getAsDetailForm", "j",cData);}
-			else{
-			postAjaxForm("vue/supplyReceiveAsDetailE","getAsDetailForm", "j",cData);	
+				postAjaxForm("vue/supplyReceiveAsDetailR","getAsDetailForm", "j",cData);}
+			else if(type=="e"){
+				postAjaxForm("vue/supplyReceiveAsDetailE","getAsDetailForm", "j",cData);	
+			}else if(type=="rc"){
+				postAjaxForm("vue/supplyReceiveAsDetailRC","getAsDetailForm", "j",cData);	
+			}else if(type=="ec"){
+				postAjaxForm("vue/supplyReceiveAsDetailEC","getAsDetailForm", "j",cData);				
 			}
 		},
 		insReason:function(index,code){
@@ -447,12 +472,30 @@ function mainPage(){//onLoad
 
 function getRefundList(jsondata){
 	main.changePage(0);
-	main.pushData(jsondata);
+	main.list =[];
+	main.list2 =[];
+	let jCount = jsondata.length;
+	for(i=0;i<jCount;i++){
+		if(jsondata.re_state == 'RR'){
+			main.sortAndPushData(jsondata[i],true);
+		}else{
+			main.sortAndPushData(jsondata[i],false);
+		}
+	}
 }
 
 function getExchangeList(jsondata){
 	main.changePage(1);
-	main.pushData(jsondata);
+	main.list =[];
+	main.list2 =[];
+	let jCount = jsondata.length;
+	for(i=0;i<jCount;i++){
+		if(jsondata.re_state == 'ER'){
+			main.sortAndPushData(jsondata[i],true);
+		}else{
+			main.sortAndPushData(jsondata[i],false);
+		}
+	}
 }
 
 function getAsDetailForm(jsondata){

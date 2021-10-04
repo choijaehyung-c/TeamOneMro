@@ -512,7 +512,7 @@ class SupplyServiceCtl {
 		RequestOrderBean ro= new RequestOrderBean();
 		try {
 			ro.setRe_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
-			ro.setRe_state("RR");
+			ro.setRe_state(" 'RR' OR RE.RE_STATE = 'RA' OR RE.RE_STATE = 'FF'");
 		} catch (Exception e) {e.printStackTrace();}
 		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
 		for(int i=0;i<roList.size();i++) {
@@ -532,7 +532,7 @@ class SupplyServiceCtl {
 		RequestOrderBean ro= new RequestOrderBean();
 		try {
 			ro.setRe_spcode(enc.aesDecode((String)pu.getAttribute("type"),enc.aesDecode((String)pu.getAttribute("userSs"),"session")));
-			ro.setRe_state("ER");
+			ro.setRe_state(" 'RR' OR RE.RE_STATE = 'EA' OR RE.RE_STATE = 'EF'");
 		} catch (Exception e) {e.printStackTrace();}
 		List<RequestOrderBean> roList = dao.getReceiveAsListSp(ro);
 		for(int i=0;i<roList.size();i++) {
