@@ -467,10 +467,7 @@
                      </div>
                   </div>
                   <h1>수주 목록</h1>
-                  <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">수주대기 목록</li>
-                  </ol>
+                  <br>
                   <ol class="breadcrumb mb-4">
    
                    <ul class="mb-5 nav nav-tabs" role="tablist">
@@ -489,32 +486,6 @@
                   </ol>
                   <div
                      class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                     <div class="dataTable-top">
-                        <div class="dataTable-dropdown">
-                           <span class="me-2" id="categoryBulkAction"> <select
-                              name="categoryBulkAction"
-                              class="d-inline w-auto form-select form-select-sm">
-                                 <option>Bulk Actions</option>
-                                 <option>Delete</option>
-                           </select>
-                              <button type="button"
-                                 class="align-top ms-1 btn btn-outline-dark btn-sm">Apply</button>
-                           </span> <label> <select
-                              class="dataTable-selector form-select form-select-sm">
-                                 <option value="5">5</option>
-                                 <option value="10" selected="">10</option>
-                                 <option value="15">15</option>
-                                 <option value="20">20</option>
-                                 <option value="25">25</option>
-                           </select> entries per page
-                           </label>
-                        </div>
-                        <div class="dataTable-search">
-                           <input class="dataTable-input form-control form-control-sm"
-                              placeholder="Search..." type="text">
-                        </div>
-                     </div>
-
                      <div class="dataTable-container border-0">
                         <table class="mb-0 table table-hover dataTable-table">
                            <thead>
@@ -558,23 +529,7 @@
                         </table>
                      </div>
 
-                     <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
-                        <nav class="dataTable-pagination">
-                           <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
-                              <li class=""><a href="#" data-page="2">2</a></li>
-                              <li class=""><a href="#" data-page="3">3</a></li>
-                              <li class=""><a href="#" data-page="4">4</a></li>
-                              <li class=""><a href="#" data-page="5">5</a></li>
-                              <li class=""><a href="#" data-page="6">6</a></li>
-                              <li class=""><a href="#" data-page="7">7</a></li>
-                              <li class="ellipsis"><a href="#">…</a></li>
-                              <li class=""><a href="#" data-page="10">10</a></li>
-                              <li class="pager"><a href="#" data-page="2">›</a></li>
-                           </ul>
-                        </nav>
-                     </div>
+                     
                   </div>
                </template>
 <!---------------------------------------------------------------------------------------------------->
@@ -947,37 +902,9 @@
                            style="position: relative; top: 50%; left: 80%;">Close</div>
                      </div>
                   </div>
-                  <ol class="breadcrumb mb-4">
-                     <li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-                     <li class="breadcrumb-item active">배송중 목록</li>
-                  </ol>
                   <div
                      class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                     <div class="dataTable-top">
-                        <div class="dataTable-dropdown">
-                           <span class="me-2" id="categoryBulkAction"> <select
-                              name="categoryBulkAction"
-                              class="d-inline w-auto form-select form-select-sm">
-                                 <option>Bulk Actions</option>
-                                 <option>Delete</option>
-                           </select>
-                              <button type="button"
-                                 class="align-top ms-1 btn btn-outline-dark btn-sm">Apply</button>
-                           </span> <label> <select
-                              class="dataTable-selector form-select form-select-sm">
-                                 <option value="5">5</option>
-                                 <option value="10" selected="">10</option>
-                                 <option value="15">15</option>
-                                 <option value="20">20</option>
-                                 <option value="25">25</option>
-                           </select> entries per page
-                           </label>
-                        </div>
-                        <div class="dataTable-search">
-                           <input class="dataTable-input form-control form-control-sm"
-                              placeholder="Search..." type="text">
-                        </div>
-                     </div>
+                     
 
                      <div class="dataTable-container border-0">
                         <table class="mb-0 table table-hover dataTable-table">
@@ -1018,24 +945,6 @@
                               </tr>
                            </tbody>
                         </table>
-                     </div>
-
-                     <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to 10 of 100 entries</div>
-                        <nav class="dataTable-pagination">
-                           <ul class="dataTable-pagination-list">
-                              <li class="active"><a href="#" data-page="1">1</a></li>
-                              <li class=""><a href="#" data-page="2">2</a></li>
-                              <li class=""><a href="#" data-page="3">3</a></li>
-                              <li class=""><a href="#" data-page="4">4</a></li>
-                              <li class=""><a href="#" data-page="5">5</a></li>
-                              <li class=""><a href="#" data-page="6">6</a></li>
-                              <li class=""><a href="#" data-page="7">7</a></li>
-                              <li class="ellipsis"><a href="#">…</a></li>
-                              <li class=""><a href="#" data-page="10">10</a></li>
-                              <li class="pager"><a href="#" data-page="2">›</a></li>
-                           </ul>
-                        </nav>
                      </div>
                   </div>
                </template>
@@ -1211,11 +1120,8 @@
 					<template v-if="display[16].show" style="z-index: 3;">
 					
 						<div class="container-fluid px-4">
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >거래내역 조회</h1>
-						<input type="text" class="form-control" name="word" placeholder="고객사명, 고객사코드 혹은 사업자번호로 검색해주세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchDeal()" value="">검 색</span>
-							<div class="card mb-4">
-								<div class="card-body">※거래내역 확인 [문의 : nsb214@naver.com]</div>
-							</div>
+							<h1 style = "padding:20px; font-size:25px; color:#000; font-weight:bold; margin-left:-30px;">거래내역 조회</h1>
+						<div style="overflow: hidden">&nbsp<span  style="float:right;" class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchDeal()" value="">검 색</span><input type="text" class="form-control" name="word" placeholder="고객사명, 고객사코드 혹은 사업자번호로 검색해주세요." style="width:30%; float:right;"/></div>
 							<div class="card mb-4">
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i> 거래내역
@@ -1309,11 +1215,8 @@
 					
 						<div class="container-fluid px-4">
 							
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행</h1>
+							<h1 style = "padding:20px; font-size:25px; color:#000; font-weight:bold; margin-left:-30px;">세금계산서 발행</h1>
 						
-							<div class="card mb-4">
-								<div class="card-body">※[문의 : nsb214@naver.com]</div>
-							</div>
 							<div class="card mb-4">
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i> 세금계산서
@@ -1646,11 +1549,9 @@
 					  </div>
 					</div>
 						<div class="container-fluid px-4">
-							<h1 style = "padding:20px; font-size:25px; color:#808080; font-weight:bold; margin-left:-30px;"><a href="/">메인페이지</a> >세금계산서 발행 내역</h1>
+							<h1 style = "padding:20px; font-size:25px; color:#000; font-weight:bold; margin-left:-30px;">세금계산서 발행 내역</h1>
 						
-							<div class="card mb-4">
-								<div class="card-body">※세금계산서 발행 내역 확인 [문의 : nsb214@naver.com]</div>
-							</div>
+							
 							<div class="card mb-4">
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i> 세금계산서 발행 내역

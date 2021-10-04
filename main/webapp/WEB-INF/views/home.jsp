@@ -50,9 +50,9 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                         	<br>
-                            <div class="nav-link" onClick="tttset()">
+                            <a class="nav-link" href="/">
                               Dashboard
-                            </div>
+                            </a>
                             <div class="sb-sidenav-menu-heading">Cooperation</div>
                         
                             <div class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -157,6 +157,7 @@
 							</div>
 						</div>
 						<div class="container-fluid px-4">
+						<h2 style="padding: 20px; font-size: 25px; color: #000; font-weight: bold; margin-left: -30px;">새상품 등록 요청 리스트</h2>
 						<h6>&nbsp</h6>
 							<div
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -259,7 +260,7 @@
 						</div>
 						<div class="container-fluid px-4">
 
-							<h1 style="padding: 20px">상품 수정신청 리스트</h1>
+							<h2 style="padding: 20px; font-size: 25px; color: #000; font-weight: bold; margin-left: -30px;">상품 수정 요청 리스트</h2>
 
 							<div
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
@@ -345,12 +346,8 @@
 <!------------------------------------------------------------------------------------------------------------------------>
                 	<template v-if="display[2].show">
                 		<div class="container-fluid px-4">
-							<h1 class="mt-4">공급사 목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">공급사 목록</li>
-							</ol>
-								<input type="text" class="form-control" name="word" placeholder="공급사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="search()" value="">검 색</span>
+							<h1 class="mt-4" style="font-size: 30px; color: #000; font-weight: bold; margin-left:10px;">공급사 목록</h1>
+								<div align="right"><input style="width:30%; display:inline;" type="text" class="form-control" name="word" placeholder="공급사 이름을 검색하세요." /> <span style="display:inline;" class="btn btn-secondary btn_two me-2 my-1" type="button" @click="search()" value="">검 색</span></div>
 								<div class="btn btn-secondary me-2 my-1" type="button" id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 공급사 등록</div>
 								                		<div class="modal fade" id="ModalLg" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
@@ -397,18 +394,14 @@
 <!------------------------------------------------------------------------------------------------------------------------>		
                 	<template v-if="display[3].show">
                 		<div class="container-fluid px-4">
-							<h1 class="mt-4">고객사 목록</h1>
-							<ol class="breadcrumb mb-4">
-								<li class="breadcrumb-item"><a href="/">메인페이지</a></li>
-								<li class="breadcrumb-item active">고객사 목록</li>
-							</ol>
-								<input type="text" class="form-control" name="wordC" placeholder="고객사 이름을 검색하세요." /><span  class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchClient()" value="">검 색</span>
+							<h1 class="mt-4" style="font-size: 30px; color: #000; font-weight: bold; margin-left:10px;">고객사 목록</h1>
+								<div align="right"><input style="width:30%; display:inline;" type="text" class="form-control" name="wordC" placeholder="고객사 이름을 검색하세요." /> <span style="display:inline;" class="btn btn-secondary btn_two me-2 my-1" type="button" @click="searchClient()" value="">검 색</span></div>
 								<div class="btn btn-secondary me-2 my-1" type="button" id="insSp" data-bs-toggle="modal" data-bs-target="#ModalLg">새 고객사 등록</div>
 								                		<div class="modal fade" id="ModalLg" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" >새 고객사 등록</h5>
+                                                                    <h5 class="modal-title"  align="left">새 고객사 등록</h5>
                                                                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onClick="close()"></button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -432,6 +425,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card mb-4">
+                                                    <br>
 								<div class="card-header">
 									<i class="fas fa-table me-1"></i> 고객사 목록
 								</div>  
@@ -444,7 +438,9 @@
                 		
          
                 		</table>    
-   	
+   						</div>
+   						</div>
+   						</div>
                 		</template>     
 <!------------------------------------------------------------------------------------------------------------------------>
 					<template v-if="display[4].show" style="z-index: 3;">
@@ -488,8 +484,8 @@
 						</div>
 						<div class="container-fluid px-4">
 							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> >주문 목록
+								style="padding: 20px; font-size: 25px; color: #000; font-weight: bold; margin-left: -30px;">
+								주문 목록
 							</h1>
 							
 							<div class="w3-bar w3-black">
@@ -615,8 +611,8 @@
 						</div>
 						<div class="container-fluid px-4">
 							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> 반품 목록
+								style="padding: 20px; font-size: 25px; color: #000; font-weight: bold; margin-left: -30px;">
+								반품 목록
 							</h1>
 							
 							<div class="w3-bar w3-black">
@@ -737,8 +733,8 @@
 						</div>
 						<div class="container-fluid px-4">
 							<h1
-								style="padding: 20px; font-size: 25px; color: #808080; font-weight: bold; margin-left: -30px;">
-								<a href="/">메인페이지</a> >교환 목록
+								style="padding: 20px; font-size: 25px; color: #000; font-weight: bold; margin-left: -30px;">
+								교환 목록
 							</h1>
 							
 							<div class="w3-bar w3-black">
