@@ -187,17 +187,17 @@
     </select>
     
     <select id="getTaxProduct"  parameterType="string" resultType="mrone.teamone.beans.OrderDetailBean">
-	SELECT
-	OD_PRSPCODE,
-	OD_OSCODE,
-	OD_STCODE,
-	OD_PRCODE,
-	OD_QUANTITY,
-	PR_NAME,
-	PR_PRICE,
-	PR_TAX
-	FROM OD INNER JOIN PR ON OD.OD_PRCODE = PR.PR_CODE
-	WHERE OD_OSCODE = #{oscode}
+   SELECT
+   RD_PRSPCODE AS OD_PRSPCODE,
+   RD_RECODE AS OD_OSCODE,
+   RD_STCODE AS OD_STCODE,
+   RD_PRCODE AS OD_PRCODE,
+   RD_QUANTITY AS OD_QUANTITY,
+   PR_NAME,
+   PR_PRICE,
+   PR_TAX
+   FROM RD INNER JOIN PR ON RD.RD_PRCODE = PR.PR_CODE
+   WHERE RD_RECODE = #{oscode} AND PR_STCODE ='PC'
     </select>
     
 	
