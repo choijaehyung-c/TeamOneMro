@@ -66,6 +66,9 @@ class ClientServiceCtl {
 	
 	
 	List<String> clientRequestCtl(ClientOrderBean co,String type){
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		Set<String> sp = new HashSet<>();
 		co.setOs_state(type);
 
@@ -85,10 +88,14 @@ class ClientServiceCtl {
 				for(String sp_code : sp) {
 					if ((this.clientOrderProcess(co,sp_code))!=null) {
 						oscodes.add(co.getOs_code());
-						this.clientRequestProcess(co,sp_code);}
+						if(this.clientRequestProcess(co,sp_code)){
+							tran = true;
+						}
+					}
 				}
 			}
 		}
+		pu.setTransactionResult(tran);
 		return oscodes;
 	}
 	
@@ -103,7 +110,6 @@ class ClientServiceCtl {
 	}
 	
 	String clientOrderProcess(ClientOrderBean co, String sp_code) {
-		boolean tran = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
 		co.setOs_date(sdf.format(cal.getTime()));
@@ -122,7 +128,7 @@ class ClientServiceCtl {
 				tranCount++;
 			}
 			System.out.println("csc_clientOrderProcess"+tranCount + ":" + co.getOd().size());
-			if (tranCount == co.getOd().size())tran = true;
+			if (tranCount == co.getOd().size()) {}
 			else co.setOs_code(null);
 
 		}

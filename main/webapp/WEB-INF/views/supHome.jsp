@@ -181,7 +181,7 @@
 								     <thead>
                                         <tr>
                                             <th style="width: 30%;"><a>상품명</a></th>
-                                            <th style="width: 45%;"><a>상품정보</a></th>
+                                            <th style="width: 45%;"><a>사유</a></th>
                                             <th style="width: 7.5%;"><a>가격</a></th>
                                             <th style="width: 7.5%;"><a>카테고리</a></th>
                                             <th style="width: 10%;"><a>원산지</a></th>                                          
@@ -190,7 +190,7 @@
 									<tbody>
 										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
 											<td>{{item.pr_name}}</td>
-											<td>{{item.pr_info}}</td>
+											<td>{{item.rd_note}}</td>
 											<td>{{item.pr_ttprice}}</td>
 											<td>{{item.cate_name}}</td>
 											<td>{{item.pr_origin}}</td>
@@ -298,7 +298,7 @@
 								     <thead>
                                         <tr>
                                             <th style="width: 30%;"><a>상품명</a></th>
-                                            <th style="width: 45%;"><a>상품정보</a></th>
+                                            <th style="width: 45%;"><a>사유</a></th>
                                             <th style="width: 7.5%;"><a>가격</a></th>
                                             <th style="width: 7.5%;"><a>카테고리</a></th>
                                             <th style="width: 10%;"><a>원산지</a></th>                                          
@@ -307,7 +307,7 @@
 									<tbody>
 										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
 											<td>{{item.pr_name}}</td>
-											<td>{{item.pr_info}}</td>
+											<td>{{item.rd_note}}</td>
 											<td>{{item.pr_ttprice}}</td>
 											<td>{{item.cate_name}}</td>
 											<td>{{item.pr_origin}}</td>
@@ -1413,12 +1413,12 @@
       <td class='border_up' align='center' width='122' height='33'>합계금액</td>
       </tr>
       
-      <tr>
-      <td class='border_up' align='center' width='195' height='33'  v-for="od in od">{{od.pr_name}}</td>      
-      <td class='border_up' align='center' width='65' height='33'  v-for="od in od">{{od.od_quantity}}</td>      
-      <td class='border_up' align='center' width='150' height='33'  v-for="od in od">{{od.pr_price}}</td>      
-      <td class='border_up' align='center' width='83' height='33'  v-for="od in od">{{od.pr_tax}}</td>
-      <td class='border_up' align='center' width='83'height='33'  v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      <tr v-for="od in od">
+      <td class='border_up' align='center' width='195' height='33'  >{{od.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' height='33'  >{{od.od_quantity}}</td>      
+      <td class='border_up' align='center' width='150' height='33'  >{{od.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' height='33'  >{{od.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'height='33'  >{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
       </tr>
  
     </table>
@@ -1517,12 +1517,12 @@
       <td class='border_up_red' align='center' width='122' height='33'>합계금액</td>
       </tr>
       
-      <tr>
-      <td class='border_up_red' align='center' width='195' height='33' v-for="od in od">{{od.pr_name}}</td>      
-      <td class='border_up_red' align='center' width='65' height='33' v-for="od in od">{{od.od_quantity}}</td>      
-      <td class='border_up_red' align='center' width='150' height='33' v-for="od in od">{{od.pr_price}}</td>      
-      <td class='border_up_red' align='center' width='83' height='33' v-for="od in od">{{od.pr_tax}}</td>
-      <td class='border_up_red' align='center' width='83'height='33' v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      <tr v-for="od in od">
+      <td class='border_up_red' align='center' width='195' height='33' >{{od.pr_name}}</td>      
+      <td class='border_up_red' align='center' width='65' height='33' >{{od.od_quantity}}</td>      
+      <td class='border_up_red' align='center' width='150' height='33' >{{od.pr_price}}</td>      
+      <td class='border_up_red' align='center' width='83' height='33' >{{od.pr_tax}}</td>
+      <td class='border_up_red' align='center' width='83'height='33' >{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
       </tr>
  
     </table>
