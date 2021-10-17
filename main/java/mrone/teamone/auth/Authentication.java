@@ -55,7 +55,7 @@ public class Authentication {
 					}else mav.setViewName("redirect:/");
 				}
 			//해당 아이디가 로그인이 안되어있을경우(db에 로그아웃상태)
-			}else loginProcessMro(mav,ah,ck);
+			}else tran = loginProcessMro(mav,ah,ck);
 		}catch (Exception e) {e.printStackTrace();}
 		
 		pu.setTransactionResult(tran);
@@ -107,7 +107,7 @@ public class Authentication {
 				}
 			}
 		}catch (Exception e) {e.printStackTrace();}
-		
+		System.out.println(tf);
 		return tf;
 	}
 	
