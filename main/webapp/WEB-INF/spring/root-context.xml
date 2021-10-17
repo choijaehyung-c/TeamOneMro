@@ -19,7 +19,7 @@
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@cleverc.online:1521:xe"/>
 		<property name="username" value="CHLCHL"/>
-		<property name="password" value="234WER"/>
+		<property name="password" value="chl999"/>
 	</bean>
 	
 	<!-- HikariCP -->
