@@ -113,7 +113,7 @@ const mainVue = new Vue({
 		},
 		/////////////////////////////////////////
 		add: function() {//공급사 추가
-			let name = document.getElementsByName("sp_name")[0].value;
+			/*let name = document.getElementsByName("sp_name")[0].value;
 			let code = document.getElementsByName("sp_code")[1].value;
 			let add = document.getElementsByName("sp_address")[0].value;
 			let tel = document.getElementsByName("sp_tel")[0].value;
@@ -124,12 +124,12 @@ const mainVue = new Vue({
 
 			let sendJsonData = { sp_name: name, sp_code: code, sp_address: add, sp_tel: tel, sp_corpnum: corpnum, sp_btype: btype, sp_bkind: bkind };
 			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/addClient', 'clientListVue2', 'j', clientData);
-			alert(clientData);
+			postAjaxJson('vue/addClient', 'clientListVue2', 'j', clientData);*/
+			alert("미지원");
 		},
 		/////////////////////////////////////////
 		addC: function() {//고객사 추가
-			let name = document.getElementsByName("cl_name")[0].value;
+			/*let name = document.getElementsByName("cl_name")[0].value;
 			let code = document.getElementsByName("cl_code")[0].value;
 			let add = document.getElementsByName("cl_address")[0].value;
 			let hp = document.getElementsByName("cl_hp")[0].value;
@@ -140,22 +140,26 @@ const mainVue = new Vue({
 
 			let sendJsonData = { cl_name: name, cl_code: code, cl_address: add, cl_hp: hp, cl_corpnum: corpnum, cl_btype: btype, cl_bkind: bkind, cl_pwd: pwd };
 			let clientData = JSON.stringify(sendJsonData);
-			postAjaxJson('vue/addClient', 'clientListVue2', 'j', clientData);
-			alert(clientData);
+			postAjaxJson('vue/addClient', 'clientListVue2', 'j', clientData);*/
+			alert("미지원");
 		},
 		/////////////////////////////////////////
 		deleteC: function(code) {//고객사 삭제
-
-			if (confirm("회원을 삭제하시겠습니까?")) {
+		
+				alert("전시중이라 죄송합니다.");
+				return
+			
+			/*if (confirm("회원을 삭제하시겠습니까?")) {
 				postAjaxJson('vue/delClient', 'clientListVue2', 's', code);
-			}
+			}*/
 		},
 		/////////////////////////////////////////
 		deleteS: function(code) {//공급사 삭제
-
-			if (confirm("회원을 삭제하시겠습니까?")) {
+				alert("전시중이라 죄송합니다.");
+				return
+			/*if (confirm("회원을 삭제하시겠습니까?")) {
 				postAjaxJson('vue/delSupply', 'supplyListVue2', 's', code);
-			}
+			}*/
 		},
 		/////////////////////////////////////////
 				mroOrderListPage: function() {
