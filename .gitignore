@@ -3,4 +3,4 @@ target/
 .classpath
 .project
 .springBeans
-root-context.xml
+main/webapp/WEB-INF/spring/root-context.xml
