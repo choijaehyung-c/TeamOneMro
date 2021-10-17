@@ -1,6 +1,1 @@
-.settings/
-target/
-.classpath
-.project
-.springBeans
-main/webapp/WEB-INF/spring/root-context.xml
+root-context.xml
