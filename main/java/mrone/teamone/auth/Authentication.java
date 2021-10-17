@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.web.servlet.ModelAndView;
 
 import mrone.teamone.beans.AccessBean;
@@ -32,6 +33,9 @@ public class Authentication {
 	AuthDao dao;
 	
 	public ModelAndView accessMroCtl(AccessHistoryBean ah,Cookie ck) {
+		boolean tran = false;
+		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
+				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		mav = new ModelAndView();
 		try {
 			//해당 아이디 로그인이 어딘가에서 된상태(db에 로그인상태)
@@ -39,57 +43,49 @@ public class Authentication {
 				// 그 로그인이 다른브라우저에 되어 있을경우 강제종료후 로그인
 				if(!(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip()).equals(dao.getLastAccessInfo(ah))) {	 
 					if(dao.forceLogout(ah)) {
-						System.out.print("강제로그아웃성공");
-						loginProcessMro(mav,ah,ck);
-						System.out.println("다른브라우저로그인성공");
+						if(loginProcessMro(mav,ah,ck)) tran = true;
 					}
 				}else {
-					if(pu.getAttribute("userSs")==null){//서버 로그인이 되어있지만 세션이 만료된 경우
+					//서버 로그인이 되어있지만 세션이 만료된 경우
+					if(pu.getAttribute("userSs")==null){
 						dao.forceLogout(ah);
-						loginProcessMro(mav,ah,ck);
-					}else {//서버 로그인이 되어있고 세션이 살아 있는 경우(같은 브라우저,새탭 페이지안바뀐 로그인버튼)
-						mav.setViewName("redirect:/");
-					}
+						if(loginProcessMro(mav,ah,ck)) tran = true;
+						
+					//서버 로그인이 되어있고 세션이 살아 있는 경우(같은 브라우저,새탭 페이지안바뀐 로그인버튼)
+					}else mav.setViewName("redirect:/");
 				}
 			//해당 아이디가 로그인이 안되어있을경우(db에 로그아웃상태)
-			}else{
-				System.out.println("222");
-				loginProcessMro(mav,ah,ck);
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+			}else loginProcessMro(mav,ah,ck);
+		}catch (Exception e) {e.printStackTrace();}
+		
+		pu.setTransactionResult(tran);
 		return mav;
 	}
 
-	private void loginProcessMro(ModelAndView mav,AccessHistoryBean ah,Cookie ck) {
+	private boolean loginProcessMro(ModelAndView mav,AccessHistoryBean ah,Cookie ck) {
+		boolean tf = false;
 		AccessBean ab = new AccessBean();
+		//MRO 운영사 로그인
 		if(ah.getAh_table().equals("AHM")){
 			ab.setId(ah.getAh_code());
 			ab.setPwd(ah.getAh_pwd());
 			ab.setCol("MD_CODE");
 			ab.setCol2("MD_PWD");
 			ab.setTable("MRD");
+		//MRO 공급사 로그인
 		}else {
-			System.out.println("ddd33");
 			ab.setId(ah.getAh_sdspcode()+ah.getAh_code());
 			ab.setPwd(ah.getAh_pwd());
 			ab.setCol("SD_SPCODE||SD_CODE");
 			ab.setCol2("SD_PWD");
 			ab.setTable("SD");
 		}
-		
-		
 		try {	
 			if(pu.getAttribute("userSs")==null){
-				boolean tf = false;
 				if(dao.isUserId(ab)){
-					System.out.println("아이디검증성공");
 					ab.setPwd(enc.aesEncode(ab.getPwd(),ah.getAh_code()));
 					if(dao.checkPwd(ab)){
-						System.out.println("로그인성공");
 						if(tf = dao.insAccessHistory(ah)) {
-							System.out.println("기록성공");
 							mav.setViewName("redirect:/");
 							if(ah.getAh_table().equals("AHM")) {
 								ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));
@@ -97,22 +93,22 @@ public class Authentication {
 							}else {
 								ck.setValue("sup"+enc.aesEncode(ah.getAh_code(),"session"));
 								pu.setAttribute("type",enc.aesEncode(ah.getAh_sdspcode(),ah.getAh_code()));
-								
 							}
 							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
 							pu.setAttribute("userSs",enc.aesEncode(ah.getAh_code(),"session"));
 							pu.setAttribute("browser",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
+							tf = true;
 						}
 					}
 				}
 				if(!tf){
 					mav.setViewName("accessForm");
-					mav.addObject("message","alert('로그인실패');");
+					mav.addObject("message","alert('로그인실패');");					
 				}
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		}catch (Exception e) {e.printStackTrace();}
+		
+		return tf;
 	}
 	
 	public ModelAndView accessOutMroCtl(AccessHistoryBean ah,Cookie ck) {
